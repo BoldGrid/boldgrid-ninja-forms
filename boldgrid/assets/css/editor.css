@@ -1,0 +1,5 @@
+[data-title="0"] .gform_heading .gform_title,
+[data-description="0"] .gform_heading .gform_description {
+	display: none !important;
+}
+
