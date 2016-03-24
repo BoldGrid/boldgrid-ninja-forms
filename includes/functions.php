@@ -321,18 +321,28 @@ function nf_get_object_children( $object_id, $child_type = '', $full_data = true
 function nf_update_object_meta( $object_id, $meta_key, $meta_value ) {
 	global $wpdb;
 
+	/* BEGIN: BoldGrid. */
+
+	// Create a new constant, due to the original being set before any blog_id switch.
+	if ( ! defined( 'BG_NF_OBJECTS_TABLE_NAME' ) )
+		define( 'BG_NF_OBJECTS_TABLE_NAME', $wpdb->prefix . 'nf_objects' );
+
+	/* END: BoldGrid. */
+
 	if ( is_array( $meta_value ) ) {
 		$meta_value = serialize( $meta_value );
 	}
 
+	// BoldGrid modified constant names below.
+
 	// Check to see if this meta_key/meta_value pair exist for this object_id.
-	$found = $wpdb->get_row( $wpdb->prepare( "SELECT id FROM ".NF_OBJECT_META_TABLE_NAME." WHERE object_id = %d AND meta_key = %s", $object_id, $meta_key ), ARRAY_A );
+	$found = $wpdb->get_row( $wpdb->prepare( "SELECT id FROM ".BG_NF_OBJECT_META_TABLE_NAME." WHERE object_id = %d AND meta_key = %s", $object_id, $meta_key ), ARRAY_A );
 
 	if ( $found ) {
-		$wpdb->update( NF_OBJECT_META_TABLE_NAME, array( 'meta_value' => $meta_value ), array( 'meta_key' => $meta_key, 'object_id' => $object_id ) );
+		$wpdb->update( BG_NF_OBJECT_META_TABLE_NAME, array( 'meta_value' => $meta_value ), array( 'meta_key' => $meta_key, 'object_id' => $object_id ) );
 		$meta_id = $found['id'];
 	} else {
-		$wpdb->insert( NF_OBJECT_META_TABLE_NAME, array( 'object_id' => $object_id, 'meta_key' => $meta_key, 'meta_value' => $meta_value ) );
+		$wpdb->insert( BG_NF_OBJECT_META_TABLE_NAME, array( 'object_id' => $object_id, 'meta_key' => $meta_key, 'meta_value' => $meta_value ) );
 		$meta_id = $wpdb->insert_id;
 	}
 
@@ -349,8 +359,18 @@ function nf_update_object_meta( $object_id, $meta_key, $meta_value ) {
 function nf_get_object_meta( $object_id ) {
 	global $wpdb;
 
+	/* BEGIN: BoldGrid. */
+
+	// Create a new constant, due to the original being set before any blog_id switch.
+	if ( ! defined( 'BG_NF_OBJECT_META_TABLE_NAME' ) )
+		define( 'BG_NF_OBJECT_META_TABLE_NAME', $wpdb->prefix . 'nf_objectmeta' );
+
+	/* END: BoldGrid. */
+
 	$tmp_array = array();
-	$settings = $wpdb->get_results( $wpdb->prepare( 'SELECT meta_key, meta_value FROM ' . NF_OBJECT_META_TABLE_NAME . ' WHERE object_id = %d', $object_id ), ARRAY_A);
+
+	// BoldGrid modified constant name below.
+	$settings = $wpdb->get_results( $wpdb->prepare( 'SELECT meta_key, meta_value FROM ' . BG_NF_OBJECT_META_TABLE_NAME . ' WHERE object_id = %d', $object_id ), ARRAY_A);
 
 	if ( is_array( $settings ) ) {
 		foreach( $settings as $setting ) {
@@ -371,7 +391,18 @@ function nf_get_object_meta( $object_id ) {
 
 function nf_insert_object( $type, $id = NULL ) {
 	global $wpdb;
-	$wpdb->insert( NF_OBJECTS_TABLE_NAME, array( 'id' => $id, 'type' => $type ) );
+
+        /* BEGIN: BoldGrid. */  
+
+        // Create a new constant, due to the original being set before any blog_id switch.
+        if ( ! defined( 'BG_NF_OBJECTS_TABLE_NAME' ) )
+                define( 'BG_NF_OBJECTS_TABLE_NAME', $wpdb->prefix . 'nf_objects' );
+
+        /* END: BoldGrid. */
+
+	// BoldGrid modified constant names below.
+	$wpdb->insert( BG_NF_OBJECTS_TABLE_NAME, array( 'id' => $id, 'type' => $type ) );
+
 	return $wpdb->insert_id;
 }
 
@@ -419,10 +450,21 @@ function nf_delete_object( $object_id ) {
 
 function nf_add_relationship( $child_id, $child_type, $parent_id, $parent_type ) {
 	global $wpdb;
+
+	/* BEGIN: BoldGrid. */
+
+	// Create a new constant, due to the original being set before any blog_id switch.
+	if ( ! defined( 'BG_NF_OBJECT_RELATIONSHIPS_TABLE_NAME' ) )
+		define( 'BG_NF_OBJECT_RELATIONSHIPS_TABLE_NAME', $wpdb->prefix . 'nf_relationships' );
+
+	/* END: BoldGrid. */
+
+	// BoldGrid modified constant names below.
+
 	// Make sure that our relationship doesn't already exist.
-	$count = $wpdb->query( $wpdb->prepare( 'SELECT id FROM ' . NF_OBJECT_RELATIONSHIPS_TABLE_NAME .' WHERE child_id = %d AND parent_id = %d', $child_id, $parent_id ), ARRAY_A );
+	$count = $wpdb->query( $wpdb->prepare( 'SELECT id FROM ' . BG_NF_OBJECT_RELATIONSHIPS_TABLE_NAME .' WHERE child_id = %d AND parent_id = %d', $child_id, $parent_id ), ARRAY_A );
 	if ( empty( $count ) ) {
-		$wpdb->insert( NF_OBJECT_RELATIONSHIPS_TABLE_NAME, array( 'child_id' => $child_id, 'child_type' => $child_type, 'parent_id' => $parent_id, 'parent_type' => $parent_type ) );
+		$wpdb->insert( BG_NF_OBJECT_RELATIONSHIPS_TABLE_NAME, array( 'child_id' => $child_id, 'child_type' => $child_type, 'parent_id' => $parent_id, 'parent_type' => $parent_type ) );
 	}
 }
 
@@ -492,11 +534,20 @@ function nf_get_ip() {
 function nf_get_objects_by_type( $object_type ) {
 	global $wpdb;
 
+	/* BEGIN: BoldGrid. */
+
+	// Create a new constant, due to the original being set before any blog_id switch.
+	if ( ! defined( 'BG_NF_OBJECTS_TABLE_NAME' ) )
+		define( 'BG_NF_OBJECTS_TABLE_NAME', $wpdb->prefix . 'nf_objects' );
+
+	/* END: BoldGrid. */
+
 	// Bail if we don't have an object type.
 	if ( $object_type == '' )
 		return false;
 
-	$results = $wpdb->get_results( $wpdb->prepare( 'SELECT id FROM ' . NF_OBJECTS_TABLE_NAME . ' WHERE type = %s', $object_type ), ARRAY_A );
+	// BoldGrid modified constant names below.
+	$results = $wpdb->get_results( $wpdb->prepare( 'SELECT id FROM ' . BG_NF_OBJECTS_TABLE_NAME . ' WHERE type = %s', $object_type ), ARRAY_A );
 
 	return $results;
 }

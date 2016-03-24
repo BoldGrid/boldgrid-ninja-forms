@@ -88,7 +88,17 @@ function ninja_forms_get_field_by_id($field_id){
 function ninja_forms_get_fields_by_form_id($form_id, $orderby = 'ORDER BY `order` ASC'){
 	global $wpdb;
 
-	$field_results = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".NINJA_FORMS_FIELDS_TABLE_NAME." WHERE form_id = %d ".$orderby, $form_id), ARRAY_A);
+	/* BEGIN: BoldGrid. */
+
+	// Create a new constant, due to the original being set before any blog_id switch.
+	if ( ! defined( 'BG_NINJA_FORMS_FIELDS_TABLE_NAME' ) )
+		define( 'BG_NINJA_FORMS_FIELDS_TABLE_NAME', $wpdb->prefix . 'ninja_forms_fields' );
+
+	/* END: BoldGrid. */
+
+	// BoldGrid modified constant name below.
+	$field_results = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".BG_NINJA_FORMS_FIELDS_TABLE_NAME." WHERE form_id = %d ".$orderby, $form_id), ARRAY_A);
+
 	if(is_array($field_results) AND !empty($field_results)){
 		$x = 0;
 		$count = count($field_results) - 1;
@@ -117,9 +127,20 @@ function ninja_forms_get_all_fields(){
 
 function ninja_forms_update_field($args){
 	global $wpdb;
+
+	/* BEGIN: BoldGrid. */
+
+	// Create a new constant, due to the original being set before any blog_id switch.
+	if ( ! defined( 'BG_NINJA_FORMS_FIELDS_TABLE_NAME' ) )
+		define( 'BG_NINJA_FORMS_FIELDS_TABLE_NAME', $wpdb->prefix . 'ninja_forms_fields' );
+
+	/* END: BoldGrid. */
+
 	$update_array = $args['update_array'];
 	$where = $args['where'];
-	$wpdb->update(NINJA_FORMS_FIELDS_TABLE_NAME, $update_array, $where);
+
+	// BoldGrid modified constant name below.
+	$wpdb->update(BG_NINJA_FORMS_FIELDS_TABLE_NAME, $update_array, $where);
 }
 
 function ninja_forms_delete_field( $field_id ){
@@ -409,8 +430,18 @@ function nf_get_sub_count( $form_id, $post_status = 'publish' ) {
 function nf_get_fields_by_form_id( $form_id, $orderby = 'ORDER BY `order` ASC' ){
 	global $wpdb;
 
+	/* BEGIN: BoldGrid. */
+
+	// Create a new constant, due to the original being set before any blog_id switch.
+	if ( ! defined( 'BG_NINJA_FORMS_FIELDS_TABLE_NAME' ) )
+		define( 'BG_NINJA_FORMS_FIELDS_TABLE_NAME', $wpdb->prefix . 'ninja_forms_fields' );
+
+	/* END: BoldGrid. */
+
 	$tmp_array = array();
-	$field_results = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".NINJA_FORMS_FIELDS_TABLE_NAME." WHERE form_id = %d ".$orderby, $form_id), ARRAY_A);
+
+	// BoldGrid modified constant names below.
+	$field_results = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".BG_NINJA_FORMS_FIELDS_TABLE_NAME." WHERE form_id = %d ".$orderby, $form_id), ARRAY_A);
 	if ( is_array( $field_results ) && ! empty( $field_results ) ) {
 		foreach ( $field_results as $field ) {
 			$field_id = $field['id'];

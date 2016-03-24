@@ -8,6 +8,15 @@
  */
 function ninja_forms_import_form( $file ){
 	global $wpdb;
+
+	/* BEGIN: BoldGrid. */
+
+	// Create a new constant, due to the original being set before any blog_id switch.
+	if ( ! defined( 'BG_NINJA_FORMS_FIELDS_TABLE_NAME' ) )
+		define( 'BG_NINJA_FORMS_FIELDS_TABLE_NAME', $wpdb->prefix . 'ninja_forms_fields' );
+
+	/* END: BoldGrid. */
+
 	$form = unserialize( trim( $file ) );
 	$form_fields = isset( $form['field'] ) ? $form['field'] : null;
 	$notifications = isset ( $form['notifications'] ) ? $form['notifications'] : null;
@@ -32,7 +41,11 @@ function ninja_forms_import_form( $file ){
 			$form_fields[$x]['data'] = serialize( $form_fields[$x]['data'] );
 			$old_field_id = $form_fields[$x]['id'];
 			$form_fields[$x]['id'] = NULL;
-			$wpdb->insert( NINJA_FORMS_FIELDS_TABLE_NAME, $form_fields[$x] );
+
+			// BoldGrid modified constant names below.
+
+			$wpdb->insert( BG_NINJA_FORMS_FIELDS_TABLE_NAME, $form_fields[$x] );
+
 			$form_fields[$x]['id'] = $wpdb->insert_id;
 			$form_fields[$x]['old_id'] = $old_field_id;
 			$form_fields[$x]['data'] = unserialize( $form_fields[$x]['data'] );
