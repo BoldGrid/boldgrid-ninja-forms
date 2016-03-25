@@ -22,8 +22,7 @@ BoldGrid Ninja Forms is a webform builder with unparalleled ease of use and feat
 
 == Changelog ==
 
-= 1.1 In progress =
-* Bug fix:		JIRA WPB-1763   Fixed issue with activation and form imports on our preview server.
+= 1.0.8 In progress =
 * Misc:			JIRA WPB-1361	Added license file.
 
 = 1.0.7.1 =
