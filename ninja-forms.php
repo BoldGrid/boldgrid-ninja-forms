@@ -56,14 +56,14 @@ if ( ! defined( 'ABSPATH' ) )
     exit;
 
 /* @formatter:on */
-    
+
 /*
  * This is a fork of Ninja Forms (by WP Ninjas/Kevin Stover).
  * Additional functionality has been added for integration into the BoldGrid WordPress plugin suite.
  * We would like to thank the WP Ninjas for making Ninja Forms available in the
  * WordPress / Open Source community.
  */
-    
+
 // Define Form version:
 if ( ! defined( 'BOLDGRID_NINJA_FORM_VERSION' ) ) {
     define( 'BOLDGRID_NINJA_FORM_VERSION', '1.0.7.1' );
@@ -192,7 +192,7 @@ class Ninja_Forms {
         // Fire our Ninja Forms init action.
         do_action( 'nf_admin_init', self::$instance );
     }
-    
+
     /**
      * Run some admin stuff on admin_notices hook.
      *
