@@ -4,7 +4,7 @@
 Plugin Name: BoldGrid Ninja Forms
 Plugin URI: http://www.boldgrid.com/
 Description: BoldGrid Ninja Forms
-Version: 1.1
+Version: 1.1.0.1
 Author: BoldGrid.com
 Author URI: http://www.boldgrid.com/
 Text Domain: boldgrid-ninja-forms
@@ -66,7 +66,7 @@ if ( ! defined( 'ABSPATH' ) )
 
 // Define Form version:
 if ( ! defined( 'BOLDGRID_NINJA_FORM_VERSION' ) ) {
-    define( 'BOLDGRID_NINJA_FORM_VERSION', '1.1' );
+    define( 'BOLDGRID_NINJA_FORM_VERSION', '1.1.0.1' );
 }
 
 // Define boldgrid-ninja-forms Path
