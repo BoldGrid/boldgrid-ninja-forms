@@ -1,0 +1,106 @@
+#nf-header {
+    //background: red;
+    height: 100px;
+    transition: margin 0.5s ease;
+    #nf-logo {
+        background-image: url( '../img/ninja-forms-app-header-logo.png' );
+        float: left;
+        width: 80px;
+        height: 30px;
+        @media (min-resolution: 192dpi), (-webkit-min-device-pixel-ratio: 2), (min--moz-device-pixel-ratio: 2), (-o-min-device-pixel-ratio: 2/1), (min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+            background-image: url( '../img/ninja-forms-app-header-logo@2x.png' );
+            background-size: 80px 30px;
+        }
+        opacity: 1.0;
+        filter: alpha(opacity=100);
+        transition: all 1.0s ease;
+    }
+    ul {
+        display: inline-block;
+        margin: 0;
+        li {
+            float: left;
+            &.nf-mobile-menu {
+                display: none;
+            }
+            a {
+                color: #424242;
+                display: block;
+                margin: 16px 20px;
+                padding-bottom: 8px;
+                text-decoration: none;
+                &.active {
+                    border-bottom: 2px solid #424242;
+                }
+                &.preview {
+                    color: #bbb;
+                    transition: all 1.0s ease;
+                    .dashicons {
+                        display: inline-block;
+                        margin-left: 10px;
+                    }
+                }
+            }
+            &:first-child {
+                a {
+                    margin-left: 0;
+                }
+            }
+        }
+        &:after {
+            clear: both;
+            content: "";
+            display: block;
+        }
+    }
+    input[type=submit] {
+        float: right;
+    }
+    .nf-cancel {
+        float: right;
+        margin-right: 30px;
+        padding: 8px 0;
+        .dashicons {
+            font-size: 30px;
+        }
+    }
+    &:after {
+        clear: both;
+        content: "";
+        display: block;
+    }
+}
+#nf-app-header {
+    height: 50px;
+    &:after {
+        clear: both;
+        content: "";
+        display: block;
+    }
+}
+#nf-app-sub-header {
+    height: 50px;
+    padding: 0;
+    h2 {
+        display: inline-block;
+        margin: 0;
+        padding: 10px 0;
+        transition: all 1.0s ease 0s
+    }
+    &:after {
+        clear: both;
+        content: "";
+        display: block;
+    }
+}
+.nf-app-buttons {
+    float: right;
+    .publish {
+        float: right;
+    }
+}
+#nf-app-form-title {
+    h2 {
+        margin: 15px 0;
+    }
+}

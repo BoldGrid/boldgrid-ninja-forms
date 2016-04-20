@@ -22,6 +22,9 @@ BoldGrid Ninja Forms is a webform builder with unparalleled ease of use and feat
 
 == Changelog ==
 
+= 1.1.1 In progress =
+* Misc:			JIRA WPB-1824	Updated Ninja Forms version to 2.9.42.
+
 = 1.1.0.1 =
 * Bug fix:		JIRA WPB-1816	Fixed update class interference with the Add Plugins page.
 
@@ -30,12 +33,12 @@ BoldGrid Ninja Forms is a webform builder with unparalleled ease of use and feat
 * Misc:			JIRA WPB-1361	Added license file.
 
 = 1.0.7.1 =
-* Bug fix:		JIRA WPB-1705	Fixed notificaiton import actions.
+* Bug fix:		JIRA WPB-1705	Fixed notification import actions.
 
 = 1.0.7 =
 * Bug fix:		JIRA WPB-1598	'Mine' count on 'all pages' is incorrect.
 * Bug fix:						Changed the method used to open media frame tabs.
-* Misc:         JIRA WPB-1659   Updating Ninja Forms version to 2.9.33
+* Misc:         JIRA WPB-1659   Updated Ninja Forms version to 2.9.33
 
 = 1.0.6 =
 * Rework:		JIRA WPB-1618	Updated require and include statements for standards.
@@ -69,4 +72,5 @@ BoldGrid Ninja Forms is a webform builder with unparalleled ease of use and feat
 * Initial public release.
 
 == Upgrade Notice ==
-
+= 1.1.1 =
+Users should update to boldgrid-ninja-forms version 1.1.1 for support in WordPress 4.5.

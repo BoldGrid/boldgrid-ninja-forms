@@ -1,0 +1,86 @@
+.nf-fields {
+    .label-above,
+    .label-below,
+    .label-hidden {
+        > label {
+            display: block;
+        }
+        > input,
+        textarea,
+        select,
+        .pikaday__container,
+        .pikaday__display {
+            width: 100%;
+        }
+        input[type="submit"],
+        input[type="button"],
+        button {
+            width: auto;
+        }
+        .nf-product-field {
+            // .nf-element {
+            //     width: 100%;
+            // }
+        }
+    }
+    .label-right {
+        vertical-align: middle;
+        > label {
+            display: inline-block;
+        }
+        > input,
+        textarea,
+        select,
+        .pikaday__container {
+            width: 50%;
+        }
+        .pikaday__display {
+            width: 100%;
+        }
+        > input[type=radio],
+        input[type=checkbox] {
+            width: auto;
+        }
+        &.textarea-wrap {
+            vertical-align: top;
+        }
+        ul {
+            float: left;
+            width: 50%;
+        }
+    }
+    .label-left {
+        vertical-align: middle;
+        > label {
+            display: inline-block;
+            float: left;
+            line-height: 16px;
+            padding: 16px;
+            text-align: right;
+            width: 49%;
+        }
+        > input,
+        textarea,
+        select,
+        .pikaday__container {
+            float: right;
+            width: 49%;
+        }
+        .pikaday__display {
+            width: 100%;
+        }
+        > input[type=radio],
+        > input[type=checkbox] {
+            float: none;
+            width: auto;
+            margin-left: 10px;
+        }
+        &.textarea-wrap {
+            vertical-align: top;
+        }
+        ul {
+            float: right;
+            width: 49%;
+        }
+    }
+}

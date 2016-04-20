@@ -1,0 +1,65 @@
+/*
+ * Ninja Forms - Form Display Structure
+ */
+
+.ninja-forms-form-wrap *,
+.ninja-forms-form-wrap *:after,
+.ninja-forms-form-wrap *:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.field-wrap,
+#ninja_forms_required_items {
+    &::after {
+        clear: both;
+        content: "";
+        display: block;
+    }
+}
+
+.nf-fields {
+    input,
+    select,
+    textarea {
+        width: auto;
+        height: auto;
+        vertical-align: inherit;
+    }
+}
+
+/* ---------------------------------
+RADIO & CHECKBOX LISTS
+----------------------------------*/
+
+.list-radio-wrap,
+.list-checkbox-wrap {
+    ul, li {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        input {
+            margin-right: 5px;
+        }
+    }
+    li {
+        padding-left: 10px;
+    }
+}
+
+/* ---------------------------------
+STAR RATING
+----------------------------------*/
+.starrating .star {
+    border-bottom: 0;
+}
+
+/* ---------------------------------
+HONEYPOT
+----------------------------------*/
+
+.nf-hp {
+    visibility: hidden;
+}

@@ -1,0 +1,139 @@
+.rtl.ninja-forms-app {
+    #wpcontent {
+        margin-right: 140px;
+        #wpbody {
+            right: 160px;
+            left: 0;
+        }
+    }
+    &.folded {
+        #wpcontent {
+            margin-right: 16px;
+            #wpbody {
+                right: 36px;
+                left: 0;
+            }
+        }
+    }
+}
+
+.rtl {
+    #nf-header {
+        #nf-logo {
+            float: right;
+        }
+        ul {
+            li {
+                float: right;
+                a {
+                    &.preview {
+                        .dashicons {
+                            margin-right: 10px;
+                        }
+                    }
+                }
+            }
+        }
+        input[type=submit] {
+            float: left;
+        }
+        .nf-cancel {
+            float: left;
+            margin-left: 20px;
+        }
+    }
+
+    .nf-add-new {
+        padding: 0 46px 0 0;
+        &:after {
+            right: 0;
+            line-height: 14px;
+        }
+        &.nf-open-drawer {
+            right: 40px;
+            left: 0;
+        }
+    }
+
+    #nf-main {
+        right: 0;
+        left: auto;
+    }
+    #nf-main-header {
+        .nf-button {
+            float: left;
+        }
+    }
+
+    .nf-item-controls {
+        float: left;
+        li {
+            float: right;
+            &.nf-item-duplicate {
+                .nf-tooltip {
+                    left: -32px;
+                    &:after {
+                        left: 36px;
+                    }
+                }
+            }
+            &.nf-item-edit {
+                .nf-tooltip {
+                    left: -16px;
+                    &:after {
+                        left: 20px;
+                    }
+                }
+            }
+        }
+        &.nf-editing {
+            .nf-item-edit {
+                .dashicons {
+                    margin-left: 12px
+                }
+            }
+        }
+    }
+
+    #nf-drawer {
+        right: auto;
+        left: -1400px;
+        &.nf-drawer-expand {
+            width: 100%;
+        }
+    }
+
+    .nf-drawer-header {
+        h2 {
+            float: right;
+            .dashicons {
+                margin-left: 10px;
+            }
+        }
+        .nf-button {
+            float: left;
+        }
+    }
+
+    .nf-search {
+        input[type=search] {
+            padding: 12px 50px 12px 0;
+        }
+        &::before {
+            right: 10px;
+            left: 0;
+        }
+    }
+
+    .nf-drawer-opened {
+        #nf-drawer {
+            left: 0;
+            right: auto;
+        }
+        #nf-app-sub-header {
+            h2 {
+                padding-right: 0;
+            }
+        }
+    }
+}

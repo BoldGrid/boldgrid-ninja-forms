@@ -1,0 +1,90 @@
+input[type=checkbox].nf-toggle {
+    display: none;
+    + label {
+        text-indent: -99999px;
+        background: transparent;
+        border: 0;
+        box-shadow: 0 0 0;
+        display: block;
+        margin: 19px 5px 11px;
+        appearance: none;
+        position: relative;
+        width: 40px;
+        height: 20px;
+        cursor: pointer;
+        &::after {
+            background: #BCBDBF;
+            border: 2px solid #BCBDBF;
+            border-radius: 20px;
+            content: "";
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            width: 40px;
+            height: 20px;
+            transition: all 0.3s ease;
+        }
+        &::before {
+            background: #fff;
+            border-radius: 20px;
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: 0;
+            width: 18px;
+            height: 18px;
+            z-index: 99;
+            transition: all 0.3s ease;
+        }
+    }
+    &:checked  {
+        + label {
+            &::after {
+                background: $accent_color;
+                border: 2px solid $accent_color;
+                transition: all 0.3s ease;
+            }
+            &::before {
+                content: "";
+                //top: 2px;
+                left: 18px;
+                transition: all 0.3s ease;
+            }
+        }
+    }
+}
+
+.nf-full {
+    position: relative;
+    input[type=checkbox].nf-toggle {
+        + label {
+            margin: -18px 0 0;
+            padding: 12px 0 20px;
+            position: absolute;
+            top: 24px;
+            right: 10px;
+            &::before {
+                left: auto;
+                right: 22px;
+                transition: right 0.3s ease;
+            }
+            &::after {
+                left: auto;
+                right: 0;
+            }
+        }
+        &:checked  {
+            + label {
+                &::before {
+                    left: auto;
+                    right: 4px;
+                    transition: right 0.3s ease;
+                }
+            }
+        }
+    }
+    .nf-setting-label {
+        border-bottom: 1px solid #ccc;
+        padding: 5px 0 20px;
+    }
+}

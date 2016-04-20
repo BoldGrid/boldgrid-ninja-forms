@@ -1,0 +1,36 @@
+
+.field-wrap {
+    > label {
+        font-weight: bold;
+    }
+}
+
+.ninja-forms-field {
+    background: #f7f7f7;
+    border: 1px solid #eaeaea;
+    &:focus {
+        background: #fff;
+        border-color: #c1c1c1;
+        outline: none;
+    }
+}
+
+.nf-error {
+    .ninja-forms-field {
+        border-color: red;
+    }
+    .nf-error-msg {
+        color: red;
+    }
+}
+
+.ninja-forms-noscript-message {
+    background: #f1f1f1;
+    border: 4px dashed #ccc;
+    color: #333;
+    display: block;
+    font-size: 20px;
+    margin: 20px 0;
+    padding: 40px;
+    text-align: center;
+}

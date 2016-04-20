@@ -1,0 +1,94 @@
+.has-merge-tags {
+    position: relative;
+    input[type=text],
+    textarea {
+        padding-right: 40px;
+    }
+    &.rte {
+        display: block;
+        .wp-editor-tabs {
+            margin-right: 40px;
+        }
+        .merge-tags {
+            color: #999;
+            z-index: 100;
+            top: 26px;
+        }
+    }
+    .merge-tags {
+        color: #ccc;
+        pointer: cursor;
+        position: absolute;
+    }
+}
+div.has-merge-tags {
+    .merge-tags {
+        top: 16px;
+        right: 12px;
+    }
+}
+label.has-merge-tags {
+    .merge-tags {
+        top: 33px;
+        right: 12px;
+    }
+}
+.jBox-Tooltip {
+    z-index: 100000000 !important;
+}
+
+.jBox-TooltipBorder {
+    .jBox-container {
+        border-radius: 5px;
+        border: 2px solid $cta_color;
+        /*background: #EBEDEE;*/
+        h4 {
+            background: #f1f1f1;
+            padding: 5px;
+            margin: 0 0 5px;
+        }
+        ul {
+            margin: 0;
+            li {
+                &:nth-child(even) {
+                    a {
+                        //background: #f1f1f1;
+                    }
+                }
+                a {
+                    color: $cta_color;
+                    margin: 0;
+                    padding: 0 5px;
+                    display: block;
+                    text-decoration: none;
+                }
+            }
+            a.active {
+                background: #f1f1f1;
+            }
+        }
+    }
+    .jBox-pointer {
+        &::after {
+            border: 2px solid $cta_color;
+            /*background: #EBEDEE;*/
+        }
+    }
+    .jBox-pointer-top,
+    .jBox-pointer-bottom {
+        width: 34px;
+        height: 12px;
+    }
+    .jBox-pointer-left,
+    .jBox-pointer-right {
+        width: 12px;
+        height: 34px;
+    }
+    &.jBox-closeButton-box {
+        &::before {
+            width: 28px;
+            height: 28px;
+            background: $cta_color;
+        }
+    }
+}

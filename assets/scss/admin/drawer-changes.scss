@@ -1,0 +1,32 @@
+table.nf-changes {
+    tr {
+        td {
+            border-bottom: 1px solid #ccc;
+        }
+        &.disabled-row {
+            td {
+                color:  #bbb;
+            }
+        }
+        &:nth-child(even) {
+            td {
+                background: #e5e7e8 !important;
+            }
+        }
+        &:hover {
+            td {
+                background: #fff !important;
+            }
+        }
+    }
+}
+.nf-button {
+    &.undoChanges {
+        .dashicons {
+            font-size: 18px;
+            height: 18px;
+            width: 18px;
+            margin-right: 5px;
+        }
+    }
+}

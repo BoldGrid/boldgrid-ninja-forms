@@ -1,0 +1,28 @@
+.nf-setting-wrap {
+    cursor: pointer;
+    float: left;
+    margin-bottom: 30px;
+    padding: 0 2%;
+    width: 33.33%;
+    &::after {
+        clear: both;
+        content: "";
+        display: block;
+    }
+    span {
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        display: table-cell;
+        height: 85px;
+        width: 400px;
+        text-align: center;
+        vertical-align: middle;
+    }
+    &.active {
+        span {
+            border: 2px solid $accent_color;
+            font-weight: bold;
+        }
+    }
+}

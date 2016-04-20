@@ -1,0 +1,36 @@
+#nf-main {
+    border: 4px solid #fff;
+    //padding: 20px 40px 40px;
+    width: 100%;
+    position: absolute;
+    top: 190px;
+    bottom: 0;
+    left: 0;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+    transition: left 0.5s ease;
+}
+#nf-main-content,
+#nf-main-header {
+    margin: 0 auto;
+    max-width: 800px;
+    user-select: none;
+}
+#nf-main-header {
+    padding: 0 0 20px;
+    .nf-button {
+        float: right;
+    }
+    h2 {
+        display: inline-block;
+    }
+    &:after {
+        clear: both;
+        content: "";
+        display: block;
+    }
+}
+
+#the-list tr.flagged th:first-child {
+    border-left: 5px solid yellow;
+}

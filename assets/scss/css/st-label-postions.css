@@ -1,0 +1,62 @@
+.nf-fields .label-above > label,
+.nf-fields .label-below > label,
+.nf-fields .label-hidden > label {
+  display: block;
+  margin-bottom: 5px; }
+.nf-fields .label-above > input,
+.nf-fields .label-above textarea,
+.nf-fields .label-above select,
+.nf-fields .label-below > input,
+.nf-fields .label-below textarea,
+.nf-fields .label-below select,
+.nf-fields .label-hidden > input,
+.nf-fields .label-hidden textarea,
+.nf-fields .label-hidden select {
+  width: 100%; }
+.nf-fields .label-above input[type="submit"],
+.nf-fields .label-above input[type="button"],
+.nf-fields .label-above button,
+.nf-fields .label-below input[type="submit"],
+.nf-fields .label-below input[type="button"],
+.nf-fields .label-below button,
+.nf-fields .label-hidden input[type="submit"],
+.nf-fields .label-hidden input[type="button"],
+.nf-fields .label-hidden button {
+  width: auto; }
+.nf-fields .label-below > label {
+  margin-bottom: 0;
+  margin-top: 5px; }
+.nf-fields .label-right {
+  vertical-align: middle; }
+  .nf-fields .label-right > label {
+    display: inline-block;
+    margin-bottom: 0; }
+  .nf-fields .label-right > input,
+  .nf-fields .label-right textarea,
+  .nf-fields .label-right select {
+    margin-right: 10px;
+    width: 50%; }
+  .nf-fields .label-right > input[type=radio],
+  .nf-fields .label-right input[type=checkbox] {
+    margin-right: 10px;
+    width: auto; }
+  .nf-fields .label-right.textarea-wrap {
+    vertical-align: top; }
+.nf-fields .label-left {
+  vertical-align: middle; }
+  .nf-fields .label-left > label {
+    display: inline-block;
+    margin-bottom: 0;
+    margin-top: 5px; }
+  .nf-fields .label-left > input,
+  .nf-fields .label-left textarea,
+  .nf-fields .label-left select {
+    margin-right: 10px;
+    float: right;
+    width: 50%; }
+  .nf-fields .label-left > input[type=radio],
+  .nf-fields .label-left input[type=checkbox] {
+    margin-right: 10px;
+    width: auto; }
+  .nf-fields .label-left.textarea-wrap {
+    vertical-align: top; }

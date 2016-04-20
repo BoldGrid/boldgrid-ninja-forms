@@ -1,0 +1,107 @@
+.ninja-forms-app {
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        td, th {
+            border-bottom: 1px solid #ECEDEE;
+            font-size: 14px;
+            padding: 15px;
+        }
+        th {
+            color: #666;
+            text-align: left;
+            text-transform: uppercase;
+        }
+        td {
+            color: #676F75;
+            white-space:nowrap;
+            &:nth-child(2) {
+                width: 90%;
+            }
+        }
+        .deactivated {
+            td {
+                color: #BCBDBF;
+                a {
+                    color: #ddd;
+                }
+            }
+        }
+        input[type=checkbox].nf-toggle + label {
+            margin: 2px 0 0;
+            // &::after {
+            //     border-radius: 20px;
+            //     top: 2px;
+            //     left: -4px;
+            //     width: 30px;
+            //     height: 14px;
+            // }
+            // &::before {
+            //     border-radius: 20px;
+            //     top: 4px;
+            //     left: -1px;
+            //     width: 14px;
+            //     height: 14px;
+            // }
+            // &:checked {
+            //     &::before {
+            //         top: 7px;
+            //         left: 17px;
+            //     }
+            // }
+        }
+        .active {
+            td {
+                color: $accent_color;
+                font-weight: bold;
+            }
+            a {
+                //color: $accent_color;
+            }
+            .nf-item-controls {
+                font-weight: normal;
+                float: right;
+                a {
+                    color: #424242;
+                }
+                .nf-item-delete,
+                .nf-item-duplicate {
+                    display: none;
+                }
+                .nf-item-editing {
+                    display: inline !important;
+                }
+                .nf-item-edit {
+                    .dashicons {
+                        margin-right: 12px
+                    }
+                }
+            }
+        }
+    }
+}
+.ui-droppable {
+    border: 4px solid #fff;
+}
+.nf-actions-empty {
+    thead {
+        display: none;
+    }
+    td {
+        border: 4px solid #fff !important;
+        display: block;
+        padding: 40px 20% !important;
+        white-space: normal !important;
+    }
+    h3 {
+        font-size: 30px;
+    }
+    p {
+        font-size: 18px;
+    }
+}
+.nf-actions-table {
+    td {
+        cursor: pointer;
+    }
+}

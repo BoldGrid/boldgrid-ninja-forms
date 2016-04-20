@@ -1,0 +1,87 @@
+.ui-sortable-helper {
+    &.nf-field-wrap
+    //&.nf-item-dock
+    {
+        box-shadow: 3px 3px 5px rgba( 0, 0, 0, 0.4 );
+    }
+}
+
+.ui-draggable-dragging {
+    .nf-item {
+        box-shadow: 3px 3px 5px rgba( 0, 0, 0, 0.4 );
+    }
+}
+
+.ui-draggable-handle {
+    cursor: pointer;
+}
+.ui-draggable-dragging {
+    z-index: 99;
+}
+#nf-builder {
+    .nf-droppable-active {
+        border: 4px solid $cta_color;
+        //padding: 6px;
+        transition: all 1.0s ease;
+    }
+    .nf-droppable-hover {
+        border: 4px solid $accent_color;
+        //padding: 6px;
+        transition: all 1.0s ease;
+    }
+}
+
+.nf-fields-sortable {
+    border: 4px solid #FFF;
+    padding: 25px 15px 6px;
+}
+.nf-fields-sortable-placeholder { margin-top: -14px; margin-bottom: 6px; border: 4px solid #84CC1E }
+
+.nf-staged-fields-drag {
+    position: relative;
+    display: block;
+    height: 80px;
+    &::after {
+        clear: both;
+        content: '';
+        display: block;
+    }
+    .nf-field-wrap {
+        position: absolute;
+        width: 500px;
+    }
+    #drag-item-1,
+    #drag-item-2,
+    #drag-item-3 {
+        box-shadow: 3px 3px 5px rgba( 0, 0, 0, 0.4 );
+    }
+    #drag-item-1 {
+        bottom: 0px;
+        left: 0px;
+        z-index: 3;
+    }
+    #drag-item-2 {
+        bottom: 5px;
+        left: 5px;
+        z-index: 2;
+    }
+    #drag-item-3 {
+        bottom: 10px;
+        left: 10px;
+        z-index: 1;
+    }
+}
+
+
+
+.nf-staged-fields-sortable-placeholder { float: left; height: 28px; border-right: 8px solid #84CC1E; margin-right: -4px; margin-left: -4px; }
+
+.nf-list-options-sortable-placeholder {
+    border: 4px solid #84CC1E;
+    height: 8px !important;
+    margin: -4px 0 -4px 0;
+}
+
+.nf-fields-empty-droppable { border: 4px solid #FFF; }
+
+.nf-settings .toggle { cursor: pointer; }

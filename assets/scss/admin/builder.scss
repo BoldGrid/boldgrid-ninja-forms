@@ -1,0 +1,91 @@
+$accent_color: #84CC1E;
+$cta_color: #1EA9EA;
+
+/*
+Normalize WordPress admin for Ninja Forms App
+---------------------------------------------*/
+
+@import "normalize";
+
+/*
+Header and Nav for Ninja Forms App
+---------------------------------- */
+
+@import "header";
+@import "main";
+@import "main-fields";
+@import "main-settings";
+
+/*
+Form field placeholders for the fields a user has added to their form
+----------------------------------------------------------------------- */
+@import "item-controls";
+@import "builder-fields";
+
+/*
+All styles used within the drawer
+--------------------------------- */
+
+@import "drawer";
+@import "drawer-settings";
+@import "drawer-add";
+@import "drawer-changes";
+
+/*
+Various custom field styles
+--------------------------------- */
+
+@import "add-new";
+@import "toggle";
+@import "dropdown";
+
+/*
+All styles used for displaying table content
+-------------------------------------------- */
+
+@import "tables";
+
+@import "scrollbar";
+@import "drag-drop";
+@import "loading";
+@import "tooltip";
+@import "merge-tags-tooltip";
+@import "editor";
+
+@import "media-queries";
+
+@import "rtl";
+
+#nf-app-admin-header {
+    background: #EBEDEE;
+    height: 60px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    .fa-times {
+        background: #424242;
+        color: #fff;
+        font-size: 30px;
+        position: absolute;
+        text-align: center;
+        text-decoration: none;
+        line-height: 56px;
+        right: 0;
+        height: 60px;
+        width: 60px;
+    }
+    #nf-logo {
+        background-image: url("../img/ninja-forms-app-header-logo@2x.png");
+        background-size: 130px 50px;
+        background-position: center bottom;
+        background-repeat: no-repeat;
+        float: left;
+        width: 160px;
+        height: 60px;
+        opacity: 1.0;
+        filter: alpha(opacity=100);
+        -webkit-transition: all 1.0s ease;
+        transition: all 1.0s ease;
+    }
+}

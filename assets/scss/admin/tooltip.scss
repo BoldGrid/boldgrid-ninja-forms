@@ -1,0 +1,37 @@
+.nf-help-text {
+    display: none;
+}
+.ninja-forms-app {
+    .nf-help {
+        color: #ccc;
+        margin-left: 5px;
+        text-decoration: none;
+        .dashicons {
+            font-size: 16px;
+            height: 16px;
+            width: 16px;
+        }
+    }
+    .qtip-default {
+        background-color: #424242;
+        border: 1px solid #424242;
+        border-radius: 4px;
+        box-shadow: 0 5px 6px rgba( 0, 0, 0, 0.3 );
+        color: #fff;
+        font-size: 14px;
+        line-height: 18px;
+        padding: 10px;
+        //position: relative;
+        &::after {
+            content: "";
+            position: absolute;
+            left: 143px;
+            bottom: -12px;
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 12px solid #424242;
+        }
+    }
+}

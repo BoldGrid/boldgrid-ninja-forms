@@ -1,0 +1,99 @@
+.field-wrap,
+#ninja_forms_required_items {
+    margin-bottom: 20px;
+}
+
+.nf-fields {
+    padding: 5px;
+    max-width: 1000px;
+    margin: 0 auto;
+    .ninja-forms-field {
+        font-size: 16px;
+        padding: 16px;
+
+    }
+    hr.ninja-forms-field {
+        padding: 0;
+    }
+    .nf-product-field {
+        &.ninja-forms-field {
+            background: transparent;
+            border: 0;
+            padding: 0;
+        }
+        span {
+            padding-right: 16px;
+        }
+        .nf-field-qty {
+            font-size: 16px;
+            padding: 5px;
+            width: 80px;
+        }
+    }
+    textarea {
+        height: 200px;
+    }
+    .listselect-wrap,
+    .liststate-wrap,
+    .listcountry-wrap {
+        select {
+            height: 48px;
+        }
+    }
+    .nf-static {
+        background: transparent;
+        border: 0;
+        font-weight: bold;
+        padding: 0;
+    }
+    .label-above,
+    .label-below,
+    .label-hidden {
+        > label {
+            margin-bottom: 5px;
+        }
+    }
+    .label-below {
+        > label {
+            margin-bottom: 0;
+            margin-top: 5px;
+        }
+    }
+    .label-right {
+        > label {
+            margin-bottom: 0;
+        }
+        > input,
+        textarea,
+        select,
+        .pikaday__container {
+            margin-right: 10px;
+        }
+        > input[type=radio],
+        input[type=checkbox] {
+            margin-right: 10px;
+        }
+        ul {
+            margin-right: 15px;
+        }
+    }
+    .label-left {
+        > label {
+            margin-bottom: 0;
+            margin-top: 5px;
+        }
+        > input,
+        textarea,
+        select,
+        .pikaday__container {
+            margin-left: 10px;
+        }
+        > input[type=radio],
+        input[type=checkbox] {
+            margin-left: 10px;
+        }
+        // ul {
+        //     margin-left: 15px;
+        // }
+    }
+}

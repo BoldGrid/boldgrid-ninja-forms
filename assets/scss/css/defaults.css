@@ -1,0 +1,20 @@
+/*
+ * Ninja Forms - Form Display Structure
+ */
+.ninja-forms-form-wrap *,
+.ninja-forms-form-wrap *:after,
+.ninja-forms-form-wrap *:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box; }
+
+.nf-fields input,
+.nf-fields select,
+.nf-fields textarea {
+  width: auto;
+  height: auto;
+  vertical-align: inherit; }
+
+.nf-fields input[type=text] {
+  width: 100%; }

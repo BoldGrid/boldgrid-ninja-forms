@@ -1,0 +1,145 @@
+.nf-search {
+    display: inline;
+    position: relative;
+    input[type=search] {
+        background: transparent;
+        box-shadow: 0 0 0;
+        border: 0;
+        margin-bottom:3px;
+        padding: 12px 0 12px 50px;
+        width: 60%;
+    }
+    &::before {
+        content: "\f179";
+        color: #aaa;
+        font-family: "Dashicons";
+        font-size: 30px;
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        top: 4px;
+        left: 10px;
+    }
+}
+.nf-stage {
+    position: relative;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    .nf-stage-controls {
+        background: #F8F8F9;
+        padding: 5px;
+        position: absolute;
+        top: -20px;
+        right: 10px;
+    }
+}
+.nf-reservoir {
+    background: #F8F8F9;
+    border: 4px solid #F8F8F9;
+    border-radius: 4px;
+    margin: 30px 2% 20px;
+    //padding: 10px;
+    min-height: 52px;
+    padding: 6px;
+    transition: all 1.0s ease;
+    &::after {
+        clear: both;
+        content: "";
+        display: block;
+    }
+    .nf-item-dock {
+        background: #fff;
+        border-radius: 4px;
+        color: #999;
+        display: inline-block;
+        float: left;
+        margin: 0 4px 3px 4px;
+        padding: 5px 10px;
+        position: relative;
+        .dashicons {
+            font-size: 14px;
+            margin: 2px 0 -4px 5px;
+        }
+        .fa {
+            margin-right: 10px;
+        }
+    }
+}
+.nf-item {
+    background: #3B454D;
+    border-radius: 4px;
+    color: #A2A5A8;
+    font-size: 14px;
+    padding: 10px;
+    position: relative;
+    text-align: center;
+    &.active {
+        background: $cta_color;
+        color: #fff;
+    }
+    .fa {
+        background: #30373E;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+        padding: 9px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 34px;
+        height: 37px;
+        line-height: 20px;
+    }
+}
+.nf-saved {
+    .nf-item {
+        position: relative;
+        &::after {
+            background: #30373E;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+            content: "\f155";
+            font-family: "Dashicons";
+            padding: 9px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 16px;
+            height: 20px;
+        }
+    }
+}
+.nf-action-items {
+    .nf-item {
+        height: 100px;
+        line-height: 75px;
+        cursor: pointer;
+        &.nf-has-img {
+            background-position: center center;
+            text-indent: -99999px;
+        }
+    }
+    &.available {
+        .nf-item {
+            &.nf-has-img {
+                filter: grayscale(100%);
+                opacity: 0.6;
+                &:hover {
+                    filter: grayscale(0);
+                    opacity: 1.0;
+                }
+            }
+        }
+    }
+}
+
+.nf-field-type-button {
+    float: left;
+    margin-bottom: 15px;
+    padding: 0 2%;
+    width: 33.33%;
+}
