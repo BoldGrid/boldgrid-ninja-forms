@@ -67,9 +67,12 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3', '<' ) ) 
 
 if( get_option( 'ninja_forms_load_deprecated', FALSE )  && ! isset( $_POST[ 'nf2to3' ] ) ) {
 
-    include 'deprecated/ninja-forms.php';
+	// BoldGrid: Changed "include" to "include_once".
+    include_once 'deprecated/ninja-forms.php';
 
     register_activation_hook( __FILE__, 'ninja_forms_activation_deprecated' );
+    // BoldGrid: Added condition: if ! function_exists.
+    if( false === function_exists( 'ninja_forms_activation_deprecated' ) ) {
     function ninja_forms_activation_deprecated( $network_wide ){
         include_once 'deprecated/includes/activation.php';
 
@@ -79,7 +82,7 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE )  && ! isset( $_POST[ 'nf2
 
         ninja_forms_activation( $network_wide );
     }
-
+    }
 } else {
 
     include_once 'lib/NF_AddonChecker.php';

@@ -934,7 +934,6 @@ function ninja_forms_uninstall(){
 	global $boldgrid_forms;
 	if( (isset ( $settings['delete_on_uninstall'] ) && 1 == $settings['delete_on_uninstall']) ||
 		false === empty( $boldgrid_forms['force_uninstall'] ) ) {
-
         // Remove our options.
         delete_option('ninja_forms_settings');
         delete_option('nf_version_upgraded_from');
