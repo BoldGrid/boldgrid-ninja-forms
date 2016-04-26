@@ -1496,7 +1496,7 @@
 
 			$active_plugin = $this->get_active_plugins();
 
-			// Generate the list of active plugins separated by new line. 
+			// Generate the list of active plugins separated by new line.
 			$active_plugin_string = '';
 			foreach ( $active_plugin as $plugin ) {
 				$active_plugin_string .= sprintf(
