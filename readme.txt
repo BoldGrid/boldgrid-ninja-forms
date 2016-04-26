@@ -24,6 +24,7 @@ BoldGrid Ninja Forms is a webform builder with unparalleled ease of use and feat
 
 = 1.1.1.1 InProgress =
 * Bug fix:		JIRA WPB-1858	Fixing 404 in editor styles.
+* Bug fix:		JIRA WPB-1859	Fixing issues where cursor resets with contentEditable fields.
 
 = 1.1.1 =
 * Misc:			JIRA WPB-1824	Updated Ninja Forms version to 2.9.42.

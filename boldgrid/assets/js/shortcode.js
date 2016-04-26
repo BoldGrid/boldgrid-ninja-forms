@@ -39,8 +39,19 @@
 			if ( $( '#tmpl-' + current_selector ).length ) {
 				this.template = wp.media.template( current_selector );
 				
-				this.render( "<div data-description=" + desc + 
-					" data-title=" + title +">" + this.template() + "</div>" );
+				this.render( "<div class='boldgrid-ninja-form' data-id='" + 
+					options.id + "' data-description=" + desc + 
+					" data-title=" + title + ">" + this.template() + "</div>" );
+				
+				setTimeout( function () {
+					if ( tinymce && tinymce.activeEditor ) {
+						$( tinymce.activeEditor.iframeElement ).contents()
+							.find( '.boldgrid-ninja-form[data-id="' + options.id + '"]' )
+							.closest( '.wpview-body' )
+							.attr( 'contentEditable', true );
+					}
+				} );
+				
 			} else {
 				this.template = wp.media.template( 'editor-boldgrid-not-found' );
 				this.render( this.template() );
