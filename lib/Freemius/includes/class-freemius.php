@@ -268,9 +268,6 @@
 			$this->_load_account();
 
 			$this->_version_updates_handler();
-
-			// BoldGrid: Prevent 'Freemius opt-in' message.
-			$this->skip_connection();
 		}
 
 		/**
@@ -2637,6 +2634,9 @@
 		 * @since  1.0.7
 		 */
 		function _admin_init_action() {
+			// BoldGrid: Skip adding opt-in notice and redirect.
+			return;
+
 			/**
 			 * Automatically redirect to connect/activation page after plugin activation.
 			 *
