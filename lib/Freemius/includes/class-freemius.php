@@ -2634,9 +2634,6 @@
 		 * @since  1.0.7
 		 */
 		function _admin_init_action() {
-			// BoldGrid: Skip adding opt-in notice and redirect.
-			return;
-
 			/**
 			 * Automatically redirect to connect/activation page after plugin activation.
 			 *
