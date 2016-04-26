@@ -225,7 +225,7 @@ class Boldgrid_Ninja_Forms {
 			plugins_url( '/boldgrid/assets/css/editor.css', $this->path_configs['plugin_filename'] ) );
 
 		add_editor_style(
-			plugins_url( '/css/ninja-forms-display.css', $this->path_configs['plugin_filename'] ) );
+			plugins_url( '/deprecated/css/ninja-forms-display.css', $this->path_configs['plugin_filename'] ) );
 	}
 
 	/**
