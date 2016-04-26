@@ -95,9 +95,6 @@ function nf_fs() {
 }
 
 function nf_is_freemius_on() {
-	// BoldGrid: Prevent Freemius opt-in message by returning 0 immediately.
-	return 0;
-
     return get_option( 'ninja_forms_freemius', 0 );
 }
 

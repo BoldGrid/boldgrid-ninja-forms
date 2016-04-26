@@ -268,6 +268,9 @@
 			$this->_load_account();
 
 			$this->_version_updates_handler();
+
+			// BoldGrid: Prevent 'Freemius opt-in' message.
+			$this->skip_connection();
 		}
 
 		/**
@@ -1496,7 +1499,7 @@
 
 			$active_plugin = $this->get_active_plugins();
 
-			// Generate the list of active plugins separated by new line. 
+			// Generate the list of active plugins separated by new line.
 			$active_plugin_string = '';
 			foreach ( $active_plugin as $plugin ) {
 				$active_plugin_string .= sprintf(
