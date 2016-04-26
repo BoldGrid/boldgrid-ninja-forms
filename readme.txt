@@ -24,6 +24,7 @@ BoldGrid Ninja Forms is a webform builder with unparalleled ease of use and feat
 
 = 1.1.1 In progress =
 * Misc:			JIRA WPB-1824	Updated Ninja Forms version to 2.9.42.
+* Update:		JIRA WPB-1856	Disable 'Freemius opt-in' message.
 
 = 1.1.0.1 =
 * Bug fix:		JIRA WPB-1816	Fixed update class interference with the Add Plugins page.
