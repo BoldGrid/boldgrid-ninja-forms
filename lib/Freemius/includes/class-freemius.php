@@ -2680,6 +2680,8 @@
 								$this->_storage->sticky_optin_added = true;
 
 								// Show notice for new plugin installations.
+								// BoldGrid: Below lines commented out to remove the "Opt-in to make BGNF better" admin notice.
+								/*
 								$this->_admin_notices->add_sticky(
 									sprintf(
 										__fs( 'few-plugin-tweaks', $this->_slug ),
@@ -2692,6 +2694,7 @@
 									'',
 									'update-nag'
 								);
+								*/
 							}
 
 							if ( $this->has_filter( 'optin_pointer_element' ) ) {
@@ -8510,6 +8513,9 @@
 					}
 				}
 			}
+
+			// BoldGrid: Disable the 'Freemius opt-in' message that displays immediately after clicking 'Activate' on the plugins page.
+			return;
 
 			if ( is_string( $url ) ) {
 				fs_redirect( $url );
