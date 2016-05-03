@@ -43,7 +43,7 @@ final class NF_Actions_CollectPayment extends NF_Abstracts_Action
 
         $this->_settings = array_merge( $this->_settings, $settings );
 
-        add_action( 'plugins_loaded', array( $this, 'register_payment_gateways' ) );
+        add_action( 'ninja_forms_loaded', array( $this, 'register_payment_gateways' ) );
 
         add_filter( 'ninja_forms_action_type_settings', array( $this, 'maybe_remove_action' ) );
     }

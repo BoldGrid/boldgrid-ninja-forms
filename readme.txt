@@ -2,7 +2,7 @@
 Contributors: imh_brad, joemoto, rramo012, timph
 Tags: inspiration,customization,build,create,design,forms,webforms
 Requires at least: 4.3
-Tested up to: 4.5
+Tested up to: 4.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,6 +23,7 @@ BoldGrid Ninja Forms is a webform builder with unparalleled ease of use and feat
 == Changelog ==
 
 = 1.1.2 In progress =
+* Misc:			JIRA WPB-1824	Updated Ninja Forms version to 2.9.45. 
 * Bug fix:		JIRA WPB-1868	Prevent fatal error when switching to 3.0.x, caused by WPB-1856.
 
 = 1.1.1.1 =

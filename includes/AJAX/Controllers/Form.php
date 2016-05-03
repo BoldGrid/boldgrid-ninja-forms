@@ -10,7 +10,7 @@ class NF_AJAX_Controllers_Form extends NF_Abstracts_Controller
 
     public function save()
     {
-        check_ajax_referer( 'ninja_forms_ajax_nonce', 'security' );
+        check_ajax_referer( 'ninja_forms_builder_nonce', 'security' );
 
         if( ! isset( $_POST[ 'form' ] ) ){
             $this->_errors[] = 'Form Not Found';
@@ -131,7 +131,7 @@ class NF_AJAX_Controllers_Form extends NF_Abstracts_Controller
 
     public function delete()
     {
-        check_ajax_referer( 'ninja_forms_ajax_nonce', 'security' );
+        check_ajax_referer( 'ninja_forms_builder_nonce', 'security' );
 
         $this->_respond();
     }

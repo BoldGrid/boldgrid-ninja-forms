@@ -8487,6 +8487,9 @@
 		 * @since  1.0.3
 		 */
 		function _redirect_on_activation_hook() {
+			// BoldGrid: Disable the 'Freemius opt-in' message that displays immediately after clicking 'Activate' on the plugins page.
+			return;
+
 			$url       = false;
 			$plugin_fs = false;
 
@@ -8513,9 +8516,6 @@
 					}
 				}
 			}
-
-			// BoldGrid: Disable the 'Freemius opt-in' message that displays immediately after clicking 'Activate' on the plugins page.
-			return;
 
 			if ( is_string( $url ) ) {
 				fs_redirect( $url );

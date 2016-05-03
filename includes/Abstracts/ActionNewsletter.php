@@ -60,7 +60,7 @@ abstract class NF_Abstracts_ActionNewsletter extends NF_Abstracts_Action
 
     public function _get_lists()
     {
-        check_ajax_referer( 'ninja_forms_ajax_nonce', 'security' );
+        check_ajax_referer( 'ninja_forms_builder_nonce', 'security' );
 
         $lists = $this->get_lists();
 

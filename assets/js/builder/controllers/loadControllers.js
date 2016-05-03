@@ -39,12 +39,14 @@ define(
 		'controllers/app/itemSettingFill',
 		'controllers/app/confirmPublish',
 		'controllers/app/rte',
+		'controllers/app/settingFieldSelect',
 		'controllers/app/settingHTML',
 		'controllers/app/changeMenu',
 		'controllers/app/mobile',
 		'controllers/app/notices',
 		'controllers/app/unloadCheck',
 		'controllers/app/fieldContentsFilters',
+		'controllers/app/cloneCollectionDeep',
 		/*
 		 * Fields domain controllers
 		 */
@@ -126,12 +128,14 @@ define(
 		ItemSettingFill,
 		ConfirmPublish,
 		RTE,
+		SettingFieldSelect,
 		SettingHTML,
 		ChangeMenu,
 		AppMobile,
 		AppNotices,
 		AppUnloadCheck,
 		FieldContentsFilters,
+		CloneCollectionDeep,
 		/*
 		 * Fields domain controllers
 		 */
@@ -204,12 +208,14 @@ define(
 				new ItemControls();
 				new ConfirmPublish();
 				new RTE();
+				new SettingFieldSelect();
 				new SettingHTML();
 				new ChangeMenu();
 				new AppMobile();
 				new AppNotices();
 				new AppUnloadCheck();
 				new FieldContentsFilters();
+				new CloneCollectionDeep();
 				// new Pushstate();
 				/*
 				 * Fields domain controllers

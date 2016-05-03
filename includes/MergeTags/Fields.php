@@ -42,7 +42,7 @@ final class NF_MergeTags_Fields extends NF_Abstracts_MergeTags
 
         $this->merge_tags[ 'all_fields' ][ 'fields' ][ $callback ] = $field;
 
-        if( is_array( $field[ 'value' ] ) ) $field[ 'value' ] = implode( ', ', $field[ 'value' ] );
+        if( is_array( $field[ 'value' ] ) ) $field[ 'value' ] = implode( ',', $field[ 'value' ] );
 
         $this->merge_tags[ $callback ] = array(
             'id' => $field[ 'id' ],

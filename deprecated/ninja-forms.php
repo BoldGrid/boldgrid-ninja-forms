@@ -265,7 +265,7 @@ class Ninja_Forms {
 
         // Plugin version
         if ( ! defined( 'NF_PLUGIN_VERSION' ) )
-            define( 'NF_PLUGIN_VERSION', '2.9.42' );
+            define( 'NF_PLUGIN_VERSION', '2.9.45' );
 
         // Plugin Folder Path
         if ( ! defined( 'NF_PLUGIN_DIR' ) )
@@ -932,8 +932,9 @@ function ninja_forms_uninstall(){
     // Bail if we haven't checked the "delete on uninstall" box.
 	// BoldGrid: Added global and additional condition.
 	global $boldgrid_forms;
-	if( (isset ( $settings['delete_on_uninstall'] ) && 1 == $settings['delete_on_uninstall']) ||
+    if( (isset ( $settings['delete_on_uninstall'] ) && 1 == $settings['delete_on_uninstall']) ||
 		false === empty( $boldgrid_forms['force_uninstall'] ) ) {
+
         // Remove our options.
         delete_option('ninja_forms_settings');
         delete_option('nf_version_upgraded_from');

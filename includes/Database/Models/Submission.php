@@ -279,8 +279,7 @@ final class NF_Database_Models_Submission
 
     public static function export( $form_id, array $sub_ids = array(), $return = FALSE )
     {
-        //TODO: Set Date Format from Plugin Settings
-        $date_format = 'm/d/Y';
+        $date_format = Ninja_Forms()->get_setting( 'date_format' );
 
 
         /*

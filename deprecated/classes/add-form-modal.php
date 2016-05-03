@@ -10,7 +10,7 @@ class NF_Admin_AddFormModal {
     function __construct() {
         // Add a tinyMCE button to our post and page editor
 		// BoldGrid: Commented out add form button in TinyMCE.
-        //add_filter( 'media_buttons_context', array( $this, 'insert_form_tinymce_buttons' ) );
+    	//add_filter( 'media_buttons_context', array( $this, 'insert_form_tinymce_buttons' ) );
     }
 
     /**

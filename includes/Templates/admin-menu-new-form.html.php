@@ -449,6 +449,21 @@
     </label>
 </script>
 
+<script id="nf-tmpl-edit-setting-field-select" type="text/template">
+    <label for="<%= name %>" class="nf-select"><%= label %> <%= renderTooltip() %>
+        <select id="<%= name %>" class="setting">
+            <%
+            _.each( options, function( option ) {
+            %>
+            <option value="<%= option.value %>" <%= ( value == option.value ) ? 'selected="selected"' : '' %>><%= option.label %></option>
+            <%
+            } );
+            %>
+        </select>
+        <div></div>
+    </label>
+</script>
+
 <script id="nf-tmpl-edit-setting-checkbox" type="text/template">
 
     <span class="nf-setting-label"><%= label %></span> <%= renderTooltip() %>

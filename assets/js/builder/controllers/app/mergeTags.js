@@ -84,7 +84,7 @@ define( [
 			this.listenTo( nfRadio.channel( 'fieldSetting-key' ), 'update:setting', this.updateKey );
 
 			// Reply to requests to check a data model for a field key when one is updated.
-			nfRadio.channel( 'app' ).reply( 'replace:fieldKey', this.replaceFieldKey, this );
+			this.listenTo( nfRadio.channel( 'app' ), 'replace:fieldKey', this.replaceFieldKey );
 
 			// Reply to requests to check a data model for a field key when one is updated.
 			nfRadio.channel( 'app' ).reply( 'get:fieldKeyFormat', this.getFieldKeyFormat, this );

@@ -13,7 +13,7 @@ class NF_AJAX_Controllers_Preview extends NF_Abstracts_Controller
 
     public function update()
     {
-        check_ajax_referer( 'ninja_forms_ajax_nonce', 'security' );
+        check_ajax_referer( 'ninja_forms_builder_nonce', 'security' );
 
         $form = json_decode( stripslashes( $_POST['form'] ), ARRAY_A );
 
