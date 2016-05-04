@@ -958,6 +958,11 @@ function ninja_forms_uninstall(){
         delete_option('nf_converted_form_reset');
         delete_option('nf_convert_forms_complete');
 
+        delete_option('nf_admin_notice');
+        delete_option('ninja_forms_load_deprecated');
+        delete_option('ninja_forms_freemius');
+        delete_option('ninja_forms_version');
+        delete_option('widget_ninja_forms_widget');
 
         // Remove upgrade last step options
         require_once( NF_PLUGIN_DIR . 'includes/admin/upgrades/class-upgrade.php');

@@ -3213,7 +3213,8 @@
 				$special_override = false;
 
 				foreach ( $check_properties as $p => $v ) {
-					if ( property_exists( $this->_site, $p ) ) {
+					// BoldGrid: Added "false === empty( $this->_site ) &&" below.
+					if ( false === empty( $this->_site ) && property_exists( $this->_site, $p ) ) {
 						if ( ! empty( $this->_site->{$p} ) &&
 						     $this->_site->{$p} != $v
 						) {
@@ -8221,6 +8222,14 @@
 		 * @return FS_Api
 		 */
 		function get_api_site_scope( $flush = false ) {
+			// BoldGrid: Added check for $this->_site, populate if empty.
+			if( true === empty( $this->_site ) ) {
+				$this->_site = new FS_Site();
+				$this->_site->id = null;
+				$this->_site->public_key = null;
+				$this->_site->secret_key = null;
+			}
+
 			if ( ! isset( $this->_site_api ) || $flush ) {
 				$this->_site_api = FS_Api::instance(
 					$this->_slug,

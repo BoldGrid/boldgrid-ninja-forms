@@ -23,6 +23,7 @@ BoldGrid Ninja Forms is a webform builder with unparalleled ease of use and feat
 == Changelog ==
 
 = 1.1.2 In progress =
+* Bug fix:		JIRA WPB-1885	Fixed PHP warnings and notices when using BoldGrid Start Over to delete forms and entries.
 * Misc:			JIRA WPB-1824	Updated Ninja Forms version to 2.9.45. 
 * Bug fix:		JIRA WPB-1868	Prevent fatal error when switching to 3.0.x, caused by WPB-1856.
 
