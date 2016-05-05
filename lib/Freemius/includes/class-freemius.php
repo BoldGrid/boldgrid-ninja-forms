@@ -3214,6 +3214,7 @@
 
 				foreach ( $check_properties as $p => $v ) {
 					// BoldGrid: Added "false === empty( $this->_site ) &&" below.
+					// @todo When we update to 3.0, check if this is still an issue.
 					if ( false === empty( $this->_site ) && property_exists( $this->_site, $p ) ) {
 						if ( ! empty( $this->_site->{$p} ) &&
 						     $this->_site->{$p} != $v

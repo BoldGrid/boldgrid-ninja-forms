@@ -958,6 +958,7 @@ function ninja_forms_uninstall(){
         delete_option('nf_converted_form_reset');
         delete_option('nf_convert_forms_complete');
 
+        // BoldGrid: Added deletion of 5 more options.
         delete_option('nf_admin_notice');
         delete_option('ninja_forms_load_deprecated');
         delete_option('ninja_forms_freemius');
