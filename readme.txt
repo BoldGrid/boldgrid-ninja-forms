@@ -2,7 +2,7 @@
 Contributors: imh_brad, joemoto, rramo012, timph
 Tags: inspiration,customization,build,create,design,forms,webforms
 Requires at least: 4.3
-Tested up to: 4.5.1
+Tested up to: 4.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,9 +22,9 @@ BoldGrid Ninja Forms is a webform builder with unparalleled ease of use and feat
 
 == Changelog ==
 
-= 1.1.2 In progress =
+= 1.1.2 =
 * Bug fix:		JIRA WPB-1885	Fixed PHP warnings and notices when using BoldGrid Start Over to delete forms and entries.
-* Misc:			JIRA WPB-1824	Updated Ninja Forms version to 2.9.45. 
+* Misc:			JIRA WPB-1824	Updated Ninja Forms version to 2.9.45.
 * Bug fix:		JIRA WPB-1868	Prevent fatal error when switching to 3.0.x, caused by WPB-1856.
 
 = 1.1.1.1 =
@@ -72,7 +72,7 @@ BoldGrid Ninja Forms is a webform builder with unparalleled ease of use and feat
 
 = 1.0.2 =
 * Bug Fix:		JIRA WPB-1277	Removed ninja_forms_preview_page from being displayed.
-* Bug Fix:		JIRA WPB-1423	When starting over in Inspirations, error log complains about ninja forms table. 
+* Bug Fix:		JIRA WPB-1423	When starting over in Inspirations, error log complains about ninja forms table.
 * Bug fix:		JIRA WPB-1406	Attribution page still showing in 'All Pages'.
 
 = 1.0.1 =
