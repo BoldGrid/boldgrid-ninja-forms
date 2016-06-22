@@ -1,0 +1,106 @@
+
+body, .attachment-preview  {
+	background-color: white;
+	box-shadow: none;
+}
+
+/**
+* Align iframe under top nav tabs
+*/
+.attachments-browser .attachments, .attachments-browser .uploader-inline
+{
+	top: 0px;
+}
+
+/**
+* Set side bar to wordpress' compressed version. Do not modify for screen sizes
+*/
+.attachments-browser .attachments, .attachments-browser .media-toolbar, .attachments-browser .uploader-inline {
+	right: 300px;
+}
+
+.media-sidebar {
+    padding: 0 16px 24px;
+	width: 300px;
+}
+
+img {
+	max-width:100%;
+}
+
+/**
+Google Mpas
+*/
+.fullwidth-imhwpb {
+	width: 100%;
+}
+
+.form-element-imhwpb {
+	padding-top: 7px;
+}
+
+.searchbutton:before {
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAABVUlEQVRYw+2YQRGEMAxFkVAJlYAEJCABCUhAQiWshJWABCRUAg7+XsrMTkibNDBdDvtnek0fSfqToQPQPeE8AuK5IDkBGAC8AESctQEIAHxXKTUIgB7ACr0CAHcrCIAJNm0A+ltALkAc2jWlKoKkcnCKCdCR0i3p4lNmroJwPRGEgC6VhGo2gaTXUQUhwEQryKsmUOaZU40WEOoTk8Eb3iTGYgGhcgaQmcRYL4N0BjHl+RnIeDuI1iFJ8EBivC0gm7bRCsGj1ktKIIGx6pohNjNZ9RYQnxliTgHRM1a/XrH4kIEZhEzstT0mgeTmBpJZzemJjgk65naTO9aAPvOFtavAWMqKdjHyhcxIW9quGRVVO2uh/lTr8fWMqbEw1cvzV/AlXXico2c884IgwZhADMY2STBNQDQwzUAkmKYgAoxvClKAGZqDMDBb89IwRjlI0/f/W+ID3tQLQPib2qQAAAAASUVORK5CYII=") repeat scroll 0 0 / 17px auto rgba(0, 0, 0, 0);
+    content: "";
+    display: block;
+    height: 17px;
+    margin: 0 auto;
+    width: 17px;
+}
+.searchbutton {
+    background-color: #4d90fe;
+    border: 0 none;
+    border-radius: 0 2px 2px 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    height: 33px;
+    left: 400px;
+    margin-left: -5px;
+    margin-top: 1px;
+    text-align: center;
+    top: 0;
+    vertical-align: top;
+    width: 27%;
+    z-index: -1;
+    cursor: pointer;
+}
+
+.googlesearch-imhwpb {
+    width: 71%;
+    height: 33px;
+}
+
+/**
+ * Media queries for iframe media replica
+ */
+@media screen and (max-width: 600px) {
+	.media-sidebar {
+		display: none !important;
+	}
+	
+	.attachments-browser .attachments, .attachments-browser .media-toolbar, .attachments-browser .uploader-inline {
+		right: 0px !important;
+	}
+	.attachment  {
+		width: 25% !important;
+	}
+}
+@media screen and (min-width: 900px) {
+	.attachment  {
+		width: 140px !important;
+	}
+}
+@media screen and (max-width: 720px) {
+	.attachment  {
+		width: 33.33%  !important;
+	}
+}
+@media screen and (max-width: 450px) {
+	.attachment  {
+		width: 50% !important;
+	}
+}
+@media screen and (max-width: 225px) {
+	.attachment  {
+		width: 100% !important;
+	}
+}

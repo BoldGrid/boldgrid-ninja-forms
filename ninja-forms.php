@@ -1,23 +1,73 @@
 <?php
+/* @formatter:off */
 /*
-Plugin Name: Ninja Forms
-Plugin URI: http://ninjaforms.com/
-Description: Ninja Forms is a webform builder with unparalleled ease of use and features.
-Version: 2.9.50
-Author: The WP Ninjas
-Author URI: http://ninjaforms.com
-Text Domain: ninja-forms
+Plugin Name: BoldGrid Ninja Forms
+Plugin URI: http://www.boldgrid.com/
+Description: BoldGrid Ninja Forms
+Version: 1.1.3
+Author: BoldGrid.com
+Author URI: http://www.boldgrid.com/
+Text Domain: boldgrid-ninja-forms
 Domain Path: /lang/
 
-Copyright 2016 WP Ninjas.
+Copyright 2011 WP Ninjas/Kevin Stover.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
 */
+
+// Exit if accessed directly
+if ( false === defined( 'ABSPATH' ) )
+    exit;
+
+/* @formatter:on */
+
+/*
+ * This is a fork of Ninja Forms 2.9.50 (by The WP Ninjas).
+ * The original source code is available at https://github.com/wpninjas/ninja-forms .
+ * Additional functionality has been added for integration into the BoldGrid WordPress plugin suite.
+ * We would like to thank the WP Ninjas for making Ninja Forms available in the
+ * WordPress / Open Source community.
+ */
+
+// Define Form version:
+if ( false === defined( 'BOLDGRID_NINJA_FORM_VERSION' ) ) {
+	define( 'BOLDGRID_NINJA_FORM_VERSION', '1.1.3' );
+}
+
+// Define boldgrid-ninja-forms Path
+if ( false === defined( 'BOLDGRID_NINJA_FORMS_PATH' ) ) {
+	define( 'BOLDGRID_NINJA_FORMS_PATH', __DIR__ );
+}
+
+// Add BoldGrid Functionality
+require_once BOLDGRID_NINJA_FORMS_PATH . '/boldgrid/includes/class-boldgrid-ninja-forms.php';
+$boldgrid_ninja_forms = new Boldgrid_Ninja_Forms();
+$boldgrid_ninja_forms->init();
+
+/* @formatter:off */
 
 require_once dirname( __FILE__ ) . '/lib/NF_VersionSwitcher.php';
 
+// BoldGrid: Added condition: if ! function_exists.
+if( false === function_exists( 'ninja_forms_three_table_exists' ) ) {
 function ninja_forms_three_table_exists(){
     global $wpdb;
     $table_name = $wpdb->prefix . 'nf3_forms';
     return ( $wpdb->get_var("SHOW TABLES LIKE '$table_name'") == $table_name );
+}
 }
 
 if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3', '<' ) || ! ninja_forms_three_table_exists() ) {
@@ -26,9 +76,12 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3', '<' ) ||
 
 if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf2to3' ] ) && ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) ){
 
-    include 'deprecated/ninja-forms.php';
+	// BoldGrid: Changed "include" to "include_once".
+    include_once 'deprecated/ninja-forms.php';
 
     register_activation_hook( __FILE__, 'ninja_forms_activation_deprecated' );
+    // BoldGrid: Added condition: if ! function_exists.
+    if( false === function_exists( 'ninja_forms_activation_deprecated' ) ) {
     function ninja_forms_activation_deprecated( $network_wide ){
         include_once 'deprecated/includes/activation.php';
 
@@ -37,6 +90,7 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
         }
 
         ninja_forms_activation( $network_wide );
+    }
     }
 
 } else {

@@ -111,7 +111,7 @@ class Ninja_Forms {
         // Fire our Ninja Forms init action.
         do_action( 'nf_admin_init', self::$instance );
     }
-    
+
     /**
      * Run some admin stuff on admin_notices hook.
      *
@@ -948,7 +948,10 @@ function ninja_forms_uninstall(){
     $settings = Ninja_Forms()->get_plugin_settings();
 
     // Bail if we haven't checked the "delete on uninstall" box.
-    if (isset ($settings['delete_on_uninstall']) && 1 == $settings['delete_on_uninstall']) {
+	// BoldGrid: Added global and additional condition.
+    global $boldgrid_forms;
+    if( (isset ( $settings['delete_on_uninstall'] ) && 1 == $settings['delete_on_uninstall']) ||
+		false === empty( $boldgrid_forms['force_uninstall'] ) ) {
 
         // Remove our options.
         delete_option('ninja_forms_settings');
@@ -973,6 +976,12 @@ function ninja_forms_uninstall(){
         delete_option('nf_converted_form_reset');
         delete_option('nf_convert_forms_complete');
 
+        // BoldGrid: Added deletion of 5 more options.
+        delete_option('nf_admin_notice');
+        delete_option('ninja_forms_load_deprecated');
+        delete_option('ninja_forms_freemius');
+        delete_option('ninja_forms_version');
+        delete_option('widget_ninja_forms_widget');
 
         // Remove upgrade last step options
         require_once( NF_PLUGIN_DIR . 'includes/admin/upgrades/class-upgrade.php');
@@ -1000,14 +1009,26 @@ function ninja_forms_uninstall(){
 
         // Remove all of our custom tables
 
-        $wpdb->query('DROP TABLE ' . NF_OBJECTS_TABLE_NAME);
-        $wpdb->query('DROP TABLE ' . NF_OBJECT_META_TABLE_NAME);
-        $wpdb->query('DROP TABLE ' . NF_OBJECT_RELATIONSHIPS_TABLE_NAME);
+		// BoldGrid: Prevent non-existent tables from errors on DROP by changing to DROP IF EXISTS.
+		$wpdb->query( 'DROP TABLE IF EXISTS ' . NF_OBJECTS_TABLE_NAME );
 
-        $wpdb->query('DROP TABLE ' . NINJA_FORMS_TABLE_NAME);
-        $wpdb->query('DROP TABLE ' . NINJA_FORMS_FIELDS_TABLE_NAME);
-        $wpdb->query('DROP TABLE ' . NINJA_FORMS_FAV_FIELDS_TABLE_NAME);
-        $wpdb->query('DROP TABLE ' . NINJA_FORMS_SUBS_TABLE_NAME);
+		// BoldGrid: Prevent non-existent tables from errors on DROP by changing to DROP IF EXISTS.
+		$wpdb->query( 'DROP TABLE IF EXISTS ' . NF_OBJECT_META_TABLE_NAME );
+
+		// BoldGrid: Prevent non-existent tables from errors on DROP by changing to DROP IF EXISTS.
+		$wpdb->query( 'DROP TABLE IF EXISTS ' . NF_OBJECT_RELATIONSHIPS_TABLE_NAME );
+
+		// BoldGrid: Prevent non-existent tables from errors on DROP by changing to DROP IF EXISTS.
+		$wpdb->query( 'DROP TABLE IF EXISTS ' . NINJA_FORMS_TABLE_NAME );
+
+		// BoldGrid: Prevent non-existent tables from errors on DROP by changing to DROP IF EXISTS.
+		$wpdb->query( 'DROP TABLE IF EXISTS ' . NINJA_FORMS_FIELDS_TABLE_NAME );
+
+		// BoldGrid: Prevent non-existent tables from errors on DROP by changing to DROP IF EXISTS.
+		$wpdb->query( 'DROP TABLE IF EXISTS ' . NINJA_FORMS_FAV_FIELDS_TABLE_NAME );
+
+		// BoldGrid: Prevent non-existent tables from errors on DROP by changing to DROP IF EXISTS.
+		$wpdb->query( 'DROP TABLE IF EXISTS ' . NINJA_FORMS_SUBS_TABLE_NAME );
 
         // Remove our daily cron job
         $timestamp = wp_next_scheduled('ninja_forms_daily_action');

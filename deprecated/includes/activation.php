@@ -75,7 +75,7 @@ function ninja_forms_activation( $network_wide ){
 		) DEFAULT CHARSET=utf8;";
 
 		dbDelta($sql);
-		
+
 		if (!function_exists('nf_change_email_fav')){
   			require_once dirname(__FILE__).'/admin/upgrades/upgrade-functions.php';
 		}
@@ -257,7 +257,8 @@ function ninja_forms_add_starter_form() {
     $file = apply_filters( 'ninja_forms_starter_form_contents', $file );
 
     // create new form
-    ninja_forms_import_form( $file );
+	// BoldGrid: Skip importing default forms.
+    //ninja_forms_import_form( $file );
 }
 
 
