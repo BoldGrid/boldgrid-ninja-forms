@@ -1,15 +1,4 @@
-
 jQuery(document).ready(function(jQuery) {
-
-	init_all_the_ninja_things();
-	
-	document.addEventListener("pjax:success", function() {
-	    init_all_the_ninja_things();
-	});
-
-});
-
-var init_all_the_ninja_things = function() {
 
 	// Prevent the enter key from submitting the form.
 	jQuery(".ninja-forms-form input").bind("keypress", function(e) {
@@ -725,7 +714,7 @@ var init_all_the_ninja_things = function() {
 			}
 		}
 	});
-}
+}); //End document.ready
 
 function ninja_forms_before_submit( formData, jqForm, options ){
 	var form_id = jQuery( jqForm ).prop( 'id' ).replace( 'ninja_forms_form_', '' );

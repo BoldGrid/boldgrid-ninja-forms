@@ -19,8 +19,11 @@ define( [], function() {
 			_.each( model.attributes, function( val, key ) {
 				// console.log( val );
 				if( val instanceof Backbone.Collection ) { // Is this a backbone collection?
-					var clonedCollection = nfRadio.channel( 'app' ).request( 'clone:collectionDeep', val );
-					replace[ key ] = clonedCollection;
+					// Clone each model.
+					var models = val.map( function( model ) { return model.clone(); } );
+					var options = _.clone( val.options );
+					var copy = new val.constructor( models, options );
+					replace[ key ] = copy;
 				} else if ( val instanceof Backbone.Model ) { // Is this a backbone model?
 					replace[ key ] = val.clone();
 				}

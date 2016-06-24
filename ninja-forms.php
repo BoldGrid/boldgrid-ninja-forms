@@ -1,63 +1,16 @@
 <?php
-/* @formatter:off */
 /*
-Plugin Name: BoldGrid Ninja Forms
-Plugin URI: http://www.boldgrid.com/
-Description: BoldGrid Ninja Forms
-Version: 1.1.2
-Author: BoldGrid.com
-Author URI: http://www.boldgrid.com/
-Text Domain: boldgrid-ninja-forms
+Plugin Name: Ninja Forms
+Plugin URI: http://ninjaforms.com/
+Description: Ninja Forms is a webform builder with unparalleled ease of use and features.
+Version: 2.9.42.1
+Author: The WP Ninjas
+Author URI: http://ninjaforms.com
+Text Domain: ninja-forms
 Domain Path: /lang/
 
-Copyright 2011 WP Ninjas/Kevin Stover.
-
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
+Copyright 2016 WP Ninjas.
 */
-
-// Exit if accessed directly
-if ( false === defined( 'ABSPATH' ) )
-    exit;
-
-/* @formatter:on */
-
-/*
- * This is a fork of Ninja Forms 2.9.45 (by The WP Ninjas).
- * The original source code is available at https://github.com/wpninjas/ninja-forms .
- * Additional functionality has been added for integration into the BoldGrid WordPress plugin suite.
- * We would like to thank the WP Ninjas for making Ninja Forms available in the
- * WordPress / Open Source community.
- */
-
-// Define Form version:
-if ( false === defined( 'BOLDGRID_NINJA_FORM_VERSION' ) ) {
-	define( 'BOLDGRID_NINJA_FORM_VERSION', '1.1.2' );
-}
-
-// Define boldgrid-ninja-forms Path
-if ( false === defined( 'BOLDGRID_NINJA_FORMS_PATH' ) ) {
-	define( 'BOLDGRID_NINJA_FORMS_PATH', __DIR__ );
-}
-
-// Add BoldGrid Functionality
-require_once BOLDGRID_NINJA_FORMS_PATH . '/boldgrid/includes/class-boldgrid-ninja-forms.php';
-$boldgrid_ninja_forms = new Boldgrid_Ninja_Forms();
-$boldgrid_ninja_forms->init();
-
-/* @formatter:off */
 
 require_once dirname( __FILE__ ) . '/lib/NF_VersionSwitcher.php';
 
@@ -65,14 +18,11 @@ if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3', '<' ) ) 
     update_option( 'ninja_forms_load_deprecated', TRUE );
 }
 
-if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf2to3' ] ) && ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) ){
+if( get_option( 'ninja_forms_load_deprecated', FALSE )  && ! isset( $_POST[ 'nf2to3' ] ) ) {
 
-	// BoldGrid: Changed "include" to "include_once".
-    include_once 'deprecated/ninja-forms.php';
+    include 'deprecated/ninja-forms.php';
 
     register_activation_hook( __FILE__, 'ninja_forms_activation_deprecated' );
-    // BoldGrid: Added condition: if ! function_exists.
-    if( false === function_exists( 'ninja_forms_activation_deprecated' ) ) {
     function ninja_forms_activation_deprecated( $network_wide ){
         include_once 'deprecated/includes/activation.php';
 
@@ -82,13 +32,48 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
 
         ninja_forms_activation( $network_wide );
     }
-    }
+
 } else {
 
-    include_once 'lib/NF_Upgrade.php';
-    include_once 'lib/NF_AddonChecker.php';
+    add_action( 'wp_ajax_ninja_forms_ajax_migrate_database', 'ninja_forms_ajax_migrate_database' );
+    function ninja_forms_ajax_migrate_database(){
+        $migrations = new NF_Database_Migrations();
+        $migrations->nuke( true, true );
+        $migrations->migrate();
+        echo json_encode( array( 'migrate' => 'true' ) );
+        wp_die();
+    }
 
-    require_once 'includes/deprecated.php';
+    add_action( 'wp_ajax_ninja_forms_ajax_import_form', 'ninja_forms_ajax_import_form' );
+    function ninja_forms_ajax_import_form(){
+        $import = stripslashes( $_POST[ 'import' ] ); // TODO: How to sanitize serialized string?
+        $form_id = ( isset( $_POST[ 'formID' ] ) ) ? absint( $_POST[ 'formID' ] ) : '';
+
+        Ninja_Forms()->form()->import_form( $import, $form_id, TRUE );
+
+        if( isset( $_POST[ 'flagged' ] ) && $_POST[ 'flagged' ] ){
+            $form = Ninja_Forms()->form( $form_id )->get();
+            $form->update_setting( 'lock', TRUE );
+            $form->save();
+        }
+
+
+        echo json_encode( array( 'export' => $_POST[ 'import' ], 'import' => $import ) );
+        wp_die();
+    }
+
+    add_action( 'wp_ajax_ninja_forms_ajax_import_fields', 'ninja_forms_ajax_import_fields' );
+    function ninja_forms_ajax_import_fields(){
+        $fields = stripslashes( $_POST[ 'fields' ] ); // TODO: How to sanitize serialized string?
+        $fields = maybe_unserialize( $fields );
+
+        foreach( $fields as $field ) {
+            Ninja_Forms()->form()->import_field( $field, $field[ 'id' ], TRUE );
+        }
+
+        echo json_encode( array( 'export' => $_POST[ 'fields' ], 'import' => $fields ) );
+        wp_die();
+    }
 
     /**
      * Class Ninja_Forms
@@ -232,20 +217,33 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                 self::$instance->menus[ 'forms' ]           = new NF_Admin_Menus_Forms();
                 self::$instance->menus[ 'all-forms' ]       = new NF_Admin_Menus_AllForms();
                 self::$instance->menus[ 'add-new' ]         = new NF_Admin_Menus_AddNew();
+                self::$instance->menus[ 'settings' ]        = new NF_Admin_Menus_Settings();
+                self::$instance->menus[ 'add-ons' ]         = new NF_Admin_Menus_Addons();
+                self::$instance->menus[ 'system_status']    = new NF_Admin_Menus_SystemStatus();
                 self::$instance->menus[ 'submissions']      = new NF_Admin_Menus_Submissions();
                 self::$instance->menus[ 'import-export']    = new NF_Admin_Menus_ImportExport();
-                self::$instance->menus[ 'settings' ]        = new NF_Admin_Menus_Settings();
                 self::$instance->menus[ 'licenses']         = new NF_Admin_Menus_Licenses();
-                self::$instance->menus[ 'system_status']    = new NF_Admin_Menus_SystemStatus();
-                self::$instance->menus[ 'add-ons' ]         = new NF_Admin_Menus_Addons();
-                self::$instance->menus[ 'divider']          = new NF_Admin_Menus_Divider();
+
+                /*
+                 * Admin menus used for building out the admin UI
+                 *
+                 * TODO: removed once building is complete
+                 */
+                // self::$instance->menus[ 'add-field']        = new NF_Admin_Menus_AddField();
+                // self::$instance->menus[ 'edit-field']       = new NF_Admin_Menus_EditField();
+                // self::$instance->menus[ 'add-action']       = new NF_Admin_Menus_AddAction();
+                // self::$instance->menus[ 'edit-action']      = new NF_Admin_Menus_EditAction();
+                // self::$instance->menus[ 'edit-settings']    = new NF_Admin_Menus_EditSettings();
+                // self::$instance->menus[ 'fields-layout']    = new NF_Admin_Menus_FieldsLayout();
                 self::$instance->menus[ 'mock-data']        = new NF_Admin_Menus_MockData();
+                // self::$instance->menus[ 'preview']          = new NF_Admin_Menus_Preview();
 
                 /*
                  * AJAX Controllers
                  */
                 self::$instance->controllers[ 'form' ]        = new NF_AJAX_Controllers_Form();
                 self::$instance->controllers[ 'preview' ]     = new NF_AJAX_Controllers_Preview();
+                self::$instance->controllers[ 'uploads' ]     = new NF_AJAX_Controllers_Uploads();
                 self::$instance->controllers[ 'submission' ]  = new NF_AJAX_Controllers_Submission();
                 self::$instance->controllers[ 'savedfields' ] = new NF_AJAX_Controllers_SavedFields();
 
@@ -265,6 +263,16 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                  * Shortcodes
                  */
                 self::$instance->shortcodes = new NF_Display_Shortcodes();
+
+                /*
+                 * Temporary Shortcodes
+                 *
+                 * TODO: removed once building is complete
+                 */
+                require_once( self::$dir . 'includes/Display/Shortcodes/tmp-frontend.php' );
+                require_once( self::$dir . 'includes/Display/Shortcodes/tmp-preview.php' );
+                require_once( self::$dir . 'includes/Display/Shortcodes/tmp-frontendform.php' );
+                require_once( self::$dir . 'includes/Display/Shortcodes/tmp-file-upload.php' );
 
                 /*
                  * Submission CPT
@@ -563,19 +571,13 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
          * @param string $file_name
          * @param array $data
          */
-        public static function template( $file_name = '', array $data = array(), $return = FALSE )
+        public static function template( $file_name = '', array $data = array() )
         {
-            if( ! $file_name ) return FALSE;
+            if( ! $file_name ) return;
 
             extract( $data );
 
-            $path = self::$dir . 'includes/Templates/' . $file_name;
-
-            if( ! file_exists( $path ) ) return FALSE;
-
-            if( $return ) return file_get_contents( $path );
-
-            include $path;
+            include self::$dir . 'includes/Templates/' . $file_name;
         }
 
         /**

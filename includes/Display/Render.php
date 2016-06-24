@@ -27,8 +27,7 @@ final class NF_Display_Render
 
     public static function localize( $form_id )
     {
-        $capability = apply_filters( 'ninja_forms_display_test_values_capabilities', 'read' );
-        if( isset( $_GET[ 'ninja_forms_test_values' ] ) && current_user_can( $capability ) ){
+        if( isset( $_GET[ 'ninja_forms_test_values' ] ) ){
             self::$use_test_values = TRUE;
         }
 
@@ -88,7 +87,6 @@ final class NF_Display_Render
                 $field_type = $field->get_settings('type');
 
                 if( ! isset( Ninja_Forms()->fields[ $field_type ] ) ) continue;
-                if( ! apply_filters( 'ninja_forms_display_type_' . $field_type, TRUE ) ) continue;
 
                 $field = apply_filters('ninja_forms_localize_fields', $field);
                 $field = apply_filters('ninja_forms_localize_field_' . $field_type, $field);
@@ -178,7 +176,9 @@ final class NF_Display_Render
         }
 
         // Output Form Container
-        Ninja_Forms::template( 'display-form-container.html.php', compact( 'form_id' ) );
+        ?>
+            <div id="nf-form-<?php echo $form_id; ?>-cont"></div>
+        <?php
 
         ?>
         <!-- TODO: Move to Template File. -->
@@ -205,8 +205,7 @@ final class NF_Display_Render
 
     public static function localize_preview( $form_id )
     {
-        $capability = apply_filters( 'ninja_forms_display_test_values_capabilities', 'read' );
-        if( isset( $_GET[ 'ninja_forms_test_values' ] ) && current_user_can( $capability ) ){
+        if( isset( $_GET[ 'ninja_forms_test_values' ] ) ){
             self::$use_test_values = TRUE;
         }
 
@@ -248,7 +247,6 @@ final class NF_Display_Render
                 $field_type = $field['settings']['type'];
 
                 if( ! isset( Ninja_Forms()->fields[ $field_type ] ) ) continue;
-                if( ! apply_filters( 'ninja_forms_preview_display_type_' . $field_type, TRUE ) ) continue;
 
                 $field['settings']['id'] = $field_id;
 
@@ -331,7 +329,9 @@ final class NF_Display_Render
         }
 
         // Output Form Container
-        Ninja_Forms::template( 'display-form-container.html.php', compact( 'form_id' ) );
+        ?>
+        <div id="nf-form-<?php echo $form_id; ?>-cont"></div>
+        <?php
 
         ?>
         <!-- TODO: Move to Template File. -->
@@ -394,7 +394,7 @@ final class NF_Display_Render
         wp_enqueue_script( 'nf-front-end', Ninja_Forms::$url . 'assets/js/min/front-end.js', array( 'jquery', 'backbone', 'backbone-radio', 'backbone-marionette', 'math' ) );
 
         $data = apply_filters( 'ninja_forms_render_localize_script_data', array(
-            'ajaxNonce' => wp_create_nonce( 'ninja_forms_display_nonce' ),
+            'ajaxNonce' => wp_create_nonce( 'ninja_forms_ajax_nonce' ),
             'adminAjax' => admin_url( 'admin-ajax.php' ),
             'requireBaseUrl' => Ninja_Forms::$url . 'assets/js/',
             'use_merge_tags' => array()

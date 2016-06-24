@@ -167,9 +167,7 @@
 	                           ( isset( $_SERVER['SERVER_PORT'] ) && 443 == $_SERVER['SERVER_PORT'] )
 	);
 
-	// BoldGrid: Added isset before $_SERVER['REQUEST_METHOD'] below.
 	define( 'WP_FS__IS_POST_REQUEST', ( WP_FS__IS_HTTP_REQUEST &&
-		isset( $_SERVER['REQUEST_METHOD'] ) &&
 	                                    strtoupper( $_SERVER['REQUEST_METHOD'] ) == 'POST' ) );
 
 	/**

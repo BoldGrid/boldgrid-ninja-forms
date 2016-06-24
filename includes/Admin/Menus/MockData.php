@@ -10,7 +10,7 @@ final class NF_Admin_Menus_MockData extends NF_Abstracts_Submenu
 
     public function __construct()
     {
-        if( ! defined( 'NF_DEV' ) || ! NF_DEV ) return;
+        if( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) return;
 
         parent::__construct();
 

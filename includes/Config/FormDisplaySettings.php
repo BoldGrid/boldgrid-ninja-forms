@@ -41,7 +41,9 @@ return apply_filters( 'ninja_forms_from_display_settings', array(
         'width' => 'full',
         'group' => 'primary',
         'value' => 1,
-        'help'  => __( 'If this box is checked, Ninja Forms will clear the form values after it has been successfully submitted.', 'ninja-forms' ),
+
+        //TODO: Add following text below the element.
+        //If this box is checked, Ninja Forms will clear the form values after it has been successfully submitted.
     ),
 
     /*

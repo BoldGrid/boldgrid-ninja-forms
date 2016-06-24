@@ -1496,7 +1496,7 @@
 
 			$active_plugin = $this->get_active_plugins();
 
-			// Generate the list of active plugins separated by new line.
+			// Generate the list of active plugins separated by new line. 
 			$active_plugin_string = '';
 			foreach ( $active_plugin as $plugin ) {
 				$active_plugin_string .= sprintf(
@@ -2680,8 +2680,6 @@
 								$this->_storage->sticky_optin_added = true;
 
 								// Show notice for new plugin installations.
-								// BoldGrid: Below lines commented out to remove the "Opt-in to make BGNF better" admin notice.
-								/*
 								$this->_admin_notices->add_sticky(
 									sprintf(
 										__fs( 'few-plugin-tweaks', $this->_slug ),
@@ -2694,7 +2692,6 @@
 									'',
 									'update-nag'
 								);
-								*/
 							}
 
 							if ( $this->has_filter( 'optin_pointer_element' ) ) {
@@ -3213,9 +3210,7 @@
 				$special_override = false;
 
 				foreach ( $check_properties as $p => $v ) {
-					// BoldGrid: Added "false === empty( $this->_site ) &&" below.
-					// @todo When we update to 3.0, check if this is still an issue.
-					if ( false === empty( $this->_site ) && property_exists( $this->_site, $p ) ) {
+					if ( property_exists( $this->_site, $p ) ) {
 						if ( ! empty( $this->_site->{$p} ) &&
 						     $this->_site->{$p} != $v
 						) {
@@ -8223,14 +8218,6 @@
 		 * @return FS_Api
 		 */
 		function get_api_site_scope( $flush = false ) {
-			// BoldGrid: Added check for $this->_site, populate if empty.
-			if( true === empty( $this->_site ) ) {
-				$this->_site = new FS_Site();
-				$this->_site->id = null;
-				$this->_site->public_key = null;
-				$this->_site->secret_key = null;
-			}
-
 			if ( ! isset( $this->_site_api ) || $flush ) {
 				$this->_site_api = FS_Api::instance(
 					$this->_slug,
@@ -8497,9 +8484,6 @@
 		 * @since  1.0.3
 		 */
 		function _redirect_on_activation_hook() {
-			// BoldGrid: Disable the 'Freemius opt-in' message that displays immediately after clicking 'Activate' on the plugins page.
-			return;
-
 			$url       = false;
 			$plugin_fs = false;
 

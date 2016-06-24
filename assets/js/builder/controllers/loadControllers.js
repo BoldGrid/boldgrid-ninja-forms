@@ -39,14 +39,11 @@ define(
 		'controllers/app/itemSettingFill',
 		'controllers/app/confirmPublish',
 		'controllers/app/rte',
-		'controllers/app/settingFieldSelect',
-		'controllers/app/settingHTML',
 		'controllers/app/changeMenu',
 		'controllers/app/mobile',
 		'controllers/app/notices',
 		'controllers/app/unloadCheck',
 		'controllers/app/fieldContentsFilters',
-		'controllers/app/cloneCollectionDeep',
 		/*
 		 * Fields domain controllers
 		 */
@@ -62,7 +59,6 @@ define(
 		'controllers/fields/editActive',
 		'controllers/fields/fieldSettings',
 		'controllers/fields/fieldCreditCard',
-		'controllers/fields/fieldList',
 		'controllers/fields/fieldPassword',
 		'controllers/fields/fieldQuantity',
 		'controllers/fields/fieldShipping',
@@ -128,14 +124,11 @@ define(
 		ItemSettingFill,
 		ConfirmPublish,
 		RTE,
-		SettingFieldSelect,
-		SettingHTML,
 		ChangeMenu,
 		AppMobile,
 		AppNotices,
 		AppUnloadCheck,
 		FieldContentsFilters,
-		CloneCollectionDeep,
 		/*
 		 * Fields domain controllers
 		 */
@@ -151,7 +144,6 @@ define(
 		FieldsEditActive,
 		FieldSettings,
 		FieldCreditCard,
-		FieldList,
 		FieldPassword,
 		FieldQuantity,
 		FieldShipping,
@@ -208,14 +200,11 @@ define(
 				new ItemControls();
 				new ConfirmPublish();
 				new RTE();
-				new SettingFieldSelect();
-				new SettingHTML();
 				new ChangeMenu();
 				new AppMobile();
 				new AppNotices();
 				new AppUnloadCheck();
 				new FieldContentsFilters();
-				new CloneCollectionDeep();
 				// new Pushstate();
 				/*
 				 * Fields domain controllers
@@ -239,7 +228,6 @@ define(
 				new FieldsEditActive();
 				new FieldSettings();
 				new FieldCreditCard();
-				new FieldList();
 				new FieldPassword;
 				new FieldQuantity();
 				new FieldShipping();

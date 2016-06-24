@@ -140,7 +140,7 @@ Header and Nav for Ninja Forms App
 #nf-main-content,
 #nf-main-header {
   margin: 0 auto;
-  max-width: 800px;
+  max-width: 700px;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -161,13 +161,11 @@ Header and Nav for Ninja Forms App
   border-left: 5px solid yellow; }
 
 .nf-fields-empty {
-  padding: 0 40px; }
+  padding: 40px 20%; }
   .nf-fields-empty h3 {
     font-size: 30px; }
   .nf-fields-empty p {
     font-size: 18px; }
-  .nf-fields-empty a {
-    text-decoration: none; }
 
 .nf-field-label {
   display: inline-block;
@@ -181,29 +179,6 @@ Header and Nav for Ninja Forms App
 .nf-field-wrap .fa {
   margin-right: 10px;
   width: 24px; }
-
-.template-box {
-  text-decoration: none; }
-  .template-box .template-box-inside {
-    background: #EBEDEE;
-    color: #424242;
-    min-height: 160px;
-    padding: 10px;
-    text-decoration: none;
-    -webkit-transition: all 0.2s ease-in-out 0.1s, box-shadow 0.2s ease-in-out 0.1s;
-    transition: all 0.2s ease-in-out 0.1s, box-shadow 0.2s ease-in-out 0.1s; }
-    .template-box .template-box-inside h4 {
-      margin: 0 0 10px;
-      min-height: 35px; }
-    .template-box .template-box-inside p {
-      font-size: 12px;
-      margin: 0; }
-  .template-box:hover .template-box-inside {
-    background: #fff;
-    box-shadow: 0 0 20px #1EA9EA;
-    color: #1EA9EA;
-    -webkit-transition: all 0.2s ease-in-out 0.1s, box-shadow 0.2s ease-in-out 0.1s;
-    transition: all 0.2s ease-in-out 0.1s, box-shadow 0.2s ease-in-out 0.1s; }
 
 .nf-setting-wrap {
   cursor: pointer;
@@ -275,6 +250,7 @@ Form field placeholders for the fields a user has added to their form
       display: none; }
       .nf-item-controls li.nf-item-expand .dashicons {
         -webkit-transform: rotate(-90deg);
+            -ms-transform: rotate(-90deg);
                 transform: rotate(-90deg); }
     .nf-item-controls li .nf-item-editing {
       display: none; }
@@ -360,6 +336,7 @@ Form field placeholders for the fields a user has added to their form
     color: #84CC1E; }
     .nf-group-wrap.expanded .nf-item-expand .dashicons {
       -webkit-transform: rotate(90deg);
+          -ms-transform: rotate(90deg);
               transform: rotate(90deg); }
     .nf-group-wrap.expanded .nf-field-wrap {
       opacity: 1.0;
@@ -416,6 +393,7 @@ All styles used within the drawer
     transition: all 0.50s ease; }
     .nf-drawer-opened #nf-drawer.nf-drawer-expand .nf-toggle-drawer .dashicons {
       -webkit-transform: rotate(180deg);
+          -ms-transform: rotate(180deg);
               transform: rotate(180deg);
       -webkit-transition: all 0.50s ease;
       transition: all 0.50s ease; }
@@ -1018,6 +996,7 @@ Various custom field styles
       background: #fff;
       color: #84CC1E;
       -webkit-transform: rotate(180deg);
+          -ms-transform: rotate(180deg);
               transform: rotate(180deg);
       -webkit-transition: all 0.5s ease;
       transition: all 0.5s ease; }
@@ -1416,6 +1395,7 @@ All styles used for displaying table content
       border: 3px solid #fff;
       border-radius: 100%;
       -webkit-transform: transformZ(0);
+          -ms-transform: transformZ(0);
               transform: transformZ(0);
       -webkit-animation: LOADING 2s infinite;
               animation: LOADING 2s infinite; }
@@ -2023,6 +2003,7 @@ label.has-merge-tags .merge-tags {
       display: none; }
       .nf-item-controls li.nf-item-expand .dashicons {
         -webkit-transform: rotate(-90deg);
+            -ms-transform: rotate(-90deg);
                 transform: rotate(-90deg); }
     .nf-item-controls li .nf-item-editing {
       display: none; }

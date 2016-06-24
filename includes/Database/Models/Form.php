@@ -90,11 +90,8 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
             $action->update_settings( $settings )->save();
         }
 
-        add_action( 'admin_notices', array( 'NF_Database_Models_Form', 'import_admin_notice' ) );
-
         self::$imported_form_id = $form_id;
-
-        return $form_id;
+        add_action( 'admin_notices', array( 'NF_Database_Models_Form', 'import_admin_notice' ) );
     }
 
     public static function import_admin_notice()
@@ -264,9 +261,6 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
         $field_lookup = array();
 
         foreach( $import[ 'fields' ] as $key => $field ){
-
-            if( ! isset( $field[ 'id' ] ) ) continue;
-
             $field_id  = $field[ 'id' ];
             $field_key = $field[ 'type' ] . '_' . $field_id;
             $field_lookup[ $field_id ] = $import[ 'fields' ][ $key ][ 'key' ] = $field_key;
@@ -278,25 +272,19 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
 
                     // Convert Tokenizer
                     $token = 'field_' . $field_id;
-                    if( ! is_array( $value ) ) {
-                        if (FALSE !== strpos($value, $token)) {
-                            $value = str_replace($token, '{field:' . $field_key . '}', $value);
-                        }
+                    if( FALSE !== strpos( $value, $token ) ) {
+                        $value = str_replace( $token, '{field:' . $field_key . '}', $value );
                     }
 
                     // Convert Shortcodes
                     $shortcode = "[ninja_forms_field id=$field_id]";
-                    if( ! is_array( $value ) ) {
-                        if (FALSE !== strpos($value, $shortcode)) {
-                            $value = str_replace($shortcode, '{field:' . $field_key . '}', $value);
-                        }
+                    if( FALSE !== strpos( $value, $shortcode ) ){
+                        $value = str_replace( $shortcode, '{field:' . $field_key . '}', $value );
                     }
                 }
 
-                if( ! is_array( $value ) ) {
-                    if (FALSE !== strpos($value, '[ninja_forms_all_fields]')) {
-                        $value = str_replace('[ninja_forms_all_fields]', '{field:all_fields}', $value);
-                    }
+                if( FALSE !== strpos( $value, '[ninja_forms_all_fields]' ) ) {
+                    $value = str_replace( '[ninja_forms_all_fields]', '{field:all_fields}', $value );
                 }
                 $action_settings[ $setting ] = $value;
                 $import[ 'actions' ][ $key ] = $action_settings;

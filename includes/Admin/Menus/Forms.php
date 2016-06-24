@@ -20,23 +20,12 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
         }
     }
 
-    public function admin_init()
-    {
-        if( isset( $_GET[ 'form_id' ] ) && ! is_numeric( $_GET[ 'form_id' ] ) && 'new' != $_GET[ 'form_id' ] ) {
-            if( current_user_can( apply_filters( 'ninja_forms_admin_import_template_capabilities', 'manage_options' ) ) ) {
-                $this->import_from_template();
-            }
-        }
-
-        $this->table = new NF_Admin_AllFormsTable();
-    }
-
     public function display()
     {
         if( isset( $_GET[ 'form_id' ] ) ){
 
 
-            if( 'new' == $_GET[ 'form_id' ] ) {
+            if( 'new' == $_GET[ 'form_id' ] ){
                 $form_id = 'tmp-' . time();
             } else {
                 $form_id = (is_numeric($_GET['form_id'])) ? absint($_GET['form_id']) : '';
@@ -79,25 +68,14 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
         }
     }
 
+    public function admin_init()
+    {
+        $this->table = new NF_Admin_AllFormsTable();
+    }
+
     public function submenu_separators()
     {
         add_submenu_page( 'ninja-forms', '', '', 'read', '', '' );
-    }
-
-    private function import_from_template()
-    {
-        $template = sanitize_title( $_GET['form_id'] );
-
-        $form = Ninja_Forms::template( $template . '.nff', array(), TRUE );
-
-        if( ! $form ) die( 'Template not found' );
-
-        $form = base64_decode( $form );
-
-        $form_id = Ninja_Forms()->form()->import_form( $form );
-
-        header( "Location: " . admin_url( "admin.php?page=ninja-forms&form_id=$form_id" ) );
-        exit();
     }
 
     private function _enqueue_the_things( $form_id )
@@ -144,7 +122,7 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
         wp_enqueue_script( 'nf-builder', Ninja_Forms::$url . 'assets/js/min/builder.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-sortable', 'jquery-effects-bounce' ) );
 
         wp_localize_script( 'nf-builder', 'nfAdmin', array(
-            'ajaxNonce'         => wp_create_nonce( 'ninja_forms_builder_nonce' ),
+            'ajaxNonce'         => wp_create_nonce( 'ninja_forms_ajax_nonce' ),
             'requireBaseUrl'    => Ninja_Forms::$url . 'assets/js/',
             'previewurl'        => site_url() . '/?nf_preview_form=',
             'wp_locale'         => $wp_locale->number_format,
