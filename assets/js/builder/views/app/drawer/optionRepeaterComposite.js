@@ -75,8 +75,6 @@ define( ['views/app/drawer/optionRepeaterOption', 'views/app/drawer/optionRepeat
 				}
 			} );
 
-			nfRadio.channel( 'mergeTags' ).request( 'init', this );
-
 			/*
 			 * Send out a radio message.
 			 */
@@ -96,7 +94,7 @@ define( ['views/app/drawer/optionRepeaterOption', 'views/app/drawer/optionRepeat
 				},
 
 	    		renderSetting: function() {
-					var setting = _.template( jQuery( '#nf-tmpl-edit-setting-' + this.type ).html() );
+	    			var setting = Marionette.TemplateCache.get( '#nf-tmpl-edit-setting-' + this.type );
 					return setting( this );
 				},
 

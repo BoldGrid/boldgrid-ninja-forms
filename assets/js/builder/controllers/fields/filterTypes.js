@@ -47,7 +47,7 @@ define( ['models/fields/typeSectionCollection'], function( fieldTypeSectionColle
         		// Request that our field types filter be applied, passing the collection we created above.
         		nfRadio.channel( 'drawer' ).trigger( 'filter:fieldTypes', filteredSectionCollection );
         		// If we've pressed the 'enter' key, add the field to staging and clear the filter.
-        		if ( e.addObject ) {
+        		if ( 'undefined' != typeof e && e.addObject ) {
         			if ( 0 < filtered.length ) {
         				nfRadio.channel( 'fields' ).request( 'add:stagedField', filtered[0] );
         				nfRadio.channel( 'drawer' ).request( 'clear:filter' );

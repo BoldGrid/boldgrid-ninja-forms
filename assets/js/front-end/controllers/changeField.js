@@ -13,6 +13,13 @@ define([], function() {
 			 * Reply to our request for changing a field.
 			 */
 			nfRadio.channel( 'nfAdmin' ).reply( 'change:field', this.changeField );
+
+			/*
+			 * If we blur our field, set the model attribute of 'clean' to false.
+			 * 'clean' tracks whether or not the user has every interacted with this element.
+			 * Some validation, like required, uses this to decide whether or not to add an error.
+			 */
+			this.listenTo( nfRadio.channel( 'fields' ), 'blur:field', this.blurField );
 		},
 
 		changeField: function( el, model ) {
@@ -46,6 +53,11 @@ define([], function() {
 			 * If the field model has a 'isUpdated' property of false, nothing will be updated.
 			 */
 			nfRadio.channel( 'nfAdmin' ).request( 'update:field', model, value );
+		},
+
+		blurField: function( el, model ) {
+			// Set our 'clean' flag to false.
+			model.set( 'clean', false );
 		}
 	});
 

@@ -7,14 +7,24 @@ define([], function() {
 	var controller = Marionette.Object.extend( {
 
 		initialize: function() {
-			this.listenTo( radioChannel, 'change:modelValue', this.emailChange );
+			this.listenTo( radioChannel, 'change:modelValue', this.onChangeModelValue );
 			this.listenTo( radioChannel, 'keyup:field', this.emailKeyup );
+			this.listenTo( radioChannel, 'blur:field', this.onBlurField );
 		},
 
-		emailChange: function( model ) {
+		onChangeModelValue: function( model ) {
 			var value = model.get( 'value' );
 			var fieldID = model.get( 'id' );
+			this.emailChange( value, fieldID );
+		},
 
+		onBlurField: function( el, model ) {
+			var value = jQuery( el ).val();
+			var fieldID = model.get( 'id' );
+			this.emailChange( value, fieldID );
+		},
+
+		emailChange: function( value, fieldID ) {
 			if ( 0 < value.length ) {
 				if( emailReg.test( value ) ) {
 					nfRadio.channel( 'fields' ).request( 'remove:error', fieldID, errorID );
@@ -38,6 +48,12 @@ define([], function() {
 		 */
 		emailKeyup: function( el, model, keyCode ) {
 			/*
+			 * If we pressed the 'tab' key to get to this field, return false.
+			 */
+			if ( 9 == keyCode ) {
+				return false;
+			}
+			/*
 			 * Get the current value from our element.
 			 */
 			var value = jQuery( el ).val();
@@ -49,21 +65,13 @@ define([], function() {
 
 			/*
 			 * Check our value to see if it is a valid email.
-			 * If we have an empty value, remove our pass/fail class
 			 */
+			
 			if ( 0 == value.length ) {
-				model.removeWrapperClass( 'nf-fail' );
-				model.removeWrapperClass( 'nf-pass' );
 				nfRadio.channel( 'fields' ).request( 'remove:error', fieldID, errorID );
 			} else if ( ! emailReg.test( value ) ) {
-				model.removeWrapperClass( 'nf-pass' );
-				if ( ! model.get( 'clean' ) ) {
-					model.addWrapperClass( 'nf-fail' );
-					nfRadio.channel( 'fields' ).request( 'add:error', fieldID, errorID, errorMsg );
-				}
+				nfRadio.channel( 'fields' ).request( 'add:error', fieldID, errorID, errorMsg );
 			} else if ( emailReg.test( value ) ) {
-				model.removeWrapperClass( 'nf-fail' );
-				model.addWrapperClass( 'nf-pass' );
 				nfRadio.channel( 'fields' ).request( 'remove:error', fieldID, errorID );
 			}
 		}

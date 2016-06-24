@@ -1,0 +1,169 @@
+.checkbox-wrap,
+.listcheckbox-wrap {
+    .nf-field-label,
+    .nf-field-element {
+        label {
+            position: relative;
+            margin-left: 30px;
+            &::after {
+                border: 1px solid;
+                content: "";
+                width: 18px;
+                height: 18px;
+                position: absolute;
+                left: -28px;
+                bottom: 0;
+            }
+            &::before {
+                content: "\f00c";
+                font-family: FontAwesome;
+                font-size: 24px;
+                position: absolute;
+                bottom: 0;
+                opacity: 0;
+                z-index: 2;
+            }
+        }
+    }
+}
+.checkbox-container {
+    .nf-field-element {
+        input {
+            display: none;
+        }
+    }
+    &.label-above,
+    &.label-below {
+        // .nf-field-element {
+        //     input {
+        //         display: none;
+        //     }
+        // }
+    }
+    &.label-above {
+        label {
+            height: 50px;
+            margin: 0;
+            display: block;
+            &::after {
+                left: 0;
+                bottom: 0;
+            }
+            &.nf-checked-label {
+                &::before {
+                    left: -2px;
+                    bottom: 0;
+                }
+            }
+        }
+    }
+    &.label-below {
+        label {
+            margin: 0;
+            display: block;
+            margin-top: 20px;
+            &::after {
+                left: 0;
+                bottom: auto;
+                top: -25px;
+            }
+            &.nf-checked-label {
+                &::before {
+                    left: -2px;
+                    bottom: auto;
+                    top: -27px;
+                }
+            }
+        }
+    }
+    &.label-left {
+        .nf-field-label {
+            width: 38%;
+            padding-right: 5%;
+        }
+        .nf-field-element {
+            width: 58%;
+        }
+        label {
+            margin: 0;
+            display: block;
+            &::after {
+                left: auto;
+                bottom: 0;
+                right: -31px;
+            }
+            &.nf-checked-label {
+                &::before {
+                    left: auto;
+                    bottom: 0;
+                    right: -36px;
+                }
+            }
+        }
+    }
+    &.label-right {
+        .nf-field-label {
+            padding: 0;
+            order: 10;
+        }
+        .nf-field-element {
+            order: 5;
+            display: none;
+        }
+        label {
+            margin: 0 0 0 30px;
+            display: block;
+            &::after {
+                left: -28px;
+                bottom: 0;
+            }
+            &.nf-checked-label {
+                &::before {
+                    left: -30px;
+                    bottom: 0;
+                }
+            }
+        }
+        .field-wrap {
+            display: flex;
+            > div {
+                width: 100%;
+            }
+        }
+        label {
+            &::after {
+                bottom: 2px !important;
+            }
+        }
+    }
+}
+.listcheckbox-container {
+    .nf-field-label {
+        label::after {
+            background: transparent !important;
+            border: 0;
+        }
+    }
+    .nf-field-element {
+        input {
+            display: none;
+        }
+        label {
+            &::before {
+                left: -30px;
+            }
+        }
+    }
+    &.label-above,
+    &.label-below,
+    &.label-right {
+        .nf-field-label {
+            label {
+                margin: 0;
+                &::before {
+                    left: -30px;
+                }
+            }
+        }
+    }
+}

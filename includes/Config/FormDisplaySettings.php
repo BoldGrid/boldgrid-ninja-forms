@@ -41,9 +41,7 @@ return apply_filters( 'ninja_forms_from_display_settings', array(
         'width' => 'full',
         'group' => 'primary',
         'value' => 1,
-
-        //TODO: Add following text below the element.
-        //If this box is checked, Ninja Forms will clear the form values after it has been successfully submitted.
+        'help'  => __( 'If this box is checked, Ninja Forms will clear the form values after it has been successfully submitted.', 'ninja-forms' ),
     ),
 
     /*
@@ -58,6 +56,41 @@ return apply_filters( 'ninja_forms_from_display_settings', array(
         'group' => 'primary',
         'value' => 1,
         'help'  => __( 'If this box is checked, Ninja Forms will hide the form after it has been successfully submitted.', 'ninja-forms' ),
+    ),
+
+    /*
+    * Default Label Position
+    */
+
+    'default_label_pos' => array(
+        'name' => 'default_label_pos',
+        'type' => 'select',
+        'label' => __( 'Default Label Position', 'ninja-forms' ),
+        'width' => 'full',
+        'group' => 'advanced',
+        'options' => array(
+            array(
+                'label' => __( 'Above Element', 'ninja-forms' ),
+                'value' => 'above'
+            ),
+            array(
+                'label' => __( 'Below Element', 'ninja-forms' ),
+                'value' => 'below'
+            ),
+            array(
+                'label' => __( 'Left of Element', 'ninja-forms' ),
+                'value' => 'left'
+            ),
+            array(
+                'label' => __( 'Right of Element', 'ninja-forms' ),
+                'value' => 'right'
+            ),
+            array(
+                'label' => __( 'Hidden', 'ninja-forms' ),
+                'value' => 'hidden'
+            ),
+        ),
+        'value' => 'above',
     ),
 
     /*

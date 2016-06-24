@@ -5,7 +5,7 @@ define([], function() {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
 			this.listenTo( nfRadio.channel( 'textarea' ), 'render:view', this.initTextareaRTEs );
-			this.listenTo( nfRadio.channel( 'fields' ), 'click:extra', this.clickExtra );
+			this.listenTo( nfRadio.channel( 'textarea' ), 'click:extra', this.clickExtra );
 
 			// Instantiates the variable that holds the media library frame.
 			this.meta_image_frame;
@@ -108,8 +108,8 @@ define([], function() {
 		linkButton: function( context ) {
 			var that = this;
 			var ui = jQuery.summernote.ui;
-			var linkButton = _.template( jQuery( '#nf-tmpl-rte-link-button' ).html() );
-			var linkDropdown = _.template( jQuery( '#nf-tmpl-rte-link-dropdown' ).html() );
+			var linkButton = Marionette.TemplateCache.get( '#nf-tmpl-rte-link-button' );
+			var linkDropdown = Marionette.TemplateCache.get( '#nf-tmpl-rte-link-dropdown' );
 			return ui.buttonGroup([
 				ui.button({
 	            className: 'dropdown-toggle',
@@ -138,7 +138,7 @@ define([], function() {
 		mediaButton: function( context ) {
 			var that = this;
 			var ui = jQuery.summernote.ui;
-			var mediaButton = _.template( jQuery( '#nf-tmpl-rte-media-button' ).html() );
+			var mediaButton = Marionette.TemplateCache.get( '#nf-tmpl-rte-media-button' );
 			return ui.button({
 	            className: 'dropdown-toggle',
 	            contents: mediaButton({}),

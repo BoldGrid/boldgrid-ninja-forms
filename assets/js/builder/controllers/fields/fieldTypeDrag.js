@@ -36,7 +36,6 @@ define( [], function( ) {
 			this.drawerEl = nfRadio.channel( 'app' ).request( 'get:drawerEl' );
 			this.mainEl = nfRadio.channel( 'app' ).request( 'get:mainEl' );
 			jQuery( this.drawerEl )[0].style.setProperty( 'overflow', 'visible', 'important' );
-			jQuery( this.mainEl )[0].style.setProperty( 'overflow', 'visible', 'important' );
 
 			this.draggableHelperClone = jQuery( ui.helper ).clone();
 
@@ -52,7 +51,6 @@ define( [], function( ) {
 		 */
 		stopDrag: function( context, ui ) {
 			jQuery( this.drawerEl )[0].style.setProperty( 'overflow', 'hidden', 'important' );
-			jQuery( this.mainEl )[0].style.setProperty( 'overflow', 'hidden', 'important' );
 		},
 
 		getCurrentDraggableHelperClone: function() {

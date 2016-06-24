@@ -4,16 +4,24 @@
     width: 100%;
     position: absolute;
     top: 190px;
+    overflow: auto;
+    overflow-x: visible;
     bottom: 0;
     left: 0;
-    overflow: scroll;
     -webkit-overflow-scrolling: touch;
     transition: left 0.5s ease;
+    .nf-field-type-button {
+        width: 400px;
+    }
+}
+.nf-main-test {
+    width: 100%;
+    transition: width 0.5s ease;
 }
 #nf-main-content,
 #nf-main-header {
     margin: 0 auto;
-    max-width: 700px;
+    max-width: 800px;
     user-select: none;
 }
 #nf-main-header {

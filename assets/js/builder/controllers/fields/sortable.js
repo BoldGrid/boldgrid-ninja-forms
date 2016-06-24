@@ -16,6 +16,7 @@ define( [], function() {
 			// When our field staging is dragged, we need to add or remove the active (blue) class.
 			this.listenTo( nfRadio.channel( 'drawer-addField' ), 'startDrag:fieldStaging', this.addActiveClass );
 			this.listenTo( nfRadio.channel( 'drawer-addField' ), 'stopDrag:fieldStaging', this.removeActiveClass );
+			
 			/*
 			 * Handles all the events fired by our sortable:
 			 * receive - dropped from type button or staging
@@ -154,7 +155,7 @@ define( [], function() {
 			}
 
 			nfRadio.channel( 'changes' ).request( 'register:change', 'addObject', newModel, null, label, data );
-			
+
 			return tmpID;
 		},
 
@@ -238,7 +239,7 @@ define( [], function() {
 		 * @return void
 		 */
 		stopFieldsSortable: function( ui ) {
-			jQuery( ui.item ).css( 'opacity', '' )
+			jQuery( ui.item ).css( 'opacity', '' );
 			jQuery( ui.helper ).remove();
 			nfRadio.channel( 'fields' ).trigger( 'sortable:stop', ui );
 		},
@@ -301,8 +302,6 @@ define( [], function() {
 
 				nfRadio.channel( 'changes' ).request( 'register:change', 'sortFields', dragModel, null, label, data );
 			}
-
-			
 		}
 	});
 

@@ -1,0 +1,203 @@
+.nf-fields {
+    input:not([type='button']),
+    textarea,
+    .list-select-wrap .nf-field-element > div {
+        background: $field-background;
+        border: 1px solid $field-border;
+        border-radius: 0;
+        box-shadow: none;
+        color: $field-font;
+        transition: all .5s;
+        &:focus {
+            background: $focus-background;
+            border-color: $focus-border;
+            //box-shadow: -3px 3px 10px #ccc;
+            color: $focus-font;
+            outline: none;
+            transition: all .5s;
+        }
+    }
+    input[type="submit"],
+    input[type="button"],
+    button {
+        background: $accent;
+        border: 0;
+        color: $field-background;
+        transition: all .5s;
+        &:hover {
+            background: $field-border;
+            color: $field-font;
+            transition: all .5s;
+        }
+    }
+    select.ninja-forms-field {
+        color: $field-font;
+        &:focus {
+            background: transparent;
+            border: 0;
+            box-shadow: none;
+            outline: none;
+        }
+    }
+}
+
+.list-select-wrap {
+    div {
+        &::after {
+            color: $field-font;
+            transition: all .5s;
+        }
+    }
+    select {
+        &:active,
+        &:focus {
+            + div {
+                background: $focus-background !important;
+                border-color: $focus-border !important;
+                transition: all .5s;
+            }
+        }
+    }
+}
+
+.listradio-wrap {
+    .nf-field-element {
+        label {
+            &::after {
+                background: $field-background;
+                border: 2px solid $field-border;
+                transition: all .5s;
+            }
+            &.nf-checked-label {
+                &::after {
+                    border-color: $selected-font;
+                    transition: all .5s;
+                }
+                &::before {
+                    background: $selected-font;
+                }
+            }
+        }
+    }
+}
+
+.checkbox-wrap,
+.listcheckbox-wrap {
+    .nf-field-label,
+    .nf-field-element {
+        label {
+            &::after {
+                background: $field-background;
+                border-color: $field-border;
+                transition: all .5s;
+            }
+            &::before {
+                color: $field-background;
+                opacity: 0;
+                transition: all .5s;
+            }
+            &.nf-checked-label {
+                &::after {
+                    //background: $accent;
+                    border-color: $selected-border;
+                    transition: all .5s;
+                }
+                &::before {
+                    color: $selected-font;
+                    opacity: 100;
+                    transition: all .5s;
+                }
+            }
+        }
+    }
+}
+
+.nf-error {
+    position: relative;
+    .ninja-forms-field {
+        border-color: #E80000 !important;
+        transition: all .5s;
+    }
+    &.field-wrap {
+        .nf-field-element::after {
+            background: #E80000;
+            color: #fff;
+            font-family: FontAwesome;
+            font-size: 20px;
+            content: "\f12a";
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            bottom: 1px;
+            height: 48px;
+            width: 50px;
+            line-height: 50px;
+            text-align: center;
+            transition: all .5s;
+        }
+    }
+    .nf-error-msg {
+        color: #E80000;
+    }
+}
+.nf-pass {
+    position: relative;
+    .ninja-forms-field {
+        border-color: green !important;
+        transition: all .5s;
+    }
+    &.field-wrap {
+        .nf-field-element::after {
+            color: green;
+            font-family: FontAwesome;
+            font-size: 30px;
+            content: "\f058";
+            position: absolute;
+            top: 0;
+            right: 16px;
+            height: 50px;
+            line-height: 50px;
+            transition: all .5s;
+        }
+    }
+    // &.field-wrap::before {
+    //     border-color: green !important;
+    // }
+}
+
+.nf-field-submit-error {
+    border: 1px solid;
+    margin: 10px 0px;
+    padding: 15px 15px 15px 50px;
+    position: relative;
+    z-index: 1;
+    &::after {
+        content: "\f06a";
+        font-family: FontAwesome;
+        font-size: 24px;
+        position: absolute;
+        top: 0;
+        left: 15px;
+        height: 50px;
+        line-height: 50px;
+        z-index: 2;
+    }
+}
+
+.nf-field-submit-error {
+    border-color: #D8000C;
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+
+.nf-icons,
+&.nf-icons {
+    .nf-field-element::before {
+        background: $field-border;
+        color: $field-background;
+    }
+}
+
+.nf-help {
+    color: $selected-font;
+}

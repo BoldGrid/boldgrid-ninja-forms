@@ -1,11 +1,10 @@
-define( ['views/beforeForm', 'views/formLayout', 'views/afterForm', 'views/formErrorCollection'], function( BeforeForm, FormLayout, AfterForm, FormErrors ) {
+define( ['views/beforeForm', 'views/formLayout', 'views/afterForm'], function( BeforeForm, FormLayout, AfterForm ) {
 
 	var view = Marionette.LayoutView.extend({
 		template: '#nf-tmpl-layout',
 
 		regions: {
 			responseMsg: '.nf-response-msg',
-			formErrors: '.nf-form-errors',
 			beforeForm: '.nf-before-form',
 			formLayout: '.nf-form-layout',
 			afterForm: '.nf-after-form'
@@ -17,7 +16,6 @@ define( ['views/beforeForm', 'views/formLayout', 'views/afterForm', 'views/formE
 
 			this.render();
 
-			this.formErrors.show( new FormErrors( { collection: this.model.get( 'errors' ) } ) );
 			this.beforeForm.show( new BeforeForm( { model: this.model } ) );
 			this.formLayout.show( new FormLayout( { model: this.model, fieldCollection: this.options.fieldCollection } ) );
 			this.afterForm.show( new AfterForm( { model: this.model } ) );

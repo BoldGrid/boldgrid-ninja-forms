@@ -1,4 +1,6 @@
-jQuery(document).ready(function(jQuery) {
+init_all_the_ninja_things();
+
+function init_all_the_ninja_things() {
 
 	// Prevent the enter key from submitting the form.
 	jQuery(".ninja-forms-form input").bind("keypress", function(e) {
@@ -178,25 +180,26 @@ jQuery(document).ready(function(jQuery) {
 	/*
 	 * Timer field JS
 	 */
-	var countdown = {};
-	jQuery('.countdown-timer').each(function( index ) {
 
-		jQuery(this).attr('disabled', 'disabled').prev('input.no-js').remove();
+	jQuery('.countdown-timer').each( function( index ) {
+		jQuery(this).attr('disabled', 'disabled').parents('.field-wrap:first').find('input.no-js').remove();
 		id = jQuery(this).attr('id');
-		countdown.index = window.setInterval(function(){ninja_forms_countdown(id, index)},1000);
-
+		if ( window.ninja_forms_timer ) window.clearInterval( window.ninja_forms_timer.index );
+		window.ninja_forms_timer = { index: window.setInterval( function(){ ninja_forms_countdown( id, index ) }, 1000 ) };
 	});
 
 	function ninja_forms_countdown( id, index ){
-		$countdown = jQuery('#' + id );
+
+		$countdown = jQuery('#' + id);
+
 		counter = parseInt($countdown.data('countdown')) - 1;
+		$countdown.val(counter).data('countdown', counter).find('span').html(counter);
 
-		$countdown.val(counter).data('countdown', counter ).find('span').html(counter);
-
-		if( counter <= 0 ) {
-			window.clearInterval(countdown.index);
-			$countdown.removeAttr('disabled').html($countdown.data('text') );
+		if ( counter <= 0 ) {
+			window.clearInterval( window.ninja_forms_timer.index );
+			$countdown.removeAttr('disabled').html( $countdown.data('text') );
 		}
+
 	}
 
 	/*
@@ -714,7 +717,7 @@ jQuery(document).ready(function(jQuery) {
 			}
 		}
 	});
-}); //End document.ready
+}
 
 function ninja_forms_before_submit( formData, jqForm, options ){
 	var form_id = jQuery( jqForm ).prop( 'id' ).replace( 'ninja_forms_form_', '' );

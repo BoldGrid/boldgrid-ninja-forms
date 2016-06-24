@@ -6,7 +6,9 @@ define( [], function() {
 			beforeFields: '',
 			afterFields: '',
 			wrapper_class: '',
-			element_class: ''
+			element_class: '',
+			hp: '',
+			fieldErrors: {}
 		},
 
 		initialize: function() {
@@ -33,12 +35,14 @@ define( [], function() {
 		addError: function( id, msg ) {
 			var errors = this.get( 'errors' );
 			errors.add( { id: id, msg: msg } );
+			nfRadio.channel( 'form-' + this.get( 'id' ) ).trigger( 'add:error', this, id, msg );
 		},
 
 		removeError: function( id ) {
 			var errors = this.get( 'errors' );
 			var errorModel = errors.get( id );
 			errors.remove( errorModel );
+			nfRadio.channel( 'form-' + this.get( 'id' ) ).trigger( 'remove:error', this, id );
 		}
 	} );
 

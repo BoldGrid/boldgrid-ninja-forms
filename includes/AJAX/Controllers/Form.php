@@ -10,7 +10,7 @@ class NF_AJAX_Controllers_Form extends NF_Abstracts_Controller
 
     public function save()
     {
-        check_ajax_referer( 'ninja_forms_ajax_nonce', 'security' );
+        check_ajax_referer( 'ninja_forms_builder_nonce', 'security' );
 
         if( ! isset( $_POST[ 'form' ] ) ){
             $this->_errors[] = 'Form Not Found';
@@ -126,12 +126,14 @@ class NF_AJAX_Controllers_Form extends NF_Abstracts_Controller
 
         delete_user_option( get_current_user_id(), 'nf_form_preview_' . $form_data['id'] );
 
+        do_action( 'ninja_forms_save_form', $form->get_id() );
+
         $this->_respond();
     }
 
     public function delete()
     {
-        check_ajax_referer( 'ninja_forms_ajax_nonce', 'security' );
+        check_ajax_referer( 'ninja_forms_builder_nonce', 'security' );
 
         $this->_respond();
     }

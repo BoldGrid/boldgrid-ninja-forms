@@ -4,6 +4,8 @@ define([], function() {
 			this.listenTo( nfRadio.channel( 'listradio' ), 'change:modelValue', this.changeModelValue );
 			this.listenTo( nfRadio.channel( 'listradio' ), 'init:model', this.register );
 			nfRadio.channel( 'listradio' ).reply( 'get:calcValue', this.getCalcValue, this );
+			
+			this.listenTo( nfRadio.channel( 'listradio' ), 'change:field', this.updateCheckedClass, this );
 		},
 
 		register: function( model ) {
@@ -31,7 +33,8 @@ define([], function() {
 
 		changeModelValue: function( model ) {
 			if ( 1 == model.get( 'show_other' ) ) {
-				model.set( 'reRender', true );
+				// model.set( 'reRender', true );
+				model.trigger( 'reRender');
 			}
 		},
 
@@ -44,7 +47,7 @@ define([], function() {
 				var valueFound = false;
 			}
 			
-			_.each( this.options, function( option ) {
+			_.each( this.options, function( option, index ) {
 				if ( option.value == that.value ) {
 					valueFound = true;
 				}
@@ -52,7 +55,8 @@ define([], function() {
 				option.fieldID = that.id;
 				option.classes = that.classes;
 				option.currentValue = that.value;
-				var template = _.template( jQuery( '#nf-tmpl-field-listradio-option' ).html() );
+				option.index = index;
+				var template = Marionette.TemplateCache.get( '#nf-tmpl-field-listradio-option' );
 				html += template( option );
 			} );
 
@@ -67,9 +71,8 @@ define([], function() {
 					renderOtherText: this.renderOtherText,
 					valueFound: valueFound
 				};
-				var template = _.template( jQuery( '#nf-tmpl-field-listradio-other' ).html() );
+				var template = Marionette.TemplateCache.get( '#nf-tmpl-field-listradio-other' );
 				html += template( data );
-
 			}
 
 			return html;
@@ -85,7 +88,7 @@ define([], function() {
 					classes: this.classes,
 					currentValue: this.currentValue
 				};
-				var template = _.template( jQuery( '#nf-tmpl-field-listradio-other-text' ).html() );
+				var template = Marionette.TemplateCache.get( '#nf-tmpl-field-listradio-other-text' );
 				return template( data );
 			}
 		},
@@ -107,6 +110,15 @@ define([], function() {
 				var calc_value = selected.calc;
 			}
 			return calc_value;
+		},
+
+		updateCheckedClass: function( el, model ) {
+			jQuery( '[name="' + jQuery( el ).attr( 'name' ) + '"]' ).removeClass( 'nf-checked' );
+			jQuery( el ).closest( 'ul' ).find( 'label' ).removeClass( 'nf-checked-label' );
+			jQuery( el ).addClass( 'nf-checked' );
+			jQuery( el ).closest( 'li' ).find( 'label[for="' + jQuery( el ).prop( 'id' ) + '"]' ).addClass( 'nf-checked-label' );
+
+
 		}
 
 	});

@@ -4,11 +4,11 @@ define( [], function() {
 		template: '#nf-tmpl-form-setting-type',
 
 		onBeforeDestroy: function() {
-			this.model.off( 'change:editActive', this.render );
+			this.model.off( 'change:editActive', this.updateActiveClass );
 		},
 
 		initialize: function() {
-			this.model.on( 'change:editActive', this.render, this );
+			this.model.on( 'change:editActive', this.updateActiveClass, this );
 		},
 
 		events: {
@@ -28,6 +28,14 @@ define( [], function() {
 	    			}
 	    			return classes;
 				}
+			}
+		},
+
+		updateActiveClass: function() {
+			if ( this.model.get( 'editActive' ) ) {
+				jQuery( this.el ).find( '.nf-setting-wrap' ).addClass( 'active' );
+			} else {
+				jQuery( this.el ).find( '.nf-setting-wrap' ).removeClass( 'active' );
 			}
 		}
 	});

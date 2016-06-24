@@ -35,21 +35,25 @@ define([], function() {
                 var valueFound = false;
             }
 
-            _.each( this.options, function( option ) {
+            _.each( this.options, function( option, index ) {
                 if ( option.value == that.value ) {
                     valueFound = true;
                 }
 
                 option.fieldID = that.id;
                 option.classes = that.classes;
-                option.currentValue = that.value;
+                option.index = index;
 
                 if( option.selected ){
                     that.selected.push( option.value );
                 }
 
-                var template = _.template( jQuery( '#nf-tmpl-field-listcheckbox-option' ).html() );
+                var testValues = _.map( that.value, function( value ) {
+                    return value.toString();
+                } );
 
+                option.isSelected = ( -1 != testValues.indexOf( option.value.toString() ) );
+                var template = Marionette.TemplateCache.get( '#nf-tmpl-field-listcheckbox-option' );
                 html += template( option );
             } );
 
@@ -65,7 +69,7 @@ define([], function() {
                     valueFound: valueFound
                 };
 
-                var template = _.template( jQuery( '#nf-tmpl-field-listcheckbox-other' ).html() );
+                var template = Marionette.TemplateCache.get( '#nf-tmpl-field-listcheckbox-other' );
                 html += template( data );
 
             }
@@ -83,7 +87,7 @@ define([], function() {
                     classes: this.classes,
                     currentValue: this.currentValue
                 };
-                var template = _.template( jQuery( '#nf-tmpl-field-listcheckbox-other-text' ).html() );
+                var template = Marionette.TemplateCache.get( '#nf-tmpl-field-listcheckbox-other-text' );
                 return template( data );
             }
         },
@@ -101,25 +105,27 @@ define([], function() {
         },
 
         beforeUpdateField: function( el, model ) {
-            var selected = model.get( 'selected' ) || [];
+            var selected = model.get( 'value' ) || [];
             if ( typeof selected == 'string' ) selected = [ selected ];
 
-            var value = jQuery( el).val();
+            var value = jQuery( el ).val();
             var checked = jQuery( el ).attr( 'checked' );
             if ( checked ) {
                 selected.push( value );
+                jQuery( el ).addClass( 'nf-checked' );
+                jQuery( el ).parent().find( 'label[for="' + jQuery( el ).prop( 'id' ) + '"]' ).addClass( 'nf-checked-label' );
             } else {
+                jQuery( el ).removeClass( 'nf-checked' );
+                jQuery( el ).parent().find( 'label[for="' + jQuery( el ).prop( 'id' ) + '"]' ).removeClass( 'nf-checked-label' );
                 var i = selected.indexOf( value );
                 if( -1 != i ){
                     selected.splice( i, 1 );
                 }
             }
 
-            model.set( 'selected', selected );
-
-            if ( 1 == model.get( 'show_other' ) ) {
-                model.set( 'reRender', true );
-            }
+            // if ( 1 == model.get( 'show_other' ) ) {
+            //     model.set( 'reRender', true );
+            // }
 
             return _.clone( selected );
         }

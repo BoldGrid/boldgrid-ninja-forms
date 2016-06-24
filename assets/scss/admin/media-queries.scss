@@ -93,72 +93,72 @@
             display: none;
         }
     }
-    .nf-item-controls {
-        li {
-            margin: -4px 15px 0;
-            height: 26px;
-            a {
-                width: 30px;
-                height: 30px;
-                &:hover {
-                    .nf-tooltip {
-                        top: -45px;
-                        visibility:visible;
-                        opacity: 1.0;
-                        filter: alpha(opacity=100);
-                        transition: all 1.0s ease;
-                        transition-delay: 1.4s;
-                    }
-                }
-                .dashicons {
-                    font-size: 26px;
-                    padding-top: 1px;
-                }
-            }
-            &.nf-item-duplicate {
-                .nf-tooltip {
-                    left: -32px;
-                    &:after {
-                        left: 36px;
-                    }
-                }
-            }
-            &.nf-item-edit {
-                .nf-tooltip {
-                    left: -16px;
-                    &:after {
-                        left: 20px;
-                    }
-                }
-            }
-            &.nf-item-delete {
-                margin-top: -4px;
-            }
-            &.nf-item-expand {
-                display: none;
-                .dashicons {
-                    transform: rotate(-90deg);
-                }
-            }
-            .nf-item-editing {
-                display: none;
-            }
-        }
-        &.nf-editing {
-            font-weight: normal;
-            a {
-                color: #424242;
-            }
-            .nf-item-delete,
-            .nf-item-duplicate {
-                display: none;
-            }
-            .nf-item-editing {
-                display: inline;
-                line-height: 26px;
-            }
-        }
-    }
+    // .nf-item-controls {
+    //     li {
+    //         margin: -4px 15px 0;
+    //         height: 26px;
+    //         a {
+    //             width: 30px;
+    //             height: 30px;
+    //             &:hover {
+    //                 .nf-tooltip {
+    //                     top: -45px;
+    //                     visibility:visible;
+    //                     opacity: 1.0;
+    //                     filter: alpha(opacity=100);
+    //                     transition: all 1.0s ease;
+    //                     transition-delay: 1.4s;
+    //                 }
+    //             }
+    //             .dashicons {
+    //                 font-size: 26px;
+    //                 padding-top: 1px;
+    //             }
+    //         }
+    //         &.nf-item-duplicate {
+    //             .nf-tooltip {
+    //                 left: -32px;
+    //                 &:after {
+    //                     left: 36px;
+    //                 }
+    //             }
+    //         }
+    //         &.nf-item-edit {
+    //             .nf-tooltip {
+    //                 left: -16px;
+    //                 &:after {
+    //                     left: 20px;
+    //                 }
+    //             }
+    //         }
+    //         &.nf-item-delete {
+    //             margin-top: -4px;
+    //         }
+    //         &.nf-item-expand {
+    //             display: none;
+    //             .dashicons {
+    //                 transform: rotate(-90deg);
+    //             }
+    //         }
+    //         .nf-item-editing {
+    //             display: none;
+    //         }
+    //     }
+    //     &.nf-editing {
+    //         font-weight: normal;
+    //         a {
+    //             color: #424242;
+    //         }
+    //         .nf-item-delete,
+    //         .nf-item-duplicate {
+    //             display: none;
+    //         }
+    //         .nf-item-editing {
+    //             display: inline;
+    //             line-height: 26px;
+    //         }
+    //     }
+    // }
     .nf-one-half, .nf-on-third {
         float: none;
         width: 100%;
@@ -185,10 +185,6 @@
         .nf-item-controls {
             width: auto;
         }
-    }
-    .nf-item-delete,
-    .nf-item-duplicate {
-        display: none;
     }
 }
 @media only screen and (max-width: 1023px) {
@@ -265,6 +261,9 @@
                 margin-left: 0;
             }
         }
+    }
+    .nf-item-controls {
+        top: 15px;
     }
     #nf-builder {
         padding: 80px 20px 10px;

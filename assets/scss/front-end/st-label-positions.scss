@@ -1,86 +1,204 @@
-.nf-fields {
-    .label-above,
-    .label-below,
-    .label-hidden {
-        > label {
-            display: block;
-        }
-        > input,
-        textarea,
-        select,
-        .pikaday__container,
-        .pikaday__display {
+/* ---------------------------------
+STANDARDIZE ALL FIELDS
+----------------------------------*/
+.field-wrap {
+    display: flex;
+    > label {
+        display: block;
+    }
+    > div input,
+    textarea,
+    select,
+    .pikaday__container,
+    .pikaday__display,
+    .listselect-wrap > div {
+        width: 100%;
+    }
+    input[type="submit"],
+    input[type="button"],
+    button {
+        width: auto;
+    }
+    .nf-product-field {
+        // .nf-element {
+        //     width: 100%;
+        // }
+    }
+}
+
+.nf-field-label {
+    order: 5;
+}
+.nf-field-description {
+    width: 100%;
+    order: 10;
+}
+.nf-field-element {
+    order: 15;
+}
+
+
+/* ---------------------------------
+LABEL ABOVE
+----------------------------------*/
+.label-above {
+    .nf-field-label {
+        margin-bottom: 10px;
+    }
+}
+
+/* ---------------------------------
+LABEL BELOW
+----------------------------------*/
+.label-below {
+    .nf-field-label {
+        margin-top: 10px;
+        order: 15;
+    }
+    .nf-field-element {
+        order: 5;
+    }
+}
+
+/* ---------------------------------
+LABEL HIDDEN
+----------------------------------*/
+.label-hidden {
+    .field-wrap {
+        flex-wrap: wrap;
+    }
+    .nf-field-label {
+        height: 0;
+        width: 100%;
+        visibility: hidden;
+    }
+    .nf-field-description {
+        width: 100%;
+        order: 20;
+    }
+    .nf-field-element {
+        width: 100%;
+    }
+}
+
+/* ---------------------------------
+LABEL LEFT
+----------------------------------*/
+.label-left {
+    .field-wrap {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .nf-field-label {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding-right: 2%;
+        text-align: right;
+        width: 35%;
+        order: 5;
+        label {
             width: 100%;
-        }
-        input[type="submit"],
-        input[type="button"],
-        button {
-            width: auto;
-        }
-        .nf-product-field {
-            // .nf-element {
-            //     width: 100%;
-            // }
         }
     }
-    .label-right {
-        vertical-align: middle;
-        > label {
-            display: inline-block;
-        }
-        > input,
-        textarea,
-        select,
-        .pikaday__container {
-            width: 50%;
-        }
-        .pikaday__display {
-            width: 100%;
-        }
-        > input[type=radio],
-        input[type=checkbox] {
+    .nf-field-description {
+        margin-left: 35%;
+    }
+    .nf-field-element {
+        display: inline-block;
+        width: 65%;
+        order: 10;
+    }
+    .nf-after-field {
+        margin-left: 36.5%;
+    }
+}
+
+/* ---------------------------------
+LABEL RIGHT
+----------------------------------*/
+.label-right {
+    .field-wrap {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .nf-field-label {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding-left: 2%;
+        width: 35%;
+        order: 10;
+    }
+    .nf-field-description {
+        margin-right: 35%;
+        order: 15;
+    }
+    .nf-field-element {
+        display: inline-block;
+        width: 65%;
+        order: 5;
+    }
+    .checkbox-wrap {
+        .nf-field-label {
             width: auto;
         }
-        &.textarea-wrap {
-            vertical-align: top;
-        }
-        ul {
-            float: left;
-            width: 50%;
+        .nf-field-element {
+            width: 20px;
         }
     }
-    .label-left {
-        vertical-align: middle;
-        > label {
-            display: inline-block;
-            float: left;
-            line-height: 16px;
-            padding: 16px;
-            text-align: right;
-            width: 49%;
-        }
-        > input,
-        textarea,
-        select,
-        .pikaday__container {
-            float: right;
-            width: 49%;
-        }
-        .pikaday__display {
-            width: 100%;
-        }
-        > input[type=radio],
-        > input[type=checkbox] {
-            float: none;
-            width: auto;
-            margin-left: 10px;
-        }
-        &.textarea-wrap {
-            vertical-align: top;
-        }
-        ul {
-            float: right;
-            width: 49%;
+    .nf-after-field {
+        width: 65%;
+    }
+}
+/* ---------------------------------
+ADJUST SOME LABEL ABOVE & BELOW ISSUES
+----------------------------------*/
+.label-below,
+.label-above {
+    .field-wrap {
+        flex-direction: column;
+        flex-flow: wrap;
+    }
+    .nf-field-element {
+        margin: 0;
+        width: 100%;
+    }
+    .checkbox-wrap {
+        .nf-field-label {
+            //margin: 0;
         }
     }
 }
+
+/* ---------------------------------
+ADJUST SOME LABEL LEFT & RIGHT ISSUES
+----------------------------------*/
+.label-left,
+.label-right {
+    .textarea-wrap,
+    .listradio-wrap,
+    .listcheckbox-wrap {
+        .nf-field-label {
+            align-items: flex-start;
+        }
+    }
+    .textarea-wrap {
+        .nf-field-label {
+            margin-top: 5px;
+        }
+    }
+    .html-wrap,
+    .hr-wrap {
+        display: block;
+        .nf-field-element {
+            display: block;
+            margin: 0;
+            width: 100%;
+        }
+    }
+}
+
+/* ---------------------------------
+FIELD DESCRIPTION POSITIONS
+----------------------------------*/

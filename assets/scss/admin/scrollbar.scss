@@ -104,3 +104,19 @@
     opacity: 0.9; }
     .ps-container:hover > .ps-scrollbar-y-rail:hover > .ps-scrollbar-y {
       background-color: #999; }
+
+/* END DEFAULT PERFECT SCROLLBAR CSS */
+
+/*
+ * Custom perfect scrollbar css
+ */
+
+#nf-main.ps-container {
+  overflow:auto !important;
+  overflow-y:hidden !important;
+}
+
+#nf-drawer.ps-container {
+  overflow:auto !important;
+  overflow-y:hidden !important;
+}

@@ -104,7 +104,11 @@ margin: 0;
 .postbox .inside, .stuffbox .inside {
 	padding: 5px 10px 10px;
 }
-
+.postbox .inside::after, .stuffbox .inside::after {
+	clear: both;
+	content: "";
+	display: block;
+}
 #menu-settings-column .button-controls {
 	clear: none;
 	float: left;

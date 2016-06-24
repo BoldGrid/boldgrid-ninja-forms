@@ -9,6 +9,14 @@
 
 function nf_check_post() {
 	if( isset ( $_POST['_ninja_forms_display_submit'] ) AND absint ( $_POST['_ninja_forms_display_submit'] ) == 1 ){
+		/*
+		 * Nonces don't really secure anything from non-logged in users.
+		 * Using them for those users, however, can cause other issues.
+		 * Because of this, we are removing the nonce check for now.
+		 * 
+		 * In 3.0, we need to look at creating our own system.
+		 */
+		/*
 		// If our nonce isn't set, bail
 		if ( !isset ( $_POST['_wpnonce'] ) )
 			return false;
@@ -16,7 +24,7 @@ function nf_check_post() {
 		// If our nonce doesn't validate, bail
 		if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'nf_form_' . absint( $_POST['_form_id'] ) ) )
 			return false;
-
+		*/
 		$ajax = Ninja_Forms()->form( absint( $_POST['_form_id'] ) )->get_setting( 'ajax' );
 
 		if( $ajax != 1 ){

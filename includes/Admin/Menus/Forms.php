@@ -20,12 +20,23 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
         }
     }
 
+    public function admin_init()
+    {
+        if( isset( $_GET[ 'form_id' ] ) && ! is_numeric( $_GET[ 'form_id' ] ) && 'new' != $_GET[ 'form_id' ] ) {
+            if( current_user_can( apply_filters( 'ninja_forms_admin_import_template_capabilities', 'manage_options' ) ) ) {
+                $this->import_from_template();
+            }
+        }
+
+        $this->table = new NF_Admin_AllFormsTable();
+    }
+
     public function display()
     {
         if( isset( $_GET[ 'form_id' ] ) ){
 
 
-            if( 'new' == $_GET[ 'form_id' ] ){
+            if( 'new' == $_GET[ 'form_id' ] ) {
                 $form_id = 'tmp-' . time();
             } else {
                 $form_id = (is_numeric($_GET['form_id'])) ? absint($_GET['form_id']) : '';
@@ -68,14 +79,25 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
         }
     }
 
-    public function admin_init()
-    {
-        $this->table = new NF_Admin_AllFormsTable();
-    }
-
     public function submenu_separators()
     {
         add_submenu_page( 'ninja-forms', '', '', 'read', '', '' );
+    }
+
+    private function import_from_template()
+    {
+        $template = sanitize_title( $_GET['form_id'] );
+
+        $form = Ninja_Forms::template( $template . '.nff', array(), TRUE );
+
+        if( ! $form ) die( 'Template not found' );
+
+        $form = base64_decode( $form );
+
+        $form_id = Ninja_Forms()->form()->import_form( $form );
+
+        header( "Location: " . admin_url( "admin.php?page=ninja-forms&form_id=$form_id" ) );
+        exit();
     }
 
     private function _enqueue_the_things( $form_id )
@@ -89,6 +111,7 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
         /**
          * CSS Libraries
          */
+        wp_enqueue_style( 'wp-color-picker' );
         wp_enqueue_style( 'jBox', Ninja_Forms::$url . 'assets/css/jBox.css' );
         wp_enqueue_style( 'summernote', Ninja_Forms::$url . 'assets/css/summernote.css' );
         wp_enqueue_style( 'codemirror', Ninja_Forms::$url . 'assets/css/codemirror.css' );
@@ -119,10 +142,10 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
         wp_enqueue_script( 'summernote', Ninja_Forms::$url . 'assets/js/lib/summernote.min.js', array( 'jquery', 'speakingurl' ) );
 
 
-        wp_enqueue_script( 'nf-builder', Ninja_Forms::$url . 'assets/js/min/builder.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-sortable', 'jquery-effects-bounce' ) );
+        wp_enqueue_script( 'nf-builder', Ninja_Forms::$url . 'assets/js/min/builder.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-sortable', 'jquery-effects-bounce', 'wp-color-picker' ) );
 
         wp_localize_script( 'nf-builder', 'nfAdmin', array(
-            'ajaxNonce'         => wp_create_nonce( 'ninja_forms_ajax_nonce' ),
+            'ajaxNonce'         => wp_create_nonce( 'ninja_forms_builder_nonce' ),
             'requireBaseUrl'    => Ninja_Forms::$url . 'assets/js/',
             'previewurl'        => site_url() . '/?nf_preview_form=',
             'wp_locale'         => $wp_locale->number_format,
@@ -352,11 +375,18 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
         $form_settings[ 'calculations' ] = Ninja_Forms::config( 'FormCalculationSettings' );
         $form_settings = apply_filters( 'ninja_forms_localize_forms_settings', $form_settings );
 
+        foreach( $form_settings_types as $group_name => $form_setting_group ){
+            if( ! isset( $form_settings[ $group_name ] ) ) $form_settings[ $group_name ] = array();
+            $form_settings[ $group_name ] = apply_filters( 'ninja_forms_localize_form_' . $group_name . '_settings', $form_settings[ $group_name ] );
+        }
+
         $groups = Ninja_Forms::config( 'SettingsGroups' );
 
         $master_settings = array();
 
         foreach( $form_settings_types as $id => $type ) {
+
+            if( ! isset( $form_settings[ $id ] ) ) $form_settings[ $id ] = '';
 
             $unique_settings = $this->_unique_settings( $form_settings[ $id ] );
             $master_settings = array_merge( $master_settings, $unique_settings );
@@ -400,6 +430,8 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
 
     protected function _group_settings( $settings, $groups )
     {
+        if( ! is_array( $settings ) ) return $groups;
+
         foreach( $settings as $setting ){
 
             $group = ( isset( $setting[ 'group' ] ) ) ? $setting[ 'group' ] : '';
@@ -427,6 +459,8 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
     protected function _unique_settings( $settings )
     {
         $unique_settings = array();
+
+        if( ! is_array( $settings ) ) return $unique_settings;
 
         foreach( $settings as $setting ){
 

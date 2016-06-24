@@ -29,7 +29,9 @@
         }
     }
 }
-
+.media-modal {
+    z-index: 100000000;
+}
 #nf-builder {
     background: #fff;
     padding: 30px 40px;

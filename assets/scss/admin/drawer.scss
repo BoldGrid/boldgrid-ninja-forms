@@ -3,11 +3,11 @@
     padding: 40px 40px;
     width: 50%;
     position: absolute;
-    top: 60px;
+    top: 0;
     bottom: 0;
     right: -1400px;
-    overflow: auto;
-    z-index: 99;
+    overflow: hidden;
+    z-index: 101;
     transition: width 0.75s ease;
     -webkit-overflow-scrolling: touch;
     &.nf-drawer-expand {
@@ -15,7 +15,7 @@
     }
 }
 .nf-drawer-opened {
-    #nf-main {
+    .nf-main-test {
         width: 50%;
         transition: all 0.50s ease;
         .nf-button {

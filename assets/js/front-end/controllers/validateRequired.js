@@ -10,8 +10,11 @@ define([], function() {
 		},
 		
 		validateKeyup: function( el, model, keyCode ) {
-			var errorExists = nfRadio.channel( 'fields' ).request( 'get:error', model.get( 'id' ), 'required-error' );
-			if ( ( errorExists || ! model.get( 'clean' ) ) && 1 == model.get( 'required' ) ) {
+			if ( 1 != model.get( 'required' ) ) {
+				return false;
+			}
+
+			if ( ! model.get( 'clean' ) ) {
 				this.validateRequired( el, model );
 			}
 		},
@@ -50,6 +53,13 @@ define([], function() {
 				return false;
 			}
 
+			/*
+			 * If we already have a required error on this model, return false
+			 */
+			if ( model.get( 'errors' ).get( 'required-error' ) ) {
+				return false;
+			}
+
 			currentValue = model.get( 'value' );
 			
 			var defaultReqValidation = true;
@@ -59,7 +69,7 @@ define([], function() {
 			}
 
 			var valid = defaultReqValidation;
-			
+
 			this.maybeError( valid, model );
 
 		},

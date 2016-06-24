@@ -23,4 +23,19 @@ return apply_filters( 'ninja_forms_action_collect_payment_settings', array(
         'group' => 'primary',
     ),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Payment Total
+    |--------------------------------------------------------------------------
+    */
+
+    'payment_total' => array(
+        'name' => 'payment_total',
+        'type' => 'textbox',
+        'label' => __( 'Payment Total', 'ninja-forms' ),
+        'width' => 'full',
+        'group' => 'primary',
+        'use_merge_tags' => TRUE
+    ),
+
 ));

@@ -6,17 +6,14 @@
 
 <script id='nf-tmpl-field-listradio-option' type='text/template'>
     <li>
-        <label><input type="radio" name="nf-field-<%= fieldID %>" class="<%= classes %> nf-element" value="<%= value %>" <%= ( value == currentValue  || 1 == selected ) ? 'checked="checked"' : '' %>> <%= label %></label>
+        <input type="radio" id="nf-field-<%= fieldID %>-<%= index %>" name="nf-field-<%= fieldID %>" class="<%= classes %> nf-element <%= ( value == currentValue  || 1 == selected ) ? 'nf-checked' : '' %>" value="<%= value %>" <%= ( value == currentValue  || 1 == selected ) ? 'checked="checked"' : '' %>> <label for="nf-field-<%= fieldID %>-<%= index %>" class="<%= ( value == currentValue  || 1 == selected ) ? 'nf-checked-label' : '' %>"><%= label %></label>
     </li>
 </script>
 
 <script id='nf-tmpl-field-listradio-other' type='text/template'>
     <li>
-        <label>
-            <input type="radio" name="nf-field-<%= fieldID %>" class="<%= classes %> nf-element" value="nf-other" <%= ( ! valueFound ) ? 'checked="checked"' : '' %>>
-            Other
-            <%= renderOtherText() %> 
-        </label>
+
+        <input type="radio" name="nf-field-<%= fieldID %>" class="<%= classes %> nf-element" value="nf-other" <%= ( ! valueFound ) ? 'checked="checked"' : '' %>> <label>Other <%= renderOtherText() %></label>
     </li>
 </script>
 

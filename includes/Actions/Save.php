@@ -73,7 +73,7 @@ final class NF_Actions_Save extends NF_Abstracts_Action
 
         $sub->save();
 
-        $data[ 'actions' ][ 'save' ][ 'id' ] = $sub->get_id();
+        $data[ 'actions' ][ 'save' ][ 'sub_id' ] = $sub->get_id();
 
         return $data;
     }

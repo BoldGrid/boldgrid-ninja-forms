@@ -8,6 +8,9 @@
  */
 define( ['models/fields/fieldCollection', 'models/fields/fieldModel'], function( fieldCollection, fieldModel ) {
 	var controller = Marionette.Object.extend( {
+		adding: false,
+		removing: false,
+		
 		initialize: function() {
 			// Load our field collection from our localized form data
 			this.collection = new fieldCollection( preloadedFormData.fields );
@@ -22,6 +25,15 @@ define( ['models/fields/fieldCollection', 'models/fields/fieldModel'], function(
 			nfRadio.channel( 'fields' ).reply( 'add', this.addField, this );
 			nfRadio.channel( 'fields' ).reply( 'delete', this.deleteField, this );
 			nfRadio.channel( 'fields' ).reply( 'sort:fields', this.sortFields, this );
+
+			/*
+			 * Respond to requests to set our 'adding' and 'removing' state. This state is used to track whether or not
+			 * we should run animations in our fields collection.
+			 */
+			nfRadio.channel( 'fields' ).reply( 'get:adding', this.getAdding, this );
+			nfRadio.channel( 'fields' ).reply( 'set:adding', this.setAdding, this );
+			nfRadio.channel( 'fields' ).reply( 'get:removing', this.getRemoving, this );
+			nfRadio.channel( 'fields' ).reply( 'set:removing', this.setRemoving, this );
 		},
 
 		getFieldCollection: function() {
@@ -40,6 +52,11 @@ define( ['models/fields/fieldCollection', 'models/fields/fieldModel'], function(
 		 * @param bool 		silent 	prevent events from firing as a result of adding	 	
 		 */
 		addField: function( data, silent ) {
+			/*
+			 * Set our fields 'adding' value to true. This enables our add field animation.
+			 */
+			nfRadio.channel( 'fields' ).request( 'set:adding', true );
+
 			silent = silent || false;
 			if ( false === data instanceof Backbone.Model ) {
 				if ( 'undefined' == typeof ( data.id ) ) {
@@ -138,7 +155,9 @@ define( ['models/fields/fieldCollection', 'models/fields/fieldModel'], function(
 		 */
 		deleteField: function( model ) {
 			nfRadio.channel( 'fields' ).trigger( 'delete:field', model );
+			this.removing = true;
 			this.collection.remove( model );
+			
 			// Set our 'clean' status to false so that we get a notice to publish changes
 			nfRadio.channel( 'app' ).request( 'update:setting', 'clean', false );
 			nfRadio.channel( 'app' ).request( 'update:db' );
@@ -156,6 +175,22 @@ define( ['models/fields/fieldCollection', 'models/fields/fieldModel'], function(
 			var tmpNum = this.collection.tmpNum;
 			this.collection.tmpNum++;
 			return 'tmp-' + tmpNum;
+		},
+
+		getAdding: function() {
+			return this.adding;
+		},
+
+		setAdding: function( val ) {
+			this.adding = val;
+		},
+
+		getRemoving: function() {
+			return this.removing;
+		},
+
+		setRemoving: function( val ) {
+			this.removing = val;
 		}
 	});
 

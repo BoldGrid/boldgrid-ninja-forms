@@ -27,7 +27,7 @@ define( [], function() {
 				}
 			} );
 
-			this.listenTo( nfRadio.channel( 'settings' ), 'update:fieldKey', this.updateFieldKey );
+			this.listenTo( nfRadio.channel( 'app' ), 'fire:updateFieldKey', this.updateFieldKey );
 		},
 
 		/**
@@ -41,7 +41,7 @@ define( [], function() {
 		},
 
 		updateFieldKey: function( keyModel, settingModel ) {
-			nfRadio.channel( 'app' ).request( 'replace:fieldKey', this, keyModel, settingModel );
+			nfRadio.channel( 'app' ).trigger( 'replace:fieldKey', this, keyModel, settingModel );
 		}
 	} );
 	

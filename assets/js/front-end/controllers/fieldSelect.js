@@ -59,8 +59,7 @@ define([], function() {
 				option.fieldID = that.id;
 				option.classes = that.classes;
 				option.currentValue = that.value;
-				
-				var template = _.template( jQuery( '#nf-tmpl-field-listselect-option' ).html() );
+				var template = Marionette.TemplateCache.get( '#nf-tmpl-field-listselect-option' );
 				html += template( option );
 			} );
 

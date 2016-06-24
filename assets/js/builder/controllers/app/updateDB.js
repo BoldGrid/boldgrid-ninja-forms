@@ -40,6 +40,16 @@ define( [], function() {
 			}
 
 			var formModel = nfRadio.channel( 'app' ).request( 'get:formModel' );
+
+			/*
+			 * There are pieces of data that are only needed for the builder and not for the front-end.
+			 * We need to unset those.
+			 * TODO: Make this more dynamic/filterable.
+			 */
+			_.each( formModel.get( 'fields' ).models, function( fieldModel, index ) {
+				fieldModel.unset( 'jBox', { silent: true } );
+			} );
+
 			/*
 			 * The main content of our form is called the fieldContents.
 			 * In this next section, we check to see if any add-ons want to modify that contents before we save.

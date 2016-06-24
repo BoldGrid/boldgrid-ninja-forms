@@ -17,8 +17,8 @@ define([], function() {
         renderRatings: function() {
         	var html = '';
         	for (var i = this.default - 1; i >= 0; i--) {
-        		var template = _.template( jQuery( '#nf-tmpl-field-starrating-star' ).html() );
-        		var num = i + 1;
+        		var template = Marionette.TemplateCache.get( '#nf-tmpl-field-starrating-star' );
+                var num = i + 1;
         		html += template( { id: this.id, classes: this.classes, num: num } );
         	}
         	return html;

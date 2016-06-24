@@ -265,14 +265,14 @@ function ninja_forms_field_list_display( $field_id, $data, $form_id = '' ){
 
 	switch($list_type){
 		case 'dropdown':
+			echo apply_filters( 'ninja_forms_dropdown_open_tag', '<select name="ninja_forms_field_'.$field_id.'" id="ninja_forms_field_'.$field_id.'" class="'.$field_class.'" rel="'.$field_id.'">', $field_id, $field_class, $data, $ninja_forms_fields, $options );
 			?>
-			<select name="ninja_forms_field_<?php echo $field_id;?>" id="ninja_forms_field_<?php echo $field_id;?>" class="<?php echo $field_class;?>" rel="<?php echo $field_id;?>">
 				<?php
+				$select_placeholder = '';
 				if($label_pos == 'inside'){
-					?>
-					<option value=""><?php echo $label;?></option>
-					<?php
+					$select_placeholder = '<option value="">'.$label.'</option>';
 				}
+				echo apply_filters( 'ninja_forms_dropdown_placeholder', $select_placeholder, $label, $label_pos, $field_id, $field_class, $data, $ninja_forms_fields, $options );
 				foreach($options as $option){
 
 					if(isset($option['value'])){

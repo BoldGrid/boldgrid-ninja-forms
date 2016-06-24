@@ -61,7 +61,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
         ),
         'width' => 'one-half',
         'group' => 'primary',
-        'value' => 'above',
+        'value' => 'default',
         'help' => __( 'Select the position of your label relative to the field element itself.', 'ninja-forms' ),
 
     ),
@@ -159,12 +159,12 @@ return apply_filters( 'ninja_forms_field_settings', array(
             array( 'label'  => 'Two', 'value' => 'two', 'calc' => '', 'selected' => 0, 'order' => 1 ),
             array( 'label'  => 'Three', 'value' => 'three', 'calc' => '', 'selected' => 0, 'order' => 2 ),
         ),
-        'columns'           => array( 
+        'columns'           => array(
            'label'          => array(
                 'header'    => __( 'Label', 'ninja-forms' ),
                 'default'   => '',
             ),
-            
+
             'value'         => array(
                 'header'    => __( 'Value', 'ninja-forms' ),
                 'default'   => '',
@@ -269,18 +269,18 @@ return apply_filters( 'ninja_forms_field_settings', array(
                 'options' => array(
                     array(
                         'label' => __( 'Character(s)', 'ninja-forms' ),
-                        'value' => 'characters'
+                        'value' => 'char'
                     ),
                     array(
                         'label' => __( 'Word(s)', 'ninja-forms' ),
-                        'value' => 'words'
+                        'value' => 'word'
                     ),
                 ),
                 'value' => 'characters',
                 'label' => '',
             ),
             array(
-                'name' => 'input_limit_message',
+                'name' => 'input_limit_msg',
                 'type' => 'textbox',
                 'label' => __( 'Text to Appear After Counter', 'ninja-forms' ),
                 'placeholder' => __( 'Character(s) left' ),
@@ -288,7 +288,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
                 'value' => __( 'Character(s) left', 'ninja-forms' )
             )
         ),
-    
+
     ),
 
     /*
@@ -346,10 +346,10 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'group' => 'display',
         'settings' => array(
             array(
-                'name' => 'wrapper_class',
+                'name' => 'container_class',
                 'type' => 'textbox',
                 'placeholder' => '',
-                'label' => __( 'Wrapper', 'ninja-forms' ),
+                'label' => __( 'Container', 'ninja-forms' ),
                 'width' => 'one-half',
                 'value' => '',
                 'use_merge_tags' => FALSE,
@@ -454,7 +454,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     /*
      * ADMIN LABEL
      */
-    
+
     'admin_label'           => array(
         'name'              => 'admin_label',
         'type'              => 'textbox',
@@ -462,7 +462,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'width'             => 'full',
         'group'             => 'administration',
         'value'             => '',
-        'help'              => __( 'Label used when viewing and exporting submissions.', 'ninja-forms' ),        
+        'help'              => __( 'Label used when viewing and exporting submissions.', 'ninja-forms' ),
     ),
 
     /*
@@ -487,11 +487,12 @@ return apply_filters( 'ninja_forms_field_settings', array(
                 'width'             => 'full',
                 'group'             => 'advanced',
                 'value'             => '',
+                'use_merge_tags'    => true,
             ),
         ),
     ),
-    
-    
+
+
     /*
      * DESCRIPTION
      */
@@ -509,46 +510,47 @@ return apply_filters( 'ninja_forms_field_settings', array(
                 'name'              => 'desc_text',
                 'type'              => 'rte',
                 'label'             => '',
-                'width'             => 'full',   
+                'width'             => 'full',
+                'use_merge_tags'    => true,
             ),
 
             /*
              * DESCRIPTION POSITION
              */
 
-            'desc_pos'              => array(
-                'name'              => 'desc_pos',
-                'type'              => 'select',
-                'options'           => array(
-                    array(
-                        'label'     => __( 'None', 'ninja-forms' ),
-                        'value'     => 'none',
-                    ),            
-                    array(
-                        'label'     => __( 'Before Everything', 'ninja-forms' ),
-                        'value'     => 'before_everything',
-                    ),           
-                    array(
-                        'label'     => __( 'Before Label', 'ninja-forms' ),
-                        'value'     => 'before_label',
-                    ),            
-                    array(
-                        'label'     => __( 'After Label', 'ninja-forms' ),
-                        'value'     => 'after_label',
-                    ),            
-                    array(
-                        'label'     => __( 'After Everything', 'ninja-forms' ),
-                        'value'     => 'after_everything',
-                    ),
-                ),
-                'label'             => __( 'Display Position', 'ninja-forms' ),
-                'width'             => 'full',
-                'help'      => __( 'Determines the position of the label relative to the field element.', 'ninja-forms' ),
-            ),
+            // 'desc_pos'              => array(
+            //     'name'              => 'desc_pos',
+            //     'type'              => 'select',
+            //     'options'           => array(
+            //         array(
+            //             'label'     => __( 'None', 'ninja-forms' ),
+            //             'value'     => 'none',
+            //         ),
+            //         array(
+            //             'label'     => __( 'Before Everything', 'ninja-forms' ),
+            //             'value'     => 'before_everything',
+            //         ),
+            //         array(
+            //             'label'     => __( 'Before Label', 'ninja-forms' ),
+            //             'value'     => 'before_label',
+            //         ),
+            //         array(
+            //             'label'     => __( 'After Label', 'ninja-forms' ),
+            //             'value'     => 'after_label',
+            //         ),
+            //         array(
+            //             'label'     => __( 'After Everything', 'ninja-forms' ),
+            //             'value'     => 'after_everything',
+            //         ),
+            //     ),
+            //     'label'             => __( 'Display Position', 'ninja-forms' ),
+            //     'width'             => 'full',
+            //     'help'      => __( 'Determines the position of the label relative to the field element.', 'ninja-forms' ),
+            // ),
 
         ),
     ),
-    
+
     /*
      * NUMERIC SORT
      */
@@ -698,7 +700,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     /*
      * Disable input
      */
-    
+
     'disable_input' => array(
         'name'      => 'disable_input',
         'type'      => 'toggle',
@@ -755,12 +757,20 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'settings' => array(),
     ),
 
+    'confirm_field' => array(
+        'name' => 'confirm_field',
+        'type' => 'field-select',
+        'label' => __( 'Confirm', 'ninja-forms' ),
+        'width' => 'full',
+        'group' => 'advanced'
+    ),
+
     /*
     |--------------------------------------------------------------------------
     | Textarea Settings
     |--------------------------------------------------------------------------
     */
-    
+
     'textarea_rte'          => array(
         'name'              => 'textarea_rte',
         'type'              => 'toggle',
@@ -769,7 +779,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'group'             => 'display',
         'value'             => '',
         'help'              => __( 'Allows rich text input.', 'ninja-forms' ),
-    ),  
+    ),
 
     'textarea_media'          => array(
         'name'              => 'textarea_media',
@@ -815,7 +825,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     | Calc Value that is used for checkbox fields
     |--------------------------------------------------------------------------
     */
-   
+
     'checked_calc_value'    => array(
         'name'      => 'checked_calc_value',
         'type'      => 'textbox',
@@ -945,12 +955,12 @@ return apply_filters( 'ninja_forms_field_settings', array(
             array( 'label'  => 'Two', 'value' => '2.00', 'order' => 1 ),
             array( 'label'  => 'Three', 'value' => '3.00', 'order' => 2 ),
         ),
-         'columns'          => array( 
+         'columns'          => array(
             'label'         => array(
                 'header'    => __( 'Label', 'ninja-forms' ),
                 'default'   => '',
             ),
-            
+
             'value'         => array(
                 'header'    => __( 'Value', 'ninja-forms' ),
                 'default'   => '',
@@ -1035,6 +1045,18 @@ return apply_filters( 'ninja_forms_field_settings', array(
                 'value' => ''
             )
         )
+    ),
+
+    /*
+     * Add New Terms
+     */
+
+    'add_new_terms' => array(
+        'name' => 'add_new_terms',
+        'type' => 'toggle',
+        'label' => __( 'Add New Terms', 'ninja-forms'),
+        'width' => 'full',
+        'group' => 'advanced',
     ),
 
     /*

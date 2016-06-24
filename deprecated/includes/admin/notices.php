@@ -12,15 +12,39 @@
 
 function nf_admin_notices( $notices ) {
 
-    $three_info = add_query_arg( array( 'nf_admin_notice_ignore' => 'three_info' ) );
-    $three_link = nf_aff_link( 'https://ninjaforms.com/three/?utm_medium=plugin&utm_source=admin-notice&utm_campaign=Ninja+Forms+THREE&utm_content=Learn+More' );
-    $notices['three_info'] = array(
-        'title' => __( 'THREE is coming!', 'ninja-forms' ),
-        'msg' => sprintf( __( 'A major update is coming to Ninja Forms. %sLearn more about new features, backwards compatibility, and more Frequently Asked Questions.%s', 'ninja-forms' ), '<a target="_blank" href="' . $three_link . '">', '</a>' ),
-        'link' => '',
-        'int' => 0,
-        'blacklist' => array( 'ninja-forms', 'ninja-forms-three' ),
-    );
+    if( ninja_forms_three_calc_check() && ninja_forms_three_addons_version_check() && ninja_forms_three_addons_check() ){
+
+
+        /*
+         * Upgrade Now
+         */
+        $upgrade_link = admin_url( 'admin.php?page=ninja-forms-three' );
+        $notices['three_upgrade'] = array(
+            'title' => __( 'Upgrade to Ninja Forms THREE', 'ninja-forms' ),
+            'msg' => sprintf( __( 'You are eligible to upgrade to the Ninja Forms THREE Release Candidate! %sUpgrade Now%s', 'ninja-forms' ), '<a target="_blank" href="' . $upgrade_link . '">', '</a>' ),
+            'link' => '',
+            'int' => 0,
+            'blacklist' => array( 'ninja-forms', 'ninja-forms-three' ),
+        );
+
+    } else {
+
+        /*
+         * THREE is Coming!
+         */
+        $three_info = add_query_arg( array( 'nf_admin_notice_ignore' => 'three_info' ) );
+        $three_link = nf_aff_link( 'https://ninjaforms.com/three/?utm_medium=plugin&utm_source=admin-notice&utm_campaign=Ninja+Forms+THREE&utm_content=Learn+More' );
+        $notices['three_info'] = array(
+            'title' => __( 'THREE is coming!', 'ninja-forms' ),
+            'msg' => sprintf( __( 'A major update is coming to Ninja Forms. %sLearn more about new features, backwards compatibility, and more Frequently Asked Questions.%s', 'ninja-forms' ), '<a target="_blank" href="' . $three_link . '">', '</a>' ),
+            'link' => '',
+            'int' => 0,
+            'blacklist' => array( 'ninja-forms', 'ninja-forms-three' ),
+        );
+
+    }
+
+
 
     $one_week_support = add_query_arg( array( 'nf_admin_notice_ignore' => 'one_week_support' ) );
     $support_link = nf_aff_link( 'https://ninjaforms.com/contact/?utm_medium=plugin&utm_source=admin-notice&utm_campaign=Ninja+Forms+Upsell&utm_content=Ninja+Forms+Support' );

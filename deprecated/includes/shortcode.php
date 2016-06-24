@@ -123,7 +123,13 @@ function nf_all_fields_shortcode( $atts, $content = '' ) {
 			continue;
 
 		$value = apply_filters( 'nf_all_fields_field_value', ninja_forms_field_shortcode( array( 'id' => $field_id ) ), $field_id );
-		$label = strip_tags( apply_filters( 'nf_all_fields_field_label', $field['data']['label'], $field_id ) );
+
+		if( isset( $field[ 'data' ][ 'admin_label' ] ) && $field[ 'data' ][ 'admin_label' ] ){
+			$label = $field[ 'data' ][ 'admin_label' ];
+		} else {
+			$label = $field['data']['label'];
+		}
+		$label = strip_tags( apply_filters( 'nf_all_fields_field_label', $label, $field_id ) );
 
 		if ( 1 == $html ) {
 			$field_list .= '<tr id="ninja_forms_field_' . $field_id . '"><td>' . $label .':</td><td>' . $value . '</td></tr>';

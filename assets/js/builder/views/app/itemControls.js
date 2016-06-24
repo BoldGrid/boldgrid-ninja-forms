@@ -31,6 +31,7 @@ define( [], function() {
 		},
 
 		events: {
+			'mouseover .nf-item-control': 'mouseoverItemControl',
 			'click .nf-edit-settings': 'clickEdit',
 			'singletap .nf-edit-settings': 'singleTapEdit',
 			'click .nf-delete': 'clickDelete',
@@ -53,6 +54,10 @@ define( [], function() {
 
 		clickDuplicateField: function( e ) {
 			nfRadio.channel( 'app' ).trigger( 'click:duplicate', e, this.model );
+		},
+
+		mouseoverItemControl: function( e ) {
+			nfRadio.channel( 'app' ).trigger( 'mouseover:itemControl', e, this.model );
 		}
 	});
 

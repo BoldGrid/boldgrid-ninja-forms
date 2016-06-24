@@ -45,15 +45,30 @@ return apply_filters( 'ninja_forms_plugin_settings_advanced', array(
 
     /*
     |--------------------------------------------------------------------------
-    | Disable Opinionated Styles
+    | Opinionated Styles
     |--------------------------------------------------------------------------
     */
 
-    'disable_opinionated_styles' => array(
-        'id'    => 'disable_opinionated_styles',
-        'type'  => 'checkbox',
-        'label' => __( 'Disable Opinionated Styles', 'ninja-forms' ),
-        'desc'  => __( 'Do not use default Ninja Forms styling conventions.', 'ninja-forms' ),
+    'opinionated_styles' => array(
+        'id'    => 'opinionated_styles',
+        'type'  => 'select',
+        'label' => __( 'Opinionated Styles', 'ninja-forms' ),
+        'options' => array(
+            array(
+                'label' => __( 'None', 'ninja-forms' ),
+                'value' => '',
+            ),
+            array(
+                'label' => __( 'Light', 'ninja-forms' ),
+                'value' => 'light',
+            ),
+            array(
+                'label' => __( 'Dark', 'ninja-forms' ),
+                'value' => 'dark',
+            ),
+        ),
+        'desc'  => __( 'Use default Ninja Forms styling conventions.', 'ninja-forms' ),
+        'value' => 'light'
     ),
 
     /*

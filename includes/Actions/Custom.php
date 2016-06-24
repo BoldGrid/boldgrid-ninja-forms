@@ -23,7 +23,7 @@ final class NF_Actions_Custom extends NF_Abstracts_Action
     /**
      * @var int
      */
-    protected $_priority = '10';
+    protected $_priority = 10;
 
     /**
      * Constructor

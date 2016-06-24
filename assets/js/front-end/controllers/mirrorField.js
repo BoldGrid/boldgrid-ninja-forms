@@ -18,7 +18,8 @@ define( [], function() {
 
 		changeValue: function( targetModel ) {
 			this.listeningModel.set( 'value', targetModel.get( 'value' ) );
-			this.listeningModel.set( 'reRender', true );
+			// this.listeningModel.set( 'reRender', true );
+			this.listeningModel.trigger( 'reRender' );
 		}
 	});
 

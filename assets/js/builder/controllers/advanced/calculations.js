@@ -42,7 +42,7 @@ define( [], function() {
 		},
 
 		updateCalc: function( optionModel ) {
-			this.checkName( optionModel.get( 'name' ), optionModel );
+			this.checkName( optionModel.get( 'name' ), optionModel, false );
 			this.checkEQ( optionModel.get( 'eq' ), optionModel );
 		},
 
@@ -58,12 +58,12 @@ define( [], function() {
 		 * @param  backbone.model 	optionModel 
 		 * @return void
 		 */
-		checkName: function( name, optionModel ) {
-			optionModel.set( 'name', name );
+		checkName: function( name, optionModel, silent ) {
+			silent = silent || true;
 			// Get our current errors, if any.
 			var errors = optionModel.get( 'errors' );
 			// Search our calc collection for our name
-			var found = optionModel.collection.where( { name: name } );
+			var found = optionModel.collection.where( { name: jQuery.trim( name ) } );
 
 			// If the name that was passed is the same as our current name, return false.
 			if ( name == optionModel.get( 'name' ) ) {
@@ -74,6 +74,7 @@ define( [], function() {
 			if ( 0 != found.length ) {
 				errors.nameExists = 'Calculation names must be unique. Please enter another name.';
 			} else {
+				optionModel.set( 'name', name, { silent: silent } );
 				delete errors.nameExists;
 			}
 

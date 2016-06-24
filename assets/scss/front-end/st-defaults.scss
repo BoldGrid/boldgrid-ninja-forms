@@ -11,24 +11,84 @@
     box-sizing: border-box;
 }
 
-.field-wrap,
+.nf-field-container,
 #ninja_forms_required_items {
+    clear: both;
+    position: relative;
+    margin-bottom: 25px;
     &::after {
         clear: both;
         content: "";
         display: block;
     }
+    &.hidden-container,
+    &.hr-container {
+        margin: 0;
+        height: auto;
+        .nf-field-label {
+            display: none;
+        }
+    }
+    &.html-container {
+        .nf-field-label {
+            display: none;
+        }
+    }
 }
 
-.nf-fields {
+.nf-field-label {
+    label {
+        font-weight: bold;
+        margin: 0;
+        padding: 0;
+    }
+}
+.nf-field-element {
+    position: relative;
     input,
     select,
     textarea {
+        margin: 0;
         width: auto;
         height: auto;
         vertical-align: inherit;
     }
+    textarea {
+        height: 200px;
+    }
 }
+.nf-field-description {
+    p:last-child {
+        margin: 0;
+    }
+}
+.nf-help {
+    background: url( '../img/help-info.png' ) no-repeat;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+}
+
+.nf-input-limit {
+    font-size: 12px;
+    margin-top: 5px;
+}
+.nf-static {
+    padding: 0 10px;
+}
+.nf-after-field {
+    .nf-error-msg {
+        margin-right: 10px;
+        text-align: right;
+    }
+}
+
+
+/* ---------------------------------
+CHECKBOX FIELD
+----------------------------------*/
+
+
 
 /* ---------------------------------
 RADIO & CHECKBOX LISTS
@@ -37,22 +97,49 @@ RADIO & CHECKBOX LISTS
 .list-radio-wrap,
 .list-checkbox-wrap {
     ul, li {
-        list-style: none;
-        margin: 0;
-        padding: 0;
+        list-style: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
         input {
             margin-right: 5px;
         }
     }
     li {
         padding-left: 10px;
+        margin: 0 0 5px !important;
+        text-indent: initial !important;
+        label {
+            display: inline-block;
+            float: initial;
+            margin: 0;
+            width: auto;
+        }
+        input {
+            width: auto !important;
+        }
+    }
+}
+
+/* ---------------------------------
+PRODUCT FIELD
+----------------------------------*/
+.product-wrap {
+    > div {
+        input {
+            width: 80px !important;
+        }
+        .nf-product-field {
+            span {
+                padding: 0 5px;
+            }
+        }
     }
 }
 
 /* ---------------------------------
 STAR RATING
 ----------------------------------*/
-.starrating .star {
+.starrating-wrap .star {
     border-bottom: 0;
 }
 
@@ -60,6 +147,80 @@ STAR RATING
 HONEYPOT
 ----------------------------------*/
 
-.nf-hp {
+.nf-form-hp {
+    position: absolute;
     visibility: hidden;
+}
+
+/* ---------------------------------
+SELECT LIST
+----------------------------------*/
+.list-select-wrap {
+    div div {
+        display: none;
+    }
+}
+
+
+/* ---------------------------------
+COLORS
+As minimal as possible
+----------------------------------*/
+.ninja-forms-req-symbol,
+.nf-error-msg, {
+    color: #E80000;
+}
+.nf-error {
+    .ninja-forms-field {
+        border: 1px solid #E80000;
+    }
+}
+.nf-field-submit-error {
+    padding: 15px;
+}
+
+.ninja-forms-noscript-message {
+    background: #f1f1f1;
+    border: 4px dashed #ccc;
+    color: #333;
+    display: block;
+    font-size: 20px;
+    margin: 20px 0;
+    padding: 40px;
+    text-align: center;
+}
+
+/* ---------------------------------
+HELPER CLASSES
+----------------------------------*/
+.two-col-list {
+    ul {
+        li {
+            float: left;
+            width: 50%
+        }
+    }
+}
+.three-col-list {
+    ul {
+        li {
+            float: left;
+            width: 33.33%
+        }
+    }
+}
+.four-col-list {
+    ul {
+        li {
+            float: left;
+            width: 25%
+        }
+    }
+}
+
+
+body {
+    .pika-label {
+        background: transparent;
+    }
 }

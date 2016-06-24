@@ -105,8 +105,9 @@ define([], function() {
             }
 
             this.totalModel.set( 'value', newTotal.toFixed( 2 ) );
-            this.totalModel.set( 'reRender', true );
-            this.totalModel.set( 'reRender', false );
+            // this.totalModel.set( 'reRender', true );
+            // this.totalModel.set( 'reRender', false );
+            this.totalModel.trigger( 'reRender' );
         }
     });
 

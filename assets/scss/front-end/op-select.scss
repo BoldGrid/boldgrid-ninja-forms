@@ -1,33 +1,62 @@
+
 .nf-fields {
-    .listselect-wrap,
-    .liststate-wrap,
-    .listcountry-wrap {
-        span {
-            position: relative;
+    .list-select-wrap > div {
+        position: relative;
+        div {
+            display: block;
+            position: absolute;
+            font-size: 16px;
+            line-height: 16px;
+            margin: 0;
+            padding: 16px;
+            height: 50px;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 1;
             &::after {
-                content: "<>";
-                color: #999;
-                font-family: "Consolas", monospace;
-                font-size:28px;
-                font-weight: bold;
-                transform: rotate(90deg);
+                content: "\f078";
+                font-family: FontAwesome;
+                font-size: 20px;
+                //font-weight: bold;
+                //transform: rotate(90deg);
                 position: absolute;
-                top: -10px;
                 right: 10px;
+                bottom: 0;
+                height: 50px;
+                line-height: 50px;
             }
         }
         &.label-right {
-            span {
-                &::after {
-                    right: 20px;
-                }
+            div {
+                width: 59%;
+                // &::after {
+                //     right: 20px;
+                // }
             }
         }
+        &.label-below {
+            div {
+                top: 0;
+                bottom: auto;
+            }
+        }
+        &.label-left {
+            div {
+                width: 59%;
+                left: 40.5%;
+                right: 40px;
+            }
+        }
+        select {
+            background: transparent;
+            border: 0;
+            appearance: none;
+            position: relative;
+            z-index: 2;
+        }
     }
-    select {
-        appearance: none;
-    }
-    listmultiselect-wrap {
+    .listmultiselect-wrap {
         select {
             appearance: normal;
         }

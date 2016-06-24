@@ -13,9 +13,9 @@ define( [], function() {
 
 		renderAddButton: function() {
 			if ( this.model.get( 'addSavedLoading' ) ) {
-				var button = _.template( jQuery( '#nf-tmpl-add-saved-field-loading' ).html() );
+				var button = Marionette.TemplateCache.get( '#nf-tmpl-add-saved-field-loading' );
 			} else {
-				var button = _.template( jQuery( '#nf-tmpl-add-saved-field-button' ).html() );
+				var button = Marionette.TemplateCache.get( '#nf-tmpl-add-saved-field-button' );
 			}
 			jQuery( this.el ).find( '.add-button' ).html( button( this ) );
 		},

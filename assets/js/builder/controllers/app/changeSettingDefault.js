@@ -25,17 +25,18 @@ define( [], function() {
 		 * @param  backbone.model 	dataModel       model that holds our field settings
 		 * @return void
 		 */
-		changeSetting: function( e, settingModel, dataModel ) {
+		changeSetting: function( e, settingModel, dataModel, value ) {
 			var name = settingModel.get( 'name' );
 			var before = dataModel.get( name );
-			// Sends out a request on the fields-type (fields-text, fields-checkbox, etc) channel to see if that field type needs to return a special value for saving.
-			var value = nfRadio.channel( settingModel.get( 'type' ) ).request( 'before:updateSetting', e, dataModel, name, settingModel );
-			// If we didn't get a special field-type value, get the value from the event passed.
-			if ( 'undefined' == typeof value ) {
-				value = jQuery( e.target ).val();
+			var value = value || null;
+			if ( ! value ) {
+				// Sends out a request on the fields-type (fields-text, fields-checkbox, etc) channel to see if that field type needs to return a special value for saving.
+				var value = nfRadio.channel( settingModel.get( 'type' ) ).request( 'before:updateSetting', e, dataModel, name, settingModel ) || jQuery( e.target ).val();
 			}
+
 			// Update our field model with the new setting value.
 			dataModel.set( name, value, { settingModel: settingModel } );
+			nfRadio.channel( 'setting-' + name, 'after:updateSetting', dataModel, settingModel );
 			// Register our setting change with our change tracker
 			var after = value;
 			

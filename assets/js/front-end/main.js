@@ -5,36 +5,15 @@ jQuery( document ).ready( function( $ ) {
 			forms: {},
 			initialize: function( options ) {
 
-				// TODO: Maybe move the resumeProcessing elsewhere.
-				if( 'undefined' != typeof nfFrontEnd.resumeProcessing ){
-					var formData = JSON.stringify( nfFrontEnd.resumeProcessing );
-					var data = {
-						'action': 'nf_ajax_resume',
-						'security': nfFrontEnd.ajaxNonce,
-						'formData': formData
-					};
+				// Underscore one-liner for getting URL Parameters
+				this.urlParameters = _.object(_.compact(_.map(location.search.slice(1).split('&'), function(item) {  if (item) return item.split('='); })));
 
-					jQuery.ajax({
-						url: nfFrontEnd.adminAjax,
-						type: 'POST',
-						data: data,
-						cache: false,
-						success: function( data, textStatus, jqXHR ) {
-							var response = jQuery.parseJSON( data );
-
-							nfRadio.channel( 'submit' ).trigger( 'submit:response', response, textStatus, jqXHR );
-						},
-						error: function( jqXHR, textStatus, errorThrown ) {
-							// Handle errors here
-							console.log('ERRORS: ' + textStatus);
-							// STOP LOADING SPINNER
-
-							nfRadio.channel( 'submit' ).trigger( 'submit:response', 'error', textStatus, jqXHR, errorThrown );
-						}
-					});
+				if( 'undefined' != typeof this.urlParameters.nf_resume ) {
+					this.listenTo(nfRadio.channel('form-' + this.urlParameters.nf_resume), 'loaded', this.restart);
 				}
 
 				var loadControllers = new LoadControllers();
+				nfRadio.channel( 'app' ).trigger( 'after:loadControllers' );
 			},
 			
 			onStart: function() {
@@ -43,6 +22,37 @@ jQuery( document ).ready( function( $ ) {
 					var layoutView = new mainLayout( { model: form, fieldCollection: form.get( 'fields' ) } );			
 					nfRadio.channel( 'form' ).trigger( 'render:view', layoutView );
 				} );
+			},
+
+			restart: function( formModel ) {
+				if( 'undefined' != typeof this.urlParameters.nf_resume ){
+					var data = {
+						'action': 'nf_ajax_submit',
+						'security': nfFrontEnd.ajaxNonce,
+						'nf_resume': this.urlParameters
+					};
+
+					nfRadio.channel( 'form-' + formModel.get( 'id' ) ).trigger( 'disable:submit' );
+					nfRadio.channel( 'form-' + formModel.get( 'id' ) ).trigger( 'processingLabel' );
+
+					jQuery.ajax({
+						url: nfFrontEnd.adminAjax,
+						type: 'POST',
+						data: data,
+						cache: false,
+						success: function( data, textStatus, jqXHR ) {
+					   		var response = jQuery.parseJSON( data );
+					        nfRadio.channel( 'forms' ).trigger( 'submit:response', response, textStatus, jqXHR );
+					    	nfRadio.channel( 'form-' + formModel.get( 'id' ) ).trigger( 'submit:response', response, textStatus, jqXHR );
+					    },
+					    error: function( jqXHR, textStatus, errorThrown ) {
+					        // Handle errors here
+					        console.log('ERRORS: ' + textStatus);
+					        // STOP LOADING SPINNER
+							nfRadio.channel( 'forms' ).trigger( 'submit:response', 'error', textStatus, jqXHR, errorThrown );
+					    }
+					});
+				}
 			}
 		});
 	

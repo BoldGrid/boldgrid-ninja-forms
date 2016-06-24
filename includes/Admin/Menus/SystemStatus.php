@@ -69,12 +69,7 @@ final class NF_Admin_Menus_SystemStatus extends NF_Abstracts_Submenu
 
         //Time Zone Check
         //TODO: May need refactored
-        $default_timezone = date_default_timezone_get();
-        if ( 'UTC' !== $default_timezone ) {
-            $default_timezone = sprintf( __( 'Default timezone is %s - it should be UTC', 'ninja-forms' ), $default_timezone );
-        } else {
-            $default_timezone =  sprintf( __( 'Default timezone is %s', 'ninja-forms' ), $default_timezone );
-        }
+        $default_timezone = get_option( 'timezone_string' );
 
         //Check for active plugins
         $active_plugins = (array) get_option( 'active_plugins', array() );

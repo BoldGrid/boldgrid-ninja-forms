@@ -21,9 +21,11 @@ define( [], function() {
 			if ( ! nfRadio.channel( 'app' ).request( 'is:mobile' ) ) {
 				jQuery( this.el ).find( 'div.nf-field-type-draggable' ).draggable( {
 					opacity: 0.9,
-					tolerance: 'intersect',
-					scroll: false,
+					tolerance: 'pointer',
 					connectToSortable: '.nf-field-type-droppable',
+					refreshPositions: true,
+					grid: [ 5, 5 ],
+					appendTo: '#nf-main',
 
 					helper: function( e ) {
 						var width = jQuery( e.target ).parent().width();
@@ -32,7 +34,7 @@ define( [], function() {
 						var left = width / 4;
 						var top = height / 2;
 						jQuery( this ).draggable( 'option', 'cursorAt', { top: top, left: left } );
-
+						jQuery( element ).zIndex( 1000 );
 						return element;
 					},
 
@@ -44,6 +46,10 @@ define( [], function() {
 					stop: function( e, ui ) {
 						that.dragging = false;
 						nfRadio.channel( 'drawer-addField' ).trigger( 'stopDrag:type', this, ui );
+					},
+
+					drag: function(e, ui) {
+						nfRadio.channel( 'drawer-addField' ).trigger( 'drag:type', this, ui, e );	
 					}
 
 				} ).disableSelection();
@@ -91,7 +97,7 @@ define( [], function() {
 			            var type = nfRadio.channel( 'fields' ).request( 'get:type', id );
 			            var nicename = type.get( 'nicename' );
 			            var icon = type.get( 'icon' );
-			            var renderType = _.template( jQuery( '#nf-tmpl-drawer-field-type-button' ).html() );
+			            var renderType = Marionette.TemplateCache.get( '#nf-tmpl-drawer-field-type-button' );
 			            html += renderType( { id: id, nicename: nicename, icon: icon, type: type, savedField: that.isSavedField } );
 			        } );
 			        return html;

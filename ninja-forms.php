@@ -3,7 +3,7 @@
 Plugin Name: Ninja Forms
 Plugin URI: http://ninjaforms.com/
 Description: Ninja Forms is a webform builder with unparalleled ease of use and features.
-Version: 2.9.42.1
+Version: 2.9.50
 Author: The WP Ninjas
 Author URI: http://ninjaforms.com
 Text Domain: ninja-forms
@@ -14,11 +14,17 @@ Copyright 2016 WP Ninjas.
 
 require_once dirname( __FILE__ ) . '/lib/NF_VersionSwitcher.php';
 
-if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3', '<' ) ) {
+function ninja_forms_three_table_exists(){
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'nf3_forms';
+    return ( $wpdb->get_var("SHOW TABLES LIKE '$table_name'") == $table_name );
+}
+
+if( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3', '<' ) || ! ninja_forms_three_table_exists() ) {
     update_option( 'ninja_forms_load_deprecated', TRUE );
 }
 
-if( get_option( 'ninja_forms_load_deprecated', FALSE )  && ! isset( $_POST[ 'nf2to3' ] ) ) {
+if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf2to3' ] ) && ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) ){
 
     include 'deprecated/ninja-forms.php';
 
@@ -35,45 +41,10 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE )  && ! isset( $_POST[ 'nf2
 
 } else {
 
-    add_action( 'wp_ajax_ninja_forms_ajax_migrate_database', 'ninja_forms_ajax_migrate_database' );
-    function ninja_forms_ajax_migrate_database(){
-        $migrations = new NF_Database_Migrations();
-        $migrations->nuke( true, true );
-        $migrations->migrate();
-        echo json_encode( array( 'migrate' => 'true' ) );
-        wp_die();
-    }
+    include_once 'lib/NF_Upgrade.php';
+    include_once 'lib/NF_AddonChecker.php';
 
-    add_action( 'wp_ajax_ninja_forms_ajax_import_form', 'ninja_forms_ajax_import_form' );
-    function ninja_forms_ajax_import_form(){
-        $import = stripslashes( $_POST[ 'import' ] ); // TODO: How to sanitize serialized string?
-        $form_id = ( isset( $_POST[ 'formID' ] ) ) ? absint( $_POST[ 'formID' ] ) : '';
-
-        Ninja_Forms()->form()->import_form( $import, $form_id, TRUE );
-
-        if( isset( $_POST[ 'flagged' ] ) && $_POST[ 'flagged' ] ){
-            $form = Ninja_Forms()->form( $form_id )->get();
-            $form->update_setting( 'lock', TRUE );
-            $form->save();
-        }
-
-
-        echo json_encode( array( 'export' => $_POST[ 'import' ], 'import' => $import ) );
-        wp_die();
-    }
-
-    add_action( 'wp_ajax_ninja_forms_ajax_import_fields', 'ninja_forms_ajax_import_fields' );
-    function ninja_forms_ajax_import_fields(){
-        $fields = stripslashes( $_POST[ 'fields' ] ); // TODO: How to sanitize serialized string?
-        $fields = maybe_unserialize( $fields );
-
-        foreach( $fields as $field ) {
-            Ninja_Forms()->form()->import_field( $field, $field[ 'id' ], TRUE );
-        }
-
-        echo json_encode( array( 'export' => $_POST[ 'fields' ], 'import' => $fields ) );
-        wp_die();
-    }
+    require_once 'includes/deprecated.php';
 
     /**
      * Class Ninja_Forms
@@ -217,33 +188,20 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE )  && ! isset( $_POST[ 'nf2
                 self::$instance->menus[ 'forms' ]           = new NF_Admin_Menus_Forms();
                 self::$instance->menus[ 'all-forms' ]       = new NF_Admin_Menus_AllForms();
                 self::$instance->menus[ 'add-new' ]         = new NF_Admin_Menus_AddNew();
-                self::$instance->menus[ 'settings' ]        = new NF_Admin_Menus_Settings();
-                self::$instance->menus[ 'add-ons' ]         = new NF_Admin_Menus_Addons();
-                self::$instance->menus[ 'system_status']    = new NF_Admin_Menus_SystemStatus();
                 self::$instance->menus[ 'submissions']      = new NF_Admin_Menus_Submissions();
                 self::$instance->menus[ 'import-export']    = new NF_Admin_Menus_ImportExport();
+                self::$instance->menus[ 'settings' ]        = new NF_Admin_Menus_Settings();
                 self::$instance->menus[ 'licenses']         = new NF_Admin_Menus_Licenses();
-
-                /*
-                 * Admin menus used for building out the admin UI
-                 *
-                 * TODO: removed once building is complete
-                 */
-                // self::$instance->menus[ 'add-field']        = new NF_Admin_Menus_AddField();
-                // self::$instance->menus[ 'edit-field']       = new NF_Admin_Menus_EditField();
-                // self::$instance->menus[ 'add-action']       = new NF_Admin_Menus_AddAction();
-                // self::$instance->menus[ 'edit-action']      = new NF_Admin_Menus_EditAction();
-                // self::$instance->menus[ 'edit-settings']    = new NF_Admin_Menus_EditSettings();
-                // self::$instance->menus[ 'fields-layout']    = new NF_Admin_Menus_FieldsLayout();
+                self::$instance->menus[ 'system_status']    = new NF_Admin_Menus_SystemStatus();
+                self::$instance->menus[ 'add-ons' ]         = new NF_Admin_Menus_Addons();
+                self::$instance->menus[ 'divider']          = new NF_Admin_Menus_Divider();
                 self::$instance->menus[ 'mock-data']        = new NF_Admin_Menus_MockData();
-                // self::$instance->menus[ 'preview']          = new NF_Admin_Menus_Preview();
 
                 /*
                  * AJAX Controllers
                  */
                 self::$instance->controllers[ 'form' ]        = new NF_AJAX_Controllers_Form();
                 self::$instance->controllers[ 'preview' ]     = new NF_AJAX_Controllers_Preview();
-                self::$instance->controllers[ 'uploads' ]     = new NF_AJAX_Controllers_Uploads();
                 self::$instance->controllers[ 'submission' ]  = new NF_AJAX_Controllers_Submission();
                 self::$instance->controllers[ 'savedfields' ] = new NF_AJAX_Controllers_SavedFields();
 
@@ -263,16 +221,6 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE )  && ! isset( $_POST[ 'nf2
                  * Shortcodes
                  */
                 self::$instance->shortcodes = new NF_Display_Shortcodes();
-
-                /*
-                 * Temporary Shortcodes
-                 *
-                 * TODO: removed once building is complete
-                 */
-                require_once( self::$dir . 'includes/Display/Shortcodes/tmp-frontend.php' );
-                require_once( self::$dir . 'includes/Display/Shortcodes/tmp-preview.php' );
-                require_once( self::$dir . 'includes/Display/Shortcodes/tmp-frontendform.php' );
-                require_once( self::$dir . 'includes/Display/Shortcodes/tmp-file-upload.php' );
 
                 /*
                  * Submission CPT
@@ -571,13 +519,19 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE )  && ! isset( $_POST[ 'nf2
          * @param string $file_name
          * @param array $data
          */
-        public static function template( $file_name = '', array $data = array() )
+        public static function template( $file_name = '', array $data = array(), $return = FALSE )
         {
-            if( ! $file_name ) return;
+            if( ! $file_name ) return FALSE;
 
             extract( $data );
 
-            include self::$dir . 'includes/Templates/' . $file_name;
+            $path = self::$dir . 'includes/Templates/' . $file_name;
+
+            if( ! file_exists( $path ) ) return FALSE;
+
+            if( $return ) return file_get_contents( $path );
+
+            include $path;
         }
 
         /**

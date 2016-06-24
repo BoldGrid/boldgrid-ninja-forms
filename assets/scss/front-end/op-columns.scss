@@ -13,6 +13,7 @@
 .two-fourths,
 .two-sixths,
 .two-thirds {
+    clear: initial;
     float: left;
     margin-left: 2.564102564102564%;
     .inside {

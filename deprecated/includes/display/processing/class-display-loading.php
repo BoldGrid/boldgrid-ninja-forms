@@ -200,7 +200,7 @@ class Ninja_Forms_Loading {
 					break;
 				default:
 					if ( 'querystring' == $default_value_type ) {
-						$default_value = isset ( $_GET[ $default_value ] ) ? esc_html( $_GET[ $default_value ] ) : '';
+						$default_value = isset ( $_GET[ $default_value ] ) ? stripslashes( esc_html( $_GET[ $default_value ] ) ) : '';
 					}
 					break;
 			}

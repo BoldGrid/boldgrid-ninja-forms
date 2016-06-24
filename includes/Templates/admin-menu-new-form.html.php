@@ -94,7 +94,38 @@
 <script id="nf-tmpl-main-content-fields-empty" type="text/template">
     <div class="nf-fields-empty">
         <h3>Add form fields</h3>
-        <p>Get started by adding your first form field. Just click the plus and select the fields you want. It’s that easy.</p>
+        <p>Get started by adding your first form field. <a class="nf-open-drawer" title="Add New Field" href="#" data-drawerid="addField">Just click here and select the fields you want.</a> It’s that easy. Or...
+        <h3>Start from a template</h3>
+        <a href="?page=ninja-forms&form_id=formtemplate-contactform" class="nf-one-third template-box">
+            <div class="template-box-inside">
+                <h4>Contact Form</h4>
+                <p class="template-desc">Allow your users to contact you with this simple contact form. You can add and remove fields as needed.</p>
+            </div>
+        </a>
+        <a href="?page=ninja-forms&form_id=formtemplate-quoterequest" class="nf-one-third template-box">
+            <div class="template-box-inside">
+                <h4>Quote Request</h4>
+                <p class="template-desc">Start collecting leads with this pre-made Request a quote form. You can add and remove fields as needed.</p>
+            </div>
+        </a>
+        <!-- <a href="#" class="nf-one-third template-box">
+            <div class="template-box-inside">
+                <h4>Donation Form</h4>
+                <p class="template-desc">Start collecting donation payments on your website with this ready-made Donation form. You can add and remove fields as needed.</p>
+            </div>
+        </a>
+        <a href="#" class="nf-one-third template-box">
+            <div class="template-box-inside">
+                <h4>Billing / Order Form</h4>
+                <p class="template-desc">Collect payments for product and service orders with this ready-made form template. You can add and remove fields as needed.</p>
+            </div>
+        </a>
+        <a href="#" class="nf-one-third template-box">
+            <div class="template-box-inside">
+                <h4>Newsletter Sign Up Form</h4>
+                <p class="template-desc">Add subscribers and grow your email list with this newsletter signup form. You can add and remove fields as needed.</p>
+            </div>
+        </a> -->
     </div>
 </script>
 
@@ -109,14 +140,14 @@
 
 <script id="nf-tmpl-main-content-field" type="text/template">
     <div id="<%= getFieldID() %>" class="<%= renderClasses() %>" data-id="<%= id %>"><%= renderIcon() %><span class="nf-field-label"><%= label %> <%= renderRequired() %></span>
-        <ul class="nf-item-controls"></ul>
+        <div class="nf-item-controls"></div>
     </div>
 </script>
 
 <script id="nf-tmpl-item-controls" type="text/template">
-    <li class="nf-item-edit"><a href="#" title="Edit"><span class="nf-edit-settings dashicons dashicons-admin-generic"></span><span class="nf-item-editing">Editing <%= objectType %></span></a></li>
-    <li class="nf-item-duplicate"><a href="#" title="Duplicate"><span class="nf-duplicate dashicons dashicons-admin-page"></span></a></li>
-    <li class="nf-item-delete"><a href="#" title="Delete"><span class="nf-delete dashicons dashicons-dismiss"></span></a></li>
+    <div class="nf-item-edit nf-item-control"><a href="#" title="Edit"><i class="nf-edit-settings fa fa-cog" aria-hidden="true"></i><!-- <span class="nf-item-editing">Editing <%= objectType %></span> --></a></div>
+    <div class="nf-item-duplicate nf-item-control"><a href="#" title="Duplicate (^ + C + click)"><i class="nf-duplicate fa fa-files-o" aria-hidden="true"></i></a></div>
+    <div class="nf-item-delete nf-item-control"><a href="#" title="Delete (^ + D + click)"><i class="nf-delete fa fa-trash" aria-hidden="true"></i></a></div>
 </script>
 
 <script id="nf-tmpl-action-table" type="text/template">
@@ -139,7 +170,7 @@
     <td><%= label %></td>
     <td><%= renderTypeNicename() %></td>
     <td>
-        <ul class="nf-item-controls"></ul>
+        <div class="nf-item-controls"></div>
     </td>
 </script>
 
@@ -168,9 +199,9 @@
 </script>
 
 <script id="nf-tmpl-drawer-content-add-field" type="text/template">
-    <section id="nf-drawer-staging" class="nf-settings nf-stage">
+    <div id="nf-drawer-staging" class="nf-settings nf-stage">
         <div class="nf-reservoir nf-drawer-staged-fields nf-field-type-droppable"></div>
-    </section>
+    </div>
     <span id="nf-drawer-primary"></span>
     <span id="nf-drawer-secondary"></span>
 </script>
@@ -284,7 +315,7 @@
 </script>
 
 <script id="nf-tmpl-drawer-action-type-button" type="text/template">
-    <div class="nf-one-third" data-type="<%= id %>">
+    <div class="nf-one-third nf-action-type-draggable" data-type="<%= id %>">
         <div class="<%= renderClasses() %>" <%= renderStyle() %>><%= nicename %></div>
     </div>
 </script>
@@ -334,9 +365,9 @@
 
 <script id="nf-tmpl-staged-fields-drag" type="text/template">
     <div class="nf-staged-fields-drag">
-        <div id="drag-item-1" class="nf-field-wrap"><%= num %> Fields</div>
-        <div id="drag-item-2" class="nf-field-wrap">&nbsp;</div>
-        <div id="drag-item-3" class="nf-field-wrap">&nbsp;</div>
+        <div id="drag-item-1" class="nf-staged-fields-drag-wrap"><%= num %> Fields</div>
+        <div id="drag-item-2" class="nf-staged-fields-drag-wrap">&nbsp;</div>
+        <div id="drag-item-3" class="nf-staged-fields-drag-wrap">&nbsp;</div>
     </div>
 </script>
 
@@ -418,6 +449,21 @@
     </label>
 </script>
 
+<script id="nf-tmpl-edit-setting-field-select" type="text/template">
+    <label for="<%= name %>" class="nf-select"><%= label %> <%= renderTooltip() %>
+        <select id="<%= name %>" class="setting">
+            <%
+            _.each( options, function( option ) {
+            %>
+            <option value="<%= option.value %>" <%= ( value == option.value ) ? 'selected="selected"' : '' %>><%= option.label %></option>
+            <%
+            } );
+            %>
+        </select>
+        <div></div>
+    </label>
+</script>
+
 <script id="nf-tmpl-edit-setting-checkbox" type="text/template">
 
     <span class="nf-setting-label"><%= label %></span> <%= renderTooltip() %>
@@ -431,6 +477,18 @@
     <span class="nf-setting-label"><%= label %><%= renderTooltip() %></span>
     <input type="checkbox" id="<%= name %>" class="nf-toggle setting" <%= ( 1 == value ) ? 'checked' : '' %> />
     <label for="<%= name %>"><%= label %></label>
+
+</script>
+
+<script id="nf-tmpl-edit-setting-color" type="text/template">
+
+    <label for="<%= name %>" class="<%= renderLabelClasses() %>"><%= label %> <%= renderTooltip() %></label>
+
+    <input type="text" id="<%= name %>" value="<%= value %>" class="setting" data-default-color="#F9F9F9" />
+
+    <div class="nf-colorpicker">
+
+    </div>
 
 </script>
 
@@ -509,6 +567,12 @@
 
     <div>
         <span class="dashicons dashicons-dismiss nf-delete"></span>
+    </div>
+</script>
+
+<script id="nf-tmpl-edit-setting-html" type="text/template">
+    <div class="nf-note">
+        <%= value %>
     </div>
 </script>
 

@@ -49,9 +49,9 @@ define( ['models/app/optionRepeaterModel', 'models/app/optionRepeaterCollection'
 			}
 			
 			var before = model.get( name );
-
+			
 			model.set( name, value );
-			// Triger an update on our dataModel
+			// Trigger an update on our dataModel
 			this.triggerDataModel( model, dataModel );
 
 			var after = value;
@@ -70,6 +70,7 @@ define( ['models/app/optionRepeaterModel', 'models/app/optionRepeaterCollection'
 
 			nfRadio.channel( 'changes' ).request( 'register:change', 'changeSetting', model, changes, label );
 			nfRadio.channel( 'option-repeater' ).trigger( 'update:option', model, dataModel, settingModel );
+			nfRadio.channel( 'option-repeater-option-' + name  ).trigger( 'update:option', e, model, dataModel, settingModel );
 			nfRadio.channel( 'option-repeater-' + settingModel.get( 'name' ) ).trigger( 'update:option', model, dataModel, settingModel );
 		},
 

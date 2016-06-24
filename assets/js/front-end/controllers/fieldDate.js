@@ -6,9 +6,11 @@ define([], function() {
         },
 
         initDatepicker: function ( view ) {
-            var dateObject = pikadayResponsive( jQuery( view.el ).find( '.nf-element' )[0], {
+
+            var el = jQuery( view.el ).find( '.nf-element' )[0];
+            var dateObject = pikadayResponsive( el, {
                 format: view.model.get( 'date_format' ),
-                classes: 'ninja-forms-field'
+                classes: jQuery( el ).attr( "class" )
             } );
             if ( 1 == view.model.get( 'date_default' ) ) {
                dateObject.setDate( moment() ); 

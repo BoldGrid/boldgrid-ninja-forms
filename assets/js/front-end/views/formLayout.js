@@ -7,7 +7,7 @@ define( ['views/fieldCollection','views/afterFields', 'views/beforeFields'], fun
 		regions: {
 			beforeFields: ".nf-before-fields",
 			fields: ".nf-fields",
-			afterFields: ".nf-after-fields",
+			afterFields: ".nf-after-fields"
 		},
 
 		initialize: function() {
@@ -21,9 +21,45 @@ define( ['views/fieldCollection','views/afterFields', 'views/beforeFields'], fun
 		},
 
 		onShow: function() {
-
 			this.beforeFields.show( new beforeFields( { model: this.model } ) );
-			this.fields.show( new fieldCollectionView( { collection: this.options.fieldCollection } ) );
+			
+			/*
+			 * Set our fieldContentsData to our form setting 'fieldContentsData'
+			 */
+			var fieldContentsData = this.model.get( 'fieldContentsData' );
+
+			/*
+			 * Set our default fieldContentsView.
+			 */
+			var fieldContentsView = fieldCollectionView;
+			/*
+			 * Check our fieldContentViewsFilter to see if we have any defined.
+			 * If we do, overwrite our default with the view returned from the filter.
+			 */
+
+			var fieldContentsViewFilters = nfRadio.channel( 'fieldContents' ).request( 'get:viewFilters' );
+			if ( 'undefined' != typeof fieldContentsData && 0 != fieldContentsViewFilters.length ) {
+				/* 
+				* Get our first filter, this will be the one with the highest priority.
+				*/
+				var sortedArray = _.without( fieldContentsViewFilters, undefined );
+				var callback = _.first( sortedArray );
+				fieldContentsView = callback();
+			}
+			
+			var fieldContentsLoadFilters = nfRadio.channel( 'fieldContents' ).request( 'get:loadFilters' );
+			if ( 'undefined' != typeof fieldContentsData && 0 != fieldContentsLoadFilters.length ) {
+				/* 
+				* Get our first filter, this will be the one with the highest priority.
+				*/
+				var sortedArray = _.without( fieldContentsLoadFilters, undefined );
+				var callback = _.first( sortedArray );
+				fieldContentsData = callback( fieldContentsData, this.model );
+			} else {
+				fieldContentsData = this.options.fieldCollection;
+			}
+
+			this.fields.show( new fieldContentsView( { collection: fieldContentsData } ) );
 			this.afterFields.show( new afterFields( { model: this.model } ) );
 		},
 

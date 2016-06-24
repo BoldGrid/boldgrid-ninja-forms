@@ -290,7 +290,8 @@ define(['models/calcCollection'], function( CalcCollection ) {
 					} );
 					fieldModel.set( 'value', value );
 					if ( ! that.init[ calcModel.get( 'name' ) ] ) {
-						fieldModel.set( 'reRender', true );
+						// fieldModel.set( 'reRender', true );
+						fieldModel.trigger( 'reRender' );
 					}
 					that.init[ calcModel.get( 'name' ) ] = false;
 				} );

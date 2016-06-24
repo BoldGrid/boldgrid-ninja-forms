@@ -37,10 +37,10 @@ define( [], function() {
 			 *
 			 * This lets specific field types modify model attributes before anything uses them.
 			 */ 
-			nfRadio.channel( 'actions' ).trigger( 'init:fieldModel', this );
-			nfRadio.channel( 'actions-' + this.get( 'type' ) ).trigger( 'init:fieldModel', this );
+			nfRadio.channel( 'actions' ).trigger( 'init:actionModel', this );
+			nfRadio.channel( 'actions-' + this.get( 'type' ) ).trigger( 'init:actionModel', this );
 
-			this.listenTo( nfRadio.channel( 'actions' ), 'update:fieldKey', this.updateFieldKey );
+			this.listenTo( nfRadio.channel( 'app' ), 'fire:updateFieldKey', this.updateFieldKey );
 		},
 
 		/**
@@ -56,7 +56,7 @@ define( [], function() {
 		},
 
 		updateFieldKey: function( keyModel, settingModel ) {
-			nfRadio.channel( 'app' ).request( 'replace:fieldKey', this, keyModel, settingModel );
+			nfRadio.channel( 'app' ).trigger( 'replace:fieldKey', this, keyModel, settingModel );
 		}
 	} );
 	

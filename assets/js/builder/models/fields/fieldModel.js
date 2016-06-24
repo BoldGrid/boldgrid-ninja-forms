@@ -43,7 +43,7 @@ define( [], function() {
 			nfRadio.channel( 'fields-' + parentType ).trigger( 'init:fieldModel', this );
 			nfRadio.channel( 'fields-' + this.get( 'type' ) ).trigger( 'init:fieldModel', this );
 
-			this.listenTo( nfRadio.channel( 'fields' ), 'update:fieldKey', this.updateFieldKey );
+			this.listenTo( nfRadio.channel( 'app' ), 'fire:updateFieldKey', this.updateFieldKey );
 		},
 
 		/**
@@ -60,7 +60,7 @@ define( [], function() {
 		},
 
 		updateFieldKey: function( keyModel, settingModel ) {
-			nfRadio.channel( 'app' ).request( 'replace:fieldKey', this, keyModel, settingModel );
+			nfRadio.channel( 'app' ).trigger( 'replace:fieldKey', this, keyModel, settingModel );
 		}
 	} );
 	

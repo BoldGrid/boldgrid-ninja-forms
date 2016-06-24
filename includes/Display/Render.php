@@ -11,6 +11,7 @@ final class NF_Display_Render
         'app-before-field',
         'app-after-field',
         'form-layout',
+        'form-hp',
         'field-layout',
         'field-before',
         'field-after',
@@ -27,7 +28,8 @@ final class NF_Display_Render
 
     public static function localize( $form_id )
     {
-        if( isset( $_GET[ 'ninja_forms_test_values' ] ) ){
+        $capability = apply_filters( 'ninja_forms_display_test_values_capabilities', 'read' );
+        if( isset( $_GET[ 'ninja_forms_test_values' ] ) && current_user_can( $capability ) ){
             self::$use_test_values = TRUE;
         }
 
@@ -87,6 +89,8 @@ final class NF_Display_Render
                 $field_type = $field->get_settings('type');
 
                 if( ! isset( Ninja_Forms()->fields[ $field_type ] ) ) continue;
+                if( ! apply_filters( 'ninja_forms_display_type_' . $field_type, TRUE ) ) continue;
+                if( ! apply_filters( 'ninja_forms_display_field', $field ) ) continue;
 
                 $field = apply_filters('ninja_forms_localize_fields', $field);
                 $field = apply_filters('ninja_forms_localize_field_' . $field_type, $field);
@@ -127,13 +131,17 @@ final class NF_Display_Render
                     if (is_numeric($setting)) $settings[$key] = floatval($setting);
                 }
 
+                if( ! isset( $settings[ 'label_pos' ] ) || 'default' == $settings[ 'label_pos' ] ){
+                    $settings[ 'label_pos' ] = $form->get_setting( 'default_label_pos' );
+                }
+
                 $settings[ 'parentType' ] = $field_class->get_parent_type();
 
                 if( 'list' == $settings[ 'parentType' ] && isset( $settings[ 'options' ] ) && is_array( $settings[ 'options' ] ) ){
                     $settings[ 'options' ] = apply_filters( 'ninja_forms_render_options', $settings[ 'options' ], $settings );
                     $settings[ 'options' ] = apply_filters( 'ninja_forms_render_options_' . $field_type, $settings[ 'options' ], $settings );
                 }
-                
+
                 if (isset($settings['default'])) {
                     $default_value = apply_filters('ninja_forms_render_default_value', $settings['default'], $field_type, $settings);
 
@@ -176,9 +184,8 @@ final class NF_Display_Render
         }
 
         // Output Form Container
-        ?>
-            <div id="nf-form-<?php echo $form_id; ?>-cont"></div>
-        <?php
+        do_action( 'ninja_forms_before_container', $form_id, $form->get_settings(), $form_fields );
+        Ninja_Forms::template( 'display-form-container.html.php', compact( 'form_id' ) );
 
         ?>
         <!-- TODO: Move to Template File. -->
@@ -205,7 +212,8 @@ final class NF_Display_Render
 
     public static function localize_preview( $form_id )
     {
-        if( isset( $_GET[ 'ninja_forms_test_values' ] ) ){
+        $capability = apply_filters( 'ninja_forms_display_test_values_capabilities', 'read' );
+        if( isset( $_GET[ 'ninja_forms_test_values' ] ) && current_user_can( $capability ) ){
             self::$use_test_values = TRUE;
         }
 
@@ -247,6 +255,8 @@ final class NF_Display_Render
                 $field_type = $field['settings']['type'];
 
                 if( ! isset( Ninja_Forms()->fields[ $field_type ] ) ) continue;
+                if( ! apply_filters( 'ninja_forms_preview_display_type_' . $field_type, TRUE ) ) continue;
+                if( ! apply_filters( 'ninja_forms_preview_display_field', $field ) ) continue;
 
                 $field['settings']['id'] = $field_id;
 
@@ -263,6 +273,12 @@ final class NF_Display_Render
 
                 foreach ($field['settings'] as $key => $setting) {
                     if (is_numeric($setting)) $field['settings'][$key] = floatval($setting);
+                }
+
+                if( ! isset( $field['settings'][ 'label_pos' ] ) || 'default' == $field['settings'][ 'label_pos' ] ){
+                    if( isset( $form[ 'settings' ][ 'default_label_pos' ] ) ) {
+                        $field['settings'][ 'label_pos' ] = $form[ 'settings' ][ 'default_label_pos' ];
+                    }
                 }
 
                 $field_class = Ninja_Forms()->fields[$field_type];
@@ -329,9 +345,8 @@ final class NF_Display_Render
         }
 
         // Output Form Container
-        ?>
-        <div id="nf-form-<?php echo $form_id; ?>-cont"></div>
-        <?php
+        do_action( 'ninja_forms_before_container_preview', $form_id, $form[ 'settings' ], $fields );
+        Ninja_Forms::template( 'display-form-container.html.php', compact( 'form_id' ) );
 
         ?>
         <!-- TODO: Move to Template File. -->
@@ -357,7 +372,6 @@ final class NF_Display_Render
     public static function enqueue_scripts( $form_id )
     {
         wp_enqueue_media();
-        wp_enqueue_style( 'nf-display-structure', Ninja_Forms::$url . 'assets/css/display-structure.css' );
         wp_enqueue_style( 'jBox', Ninja_Forms::$url . 'assets/css/jBox.css' );
         wp_enqueue_style( 'summernote', Ninja_Forms::$url . 'assets/css/summernote.css' );
         wp_enqueue_style( 'codemirror', Ninja_Forms::$url . 'assets/css/codemirror.css' );
@@ -365,8 +379,19 @@ final class NF_Display_Render
         wp_enqueue_style( 'rating', Ninja_Forms::$url . 'assets/css/rating.css' );
 
 
-        if( ! Ninja_Forms()->get_setting( 'disable_opinionated_styles' ) ) {
-            wp_enqueue_style('nf-display-opinions', Ninja_Forms::$url . 'assets/css/display-opinions.css');
+        if( Ninja_Forms()->get_setting( 'opinionated_styles' ) ) {
+
+            if( 'light' == Ninja_Forms()->get_setting( 'opinionated_styles' ) ){
+                wp_enqueue_style('nf-display', Ninja_Forms::$url . 'assets/css/display-opinions-light.css');
+                wp_enqueue_style( 'nf-font-awesome', Ninja_Forms::$url . 'assets/css/font-awesome.min.css' );
+            }
+
+            if( 'dark' == Ninja_Forms()->get_setting( 'opinionated_styles' ) ){
+                wp_enqueue_style('nf-display', Ninja_Forms::$url . 'assets/css/display-opinions-dark.css');
+                wp_enqueue_style( 'nf-font-awesome', Ninja_Forms::$url . 'assets/css/font-awesome.min.css' );
+            }
+        } else {
+            wp_enqueue_style( 'nf-display', Ninja_Forms::$url . 'assets/css/display-structure.css' );
         }
 
         wp_enqueue_style( 'pikaday-responsive', Ninja_Forms::$url . 'assets/css/pikaday-package.css' );
@@ -394,10 +419,11 @@ final class NF_Display_Render
         wp_enqueue_script( 'nf-front-end', Ninja_Forms::$url . 'assets/js/min/front-end.js', array( 'jquery', 'backbone', 'backbone-radio', 'backbone-marionette', 'math' ) );
 
         $data = apply_filters( 'ninja_forms_render_localize_script_data', array(
-            'ajaxNonce' => wp_create_nonce( 'ninja_forms_ajax_nonce' ),
+            'ajaxNonce' => wp_create_nonce( 'ninja_forms_display_nonce' ),
             'adminAjax' => admin_url( 'admin-ajax.php' ),
             'requireBaseUrl' => Ninja_Forms::$url . 'assets/js/',
-            'use_merge_tags' => array()
+            'use_merge_tags' => array(),
+            'opinionated_styles' => Ninja_Forms()->get_setting( 'opinionated_styles' )
         ));
 
         foreach( Ninja_Forms()->fields as $field ){
@@ -421,6 +447,7 @@ final class NF_Display_Render
         </script>
         <?php
         */
+        do_action( 'nf_display_enqueue_scripts' );
     }
 
     protected static function load_template( $file_name = '' )

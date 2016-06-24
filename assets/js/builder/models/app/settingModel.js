@@ -49,7 +49,7 @@ define( [], function() {
 		 * @return void
 		 */
 		updateKey: function( keyModel ) {
-			nfRadio.channel( this.collection.options.objectType ).trigger( 'update:fieldKey', keyModel, this );
+			nfRadio.channel( 'app' ).trigger( 'fire:updateFieldKey', keyModel, this );
 		},
 
 		maybePreventUI: function() {

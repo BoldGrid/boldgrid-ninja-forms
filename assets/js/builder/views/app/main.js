@@ -3,6 +3,7 @@ define( [], function() {
 	var view = Marionette.LayoutView.extend({
 		tagName: 'div',
 		template: '#nf-tmpl-main',
+		className: 'nf-main-test',
 
 		regions: {
 			header: '#nf-main-header',
@@ -17,11 +18,7 @@ define( [], function() {
 		},
 
 		onShow: function() {
-			if ( ! nfRadio.channel( 'app' ).request( 'is:mobile' ) ) {
-				jQuery( this.el ).parent().perfectScrollbar();
-				jQuery( this.el ).parent().disableSelection();
-			}
-			nfRadio.channel( 'main' ).trigger( 'show:main' );
+			nfRadio.channel( 'main' ).trigger( 'show:main', this );
 		},
 
 		onRender: function() {

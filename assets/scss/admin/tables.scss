@@ -15,6 +15,7 @@
         td {
             color: #676F75;
             white-space:nowrap;
+            position: relative;
             &:nth-child(2) {
                 width: 90%;
             }
@@ -103,5 +104,8 @@
 .nf-actions-table {
     td {
         cursor: pointer;
+    }
+    .nf-item-controls {
+        top: 12px;
     }
 }

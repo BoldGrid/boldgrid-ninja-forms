@@ -1,10 +1,17 @@
 define([], function() {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
-			this.listenTo( nfRadio.channel( 'submit' ), 'submit:response', this.actionSubmit );
+			this.listenTo( nfRadio.channel( 'forms' ), 'submit:response', this.actionSubmit );
 		},
 
 		actionSubmit: function( response ) {
+			/*
+			 * If we have errors, don't hide or clear.
+			 */
+			if ( 0 != _.size( response.errors ) ) {
+				return false;
+			}
+
 			if ( 1 == response.data.settings.clear_complete ) {
 				// nfRadio.channel( 'form-' + response.data.form_id ).trigger( 'reset' );
 				var formModel = nfRadio.channel( 'app' ).request( 'get:form', response.data.form_id );

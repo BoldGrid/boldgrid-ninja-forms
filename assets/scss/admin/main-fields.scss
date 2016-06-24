@@ -1,15 +1,19 @@
 .nf-fields-empty {
-    padding: 40px 20%;
+    padding: 0 40px;
     h3 {
         font-size: 30px;
     }
     p {
         font-size: 18px;
     }
+    a {
+        text-decoration: none;
+    }
 }
 
 .nf-field-label {
     display: inline-block;
+    margin-left: 16px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -21,7 +25,34 @@
 
 .nf-field-wrap {
     .fa {
-        margin-right: 10px;
-        width: 24px;
+        // margin-right: 10px;
+        // width: 24px;
+    }
+}
+.template-box {
+    text-decoration: none;
+    .template-box-inside {
+        background: #EBEDEE;
+        color: #424242;
+        min-height: 160px;
+        padding: 10px;
+        text-decoration: none;
+        transition: all 0.2s ease-in-out 0.1s, box-shadow 0.2s ease-in-out 0.1s;
+        h4 {
+            margin: 0 0 10px;
+            min-height: 35px;
+        }
+        p {
+            font-size: 12px;
+            margin: 0;
+        }
+    }
+    &:hover {
+        .template-box-inside {
+            background: #fff;
+            box-shadow: 0 0 20px $cta_color;
+            color: $cta_color;
+            transition: all 0.2s ease-in-out 0.1s, box-shadow 0.2s ease-in-out 0.1s;
+        }
     }
 }

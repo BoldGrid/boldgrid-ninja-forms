@@ -48,7 +48,11 @@ define( ['views/fields/drawer/stagedField', 'views/fields/drawer/stagingEmpty'],
 
 			jQuery( this.el ).parent().draggable( {
 				opacity: 0.9,
-				connectToSortable: '.nf-fields-sortable',
+				connectToSortable: '.nf-field-type-droppable',
+				appendTo: '#nf-main',
+				refreshPositions: true,
+				grid: [ 3, 3 ],
+				tolerance: 'pointer',
 
 				helper: function( e ) {
 					var width = jQuery( e.target ).parent().width();
@@ -57,9 +61,10 @@ define( ['views/fields/drawer/stagedField', 'views/fields/drawer/stagingEmpty'],
 					var left = width / 4;
 					var top = height / 2;
 					jQuery( this ).draggable( 'option', 'cursorAt', { top: top, left: left } );
-
+					jQuery( element ).zIndex( 1000 );
 					return element;
 				},
+
 				start: function( e, ui ) {
 					nfRadio.channel( 'drawer-addField' ).trigger( 'startDrag:fieldStaging', this, ui );
 				},

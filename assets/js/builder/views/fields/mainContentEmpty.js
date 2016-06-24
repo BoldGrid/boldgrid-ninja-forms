@@ -24,6 +24,7 @@ define( [], function() {
 						return true;
 					}
 				},
+				activeClass: 'nf-droppable-active',
 				hoverClass: 'nf-droppable-hover',
 				tolerance: 'pointer',
 				over: function( e, ui ) {

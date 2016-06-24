@@ -22,12 +22,15 @@ define( ['models/actions/actionCollection', 'models/actions/actionModel'], funct
 		 * @param bool 		silent 	prevent events from firing as a result of adding	 	
 		 */
 		addAction: function( type ) {
+
 			var data = {
 				id: nfRadio.channel( 'actions' ).request( 'get:tmpID' ),
 				type: type.get( 'id' ),
-				label: type.get( 'nicename' )
+				label: type.get( 'settingDefaults').label || type.get( 'nicename' )
 			}
+
 			var newModel = nfRadio.channel( 'actions' ).request( 'add', data );
+
 			var label = {
 				object: 'Action',
 				label: newModel.get( 'label' ),

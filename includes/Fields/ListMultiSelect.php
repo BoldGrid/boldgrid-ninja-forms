@@ -11,7 +11,7 @@ class NF_Fields_ListMultiselect extends NF_Abstracts_List
 
     protected $_nicename = 'Mulit-Select';
 
-    protected $_section = '';
+    protected $_section = 'common';
 
     protected $_templates = 'listselect';
 

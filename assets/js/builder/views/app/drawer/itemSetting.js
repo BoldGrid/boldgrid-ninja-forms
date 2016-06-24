@@ -105,7 +105,7 @@ define( ['views/app/drawer/mergeTagsContent', 'views/app/drawer/settingError'], 
 					closeOnClick: true
 				})
 		    });
-
+			
 		    if ( this.model.get( 'use_merge_tags' ) ) {
 		    	nfRadio.channel( 'mergeTags' ).request( 'init', this );
 		    }
@@ -194,9 +194,7 @@ define( ['views/app/drawer/mergeTagsContent', 'views/app/drawer/settingError'], 
 	    			} else if ( 'undefined' == typeof this.value ) {
 	    				this.value = '';
 	    			}
-
-					var setting = _.template( jQuery( '#nf-tmpl-edit-setting-' + this.type ).html() );
-
+	    			var setting = Marionette.TemplateCache.get( '#nf-tmpl-edit-setting-' + this.type );
 					return setting( this );
 				},
 

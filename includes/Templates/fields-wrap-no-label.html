@@ -1,6 +1,7 @@
 <script id="nf-tmpl-field-wrap-no-label" type="text/template">
     <div id="nf-field-<%= id %>-wrap" class="<%= renderWrapClass() %>" data-field-id="<%= id %>">
-        <%= renderElement() %>
+        <div class="nf-field-label"></div>
+        <div class="nf-field-element"><%= renderElement() %></div>
         <div class="nf-error-wrap"></div>
     </div>
 </script>

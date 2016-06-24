@@ -1,25 +1,50 @@
-.field-wrap,
-#ninja_forms_required_items {
-    margin-bottom: 20px;
+.nf-help {
+    background: none;
 }
-
+.nf-field-description {
+    font-size: 14px;
+}
 .nf-fields {
     padding: 5px;
     max-width: 1000px;
     margin: 0 auto;
-    .ninja-forms-field {
+    label {
+        font-size: 18px;
+        line-height: 20px;
+    }
+    .ninja-forms-field,
+    .listselect-wrap .nf-field-element div {
         font-size: 16px;
-        padding: 16px;
-
+        margin: 0;
+        padding: 12px;
+    }
+    input.ninja-forms-field,
+    select.ninja-forms-field,
+    .listselect-wrap .nf-field-element div {
+        height: 50px;
+    }
+    textarea.ninja-forms-field {
+        height: 200px;
     }
     hr.ninja-forms-field {
         padding: 0;
     }
+    input[type="radio"].ninja-forms-field,
+    input[type="checkbox"].ninja-forms-field  {
+        height: auto;
+    }
+    .listradio-wrap,
+    .listcheckbox-wrap {
+        li {
+            margin-bottom: 12px !important;
+            line-height: 0;
+        }
+    }
     .nf-product-field {
         &.ninja-forms-field {
-            background: transparent;
-            border: 0;
-            padding: 0;
+            // background: transparent;
+            // border: 0;
+            // padding: 0;
         }
         span {
             padding-right: 16px;
@@ -27,17 +52,14 @@
         .nf-field-qty {
             font-size: 16px;
             padding: 5px;
-            width: 80px;
+            width: 80px !important;
         }
-    }
-    textarea {
-        height: 200px;
     }
     .listselect-wrap,
     .liststate-wrap,
     .listcountry-wrap {
         select {
-            height: 48px;
+            //height: 50px;
         }
     }
     .nf-static {
@@ -49,49 +71,52 @@
     .label-above,
     .label-below,
     .label-hidden {
-        > label {
-            margin-bottom: 5px;
+        .nf-field-label {
+            margin-bottom: 10px;
+            padding: 0;
         }
     }
     .label-below {
-        > label {
+        .nf-field-label {
             margin-bottom: 0;
-            margin-top: 5px;
+            margin-top: 10px;
         }
     }
     .label-right {
-        > label {
-            margin-bottom: 0;
+        .nf-field-label {
+            margin: 0;
         }
         > input,
         textarea,
         select,
+        .nf-product-field,
+        .starrating,
+        .nf-static,
         .pikaday__container {
-            margin-right: 10px;
+            // margin-right: 1%;
         }
         > input[type=radio],
         input[type=checkbox] {
-            margin-right: 10px;
+            margin-right: 1%;
         }
         ul {
-            margin-right: 15px;
+            margin-right: 1%;
         }
     }
     .label-left {
-        > label {
-            margin-bottom: 0;
-            margin-top: 5px;
-        }
-        > input,
-        textarea,
-        select,
-        .pikaday__container {
-            margin-left: 10px;
-        }
-        > input[type=radio],
-        input[type=checkbox] {
-            margin-left: 10px;
-        }
+        // > label {
+        //     margin: 0;
+        // }
+        // > input,
+        // textarea,
+        // select,
+        // .pikaday__container {
+        //     // margin-left: 1%;
+        // }
+        // > input[type=radio],
+        // input[type=checkbox] {
+        //     margin-left: 1%;
+        // }
         // ul {
         //     margin-left: 15px;
         // }

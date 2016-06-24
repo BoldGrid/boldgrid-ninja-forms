@@ -1,0 +1,42 @@
+@media only screen and (max-width: 800px) {
+    .nf-field-container {
+        .nf-field-label {
+            margin-bottom: 10px !important;
+            padding: 0;
+            width: 100%;
+            order: 5;
+            label {
+                text-align: left;
+            }
+        }
+        .nf-field-description {
+            margin: 0;
+            width: 100%;
+            order: 10;
+        }
+        .nf-field-element {
+            width: 100%;
+            order: 15;
+        }
+        .checkbox-wrap {
+            .nf-field-label {
+                width: auto;
+                label {
+                    position: relative;
+                    margin-left: 30px;
+                    &::after {
+                        left: -28px;
+                        bottom: 0;
+                    }
+                    &::before {
+                        left: -30px;
+                        bottom: 0;
+                    }
+                }
+            }
+            .nf-field-element {
+                width: 20px;
+            }
+        }
+    }
+}

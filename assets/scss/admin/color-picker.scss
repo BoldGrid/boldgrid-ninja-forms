@@ -1,0 +1,41 @@
+/*
+WP Color Picker (Iris) Styles
+---------------------------------------------*/
+
+.ninja-forms-app #wpcontent .wp-picker-holder {
+    position: absolute;
+    z-index: 9001;
+}
+.ninja-forms-app #wpcontent .wp-picker-holder * {
+    box-sizing: content-box;
+}
+.wp-picker-container {
+    width: 100%;
+}
+.wp-color-result,
+.wp-picker-input-wrap {
+    margin-top: 5px;
+}
+.wp-color-result {
+    border: 0;
+    box-shadow: none;
+    margin: 5px 0 0;
+    height: 41px;
+    width: 100%;
+    padding-left: 60px;
+}
+.wp-color-result:after {
+    font-size: 16px;
+    line-height: 41px;
+}
+.wp-color-result.wp-picker-open {
+    display: none;
+}
+.wp-color-picker,
+.wp-picker-input-wrap {
+    width: 100% !important;
+}
+
+.wp-picker-input-wrap > .button.wp-picker-default {
+    display: none;
+}
