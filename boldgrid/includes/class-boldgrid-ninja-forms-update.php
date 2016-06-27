@@ -13,46 +13,13 @@
  */
 class Boldgrid_Ninja_Forms_Update {
 	/**
-	 * BoldGrid Forms class object.
-	 *
-	 * @var object The BoldGrid Ninja Forms object.
-	 */
-	private $boldgrid_ninja_forms = null;
-
-	/**
-	 * Setter for the BoldGrid Ninja Forms class object.
-	 *
-	 * @param object $boldgrid_ninja_forms The BoldGrid Ninja Forms object.
-	 * @return bool
-	 */
-	private function set_boldgrid_ninja_forms( $boldgrid_ninja_forms ) {
-		$this->boldgrid_ninja_forms = $boldgrid_ninja_forms;
-		return true;
-	}
-
-	/**
-	 * Getter for the BoldGrid Ninja Forms class object.
-	 *
-	 * @return object $this->boldgrid_ninja_forms
-	 */
-	protected function get_boldgrid_ninja_forms() {
-		return $this->boldgrid_ninja_forms;
-	}
-
-	/**
 	 * Constructor.
 	 *
 	 * Add hooks.
 	 *
 	 * @global $pagenow The current WordPress page filename.
-	 *
-	 * @param object $boldgrid_ninja_forms The BoldGrid Ninja Forms object.
-	 * @return null
 	 */
-	public function __construct( $boldgrid_ninja_forms ) {
-		// Set the BoldGrid Forms class object (used to get configs).
-		$this->set_boldgrid_ninja_forms( $boldgrid_ninja_forms );
-
+	public function __construct() {
 		// Only for admin.
 		if ( is_admin() ) {
 			// Get the current WordPress page filename.
@@ -116,16 +83,25 @@ class Boldgrid_Ninja_Forms_Update {
 			$version_data = get_transient( 'boldgrid_ninja_forms_version_data' );
 		}
 
-		// Get the BoldGrid Editor class object for getting configs.
-		$boldgrid_ninja_forms = $this->get_boldgrid_ninja_forms();
+		// Set the config class file path.
+		$config_class_path = BOLDGRID_NINJA_FORMS_PATH . '/boldgrid/includes/class-boldgrid-ninja-forms-config.php';
+
+		// If the config class file is not readable, then return the current transient.
+		if ( false === is_readable( $config_class_path ) ) {
+			return $transient;
+		}
+
+		// Include the config class.
+		require_once $config_class_path;
+
+		// Instantiate the config class.
+		$boldgrid_ninjaforms_config = new Boldgrid_Ninja_Forms_Config();
 
 		// Get configs.
-		$configs = $boldgrid_ninja_forms->get_boldgrid_ninja_form_config()
-			->get_configs();
+		$configs = $boldgrid_ninjaforms_config->get_configs();
 
-		// Get the installed plugin data.
-		$plugin_path = $boldgrid_ninja_forms->get_path_configs();
-		$plugin_data = get_plugin_data( $plugin_path['plugin_filename'], false );
+		// Get plugin data.
+		$plugin_data = get_plugin_data( BOLDGRID_NINJA_FORMS_PATH . '/ninja-forms.php', false );
 
 		// Get the WordPress version.
 		global $wp_version;
@@ -137,7 +113,7 @@ class Boldgrid_Ninja_Forms_Update {
 		$is_force_check = isset( $_GET['force-check'] );
 
 		// Was the version data recently updated?
-		$is_data_old = ( empty( $version_data->updated ) || $version_data->updated < time() - 60 );
+		$is_data_old = ( empty( $version_data->updated ) || $version_data->updated < time() - 5 );
 
 		// If we have no transient or force-check is called, and we do have configs, then get data and set transient.
 		if ( $have_configs && ( false === $version_data || ( $is_force_check && $is_data_old ) ) ) {
@@ -316,5 +292,68 @@ class Boldgrid_Ninja_Forms_Update {
 		}
 
 		return $value;
+	}
+
+	/**
+	 * Action to add a filter to check if this plugin should be auto-updated.
+	 *
+	 * @since 1.1.3
+	 */
+	public function wp_update_this_plugin () {
+		// Add filters to modify plugin update transient information.
+		add_filter( 'pre_set_site_transient_update_plugins',
+			array (
+				$this,
+				'custom_plugins_transient_update'
+			)
+		);
+
+		add_filter( 'plugins_api',
+			array (
+				$this,
+				'custom_plugins_transient_update'
+			)
+		);
+
+		add_filter( 'site_transient_update_plugins',
+			array (
+				$this,
+				'site_transient_update_plugins'
+			)
+		);
+
+		add_filter( 'auto_update_plugin',
+			array (
+				$this,
+				'auto_update_this_plugin'
+			), 10, 2
+		);
+
+		add_filter( 'auto_update_plugins',
+			array (
+				$this,
+				'auto_update_this_plugin'
+			), 10, 2
+		);
+
+		// Have WordPress check for plugin updates.
+		wp_maybe_auto_update();
+	}
+
+	/**
+	 * Filter to check if this plugin should be auto-updated.
+	 *
+	 * @since 1.1.3
+	 *
+	 * @param bool $update Whether or not this plugin is set to update.
+	 * @param object $item The plugin transient object.
+	 * @return bool Whether or not to update this plugin.
+	 */
+	public function auto_update_this_plugin ( $update, $item ) {
+		if ( isset( $item->slug['boldgrid-ninja-forms'] ) && isset( $item->autoupdate ) ) {
+			return true;
+		} else {
+			return $update;
+		}
 	}
 }

@@ -42,17 +42,46 @@ if ( false === defined( 'ABSPATH' ) )
  * WordPress / Open Source community.
  */
 
-// Define Form version:
+// Define Form version.
 if ( false === defined( 'BOLDGRID_NINJA_FORM_VERSION' ) ) {
 	define( 'BOLDGRID_NINJA_FORM_VERSION', '1.1.3' );
 }
 
-// Define boldgrid-ninja-forms Path
+// Define boldgrid-ninja-forms Path.
 if ( false === defined( 'BOLDGRID_NINJA_FORMS_PATH' ) ) {
-	define( 'BOLDGRID_NINJA_FORMS_PATH', __DIR__ );
+	define( 'BOLDGRID_NINJA_FORMS_PATH', dirname( __FILE__ ) );
 }
 
-// Add BoldGrid Functionality
+// Define Editor configuration directory, if not defined.
+if ( false === defined( 'BOLDGRID_NINJA_FORMS_CONFIGDIR' ) ) {
+	define( 'BOLDGRID_NINJA_FORMS_CONFIGDIR', BOLDGRID_NINJA_FORMS_PATH . '/boldgrid/includes/config' );
+}
+
+// If DOING_CRON, then check if this plugin should be auto-updated.
+if ( true === defined( 'DOING_CRON' ) && DOING_CRON ){
+	// Ensure required definitions for pluggable.
+	if ( false === defined( 'AUTH_COOKIE' ) ) {
+		define( 'AUTH_COOKIE', null );
+	}
+
+	if ( false === defined( 'LOGGED_IN_COOKIE' ) ) {
+		define( 'LOGGED_IN_COOKIE', null );
+	}
+
+	// Load the pluggable class, if needed.
+	require_once ABSPATH . 'wp-includes/pluggable.php';
+
+	// Include the update class.
+	require_once BOLDGRID_NINJA_FORMS_PATH . '/boldgrid/includes/class-boldgrid-ninja-forms-update.php';
+
+	// Instantiate the update class.
+	$plugin_update = new Boldgrid_Ninja_Forms_Update();
+
+	// Check and update plugins.
+	$plugin_update->wp_update_this_plugin();
+}
+
+// Add BoldGrid Functionality.
 require_once BOLDGRID_NINJA_FORMS_PATH . '/boldgrid/includes/class-boldgrid-ninja-forms.php';
 $boldgrid_ninja_forms = new Boldgrid_Ninja_Forms();
 $boldgrid_ninja_forms->init();

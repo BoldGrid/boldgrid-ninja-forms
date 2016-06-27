@@ -7,11 +7,6 @@
  * @version $Id$
  * @author BoldGrid.com <wpb@boldgrid.com>
  */
-if ( ! defined( 'WPINC' ) ) {
-	header( 'Status: 403 Forbidden' );
-	header( 'HTTP/1.1 403 Forbidden' );
-	exit();
-}
 
 /**
  * BoldGrid Forms class
@@ -55,7 +50,7 @@ class Boldgrid_Ninja_Forms {
 	}
 
 	/**
-	 * Initialize tab configs
+	 * Initialize tab configs.
 	 */
 	public function __construct() {
 		$plugin_dir = self::derive_plugin_dir();
@@ -69,17 +64,13 @@ class Boldgrid_Ninja_Forms {
 			'plugin_filename' => $plugin_filename
 		);
 
-		// Identify the BoldGrid Form config directory:
-		$settings = array (
-			'configDir' => $plugin_dir . '/boldgrid/includes/config'
-		);
-		// Load and instantiate WPB_Form_Config:
+		// Load and instantiate WPB_Form_Config.
 		require_once $plugin_dir . '/boldgrid/includes/class-boldgrid-ninja-forms-config.php';
 
-		// Instantiate the Boldgrid_Ninja_Forms_Config class and save it into a class property:
-		$this->boldgrid_ninja_form_config = new Boldgrid_Ninja_Forms_Config( $settings );
+		// Instantiate the Boldgrid_Ninja_Forms_Config class and save it into a class property.
+		$this->boldgrid_ninja_form_config = new Boldgrid_Ninja_Forms_Config();
 
-		// Add an action to load this plugin on init, only in the dashboard:
+		// Add an action to load this plugin on init, only in the dashboard.
 		if ( is_admin() ) {
 			add_action( 'init', array (
 				$this,
@@ -89,12 +80,10 @@ class Boldgrid_Ninja_Forms {
 	}
 
 	/**
-	 * Load the BoldGrid Ninja Forms update class
-	 *
-	 * @return void
+	 * Load the BoldGrid Ninja Forms update class.
 	 */
 	public function load_boldgrid_ninja_form_update() {
-		// Load and check for plugin updates:
+		// Load and check for plugin updates.
 		require_once BOLDGRID_NINJA_FORMS_PATH .
 			 '/boldgrid/includes/class-boldgrid-ninja-forms-update.php';
 
