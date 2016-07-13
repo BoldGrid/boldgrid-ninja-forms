@@ -57,20 +57,6 @@
 				this.render( this.template() );
 			}
 		},
-	    setContent: function( content, callback, rendered ) {
-			this.getNodes( function( editor, node, contentNode ) {
-				content = content.body || content;
-	
-				if ( content.indexOf( '<iframe' ) !== -1 ) {
-					content += '<div class="wpview-overlay"></div>';
-				}
-	
-				contentNode.innerHTML = '';
-				contentNode.appendChild( _.isString( content ) ? editor.dom.createFragment( content ) : content );
-	
-				callback && callback.call( this, editor, node, contentNode );
-			}, rendered );
-		}
 	} );
 
 	views.register( 'ninja_forms', _.extend( {}, boldgrid_form ) );
