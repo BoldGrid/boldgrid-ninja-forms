@@ -622,25 +622,13 @@ body .pika-label {
   margin: 100px auto;
   background-color: rgba(208, 208, 208, 0.5);
   border-radius: 100%;
-  -webkit-animation: nf-scaleout 1.0s infinite ease-in-out;
-          animation: nf-scaleout 1.0s infinite ease-in-out; }
-
-@-webkit-keyframes nf-scaleout {
-  0% {
-    -webkit-transform: scale(0);
-            transform: scale(0); }
-  100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-    opacity: 0; } }
+  animation: nf-scaleout 1.0s infinite ease-in-out; }
 
 @keyframes nf-scaleout {
   0% {
-    -webkit-transform: scale(0);
-            transform: scale(0); }
+    transform: scale(0); }
   100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 0; } }
 
 /*
@@ -650,8 +638,6 @@ Make sure all Ninja Forms label positons function properly
 STANDARDIZE ALL FIELDS
 ----------------------------------*/
 .field-wrap {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex; }
   .field-wrap > label {
@@ -669,23 +655,17 @@ STANDARDIZE ALL FIELDS
     width: auto; }
 
 .nf-field-label {
-  -webkit-box-ordinal-group: 6;
-  -webkit-order: 5;
-      -ms-flex-order: 5;
-          order: 5; }
+  -ms-flex-order: 5;
+      order: 5; }
 
 .nf-field-description {
   width: 100%;
-  -webkit-box-ordinal-group: 11;
-  -webkit-order: 10;
-      -ms-flex-order: 10;
-          order: 10; }
+  -ms-flex-order: 10;
+      order: 10; }
 
 .nf-field-element {
-  -webkit-box-ordinal-group: 16;
-  -webkit-order: 15;
-      -ms-flex-order: 15;
-          order: 15; }
+  -ms-flex-order: 15;
+      order: 15; }
 
 /* ---------------------------------
 LABEL ABOVE
@@ -698,24 +678,19 @@ LABEL BELOW
 ----------------------------------*/
 .label-below .nf-field-label {
   margin-top: 10px;
-  -webkit-box-ordinal-group: 16;
-  -webkit-order: 15;
-      -ms-flex-order: 15;
-          order: 15; }
+  -ms-flex-order: 15;
+      order: 15; }
 
 .label-below .nf-field-element {
-  -webkit-box-ordinal-group: 6;
-  -webkit-order: 5;
-      -ms-flex-order: 5;
-          order: 5; }
+  -ms-flex-order: 5;
+      order: 5; }
 
 /* ---------------------------------
 LABEL HIDDEN
 ----------------------------------*/
 .label-hidden .field-wrap {
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap; }
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap; }
 
 .label-hidden .nf-field-label {
   height: 0;
@@ -724,10 +699,8 @@ LABEL HIDDEN
 
 .label-hidden .nf-field-description {
   width: 100%;
-  -webkit-box-ordinal-group: 21;
-  -webkit-order: 20;
-      -ms-flex-order: 20;
-          order: 20; }
+  -ms-flex-order: 20;
+      order: 20; }
 
 .label-hidden .nf-field-element {
   width: 100%; }
@@ -736,36 +709,23 @@ LABEL HIDDEN
 LABEL LEFT
 ----------------------------------*/
 .label-left .field-wrap {
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap; }
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap; }
 
 .label-left .nf-field-label {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-align: center;
+      align-items: center;
   padding-right: 2%;
   text-align: right;
   width: 35%;
-  -webkit-box-ordinal-group: 6;
-  -webkit-order: 5;
-      -ms-flex-order: 5;
-          order: 5; }
+  -ms-flex-order: 5;
+      order: 5; }
   .label-left .nf-field-label label {
     width: 100%; }
 
@@ -775,10 +735,8 @@ LABEL LEFT
 .label-left .nf-field-element {
   display: inline-block;
   width: 65%;
-  -webkit-box-ordinal-group: 11;
-  -webkit-order: 10;
-      -ms-flex-order: 10;
-          order: 10; }
+  -ms-flex-order: 10;
+      order: 10; }
 
 .label-left .nf-after-field {
   margin-left: 36.5%; }
@@ -787,50 +745,33 @@ LABEL LEFT
 LABEL RIGHT
 ----------------------------------*/
 .label-right .field-wrap {
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap; }
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap; }
 
 .label-right .nf-field-label {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-align: center;
+      align-items: center;
   padding-left: 2%;
   width: 35%;
-  -webkit-box-ordinal-group: 11;
-  -webkit-order: 10;
-      -ms-flex-order: 10;
-          order: 10; }
+  -ms-flex-order: 10;
+      order: 10; }
 
 .label-right .nf-field-description {
   margin-right: 35%;
-  -webkit-box-ordinal-group: 16;
-  -webkit-order: 15;
-      -ms-flex-order: 15;
-          order: 15; }
+  -ms-flex-order: 15;
+      order: 15; }
 
 .label-right .nf-field-element {
   display: inline-block;
   width: 65%;
-  -webkit-box-ordinal-group: 6;
-  -webkit-order: 5;
-      -ms-flex-order: 5;
-          order: 5; }
+  -ms-flex-order: 5;
+      order: 5; }
 
 .label-right .checkbox-wrap .nf-field-label {
   width: auto; }
@@ -846,14 +787,10 @@ ADJUST SOME LABEL ABOVE & BELOW ISSUES
 ----------------------------------*/
 .label-below .field-wrap,
 .label-above .field-wrap {
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-flex-flow: wrap;
-      -ms-flex-flow: wrap;
-          flex-flow: wrap; }
+  -ms-flex-direction: column;
+      flex-direction: column;
+  -ms-flex-flow: wrap;
+      flex-flow: wrap; }
 
 .label-below .nf-field-element,
 .label-above .nf-field-element {
@@ -869,10 +806,9 @@ ADJUST SOME LABEL LEFT & RIGHT ISSUES
 .label-right .textarea-wrap .nf-field-label,
 .label-right .listradio-wrap .nf-field-label,
 .label-right .listcheckbox-wrap .nf-field-label {
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-      -ms-flex-align: start;
-          align-items: flex-start; }
+  -ms-flex-align: start;
+      -ms-grid-row-align: flex-start;
+      align-items: flex-start; }
 
 .label-left .textarea-wrap .nf-field-label,
 .label-right .textarea-wrap .nf-field-label {

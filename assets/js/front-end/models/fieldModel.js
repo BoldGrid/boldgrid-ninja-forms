@@ -9,7 +9,8 @@ define( ['models/fieldErrorCollection'], function( fieldErrorCollection ) {
 			mirror_field: false,
 			confirm_field: false,
 			clean: true,
-			disabled: ''
+			disabled: '',
+			visible: true
 		},
 
 		initialize: function() {

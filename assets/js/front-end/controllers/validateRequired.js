@@ -20,7 +20,7 @@ define([], function() {
 		},
 
 		validateRequired: function( el, model ) {
-			if ( 1 != model.get( 'required' ) ) {
+			if ( 1 != model.get( 'required' ) || ! model.get( 'visible' ) ) {
 				return false;
 			}
 
@@ -49,7 +49,7 @@ define([], function() {
 		},
 
 		validateModelData: function( model ) {
-			if ( 1 != model.get( 'required' ) ) {
+			if ( 1 != model.get( 'required' ) || ! model.get( 'visible' ) ) {
 				return false;
 			}
 

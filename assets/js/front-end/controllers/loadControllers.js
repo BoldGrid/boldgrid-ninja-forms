@@ -12,6 +12,7 @@ define(
 		'controllers/confirmField',
 		'controllers/updateFieldModel',
 		'controllers/submitButton',
+		'controllers/submitDebug',
 		'controllers/getFormErrors',
 		'controllers/selectFile',
 		'controllers/validateRequired',
@@ -48,6 +49,7 @@ define(
 		ConfirmField,
 		UpdateFieldModel,
 		SubmitButton,
+		SubmitDebug,
 		GetFormErrors,
 		SelectFile,
 		ValidateRequired,
@@ -109,6 +111,7 @@ define(
 				new ConfirmField();
 				new UpdateFieldModel();
 				new SubmitButton();
+				new SubmitDebug();
 				new GetFormErrors();
 				new SelectFile();
 				new ValidateRequired();

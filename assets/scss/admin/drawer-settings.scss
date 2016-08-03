@@ -23,6 +23,9 @@
         border: 1px solid #ccc;
         cursor: default;
     }
+    &.publish {
+        float: right;
+    }
 }
 .nf-cancel {
     color: #999;

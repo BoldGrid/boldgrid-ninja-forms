@@ -32,12 +32,21 @@ define([], function() {
 		 * @return void
 		 */
 		submit: function( formModel ) {
+
 			/*
 			 * Send out a radio message saying that we're about to begin submitting.
 			 * First we send on the generic forms channel, and then on the form-specific channel.
 			 */
 			nfRadio.channel( 'forms' ).trigger( 'before:submit', formModel );
 			nfRadio.channel( 'form-' + formModel.get( 'id' ) ).trigger( 'before:submit', formModel );
+
+			var submit = nfRadio.channel( 'form-' + formModel.get( 'id' ) ).request( 'maybe:submit', formModel );
+
+			if ( false == submit ) {
+				nfRadio.channel( 'forms' ).trigger( 'submit:cancel', formModel );
+				nfRadio.channel( 'form-' + formModel.get( 'id' ) ).trigger( 'submit:cancel', formModel );
+				return;
+			}
 
 			/*
 			 * Make sure we don't have any form errors before we submit.
@@ -60,9 +69,10 @@ define([], function() {
 				var fieldData = nfRadio.channel( field.get( 'type' ) ).request( 'get:submitData', fieldDataDefaults, field ) || fieldDataDefaults;
 				fields.push( fieldData );
 			} );
+			var extra = formModel.get( 'extra' );
 			var settings = formModel.get( 'settings' );
 			delete settings.fieldContentsData;
-			var formData = JSON.stringify( { id: formID, fields: fields, settings: settings } );
+			var formData = JSON.stringify( { id: formID, fields: fields, settings: settings, extra: extra } );
 			var data = {
 				'action': 'nf_ajax_submit',
 				'security': nfFrontEnd.ajaxNonce,

@@ -68,10 +68,10 @@ final class NF_Actions_Save extends NF_Abstracts_Action
             $sub->update_extra_values( $data['extra'] );
         }
 
+        $sub->save();
+
         do_action( 'nf_save_sub', $sub->get_id() );
         do_action( 'ninja_forms_save_sub', $sub->get_id() );
-
-        $sub->save();
 
         $data[ 'actions' ][ 'save' ][ 'sub_id' ] = $sub->get_id();
 

@@ -161,6 +161,12 @@ border-bottom-color: transparent;
 }
 #ninja_forms_admin_metaboxes .item-edit {
 	top: -4px;
+	text-indent: -9999px;
+}
+#ninja_forms_admin_metaboxes .item-edit::before {
+	position: absolute;
+	top: 6px;
+	right: 10px;
 }
 #ninja_forms_admin_metaboxes textarea {
 	min-height: 100px;

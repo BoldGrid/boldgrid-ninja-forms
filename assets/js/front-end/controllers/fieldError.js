@@ -8,6 +8,9 @@ define(['models/fieldErrorModel'], function( fieldErrorModel ) {
 
 		addError: function( targetID, id, msg ) {
 			var model = nfRadio.channel( 'fields' ).request( 'get:field', targetID );
+
+			if( 'undefined' == typeof model ) return;
+
 			var errors = model.get( 'errors' );
 			errors.add( { 'id': id, 'msg' : msg } );
 			model.set( 'errors', errors );

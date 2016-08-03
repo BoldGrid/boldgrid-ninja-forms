@@ -223,20 +223,20 @@ RADIO & CHECKBOX LISTS
     margin-right: 5px;
 }
 
-.list-radio-wrap ul,
-.list-checkbox-wrap ul {
+.list-radio-wrap span ul,
+.list-checkbox-wrap span ul {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.list-radio-wrap ul li,
-.list-checkbox-wrap ul li {
+.list-radio-wrap span ul li,
+.list-checkbox-wrap span ul li {
     list-style: none;
 }
 
-.list-radio-wrap ul li,
-.list-checkbox-wrap ul li {
+.list-radio-wrap span ul li,
+.list-checkbox-wrap span ul li {
     margin: 0;
     padding: 0;
 }

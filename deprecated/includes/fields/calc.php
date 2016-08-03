@@ -630,9 +630,17 @@ function ninja_forms_field_calc_pre_process(){
 						$calc_places = 0;
 					}
 
+					// Swap out decimal separator
+					$decimal_point = $wp_locale->number_format['decimal_point'];
+					$result = str_replace( $decimal_point, '.', $result );
+
+					// Round and Format
 					$result = number_format( round( $result, $calc_places ), $calc_places );
+
+					// Swap back decimal separator
+					$result = str_replace( '.', $decimal_point, $result );
 				}
-				$result = str_replace( ',', '', $result );
+				$result = str_replace( $wp_locale->number_format['thousands_sep'], '', $result );
 
 				if ( isset ( $ninja_forms_loading ) ) {
 					$ninja_forms_loading->update_field_value( $field_id, $result );

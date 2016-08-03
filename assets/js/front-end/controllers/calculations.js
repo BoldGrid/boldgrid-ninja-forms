@@ -101,7 +101,7 @@ define(['models/calcCollection'], function( CalcCollection ) {
 					fieldModel = nfRadio.channel( 'form-' + calcModel.get( 'formID' ) ).request( 'get:fieldByKey', key );
 
 					if( 'undefined' == typeof fieldModel ) return;
-
+					// Register a listener in our field model for value changes.
 					fieldModel.on( 'change:value', calcModel.changeField, calcModel );
 					// Get our calc value from our field model.
 					var calcValue = that.getCalcValue( fieldModel );
@@ -187,6 +187,10 @@ define(['models/calcCollection'], function( CalcCollection ) {
 				} else {
 					value = 0;
 				}
+			}
+
+			if ( ! fieldModel.get( 'visible' ) ) {
+				value = 0;
 			}
 
 			return ( jQuery.isNumeric( value ) ) ? value : 0;

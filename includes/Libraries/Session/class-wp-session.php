@@ -13,6 +13,13 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+/*
+* MODIFICATIONS
+*
+* - Remove `set_cooke()` from constructor
+* - Give `set_cookie()` public access
+*/
+
 /**
  * WordPress Session class for managing user session data.
  *
@@ -93,8 +100,10 @@ final class WP_Session extends Recursive_ArrayAccess implements Iterator, Counta
 
         $this->read_data();
 
-        $this->set_cookie();
-
+        /*
+         * MODIFICATION: Only set the cookie manually.
+         */
+        //$this->set_cookie();
     }
 
     /**
@@ -123,7 +132,10 @@ final class WP_Session extends Recursive_ArrayAccess implements Iterator, Counta
     /**
      * Set the session cookie
      */
-    protected function set_cookie() {
+    /*
+     * MODIFICATION: Change access to public for manually setting cookie.
+     */
+    public function set_cookie() {
         @setcookie( WP_SESSION_COOKIE, $this->session_id . '||' . $this->expires . '||' . $this->exp_variant , $this->expires, COOKIEPATH, COOKIE_DOMAIN );
     }
 

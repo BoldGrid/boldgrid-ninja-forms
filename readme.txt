@@ -14,13 +14,16 @@ BoldGrid Ninja Forms is a webform builder with unparalleled ease of use and feat
 
 == Installation ==
 
+This section describes how to install the plugin and get it working.
+
 1. Upload the entire boldgrid-ninja-forms folder to the /wp-content/plugins/ directory.
-
 2. Activate the plugin through the Plugins menu in WordPress.
-
 3. You will find the Forms menu in your WordPress Dashboard / admin panel.
 
 == Changelog ==
+
+= 1.2.1 In progress =
+* Update:		JIRA WPB-2179	Updated Ninja Forms version to 2.9.55.
 
 = 1.2 =
 * New feature:	JIRA WPB-2037	Fixing comatibility issues with WordPress 4.6.
@@ -90,5 +93,8 @@ BoldGrid Ninja Forms is a webform builder with unparalleled ease of use and feat
 * Initial public release.
 
 == Upgrade Notice ==
+= 1.2.1 =
+Shortcodes have been re-implemented. They are used like so: [ninja_form id=3] where 3 is the ID number of the form you want to display.
+
 = 1.1.1 =
 Users should update to boldgrid-ninja-forms version 1.1.1 for support in WordPress 4.5.

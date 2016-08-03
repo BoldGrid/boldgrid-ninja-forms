@@ -2,6 +2,7 @@ define([], function() {
     var controller = Marionette.Object.extend( {
         initialize: function() {
             this.listenTo( nfRadio.channel( 'product' ), 'init:model', this.register );
+            nfRadio.channel( 'product' ).reply( 'get:calcValue', this.getCalcValue, this );
         },
 
         register: function( model ) {
@@ -58,6 +59,14 @@ define([], function() {
             } );
 
             return html;
+        },
+
+        getCalcValue: function( fieldModel ) {
+
+            var product_price = fieldModel.get( 'product_price' );
+            var product_quantity = fieldModel.get( 'value' );
+
+            return product_price * product_quantity;
         }
     });
 

@@ -119,11 +119,11 @@ final class NF_Admin_Menus_SystemStatus extends NF_Abstracts_Submenu
             __( 'MySQL Version','ninja-forms' ) => $wpdb->db_version(),
             __( 'PHP Locale','ninja-forms' ) =>  $data,
             //TODO: Possibly move the ninja_forms_letters_to_numbers function over.
-            __( 'WP Memory Limit','ninja-forms' ) => size_format( WP_MEMORY_LIMIT ),
+            __( 'WP Memory Limit','ninja-forms' ) => number_format_i18n( WP_MEMORY_LIMIT ),
             __( 'WP Debug Mode', 'ninja-forms' ) => $debug,
             __( 'WP Language', 'ninja-forms' ) => $lang,
             __( 'WP Max Upload Size','ninja-forms' ) => size_format( wp_max_upload_size() ),
-            __('PHP Post Max Size','ninja-forms' ) => size_format( ini_get('post_max_size') ),
+            __('PHP Post Max Size','ninja-forms' ) => number_format_i18n( ini_get('post_max_size') ),
             __('Max Input Nesting Level','ninja-forms' ) => ini_get('max_input_nesting_level'),
             __('PHP Time Limit','ninja-forms' ) => ini_get('max_execution_time'),
             __( 'PHP Max Input Vars','ninja-forms' ) => ini_get('max_input_vars'),

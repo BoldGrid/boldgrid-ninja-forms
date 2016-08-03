@@ -35,7 +35,7 @@ if ( false === defined( 'ABSPATH' ) )
 /* @formatter:on */
 
 /*
- * This is a fork of Ninja Forms 2.9.50 (by The WP Ninjas).
+ * This is a fork of Ninja Forms 2.9.55 (by The WP Ninjas).
  * The original source code is available at https://github.com/wpninjas/ninja-forms .
  * Additional functionality has been added for integration into the BoldGrid WordPress plugin suite.
  * We would like to thank the WP Ninjas for making Ninja Forms available in the
@@ -89,6 +89,7 @@ $boldgrid_ninja_forms->init();
 /* @formatter:off */
 
 require_once dirname( __FILE__ ) . '/lib/NF_VersionSwitcher.php';
+require_once dirname( __FILE__ ) . '/lib/NF_Tracking.php';
 
 // BoldGrid: Added condition: if ! function_exists.
 if( false === function_exists( 'ninja_forms_three_table_exists' ) ) {
@@ -113,10 +114,6 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
     if( false === function_exists( 'ninja_forms_activation_deprecated' ) ) {
     function ninja_forms_activation_deprecated( $network_wide ){
         include_once 'deprecated/includes/activation.php';
-
-        if( ! get_option( 'nf_aff', FALSE ) ) {
-            update_option('ninja_forms_freemius', 1);
-        }
 
         ninja_forms_activation( $network_wide );
     }
@@ -324,6 +321,7 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
                 self::$instance->merge_tags[ 'fields' ] = new NF_MergeTags_Fields();
                 self::$instance->merge_tags[ 'calcs' ] = new NF_MergeTags_Calcs();
                 self::$instance->merge_tags[ 'querystrings' ] = new NF_MergeTags_QueryStrings();
+                self::$instance->merge_tags[ 'form' ] = new NF_MergeTags_Form();
 
                 /*
                  * Add Form Modal
@@ -632,7 +630,6 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
          * Activation
          */
         public function activation() {
-            update_option( 'ninja_forms_freemius', 1 );
             $migrations = new NF_Database_Migrations();
             $migrations->migrate();
         }
@@ -666,15 +663,7 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
     |--------------------------------------------------------------------------
     */
 
-    if ( nf_is_freemius_on() ) {
-        // Override plugin's version, should be executed before Freemius init.
-        nf_override_plugin_version();
-        // Init Freemius.
-        nf_fs();
-        nf_fs()->add_action( 'after_uninstall', 'ninja_forms_uninstall' );
-    } else {
-        register_uninstall_hook( __FILE__, 'ninja_forms_uninstall' );
-    }
+    register_uninstall_hook( __FILE__, 'ninja_forms_uninstall' );
 
     function ninja_forms_uninstall(){
 

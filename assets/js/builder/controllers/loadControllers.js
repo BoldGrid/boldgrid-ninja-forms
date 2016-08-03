@@ -275,10 +275,11 @@ define(
 				 */
 				new SettingTypes();
 				new FormSettings();
+				new AdvancedCalculations();
 				new SettingData();
 				new SettingsEditActive();
 				new SettingsClickEdit();
-				new AdvancedCalculations();
+				
 				/*
 				 * Data controllers need to be set after every other controller has been setup, even if they aren't domain-specific.
 				 * AppData() was after FormData();

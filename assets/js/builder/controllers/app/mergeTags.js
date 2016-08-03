@@ -50,12 +50,11 @@ define( [
 
 			var formModel = nfRadio.channel( 'app' ).request( 'get:formModel' );
 			var calcCollection = formModel.get( 'settings' ).get( 'calculations' );
-			_.each( calcCollection, function( calc ) {
+			_.each( calcCollection.models, function( calcModel ) {
 				calcTags.add( {
-					label: calc.name,
-					tag: '{calc:' + calc.name + '}'
-				} );					
-				
+					label: calcModel.get( 'name' ),
+					tag: '{calc:' + calcModel.get( 'name' ) + '}'
+				} );
 			} );
 
 			this.tagSectionCollection.get( 'calcs' ).set( 'tags', calcTags );

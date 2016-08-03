@@ -35,7 +35,14 @@ return apply_filters( 'ninja_forms_action_collect_payment_settings', array(
         'label' => __( 'Payment Total', 'ninja-forms' ),
         'width' => 'full',
         'group' => 'primary',
-        'use_merge_tags' => TRUE
+        'use_merge_tags' => array(
+            'include' => array( 'calcs' ),
+            'exclude' => array(
+                'user',
+                'post',
+                'system'
+            )
+        )
     ),
 
 ));

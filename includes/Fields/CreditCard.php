@@ -17,6 +17,8 @@ class NF_Fields_CreditCard extends NF_Abstracts_Field
 
     protected $_test_value = '';
 
+    protected $_settings_exclude = array( 'input_limit_set', 'disable_input' );
+
     public function __construct()
     {
         parent::__construct();

@@ -8,7 +8,7 @@
  * @copyright   Copyright (c) 2014, WPNINJAS
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       2.7
-*/
+ */
 
 class NF_Subs_CPT {
 
@@ -20,13 +20,13 @@ class NF_Subs_CPT {
 
 	/**
 	 * Get things started
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return void
 	 */
 	function __construct() {
-		
+
 		// Register our submission custom post type.
 		add_action( 'init', array( $this, 'register_cpt' ), 5 );
 
@@ -82,7 +82,7 @@ class NF_Subs_CPT {
 
 		// Load any custom screen options
 		add_filter( 'screen_settings', array( $this, 'output_screen_options' ), 10, 2 );
-				
+
 		// Listen for our exports button.
 		add_action( 'load-edit.php', array( $this, 'export_listen' ) );
 
@@ -93,7 +93,7 @@ class NF_Subs_CPT {
 
 	/**
 	 * Register our submission CPT
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return void
@@ -113,18 +113,18 @@ class NF_Subs_CPT {
 		}
 
 		$labels = array(
-		    'name' => $name,
-		    'singular_name' => _x( 'Submission', 'post type singular name', 'ninja-forms' ),
-		    'add_new' => _x( 'Add New', 'nf_sub' ),
-		    'add_new_item' => __( 'Add New Submission', 'ninja-forms' ),
-		    'edit_item' => __( 'Edit Submission', 'ninja-forms' ),
-		    'new_item' => __( 'New Submission', 'ninja-forms' ),
-		    'view_item' => __( 'View Submission', 'ninja-forms' ),
-		    'search_items' => __( 'Search Submissions', 'ninja-forms' ),
-		    'not_found' =>  $not_found,
-		    'not_found_in_trash' => __( 'No Submissions Found In The Trash', 'ninja-forms' ),
-		    'parent_item_colon' => ''
-	  	);
+			'name' => $name,
+			'singular_name' => _x( 'Submission', 'post type singular name', 'ninja-forms' ),
+			'add_new' => _x( 'Add New', 'nf_sub' ),
+			'add_new_item' => __( 'Add New Submission', 'ninja-forms' ),
+			'edit_item' => __( 'Edit Submission', 'ninja-forms' ),
+			'new_item' => __( 'New Submission', 'ninja-forms' ),
+			'view_item' => __( 'View Submission', 'ninja-forms' ),
+			'search_items' => __( 'Search Submissions', 'ninja-forms' ),
+			'not_found' =>  $not_found,
+			'not_found_in_trash' => __( 'No Submissions Found In The Trash', 'ninja-forms' ),
+			'parent_item_colon' => ''
+		);
 
 		$args = array(
 			'labels' => $labels,
@@ -159,7 +159,7 @@ class NF_Subs_CPT {
 
 	/**
 	 * Populate our fields var with all the fields. This keeps us from needing to ping the database later.
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 */
@@ -185,14 +185,14 @@ class NF_Subs_CPT {
 
 	/**
 	 * Add our submissions submenu
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return void
 	 */
 	public function add_submenu() {
 		// Add our submissions submenu
-		$sub_page = add_submenu_page( 'ninja-forms', __( 'Submissions', 'ninja-forms' ), __( 'Submissions', 'ninja-forms' ), apply_filters( 'ninja_forms_admin_submissions_capabilities', 'manage_options' ), 'edit.php?post_type=nf_sub' ); 
+		$sub_page = add_submenu_page( 'ninja-forms', __( 'Submissions', 'ninja-forms' ), __( 'Submissions', 'ninja-forms' ), apply_filters( 'ninja_forms_admin_submissions_capabilities', 'manage_options' ), 'edit.php?post_type=nf_sub' );
 		// Enqueue our JS on the edit page.
 		//add_action( 'load-' . $sub_page, array( $this, 'load_js' ) );
 		add_action( 'admin_print_styles', array( $this, 'load_js' ) );
@@ -204,7 +204,7 @@ class NF_Subs_CPT {
 
 	/**
 	 * Enqueue our submissions JS file.
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return void
@@ -246,7 +246,7 @@ class NF_Subs_CPT {
 
 	/**
 	 * Enqueue our submissions CSS file.
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return void
@@ -257,14 +257,14 @@ class NF_Subs_CPT {
 		// Bail if we aren't on the edit.php page or the post.php page.
 		if ( ( $pagenow != 'edit.php' && $pagenow != 'post.php' ) || $typenow != 'nf_sub' )
 			return false;
-		
+
 		wp_enqueue_style( 'nf-sub', NF_PLUGIN_URL .'assets/css/cpt.css' );
 		wp_enqueue_style( 'nf-jquery-ui-freshness', NF_PLUGIN_URL .'assets/css/jquery-ui-fresh.min.css' );
 	}
 
 	/**
 	 * Modify the columns of our submissions table.
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return array $cols
@@ -281,7 +281,7 @@ class NF_Subs_CPT {
 
 		// Compatibility with old field registration system. Can be removed when the new one is in place.
 		if ( isset ( $_GET['form_id'] ) && $_GET['form_id'] != '' ) {
-			$form_id = $_GET['form_id'];
+			$form_id = absint( $_GET['form_id'] );
 			if ( is_object( Ninja_Forms()->form( $this->form_id ) ) && is_array ( Ninja_Forms()->form( $this->form_id )->fields ) ) {
 				foreach ( Ninja_Forms()->form( $this->form_id )->fields as $field ) {
 					$field_id = $field['id'];
@@ -319,7 +319,7 @@ class NF_Subs_CPT {
 
 	/**
 	 * Make our columns sortable
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return array
@@ -330,7 +330,7 @@ class NF_Subs_CPT {
 		$tmp_array = array();
 		foreach ( $columns as $slug => $c ) {
 			if ( $slug != 'cb' ) {
-				$tmp_array[ $slug ] = $slug;				
+				$tmp_array[ $slug ] = $slug;
 			}
 		}
 		return $tmp_array;
@@ -338,7 +338,7 @@ class NF_Subs_CPT {
 
 	/**
 	 * Actually sort our columns
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return array $vars
@@ -346,33 +346,33 @@ class NF_Subs_CPT {
 	public function sort_columns( $vars ) {
 		global $pagenow, $typenow;
 		if( array_key_exists( 'orderby', $vars ) ) {
-           if( strpos( $vars['orderby'], 'form_' ) !== false ) {
-           		$args = explode( '_', $vars['orderby'] );
-           		$field_id = $args[3];
+			if( strpos( $vars['orderby'], 'form_' ) !== false ) {
+				$args = explode( '_', $vars['orderby'] );
+				$field_id = $args[3];
 
-           		if ( isset ( Ninja_Forms()->form( $this->form_id )->fields[ $field_id ]['data']['num_sort'] ) && Ninja_Forms()->form( $this->form_id )->fields[ $field_id ]['data']['num_sort'] == 1 ) {
-           			$orderby = 'meta_value_num';
-           		} else {
-           			$orderby = 'meta_value';
-           		}
+				if ( isset ( Ninja_Forms()->form( $this->form_id )->fields[ $field_id ]['data']['num_sort'] ) && Ninja_Forms()->form( $this->form_id )->fields[ $field_id ]['data']['num_sort'] == 1 ) {
+					$orderby = 'meta_value_num';
+				} else {
+					$orderby = 'meta_value';
+				}
 
-                $vars['orderby'] = $orderby;
-                $vars['meta_key'] = '_field_' . $field_id;
-           } else if ( $vars['orderby'] == 'id' ) {
+				$vars['orderby'] = $orderby;
+				$vars['meta_key'] = '_field_' . $field_id;
+			} else if ( $vars['orderby'] == 'id' ) {
 				$vars['orderby'] = 'meta_value_num';
-                $vars['meta_key'] = '_seq_num';
-           }
+				$vars['meta_key'] = '_seq_num';
+			}
 		} else if( is_admin() && $typenow == 'nf_sub' && $pagenow == 'edit.php' ) {
 			$vars['orderby'] = 'meta_value_num';
-            $vars['meta_key'] = '_seq_num';
-            $vars['order'] = 'DESC';
+			$vars['meta_key'] = '_seq_num';
+			$vars['order'] = 'DESC';
 		}
 		return $vars;
 	}
 
 	/**
 	 * Add our custom column data
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return void
@@ -424,7 +424,7 @@ class NF_Subs_CPT {
 
 				$t_time = apply_filters( 'nf_sub_title_time', $t_time );
 				$h_time = apply_filters( 'nf_sub_human_time', $h_time );
-				
+
 				/** This filter is documented in wp-admin/includes/class-wp-posts-list-table.php */
 				echo '<abbr title="' . $t_time . '">' . $h_time . '</abbr>';
 
@@ -436,27 +436,27 @@ class NF_Subs_CPT {
 
 				$field_id = str_replace( 'form_' . $form_id . '_field_', '', $column );
 				//if ( apply_filters( 'nf_add_sub_value', Ninja_Forms()->field( $field_id )->type->add_to_sub, $field_id ) ) {
-					$field = Ninja_Forms()->form( $form_id )->fields[ $field_id ];
-					$field_type = $field['type'];
-					if ( isset ( $ninja_forms_fields[ $field_type ] ) ) {
-						$reg_field = $ninja_forms_fields[ $field_type ];
-					} else {
-						$reg_field = array();
-					}
+				$field = Ninja_Forms()->form( $form_id )->fields[ $field_id ];
+				$field_type = $field['type'];
+				if ( isset ( $ninja_forms_fields[ $field_type ] ) ) {
+					$reg_field = $ninja_forms_fields[ $field_type ];
+				} else {
+					$reg_field = array();
+				}
 
-					if ( isset ( $reg_field['sub_table_value'] ) ) {
-						$edit_value_function = $reg_field['sub_table_value'];
-					} else {
-						$edit_value_function = 'nf_field_text_sub_table_value';
-					}
+				if ( isset ( $reg_field['sub_table_value'] ) ) {
+					$edit_value_function = $reg_field['sub_table_value'];
+				} else {
+					$edit_value_function = 'nf_field_text_sub_table_value';
+				}
 
-					$user_value = Ninja_Forms()->sub( $sub_id )->get_field( $field_id );
+				$user_value = Ninja_Forms()->sub( $sub_id )->get_field( $field_id );
 
-					$args['field_id'] = $field_id;
-					$args['user_value'] = ninja_forms_esc_html_deep( $user_value );
-					$args['field'] = $field;
+				$args['field_id'] = $field_id;
+				$args['user_value'] = ninja_forms_esc_html_deep( $user_value );
+				$args['field'] = $field;
 
-					call_user_func_array( $edit_value_function, $args );
+				call_user_func_array( $edit_value_function, $args );
 				//}
 			}
 		}
@@ -464,7 +464,7 @@ class NF_Subs_CPT {
 
 	/**
 	 * Add our submission filters
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return void
@@ -508,7 +508,7 @@ class NF_Subs_CPT {
 
 	/**
 	 * Filter our submission list by form_id
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return void
@@ -518,117 +518,117 @@ class NF_Subs_CPT {
 
 		if( $pagenow == 'edit.php' && is_admin() && ( isset ( $query->query['post_type'] ) && $query->query['post_type'] == 'nf_sub' ) && is_main_query() ) {
 
-		    $qv = &$query->query_vars;
+			$qv = &$query->query_vars;
 
-		    if( !empty( $_GET['form_id'] ) ) {
-		    	$form_id = $_GET['form_id'];
-		    } else {
-		    	$form_id = 0;
-		    }
+			if( !empty( $_GET['form_id'] ) ) {
+				$form_id = $_GET['form_id'];
+			} else {
+				$form_id = 0;
+			}
 
-		    $plugin_settings = nf_get_settings();
-		    $date_format = $plugin_settings['date_format'];
+			$plugin_settings = nf_get_settings();
+			$date_format = $plugin_settings['date_format'];
 
-		    if ( !empty ( $_GET['begin_date'] ) ) {
-		    	$begin_date = nf_get_begin_date( $_GET['begin_date'] )->format("Y-m-d G:i:s");
-		    } else {
-		    	$begin_date = '';
-		    }
+			if ( !empty ( $_GET['begin_date'] ) ) {
+				$begin_date = nf_get_begin_date( $_GET['begin_date'] )->format("Y-m-d G:i:s");
+			} else {
+				$begin_date = '';
+			}
 
 			if ( !empty ( $_GET['end_date'] ) ) {
-		    	$end_date = nf_get_end_date( $_GET['end_date'] )->format("Y-m-d G:i:s");
-		    } else {
-		    	$end_date = '';
-		    }
+				$end_date = nf_get_end_date( $_GET['end_date'] )->format("Y-m-d G:i:s");
+			} else {
+				$end_date = '';
+			}
 
-		    if ( $begin_date > $end_date ) {
-		    	 $begin_date = new DateTime( $begin_date );
-		    	 $end_date = new DateTime( $end_date );
-			     $end_date_temp = $begin_date;
-			     $begin_date_temp = $end_date;
-			     $begin_date = $begin_date_temp;
-			     $end_date = $end_date_temp;
-			     $_GET['begin_date'] = $begin_date->format('m/d/Y');
-			     $_GET['end_date'] = $end_date->format('m/d/Y');
-			     $begin_date = $begin_date->format("Y-m-d G:i:s");
-			     $end_date = $end_date->format("Y-m-d G:i:s");
-		    }
-		    
-		    if ( ! isset ( $qv['date_query'] ) ) {
-			    $qv['date_query'] = array(
-			    	'after' => $begin_date,
-			    	'before' => $end_date,
-			    );		    	
-		    }
+			if ( $begin_date > $end_date ) {
+				$begin_date = new DateTime( $begin_date );
+				$end_date = new DateTime( $end_date );
+				$end_date_temp = $begin_date;
+				$begin_date_temp = $end_date;
+				$begin_date = $begin_date_temp;
+				$end_date = $end_date_temp;
+				$_GET['begin_date'] = $begin_date->format('m/d/Y');
+				$_GET['end_date'] = $end_date->format('m/d/Y');
+				$begin_date = $begin_date->format("Y-m-d G:i:s");
+				$end_date = $end_date->format("Y-m-d G:i:s");
+			}
 
-		    if ( ! isset ( $qv['meta_query'] ) ) {
-			     $qv['meta_query'] = array(
-			    	array(
-			    		'key' => '_form_id',
-			    		'value' => $form_id,
-			    		'compare' => '=',
-			    	),
-			    );
-		    }
+			if ( ! isset ( $qv['date_query'] ) ) {
+				$qv['date_query'] = array(
+					'after' => $begin_date,
+					'before' => $end_date,
+				);
+			}
 
-		    $qv = apply_filters( 'nf_subs_table_qv', $qv, $form_id );
+			if ( ! isset ( $qv['meta_query'] ) ) {
+				$qv['meta_query'] = array(
+					array(
+						'key' => '_form_id',
+						'value' => $form_id,
+						'compare' => '=',
+					),
+				);
+			}
+
+			$qv = apply_filters( 'nf_subs_table_qv', $qv, $form_id );
 		}
 	}
 
 	/**
 	 * Filter our search
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return void
 	 */
 	public function search( $pieces ) {
 		global $typenow;
-	    // filter to select search query
-	    if ( is_search() && is_admin() && $typenow == 'nf_sub' && isset ( $_GET['s'] ) ) { 
-	        global $wpdb;
+		// filter to select search query
+		if ( is_search() && is_admin() && $typenow == 'nf_sub' && isset ( $_GET['s'] ) ) {
+			global $wpdb;
 
-	        $keywords = explode(' ', get_query_var('s'));
-	        $query = "";
+			$keywords = explode(' ', get_query_var('s'));
+			$query = "";
 
-	        foreach ($keywords as $word) {
+			foreach ($keywords as $word) {
 
-	             $query .= " (mypm1.meta_value  LIKE '%{$word}%') OR ";
-	         }
+				$query .= " (mypm1.meta_value  LIKE '%{$word}%') OR ";
+			}
 
-	        if (!empty($query)) {
-	            // add to where clause
-	            $pieces['where'] = str_replace("((({$wpdb->posts}.post_title LIKE '%", "( {$query} (({$wpdb->posts}.post_title LIKE '%", $pieces['where']);
+			if (!empty($query)) {
+				// add to where clause
+				$pieces['where'] = str_replace("((({$wpdb->posts}.post_title LIKE '%", "( {$query} (({$wpdb->posts}.post_title LIKE '%", $pieces['where']);
 
-	            $pieces['join'] = $pieces['join'] . " INNER JOIN {$wpdb->postmeta} AS mypm1 ON ({$wpdb->posts}.ID = mypm1.post_id)";
-	        	
-	        }
-	    }
-	    return ($pieces);
+				$pieces['join'] = $pieces['join'] . " INNER JOIN {$wpdb->postmeta} AS mypm1 ON ({$wpdb->posts}.ID = mypm1.post_id)";
+
+			}
+		}
+		return ($pieces);
 	}
 
 	/**
 	 * Filter our bulk updated/trashed messages so that it uses "submission" rather than "post"
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return array $bulk_messages
 	 */
 	public function updated_messages_filter( $bulk_messages, $bulk_counts ) {
-	    $bulk_messages['nf_sub'] = array(
-	        'updated'   => _n( '%s submission updated.', '%s submissions updated.', $bulk_counts['updated'], 'ninja-forms' ),
-	        'locked'    => _n( '%s submission not updated, somebody is editing it.', '%s submissions not updated, somebody is editing them.', $bulk_counts['locked'], 'ninja-forms' ),
-	        'deleted'   => _n( '%s submission permanently deleted.', '%s submissions permanently deleted.', $bulk_counts['deleted'], 'ninja-forms' ),
-	        'trashed'   => _n( '%s submission moved to the Trash.', '%s submissions moved to the Trash.', $bulk_counts['trashed'], 'ninja-forms' ),
-	        'untrashed' => _n( '%s submission restored from the Trash.', '%s submissions restored from the Trash.', $bulk_counts['untrashed'], 'ninja-forms' ),
-	    );
+		$bulk_messages['nf_sub'] = array(
+			'updated'   => _n( '%s submission updated.', '%s submissions updated.', $bulk_counts['updated'], 'ninja-forms' ),
+			'locked'    => _n( '%s submission not updated, somebody is editing it.', '%s submissions not updated, somebody is editing them.', $bulk_counts['locked'], 'ninja-forms' ),
+			'deleted'   => _n( '%s submission permanently deleted.', '%s submissions permanently deleted.', $bulk_counts['deleted'], 'ninja-forms' ),
+			'trashed'   => _n( '%s submission moved to the Trash.', '%s submissions moved to the Trash.', $bulk_counts['trashed'], 'ninja-forms' ),
+			'untrashed' => _n( '%s submission restored from the Trash.', '%s submissions restored from the Trash.', $bulk_counts['untrashed'], 'ninja-forms' ),
+		);
 
-	    return $bulk_messages;
+		return $bulk_messages;
 	}
 
 	/**
 	 * Filter our updated/trashed post messages
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return array $messages
@@ -643,16 +643,16 @@ class NF_Subs_CPT {
 
 		$messages[$post_type] = array(
 			0 => 	'', // Unused. Messages start at index 1.
-	 		1 => 	sprintf( __( '%s updated.', 'ninja-forms' ), $singular ),
-	 		2 => 	__( 'Custom field updated.' ),
-	 		3 => 	__( 'Custom field deleted.' ),
-	 		4 => 	sprintf( __( '%s updated.', 'ninja-forms' ), $singular ),
+			1 => 	sprintf( __( '%s updated.', 'ninja-forms' ), $singular ),
+			2 => 	__( 'Custom field updated.' ),
+			3 => 	__( 'Custom field deleted.' ),
+			4 => 	sprintf( __( '%s updated.', 'ninja-forms' ), $singular ),
 			/* translators: %s: date and time of the revision */
-	 		5 => 	isset($_GET['revision']) ? sprintf( __( '%1$s restored to revision from %2$s.' ), $singular, wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-	 		6 => 	sprintf( __( '%s published.', 'ninja-forms' ), $singular ),
-	 		7 => 	sprintf( __( '%s saved.', 'ninja-forms' ), $singular ),
-	 		8 => 	sprintf( __( '%1$s submitted. <a href="%2$s" target="_blank">Preview %3$s</a>', 'ninja-forms' ), $singular, esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ), $singular ),
-	 		9 => 	sprintf( __( '%1$s scheduled for: <strong>%2$s</strong>. <a href="%3$s" target="_blank">Preview %4$s</a>', 'ninja-forms' ), $singular, date_i18n( get_option( 'data_format' ) . ' ' . get_option( 'time_format' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID ) ), $singular ),
+			5 => 	isset($_GET['revision']) ? sprintf( __( '%1$s restored to revision from %2$s.' ), $singular, wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			6 => 	sprintf( __( '%s published.', 'ninja-forms' ), $singular ),
+			7 => 	sprintf( __( '%s saved.', 'ninja-forms' ), $singular ),
+			8 => 	sprintf( __( '%1$s submitted. <a href="%2$s" target="_blank">Preview %3$s</a>', 'ninja-forms' ), $singular, esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ), $singular ),
+			9 => 	sprintf( __( '%1$s scheduled for: <strong>%2$s</strong>. <a href="%3$s" target="_blank">Preview %4$s</a>', 'ninja-forms' ), $singular, date_i18n( get_option( 'data_format' ) . ' ' . get_option( 'time_format' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID ) ), $singular ),
 			10 => 	sprintf( __( '%1$s draft updated. <a href="%2$s" target="_blank">Preview %3$s</a>', 'ninja-forms' ), $singular, esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ), $singular ),
 		);
 
@@ -661,7 +661,7 @@ class NF_Subs_CPT {
 
 	/**
 	 * Remove the 'edit' bulk action
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return array $actions
@@ -673,14 +673,14 @@ class NF_Subs_CPT {
 
 	/**
 	 * Add our "export" bulk action
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return void
 	 */
 	public function bulk_admin_footer() {
 		global $post_type;
- 		
+
 		if ( ! is_admin() )
 			return false;
 
@@ -692,31 +692,31 @@ class NF_Subs_CPT {
 					jQuery('<option>').val('export').text('<?php _e('Export')?>').appendTo("select[name='action2']");
 					<?php
 					if ( ( isset ( $_POST['action'] ) && $_POST['action'] == 'export' ) || ( isset ( $_POST['action2'] ) && $_POST['action2'] == 'export' ) ) {
-						?>
-						setInterval(function(){
-							jQuery( "select[name='action'" ).val( '-1' );
-							jQuery( "select[name='action2'" ).val( '-1' );
-							jQuery( '#posts-filter' ).submit();
-						},5000);
-						<?php
+					?>
+					setInterval(function(){
+						jQuery( "select[name='action'" ).val( '-1' );
+						jQuery( "select[name='action2'" ).val( '-1' );
+						jQuery( '#posts-filter' ).submit();
+					},5000);
+					<?php
 					}
 
 					if ( isset ( $_REQUEST['form_id'] ) && ! empty ( $_REQUEST['form_id'] ) ) {
-						$redirect = urlencode( remove_query_arg( array( 'download_all', 'download_file' ) ) );
-						$url = admin_url( 'admin.php?page=nf-processing&action=download_all_subs&form_id=' . absint( $_REQUEST['form_id'] ) . '&redirect=' . $redirect );
-						$url = esc_url( $url );
-						?>
-						var button = '<a href="<?php echo $url; ?>" class="button-secondary nf-download-all"><?php echo __( 'Download All Submissions', 'ninja-forms' ); ?></a>';
-						jQuery( '#doaction2' ).after( button );
-						<?php
+					$redirect = urlencode( remove_query_arg( array( 'download_all', 'download_file' ) ) );
+					$url = admin_url( 'admin.php?page=nf-processing&action=download_all_subs&form_id=' . absint( $_REQUEST['form_id'] ) . '&redirect=' . $redirect );
+					$url = esc_url( $url );
+					?>
+					var button = '<a href="<?php echo $url; ?>" class="button-secondary nf-download-all"><?php echo __( 'Download All Submissions', 'ninja-forms' ); ?></a>';
+					jQuery( '#doaction2' ).after( button );
+					<?php
 					}
-					
+
 					if ( isset ( $_REQUEST['download_all'] ) && $_REQUEST['download_all'] != '' ) {
-						$redirect = esc_url_raw( add_query_arg( array( 'download_file' => esc_html( $_REQUEST['download_all'] ) ) ) );
-						$redirect = remove_query_arg( array( 'download_all' ), $redirect );
-						?>
-						document.location.href = "<?php echo $redirect; ?>";
-						<?php
+					$redirect = esc_url_raw( add_query_arg( array( 'download_file' => esc_html( $_REQUEST['download_all'] ) ) ) );
+					$redirect = remove_query_arg( array( 'download_all' ), $redirect );
+					?>
+					document.location.href = "<?php echo $redirect; ?>";
+					<?php
 					}
 
 					?>
@@ -730,7 +730,7 @@ class NF_Subs_CPT {
 	 * jQuery that hides some of our post-related page items.
 	 * Also adds the active class to All and Trash links, and changes those
 	 * links to match the current filter.
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return void
@@ -752,7 +752,7 @@ class NF_Subs_CPT {
 			$trash_url = esc_url_raw( add_query_arg( array( 'post_status' => 'trash' ) ) );
 			$trash_url = remove_query_arg( 's', $trash_url );
 			if ( isset ( $_GET['form_id'] ) ) {
-				$trashed_sub_count = nf_get_sub_count( $_GET['form_id'], 'trash' );	
+				$trashed_sub_count = nf_get_sub_count( $_GET['form_id'], 'trash' );
 			} else {
 				$trashed_sub_count = 0;
 			}
@@ -767,11 +767,11 @@ class NF_Subs_CPT {
 					jQuery( ".view-switch" ).remove();
 					<?php
 					if ( $trashed_sub_count == 0 ) {
-						?>
-						var text = jQuery( "li.all" ).prop( "innerHTML" );
-						text = text.replace( " |", "" );
-						jQuery( "li.all" ).prop( "innerHTML", text );
-						<?php
+					?>
+					var text = jQuery( "li.all" ).prop( "innerHTML" );
+					text = text.replace( " |", "" );
+					jQuery( "li.all" ).prop( "innerHTML", text );
+					<?php
 					}
 					?>
 				});
@@ -788,14 +788,14 @@ class NF_Subs_CPT {
 					display:none;
 				}
 			</style>
-			<?php			
+			<?php
 		} else if ( $typenow == 'nf_sub' && $pagenow == 'post.php' ) {
 			if ( isset ( $_REQUEST['ref'] ) ) {
 				$back_url = esc_url_raw( $_REQUEST['ref'] );
 			} else {
 				$back_url = get_transient( 'nf_sub_edit_ref' );
 			}
-			
+
 			if ( $back_url ) {
 				$back_url = urldecode( $back_url );
 			} else {
@@ -817,7 +817,7 @@ class NF_Subs_CPT {
 				.add-new-h2 {
 					display:none;
 				}
-			</style>	
+			</style>
 
 			<?php
 		}
@@ -825,13 +825,13 @@ class NF_Subs_CPT {
 
 	/**
 	 * Filter our post counts for the submission listing page
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return int $count
 	 */
 	public function count_posts( $count, $post_type, $perm ) {
-		
+
 		// Bail if we aren't working with our custom post type.
 		if ( $post_type != 'nf_sub' )
 			return $count;
@@ -851,7 +851,7 @@ class NF_Subs_CPT {
 
 	/**
 	 * Add our field editing metabox to the CPT editing page.
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return void
@@ -870,7 +870,7 @@ class NF_Subs_CPT {
 
 	/**
 	 * Output our field editing metabox to the CPT editing page.
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return void
@@ -880,7 +880,7 @@ class NF_Subs_CPT {
 		// Get all the post meta
 		$form_id = Ninja_Forms()->sub( $post->ID )->form_id;
 		$fields = Ninja_Forms()->form( $this->form_id )->fields;
-		
+
 		if ( isset ( $_REQUEST['ref'] ) ) {
 			$ref = esc_url_raw( $_REQUEST['ref'] );
 		} else if ( get_transient( 'nf_sub_edit_ref' ) ) {
@@ -893,61 +893,61 @@ class NF_Subs_CPT {
 		<div id="postcustomstuff">
 			<table id="list-table">
 				<thead>
-					<tr>
-						<th class="left"><?php _e( 'Field', 'ninja-forms' ); ?></th>
-						<th><?php _e( 'Value', 'ninja-forms' ); ?></th>
-					</tr>
+				<tr>
+					<th class="left"><?php _e( 'Field', 'ninja-forms' ); ?></th>
+					<th><?php _e( 'Value', 'ninja-forms' ); ?></th>
+				</tr>
 				</thead>
 				<tbody id="the-list">
-					<?php
-					// Loop through our post meta and keep our field values
-					foreach ( $fields as $field_id => $field ) {
-						$user_value = Ninja_Forms()->sub( $post->ID )->get_field( $field_id );
-						$field_type = $field['type'];
+				<?php
+				// Loop through our post meta and keep our field values
+				foreach ( $fields as $field_id => $field ) {
+					$user_value = Ninja_Forms()->sub( $post->ID )->get_field( $field_id );
+					$field_type = $field['type'];
 
-						if ( isset ( $field['data']['admin_label'] ) && $field['data']['admin_label'] != '' ) {
-							$label = $field['data']['admin_label'];
-						} else if ( isset ( $field['data']['label'] ) ) {
-							$label = $field['data']['label'];
-						} else {
-							$label = '';
-						}
+					if ( isset ( $field['data']['admin_label'] ) && $field['data']['admin_label'] != '' ) {
+						$label = $field['data']['admin_label'];
+					} else if ( isset ( $field['data']['label'] ) ) {
+						$label = $field['data']['label'];
+					} else {
+						$label = '';
+					}
 
-						if ( isset ( $ninja_forms_fields[ $field_type ] ) ) {
-							$reg_field = $ninja_forms_fields[ $field_type ];
-							$process_field = $reg_field['process_field'];
-						} else {
-							$process_field = false;
-						}
+					if ( isset ( $ninja_forms_fields[ $field_type ] ) ) {
+						$reg_field = $ninja_forms_fields[ $field_type ];
+						$process_field = $reg_field['process_field'];
+					} else {
+						$process_field = false;
+					}
 
-						if ( isset ( Ninja_Forms()->form( $this->form_id )->fields[ $field_id ] ) && $process_field ) {
-							?>
-							<tr>
-								<td class="left"><?php echo $label; ?></td>
-								<td>
-									<div class="nf-sub-edit-value type-<?php echo $field_type; ?>">
+					if ( isset ( Ninja_Forms()->form( $this->form_id )->fields[ $field_id ] ) && $process_field ) {
+						?>
+						<tr>
+							<td class="left"><?php echo $label; ?></td>
+							<td>
+								<div class="nf-sub-edit-value type-<?php echo $field_type; ?>">
 									<?php
-										if ( isset ( $reg_field['edit_sub_value'] ) ) {
-											$edit_value_function = $reg_field['edit_sub_value'];
-										} else {
-											$edit_value_function = 'nf_field_text_edit_sub_value';
-										}
-										$args['field_id'] = $field_id;
-										$args['user_value'] = nf_wp_kses_post_deep( $user_value );
-										$args['field'] = $field;
-										$args['sub_id'] = $post->ID;
+									if ( isset ( $reg_field['edit_sub_value'] ) ) {
+										$edit_value_function = $reg_field['edit_sub_value'];
+									} else {
+										$edit_value_function = 'nf_field_text_edit_sub_value';
+									}
+									$args['field_id'] = $field_id;
+									$args['user_value'] = nf_wp_kses_post_deep( $user_value );
+									$args['field'] = $field;
+									$args['sub_id'] = $post->ID;
 
-										call_user_func_array( $edit_value_function, $args );
+									call_user_func_array( $edit_value_function, $args );
 
 									?>
-									</div>
-								</td>
-							</tr>
-							<?php
-						}
-
+								</div>
+							</td>
+						</tr>
+						<?php
 					}
-					?>
+
+				}
+				?>
 				</tbody>
 			</table>
 		</div>
@@ -956,7 +956,7 @@ class NF_Subs_CPT {
 
 	/**
 	 * Output our field editing metabox to the CPT editing page.
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return void
@@ -967,7 +967,7 @@ class NF_Subs_CPT {
 
 		if ( $post->post_author != 0 ) {
 			$user_data = get_userdata( $post->post_author );
-			
+
 			$first_name = $user_data->first_name;
 			$last_name = $user_data->last_name;
 
@@ -1028,12 +1028,12 @@ class NF_Subs_CPT {
 			<div id="major-publishing-actions">
 				<div id="delete-action">
 
-				<!-- <a class="submitdelete deletion" href="<?php echo get_delete_post_link( $post->ID ); ?>">Move to Trash</a>--></div> 
+					<!-- <a class="submitdelete deletion" href="<?php echo get_delete_post_link( $post->ID ); ?>">Move to Trash</a>--></div>
 
 				<div id="publishing-action">
-				<span class="spinner"></span>
-						<input name="original_publish" type="hidden" id="original_publish" value="<?php _e( 'Update', 'ninja-forms' ); ?>">
-						<input name="save" type="submit" class="button button-primary button-large" id="publish" accesskey="p" value="<?php _e( 'Update', 'ninja-forms' ); ?>">
+					<span class="spinner"></span>
+					<input name="original_publish" type="hidden" id="original_publish" value="<?php _e( 'Update', 'ninja-forms' ); ?>">
+					<input name="save" type="submit" class="button button-primary button-large" id="publish" accesskey="p" value="<?php _e( 'Update', 'ninja-forms' ); ?>">
 				</div>
 				<div class="clear"></div>
 			</div>
@@ -1043,7 +1043,7 @@ class NF_Subs_CPT {
 
 	/**
 	 * Save our submission user values
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return void
@@ -1057,7 +1057,7 @@ class NF_Subs_CPT {
 		// verify if this is an auto save routine.
 		// If it is our form has not been submitted, so we dont want to do anything
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
-		  return $sub_id;
+			return $sub_id;
 
 		if ( $pagenow != 'post.php' )
 			return $sub_id;
@@ -1070,19 +1070,19 @@ class NF_Subs_CPT {
 
 		/* Check if the current user has permission to edit the post. */
 		if ( !current_user_can( $post_type->cap->edit_post, $sub_id ) )
-	    	return $sub_id;
+			return $sub_id;
 
-	    foreach ( $_POST['fields'] as $field_id => $user_value ) {
-	    	$user_value = nf_wp_kses_post_deep( apply_filters( 'nf_edit_sub_user_value', $user_value, $field_id, $sub_id ) );
-	    	Ninja_Forms()->sub( $sub_id )->update_field( $field_id, $user_value );
-	    }
+		foreach ( $_POST['fields'] as $field_id => $user_value ) {
+			$user_value = nf_wp_kses_post_deep( apply_filters( 'nf_edit_sub_user_value', $user_value, $field_id, $sub_id ) );
+			Ninja_Forms()->sub( $sub_id )->update_field( $field_id, $user_value );
+		}
 
-	    set_transient( 'nf_sub_edit_ref', esc_url_raw( $_REQUEST['ref'] ) );
+		set_transient( 'nf_sub_edit_ref', esc_url_raw( $_REQUEST['ref'] ) );
 	}
 
 	/**
 	 * Filter our hidden columns so that they are handled on a per-form basis.
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return void
@@ -1099,7 +1099,7 @@ class NF_Subs_CPT {
 		$form_id = absint( $_REQUEST['form_id'] );
 		// Get the columns that should be hidden for this form ID.
 		$hidden_columns = get_user_option( 'manageedit-nf_subcolumnshidden-form-' . $form_id );
-		
+
 		if ( $hidden_columns === false ) {
 			// If we don't have custom hidden columns set up for this form, then only show the first five columns.
 			// Get our column headers
@@ -1119,7 +1119,7 @@ class NF_Subs_CPT {
 
 	/**
 	 * Save our hidden columns per form id.
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return void
@@ -1137,7 +1137,7 @@ class NF_Subs_CPT {
 
 	/**
 	 * Add custom screen options
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7
 	 * @return void
@@ -1151,7 +1151,7 @@ class NF_Subs_CPT {
 
 	/**
 	 * Listen for exporting subs
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7.3
 	 * @return void
@@ -1174,7 +1174,7 @@ class NF_Subs_CPT {
 		if ( isset ( $_REQUEST['download_file'] ) && ! empty( $_REQUEST['download_file'] ) ) {
 			// Open our download all file
 			$filename = esc_html( $_REQUEST['download_file'] );
-			
+
 			$upload_dir = wp_upload_dir();
 
 			$file_path = trailingslashit( $upload_dir['path'] ) . $filename . '.csv';
@@ -1186,7 +1186,7 @@ class NF_Subs_CPT {
 				wp_redirect( $redirect );
 				die();
 			}
-			
+
 			unlink( $file_path );
 
 			$form_name = Ninja_Forms()->form( absint( $_REQUEST['form_id'] ) )->get_setting( 'form_title' );
@@ -1206,10 +1206,10 @@ class NF_Subs_CPT {
 			die();
 		}
 	}
-	
+
 	/**
 	 * Filter user capabilities
-	 * 
+	 *
 	 * @access public
 	 * @since 2.7.7
 	 * @return void

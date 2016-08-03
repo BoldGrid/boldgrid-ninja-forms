@@ -10,10 +10,26 @@ define( ['views/fieldItem', 'views/beforeField', 'views/afterField'], function( 
             afterField: ".nf-after-field",
         },
 
+        initialize: function() {
+            this.model.on( 'change:visible', this.render, this );
+        },
+
         onShow: function() {
-            this.beforeField.show( new beforeField( { model: this.model } ) );
-            this.field.show( new fieldItem( { model: this.model } ) );
-            this.afterField.show( new afterField( { model: this.model } ) );
+            // this.beforeField.show( new beforeField( { model: this.model } ) );
+            // this.field.show( new fieldItem( { model: this.model } ) );
+            // this.afterField.show( new afterField( { model: this.model } ) );
+        },
+
+        onRender: function() {
+            if ( this.model.get( 'visible' ) ) {
+                this.beforeField.show( new beforeField( { model: this.model } ) );
+                this.field.show( new fieldItem( { model: this.model } ) );
+                this.afterField.show( new afterField( { model: this.model } ) );
+            } else {
+                this.beforeField.empty();
+                this.field.empty();
+                this.afterField.empty();
+            }
         },
 
         templateHelpers: function() {

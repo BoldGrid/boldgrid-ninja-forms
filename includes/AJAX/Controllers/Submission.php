@@ -60,6 +60,8 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
 
         $this->_data['settings'] = $this->_form_data['settings'];
 
+        $this->_data['extra'] = $this->_form_data['extra'];
+
         $this->_data['fields'] = $this->_form_data['fields'];
 
         $this->validate_fields();
@@ -136,9 +138,11 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
             $errors = $this->validate_field( $field, $this->_data );
 
             if( ! empty( $errors ) ){
-                $this->_errors[ $field['id'] ] = $errors;
+                $this->_errors[ 'fields' ][ $field['id'] ] = $errors;
             }
         }
+
+        if( $this->_errors ) $this->_respond();
     }
 
     protected function validate_field( $field, $data )
@@ -261,14 +265,18 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
     protected function sort_form_actions( $a, $b )
     {
         if( is_object( $a ) ) {
+            if( ! isset( Ninja_Forms()->actions[ $a->get_setting( 'type' ) ] ) ) return -1;
             $a = Ninja_Forms()->actions[ $a->get_setting( 'type' ) ];
         } else {
+            if( ! isset( Ninja_Forms()->actions[ $a[ 'settings' ][ 'type' ] ] ) ) return -1;
             $a = Ninja_Forms()->actions[ $a[ 'settings' ][ 'type' ] ];
         }
 
         if( is_object( $b ) ) {
+            if( ! isset( Ninja_Forms()->actions[ $b->get_setting( 'type' ) ] ) ) return 1;
             $b = Ninja_Forms()->actions[ $b->get_setting( 'type' ) ];
         } else {
+            if( ! isset( Ninja_Forms()->actions[ $b[ 'settings' ][ 'type' ] ] ) ) return 1;
             $b = Ninja_Forms()->actions[ $b[ 'settings' ][ 'type' ] ];
         }
 

@@ -64,8 +64,6 @@ abstract class NF_Abstracts_Submenu
             $this->menu_slug = 'nf-' . strtolower( preg_replace( '/[^A-Za-z0-9-]+/', '-', $this->menu_title ) );
         }
 
-        $this->capability = apply_filters( 'submenu_' . $this->menu_slug . '_capability', $this->capability );
-
         add_action( 'admin_menu', array( $this, 'register' ), $this->priority );
     }
 
@@ -80,7 +78,7 @@ abstract class NF_Abstracts_Submenu
             $this->parent_slug,
             $this->page_title,
             $this->menu_title,
-            $this->capability,
+            apply_filters( 'ninja_forms_submenu_' . $this->menu_slug . '_capability', $this->capability ),
             $this->menu_slug,
             $function
         );

@@ -56,6 +56,7 @@ define(['models/formModel', 'models/formCollection', 'models/fieldCollection', '
 
 		getField: function( id ) {
 			var model = false;
+			
 			_.each( this.formCollection.models, function( form ) {
 				if ( ! model ) {
 					model = form.get( 'fields' ).get( id );	

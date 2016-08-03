@@ -68,7 +68,7 @@ return apply_filters( 'ninja_forms_plugin_settings_advanced', array(
             ),
         ),
         'desc'  => __( 'Use default Ninja Forms styling conventions.', 'ninja-forms' ),
-        'value' => 'light'
+        'value' => ''
     ),
 
     /*

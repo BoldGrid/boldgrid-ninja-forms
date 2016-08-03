@@ -19,7 +19,7 @@
             background: #fff;
             border: 1px solid #fff;
             border-radius: 50px;
-            color: #bbb;
+            color: $cta_color;
             display: block;
             text-decoration: none;
             padding: 3px;
@@ -27,12 +27,12 @@
             width: 32px;
             &:hover {
                 background: #fff;
-                border: 1px solid $accent_color;
-                color: $accent_color;
+                border: 1px solid $cta_color;
+                color: $cta_color;
             }
         }
         .fa {
-            font-size: 24px;
+            font-size: 18px;
             line-height: 24px;
             text-align: center;
         }
@@ -44,7 +44,7 @@
     }
     &:hover {
         a {
-            background: $accent_color;
+            background: $cta_color;
             color: #fff;
         }
         .nf-item-duplicate {

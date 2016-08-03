@@ -55,7 +55,17 @@ define( [
 					 * TODO: Add filtering when editing settings. For now, removing them from settings.
 					 */
 					getHeaderView: function( data ) {
-						return new editSettingsHeaderView( data );
+						/*
+						 * Get a custom setting header view if one is set.
+						 * TODO: Currently, this only works for advanced settings.
+						 * This could be used to replace the need for a single config file.
+						 */
+						if ( 'undefined' != typeof data.typeModel ) {
+							var view = nfRadio.channel( data.typeModel.get( 'id' ) ).request( 'get:drawerHeaderView' ) || editSettingsHeaderView;
+						} else {
+							var view = editSettingsHeaderView;
+						}
+						return new view( data );
 					},
 
 					getContentView: function( data ) {

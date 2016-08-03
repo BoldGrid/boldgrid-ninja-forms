@@ -12,6 +12,7 @@ define(['controllers/submitButton'], function( submitButton ) {
 			fieldModel.listenTo( nfRadio.channel( 'form-' + fieldModel.get( 'formID' ) ), 'before:submit', this.beforeSubmit, fieldModel );
 			fieldModel.listenTo( nfRadio.channel( 'form-' + fieldModel.get( 'formID' ) ), 'submit:failed', this.resetLabel, fieldModel );
 			fieldModel.listenTo( nfRadio.channel( 'form-' + fieldModel.get( 'formID' ) ), 'submit:response', this.resetLabel, fieldModel );
+			fieldModel.listenTo( nfRadio.channel( 'form-' + fieldModel.get( 'formID' ) ), 'enable:submit', this.maybeEnable, fieldModel );
 			fieldModel.listenTo( nfRadio.channel( 'form-' + fieldModel.get( 'formID' ) ), 'disable:submit', this.maybeDisable, fieldModel );
 			fieldModel.listenTo( nfRadio.channel( 'form-' + fieldModel.get( 'formID' ) ), 'processingLabel', this.processingLabel, fieldModel );
 
@@ -38,10 +39,11 @@ define(['controllers/submitButton'], function( submitButton ) {
 			/*
 			 * If the field reporting the error is not on the same form as the submit button, return false;
 			 */
-			if ( fieldModel.get( 'formID' ) != this.get( 'formID' ) ) {
+			if ( 'undefined' != typeof fieldModel && fieldModel.get( 'formID' ) != this.get( 'formID' ) ) {
 				return false;
 			}
-			var formModel = nfRadio.channel( 'app' ).request( 'get:form', fieldModel.get( 'formID' ) );
+			
+			var formModel = nfRadio.channel( 'app' ).request( 'get:form', this.get( 'formID' ) );
 			if ( 0 == _.size( formModel.get( 'fieldErrors' ) ) ) {
 				this.set( 'disabled', false );
 				this.trigger( 'reRender' );

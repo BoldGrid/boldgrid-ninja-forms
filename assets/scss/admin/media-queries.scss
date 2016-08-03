@@ -41,6 +41,15 @@
             }
         }
     }
+    .nf-drawer-opened {
+        .nf-actions-table {
+            th, td {
+                &:nth-child(3) {
+                    display: none;
+                }
+            }
+        }
+    }
 }
 @media only screen and (max-width: 900px) {
     #nf-header {
@@ -159,7 +168,7 @@
     //         }
     //     }
     // }
-    .nf-one-half, .nf-on-third {
+    .nf-one-half, .nf-one-third {
         float: none;
         width: 100%;
     }
@@ -262,14 +271,14 @@
             }
         }
     }
-    .nf-item-controls {
-        top: 15px;
-    }
+    // .nf-item-controls {
+    //     top: 15px;
+    // }
     #nf-builder {
         padding: 80px 20px 10px;
     }
     #nf-main {
-        padding: 0 0 80px;
+        padding: 20px 0 80px;
     }
     #nf-drawer {
         padding: 20px;
@@ -283,28 +292,28 @@
     #nf-main {
         border: 0;
     }
-    .nf-field-wrap {
-        border: 0;
-        border-top: 8px solid #f1f1f1;
-        border-radius: 0;
-        margin: 0;
-        padding: 20px;
-        &:first-child {
-            border-top: 8px solid #fff;
-        }
-    }
-    .nf-fields-sortable-placeholder { margin-top: 0; margin-bottom: 0; border: 4px solid #84CC1E }
-    .nf-fields-sortable-placeholder + .nf-field-wrap {
-        border: 0;
-    }
-    .nf-fields-sortable {
-        border: 0;
-        padding: 0;
-    }
-    .nf-field-wrap.ui-sortable-helper {
-        background: transparent;
-        border: 2px solid $accent_color;
-    }
+    // .nf-field-wrap {
+    //     border: 0;
+    //     border-top: 8px solid #f1f1f1;
+    //     border-radius: 0;
+    //     margin: 0;
+    //     padding: 20px;
+    //     &:first-child {
+    //         border-top: 8px solid #fff;
+    //     }
+    // }
+    // .nf-fields-sortable-placeholder { margin-top: 0; margin-bottom: 0; border: 4px solid #84CC1E }
+    // .nf-fields-sortable-placeholder + .nf-field-wrap {
+    //     border: 0;
+    // }
+    // .nf-fields-sortable {
+    //     border: 0;
+    //     padding: 0;
+    // }
+    // .nf-field-wrap.ui-sortable-helper {
+    //     background: transparent;
+    //     border: 2px solid $accent_color;
+    // }
 
 }
 @media only screen and (max-width: 660px) {
@@ -373,28 +382,32 @@
     .nf-drawer-buttons {
         display: block;
     }
-    .nf-drawer-header {
-        background: #fff;
-        margin: -20px -20px 20px;
-        padding: 0;
-        h2 {
-            font-size: 16px;
-            line-height: 46px;
-            margin: 0;
-            .dashicons {
-                background: #fff;
-                font-size: 30px;
-                padding-top: 7px;
-                width: 45px;
-                height: 45px;
-            }
-        }
-        .nf-button {
-            border-radius: 0;
-        }
-    }
+    // .nf-drawer-header {
+    //     background: #fff;
+    //     margin: -20px -20px 20px;
+    //     //padding: 0;
+    //     h2 {
+    //         font-size: 16px;
+    //         line-height: 46px;
+    //         margin: 0;
+    //         .dashicons {
+    //             background: #fff;
+    //             font-size: 30px;
+    //             padding-top: 7px;
+    //             width: 45px;
+    //             height: 45px;
+    //         }
+    //     }
+    //     .nf-button {
+    //         border-radius: 0;
+    //     }
+    // }
     .nf-item {
         padding: 15px;
+        .fa {
+            padding: 14px;
+            width: 48px;
+        }
     }
     .nf-saved .nf-item::after {
         padding: 14px;

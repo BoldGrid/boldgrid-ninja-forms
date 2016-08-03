@@ -45,11 +45,11 @@ define( ['views/app/builderHeader', 'views/app/main', 'views/app/mobileMenu', 'v
 			// Show our drawer.
 			this.drawer.show( new drawerView() );
 
-			
+
 		},
 
 		onRender: function() {
-			
+
 		},
 
 		getBuilderEl: function() {
@@ -70,7 +70,7 @@ define( ['views/app/builderHeader', 'views/app/main', 'views/app/mobileMenu', 'v
 		/**
 		 * Someone clicked to open a drawer, so fire a radio event.
 		 * This lets us separate the logic from the click event and view.
-		 * 
+		 *
 		 * @since  3.0
 		 * @param  Object 	e 	event
 		 * @return void
@@ -81,7 +81,7 @@ define( ['views/app/builderHeader', 'views/app/main', 'views/app/mobileMenu', 'v
 		/**
 		 * Someone clicked to close a drawer, so fire a radio event.
 		 * This lets us separate the logic from the click event and view.
-		 * 
+		 *
 		 * @since  3.0
 		 * @return void
 		 */
@@ -91,7 +91,7 @@ define( ['views/app/builderHeader', 'views/app/main', 'views/app/mobileMenu', 'v
 		/**
 		 * Someone clicked to change the domain, so fire a radio event.
 		 * This lets us separate the logic from the click event and view.
-		 * 
+		 *
 		 * @since  3.0
 		 * @param  Object 	e 	event
 		 * @return void

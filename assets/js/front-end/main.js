@@ -35,6 +35,7 @@ jQuery( document ).ready( function( $ ) {
 					nfRadio.channel( 'form-' + formModel.get( 'id' ) ).trigger( 'disable:submit' );
 					nfRadio.channel( 'form-' + formModel.get( 'id' ) ).trigger( 'processingLabel' );
 
+					// TODO: Refactor Duplication
 					jQuery.ajax({
 						url: nfFrontEnd.adminAjax,
 						type: 'POST',
@@ -42,7 +43,7 @@ jQuery( document ).ready( function( $ ) {
 						cache: false,
 						success: function( data, textStatus, jqXHR ) {
 					   		var response = jQuery.parseJSON( data );
-					        nfRadio.channel( 'forms' ).trigger( 'submit:response', response, textStatus, jqXHR );
+					        nfRadio.channel( 'forms' ).trigger( 'submit:response', response, textStatus, jqXHR, formModel.get( 'id' ) );
 					    	nfRadio.channel( 'form-' + formModel.get( 'id' ) ).trigger( 'submit:response', response, textStatus, jqXHR );
 					    },
 					    error: function( jqXHR, textStatus, errorThrown ) {

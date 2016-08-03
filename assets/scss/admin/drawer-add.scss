@@ -37,18 +37,20 @@
     }
 }
 .nf-reservoir {
-    background: #F8F8F9;
-    border: 4px solid #F8F8F9;
-    border-radius: 4px;
-    margin: 30px 2% 20px;
-    //padding: 10px;
-    min-height: 52px;
-    padding: 6px;
-    transition: all 1.0s ease;
     &::after {
         clear: both;
         content: "";
         display: block;
+    }
+    &.nf-droppable-active {
+        background: #F8F8F9;
+        border: 4px solid #F8F8F9;
+        border-radius: 4px;
+        margin: 30px 2% 20px;
+        //padding: 10px;
+        min-height: 52px;
+        padding: 6px;
+        transition: all 1.0s ease;
     }
     .nf-item-dock {
         background: #fff;
@@ -67,6 +69,7 @@
             margin-right: 10px;
         }
     }
+
 }
 .nf-item {
     background: #3B454D;
@@ -90,7 +93,6 @@
         left: 0;
         bottom: 0;
         width: 34px;
-        height: 37px;
         line-height: 20px;
     }
 }

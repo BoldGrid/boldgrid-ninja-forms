@@ -43,6 +43,11 @@ define([], function() {
 		},
 
 		registerRenderClasses: function( model ) {
+			if ( 'checked' == model.get( 'default_value' ) ) {
+				model.set( 'value', 1 );
+			} else {
+				model.set( 'value', 0 );
+			}
 			model.set( 'customClasses', this.customClasses );
 			model.set( 'customLabelClasses', this.customLabelClasses );
 			model.set( 'maybeChecked', this.maybeChecked );

@@ -43,7 +43,6 @@ Header and Nav for Ninja Forms App
 ---------------------------------- */
 #nf-header {
   height: 100px;
-  -webkit-transition: margin 0.5s ease;
   transition: margin 0.5s ease; }
   #nf-header #nf-logo {
     background-image: url("../img/ninja-forms-app-header-logo.png");
@@ -52,7 +51,6 @@ Header and Nav for Ninja Forms App
     height: 30px;
     opacity: 1.0;
     filter: alpha(opacity=100);
-    -webkit-transition: all 1.0s ease;
     transition: all 1.0s ease; }
     @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min--moz-device-pixel-ratio: 2), (min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
       #nf-header #nf-logo {
@@ -75,7 +73,6 @@ Header and Nav for Ninja Forms App
           border-bottom: 2px solid #424242; }
         #nf-header ul li a.preview {
           color: #bbb;
-          -webkit-transition: all 1.0s ease;
           transition: all 1.0s ease; }
           #nf-header ul li a.preview .dashicons {
             display: inline-block;
@@ -113,7 +110,6 @@ Header and Nav for Ninja Forms App
     display: inline-block;
     margin: 0;
     padding: 10px 0;
-    -webkit-transition: all 1.0s ease 0s;
     transition: all 1.0s ease 0s; }
   #nf-app-sub-header:after {
     clear: both;
@@ -138,14 +134,12 @@ Header and Nav for Ninja Forms App
   bottom: 0;
   left: 0;
   -webkit-overflow-scrolling: touch;
-  -webkit-transition: left 0.5s ease;
   transition: left 0.5s ease; }
   #nf-main .nf-field-type-button {
     width: 400px; }
 
 .nf-main-test {
   width: 100%;
-  -webkit-transition: width 0.5s ease;
   transition: width 0.5s ease; }
 
 #nf-main-content,
@@ -157,16 +151,16 @@ Header and Nav for Ninja Forms App
       -ms-user-select: none;
           user-select: none; }
 
-#nf-main-header {
-  padding: 0 0 20px; }
-  #nf-main-header .nf-button {
-    float: right; }
-  #nf-main-header h2 {
-    display: inline-block; }
-  #nf-main-header:after {
-    clear: both;
-    content: "";
-    display: block; }
+#nf-main-header .nf-button {
+  float: right; }
+
+#nf-main-header h2 {
+  display: inline-block; }
+
+#nf-main-header:after {
+  clear: both;
+  content: "";
+  display: block; }
 
 #the-list tr.flagged th:first-child {
   border-left: 5px solid yellow; }
@@ -198,7 +192,6 @@ Header and Nav for Ninja Forms App
     min-height: 160px;
     padding: 10px;
     text-decoration: none;
-    -webkit-transition: all 0.2s ease-in-out 0.1s, box-shadow 0.2s ease-in-out 0.1s;
     transition: all 0.2s ease-in-out 0.1s, box-shadow 0.2s ease-in-out 0.1s; }
     .template-box .template-box-inside h4 {
       margin: 0 0 10px;
@@ -210,7 +203,6 @@ Header and Nav for Ninja Forms App
     background: #fff;
     box-shadow: 0 0 20px #1EA9EA;
     color: #1EA9EA;
-    -webkit-transition: all 0.2s ease-in-out 0.1s, box-shadow 0.2s ease-in-out 0.1s;
     transition: all 0.2s ease-in-out 0.1s, box-shadow 0.2s ease-in-out 0.1s; }
 
 .nf-setting-wrap {
@@ -255,13 +247,12 @@ Form field placeholders for the fields a user has added to their form
     height: 30px;
     position: absolute;
     right: 0;
-    -webkit-transition: all 0.5s ease;
     transition: all 0.5s ease; }
     .nf-item-controls .nf-item-control a {
       background: #fff;
       border: 1px solid #fff;
       border-radius: 50px;
-      color: #bbb;
+      color: #1EA9EA;
       display: block;
       text-decoration: none;
       padding: 3px;
@@ -269,10 +260,10 @@ Form field placeholders for the fields a user has added to their form
       width: 32px; }
       .nf-item-controls .nf-item-control a:hover {
         background: #fff;
-        border: 1px solid #84CC1E;
-        color: #84CC1E; }
+        border: 1px solid #1EA9EA;
+        color: #1EA9EA; }
     .nf-item-controls .nf-item-control .fa {
-      font-size: 24px;
+      font-size: 18px;
       line-height: 24px;
       text-align: center; }
     .nf-item-controls .nf-item-control.nf-item-edit {
@@ -280,19 +271,17 @@ Form field placeholders for the fields a user has added to their form
       visibility: visible;
       z-index: 100; }
   .nf-item-controls:hover a {
-    background: #84CC1E;
+    background: #1EA9EA;
     color: #fff; }
   .nf-item-controls:hover .nf-item-duplicate {
     visibility: visible;
     opacity: 100;
     right: 80px;
-    -webkit-transition: all 0.5s ease;
     transition: all 0.5s ease; }
   .nf-item-controls:hover .nf-item-delete {
     visibility: visible;
     opacity: 100;
     right: 40px;
-    -webkit-transition: all 0.5s ease;
     transition: all 0.5s ease; }
 
 #nf-table-display .nf-item-controls {
@@ -352,9 +341,7 @@ Form field placeholders for the fields a user has added to their form
     border-color: #84CC1E;
     color: #84CC1E; }
     .nf-group-wrap.expanded .nf-item-expand .dashicons {
-      -webkit-transform: rotate(90deg);
-          -ms-transform: rotate(90deg);
-              transform: rotate(90deg); }
+      transform: rotate(90deg); }
     .nf-group-wrap.expanded .nf-field-wrap {
       opacity: 1.0;
       visibility: visible;
@@ -363,7 +350,6 @@ Form field placeholders for the fields a user has added to their form
       top: 0;
       left: 0;
       right: 0;
-      -webkit-transition: all 1.0s ease;
       transition: all 1.0s ease; }
       .nf-group-wrap.expanded .nf-field-wrap:nth-child(2) {
         margin-top: 20px; }
@@ -387,7 +373,6 @@ All styles used within the drawer
   right: -1400px;
   overflow: hidden;
   z-index: 101;
-  -webkit-transition: width 0.75s ease;
   transition: width 0.75s ease;
   -webkit-overflow-scrolling: touch; }
   #nf-drawer.nf-drawer-expand {
@@ -395,24 +380,18 @@ All styles used within the drawer
 
 .nf-drawer-opened .nf-main-test {
   width: 50%;
-  -webkit-transition: all 0.50s ease;
   transition: all 0.50s ease; }
   .nf-drawer-opened .nf-main-test .nf-button {
     display: none; }
 
 .nf-drawer-opened #nf-drawer {
   right: 0;
-  -webkit-transition: all 0.50s ease;
   transition: all 0.50s ease; }
   .nf-drawer-opened #nf-drawer.nf-drawer-expand {
     width: 100%;
-    -webkit-transition: all 0.50s ease;
     transition: all 0.50s ease; }
     .nf-drawer-opened #nf-drawer.nf-drawer-expand .nf-toggle-drawer .dashicons {
-      -webkit-transform: rotate(180deg);
-          -ms-transform: rotate(180deg);
-              transform: rotate(180deg);
-      -webkit-transition: all 0.50s ease;
+      transform: rotate(180deg);
       transition: all 0.50s ease; }
     .nf-drawer-opened #nf-drawer.nf-drawer-expand .nf-toggle-drawer .nf-expand-off {
       display: none; }
@@ -423,24 +402,16 @@ All styles used within the drawer
   opacity: 0.0;
   visibility: hidden;
   filter: alpha(opacity=0);
-  -webkit-transition: all 0.50s ease;
   transition: all 0.50s ease; }
   .nf-drawer-opened .preview:hover, .nf-drawer-opened .preview:active, .nf-drawer-opened .preview.active {
     opacity: 0.0;
     visibility: hidden;
     filter: alpha(opacity=0);
-    -webkit-transition: all 0.50s ease;
     transition: all 0.50s ease; }
-
-.nf-drawer-opened #nf-app-sub-header h2, .nf-drawer-opened #nf-header h2 {
-  padding-left: 50px;
-  -webkit-transition: all 0.50s ease 0s;
-  transition: all 0.50s ease 0s; }
 
 .nf-drawer-opened #nf-main-content,
 .nf-drawer-opened #nf-main-header {
   margin: 0 auto;
-  -webkit-transition: all 0.50s ease;
   transition: all 0.50s ease; }
 
 @media only screen and (min-width: 901px) {
@@ -450,7 +421,6 @@ All styles used within the drawer
 
 .nf-drawer-opened .nf-setting-wrap {
   width: 50%;
-  -webkit-transition: width 0.50s ease;
   transition: width 0.50s ease; }
 
 .nf-drawer-opened .nf-toggle-drawer {
@@ -459,24 +429,20 @@ All styles used within the drawer
 .nf-drawer-closed #nf-main {
   width: 100%;
   left: 0;
-  -webkit-transition: width 0.50s ease, left 0.50s ease;
   transition: width 0.50s ease, left 0.50s ease; }
 
 .nf-drawer-closed #nf-drawer {
   right: -1400px;
-  -webkit-transition: right 0.50s ease;
   transition: right 0.50s ease; }
 
 .nf-drawer-closed .nf-add-new {
   opacity: 1.0;
   visibility: visible;
   filter: alpha(opacity=100);
-  -webkit-transition: all 0.50s ease;
   transition: all 0.50s ease; }
 
 .nf-drawer-closed .nf-setting-wrap {
   width: 33%;
-  -webkit-transition: width 0.50s ease;
   transition: width 0.50s ease; }
 
 .nf-drawer-closed .nf-toggle-drawer {
@@ -572,7 +538,6 @@ All styles used within the drawer
   right: 0; }
   .nf-toggle-drawer .dashicons {
     margin-right: 5px;
-    -webkit-transition: all 0.50s ease;
     transition: all 0.50s ease; }
   .nf-toggle-drawer .nf-expand-off {
     display: inline; }
@@ -588,7 +553,6 @@ All styles used within the drawer
   bottom: 0;
   right: -250px;
   z-index: 999;
-  -webkit-transition: right 0.50s ease;
   transition: right 0.50s ease; }
   #nf-menu-drawer ul {
     margin: 0; }
@@ -615,18 +579,15 @@ All styles used within the drawer
 
 .nf-menu-expand #nf-menu-drawer {
   right: 0;
-  -webkit-transition: right 0.50s ease;
   transition: right 0.50s ease; }
 
 .nf-menu-expand #nf-header {
   margin-right: 250px;
   margin-left: -250px;
-  -webkit-transition: margin 0.50s ease;
   transition: margin 0.50s ease; }
 
 .nf-menu-expand #nf-main {
   left: -250px;
-  -webkit-transition: left 0.50s ease;
   transition: left 0.50s ease; }
 
 .nf-div-table .nf-table-row.nf-error textarea {
@@ -671,6 +632,8 @@ All styles used within the drawer
     background: #ccc;
     border: 1px solid #ccc;
     cursor: default; }
+  .nf-button.publish {
+    float: right; }
 
 .nf-cancel {
   color: #999;
@@ -684,7 +647,6 @@ All styles used within the drawer
   float: right;
   padding: 5px 7px 5px 5px;
   text-decoration: none;
-  -webkit-transition: margin 0.5s ease;
   transition: margin 0.5s ease; }
   .nf-mobile-menu .dashicons {
     font-size: 30px;
@@ -812,26 +774,14 @@ All styles used within the drawer
     display: block; }
 
 .dashicons.spin {
-  -webkit-animation: dashicons-spin 1s infinite;
-          animation: dashicons-spin 1s infinite;
-  -webkit-animation-timing-function: linear;
-          animation-timing-function: linear; }
-
-@-webkit-keyframes dashicons-spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg); }
-  100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg); } }
+  animation: dashicons-spin 1s infinite;
+  animation-timing-function: linear; }
 
 @keyframes dashicons-spin {
   0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg); }
+    transform: rotate(0deg); }
   100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg); } }
+    transform: rotate(360deg); } }
 
 .nf-search {
   display: inline;
@@ -867,33 +817,34 @@ All styles used within the drawer
     top: -20px;
     right: 10px; }
 
-.nf-reservoir {
+.nf-reservoir::after {
+  clear: both;
+  content: "";
+  display: block; }
+
+.nf-reservoir.nf-droppable-active {
   background: #F8F8F9;
   border: 4px solid #F8F8F9;
   border-radius: 4px;
   margin: 30px 2% 20px;
   min-height: 52px;
   padding: 6px;
-  -webkit-transition: all 1.0s ease;
   transition: all 1.0s ease; }
-  .nf-reservoir::after {
-    clear: both;
-    content: "";
-    display: block; }
-  .nf-reservoir .nf-item-dock {
-    background: #fff;
-    border-radius: 4px;
-    color: #999;
-    display: inline-block;
-    float: left;
-    margin: 0 4px 3px 4px;
-    padding: 5px 10px;
-    position: relative; }
-    .nf-reservoir .nf-item-dock .dashicons {
-      font-size: 14px;
-      margin: 2px 0 -4px 5px; }
-    .nf-reservoir .nf-item-dock .fa {
-      margin-right: 10px; }
+
+.nf-reservoir .nf-item-dock {
+  background: #fff;
+  border-radius: 4px;
+  color: #999;
+  display: inline-block;
+  float: left;
+  margin: 0 4px 3px 4px;
+  padding: 5px 10px;
+  position: relative; }
+  .nf-reservoir .nf-item-dock .dashicons {
+    font-size: 14px;
+    margin: 2px 0 -4px 5px; }
+  .nf-reservoir .nf-item-dock .fa {
+    margin-right: 10px; }
 
 .nf-item {
   background: #3B454D;
@@ -916,7 +867,6 @@ All styles used within the drawer
     left: 0;
     bottom: 0;
     width: 34px;
-    height: 37px;
     line-height: 20px; }
 
 .nf-saved .nf-item {
@@ -980,7 +930,7 @@ table.nf-changes tr:hover td {
 Various custom field styles
 --------------------------------- */
 .nf-add-new {
-  color: #84CC1E;
+  color: #1EA9EA;
   padding: 0 0 0 46px;
   text-decoration: none;
   line-height: 32px;
@@ -990,8 +940,8 @@ Various custom field styles
   text-indent: 0px;
   overflow: hidden; }
   .nf-add-new:after {
-    background: #84CC1E;
-    border: 2px solid #84CC1E;
+    background: #1EA9EA;
+    border: 2px solid #1EA9EA;
     border-radius: 40px;
     color: #fff;
     content: "+";
@@ -1003,24 +953,53 @@ Various custom field styles
     height: 12px;
     line-height: 10px;
     text-indent: 0px;
-    -webkit-transition: all 0.5s ease 0s;
     transition: all 0.5s ease 0s; }
   .nf-add-new:hover, .nf-add-new:active, .nf-add-new.active {
-    color: #84CC1E;
-    -webkit-transition: width 0.5s ease 0s,height 0.5s ease 0s, text-indent 0.5s ease,top 0.5s ease,left 0.5s ease;
+    color: #1EA9EA;
     transition: width 0.5s ease 0s,height 0.5s ease 0s, text-indent 0.5s ease,top 0.5s ease,left 0.5s ease; }
     .nf-add-new:hover:after, .nf-add-new:active:after, .nf-add-new.active:after {
       background: #fff;
-      color: #84CC1E;
-      -webkit-transform: rotate(180deg);
-          -ms-transform: rotate(180deg);
-              transform: rotate(180deg);
-      -webkit-transition: all 0.5s ease;
+      color: #1EA9EA;
+      transform: rotate(180deg);
       transition: all 0.5s ease; }
   .nf-add-new.nf-open-drawer {
     position: absolute;
     top: 185px;
     left: 40px; }
+
+.nf-master-control {
+  background: #1EA9EA;
+  border: 2px solid #1EA9EA;
+  border-radius: 40px;
+  cursor: pointer;
+  position: absolute;
+  height: 60px;
+  width: 60px;
+  top: auto;
+  left: auto;
+  bottom: 20px;
+  right: 30px;
+  transition: all 0.5s ease;
+  z-index: 98; }
+  .nf-master-control span {
+    display: block;
+    text-indent: -9999px; }
+  .nf-master-control .fa {
+    color: #fff;
+    cursor: pointer;
+    font-size: 28px;
+    line-height: 28px;
+    margin: 15px 0 0 16px;
+    transition: all 0.5s ease; }
+  .nf-master-control:hover, .nf-master-control:active, .nf-master-control.active {
+    background: #fff;
+    color: #1EA9EA;
+    transition: all 0.5s ease; }
+    .nf-master-control:hover .fa, .nf-master-control:active .fa, .nf-master-control.active .fa {
+      color: #1EA9EA;
+      margin: 12px 0 0 16px;
+      transform: rotate(180deg);
+      transition: all 0.5s ease; }
 
 input[type=checkbox].nf-toggle {
   display: none; }
@@ -1048,7 +1027,6 @@ input[type=checkbox].nf-toggle {
       left: -4px;
       width: 40px;
       height: 20px;
-      -webkit-transition: all 0.3s ease;
       transition: all 0.3s ease; }
     input[type=checkbox].nf-toggle + label::before {
       background: #fff;
@@ -1060,17 +1038,14 @@ input[type=checkbox].nf-toggle {
       width: 18px;
       height: 18px;
       z-index: 99;
-      -webkit-transition: all 0.3s ease;
       transition: all 0.3s ease; }
   input[type=checkbox].nf-toggle:checked + label::after {
     background: #84CC1E;
     border: 2px solid #84CC1E;
-    -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease; }
   input[type=checkbox].nf-toggle:checked + label::before {
     content: "";
     left: 18px;
-    -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease; }
 
 .nf-full {
@@ -1084,7 +1059,6 @@ input[type=checkbox].nf-toggle {
     .nf-full input[type=checkbox].nf-toggle + label::before {
       left: auto;
       right: 22px;
-      -webkit-transition: right 0.3s ease;
       transition: right 0.3s ease; }
     .nf-full input[type=checkbox].nf-toggle + label::after {
       left: auto;
@@ -1092,7 +1066,6 @@ input[type=checkbox].nf-toggle {
   .nf-full input[type=checkbox].nf-toggle:checked + label::before {
     left: auto;
     right: 4px;
-    -webkit-transition: right 0.3s ease;
     transition: right 0.3s ease; }
   .nf-full .nf-setting-label {
     border-bottom: 1px solid #ccc;
@@ -1173,7 +1146,7 @@ All styles used for displaying table content
     font-weight: normal;
     float: right; }
     .ninja-forms-app table .active .nf-item-controls a {
-      color: #424242; }
+      color: #84CC1E; }
     .ninja-forms-app table .active .nf-item-controls .nf-item-delete,
     .ninja-forms-app table .active .nf-item-controls .nf-item-duplicate {
       display: none; }
@@ -1238,7 +1211,6 @@ All styles used for displaying table content
   /* please don't change 'position' */
   border-radius: 4px;
   opacity: 0;
-  -webkit-transition: background-color 0.2s linear, opacity 0.2s linear;
   transition: background-color 0.2s linear, opacity 0.2s linear;
   bottom: 3px;
   /* there must be 'bottom' for ps-scrollbar-x-rail */
@@ -1249,7 +1221,6 @@ All styles used for displaying table content
   /* please don't change 'position' */
   background-color: #aaa;
   border-radius: 4px;
-  -webkit-transition: background-color 0.2s linear;
   transition: background-color 0.2s linear;
   bottom: 0;
   /* there must be 'bottom' for ps-scrollbar-x */
@@ -1261,7 +1232,6 @@ All styles used for displaying table content
   /* please don't change 'position' */
   border-radius: 4px;
   opacity: 0;
-  -webkit-transition: background-color 0.2s linear, opacity 0.2s linear;
   transition: background-color 0.2s linear, opacity 0.2s linear;
   right: 3px;
   /* there must be 'right' for ps-scrollbar-y-rail */
@@ -1272,7 +1242,6 @@ All styles used for displaying table content
   /* please don't change 'position' */
   background-color: #aaa;
   border-radius: 4px;
-  -webkit-transition: background-color 0.2s linear;
   transition: background-color 0.2s linear;
   right: 0;
   /* there must be 'right' for ps-scrollbar-y */
@@ -1339,12 +1308,10 @@ All styles used for displaying table content
 
 #nf-builder .nf-droppable-active {
   border: 4px solid #1EA9EA;
-  -webkit-transition: all 1.0s ease;
   transition: all 1.0s ease; }
 
 #nf-builder .nf-droppable-hover {
   border: 4px solid #84CC1E;
-  -webkit-transition: all 1.0s ease;
   transition: all 1.0s ease; }
 
 .nf-fields-sortable {
@@ -1455,50 +1422,27 @@ All styles used for displaying table content
       width: 10px;
       border: 3px solid #fff;
       border-radius: 100%;
-      -webkit-transform: transformZ(0);
-          -ms-transform: transformZ(0);
-              transform: transformZ(0);
-      -webkit-animation: LOADING 2s infinite;
-              animation: LOADING 2s infinite; }
+      transform: transformZ(0);
+      animation: LOADING 2s infinite; }
       .nf-loading ul li:nth-child(1n) {
         left: 0;
-        -webkit-animation-delay: 0s;
-                animation-delay: 0s; }
+        animation-delay: 0s; }
       .nf-loading ul li:nth-child(2n) {
         left: 15px;
-        -webkit-animation-delay: 0.2s;
-                animation-delay: 0.2s; }
+        animation-delay: 0.2s; }
       .nf-loading ul li:nth-child(3n) {
         left: 30px;
-        -webkit-animation-delay: 0.4s;
-                animation-delay: 0.4s; }
-
-@-webkit-keyframes LOADING {
-  0% {
-    -webkit-transform: scale(0.5);
-            transform: scale(0.5);
-    background: #fff; }
-  50% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-    background: #fff; }
-  100% {
-    -webkit-transform: scale(0.5);
-            transform: scale(0.5);
-    background: #fff; } }
+        animation-delay: 0.4s; }
 
 @keyframes LOADING {
   0% {
-    -webkit-transform: scale(0.5);
-            transform: scale(0.5);
+    transform: scale(0.5);
     background: #fff; }
   50% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     background: #fff; }
   100% {
-    -webkit-transform: scale(0.5);
-            transform: scale(0.5);
+    transform: scale(0.5);
     background: #fff; } }
 
 .nf-help-text {
@@ -2004,14 +1948,6 @@ WP Color Picker (Iris) Styles
 .wp-picker-input-wrap > .button.wp-picker-default {
   display: none; }
 
-@-webkit-keyframes color_change {
-  from {
-    background-color: #1EA9EA;
-    color: #fff; }
-  to {
-    background-color: #3B454D;
-    color: #A2A5A8; } }
-
 @keyframes color_change {
   from {
     background-color: #1EA9EA;
@@ -2021,14 +1957,10 @@ WP Color Picker (Iris) Styles
     color: #A2A5A8; } }
 
 .nf-item.clicked {
-  -webkit-animation-name: color_change;
-          animation-name: color_change;
-  -webkit-animation-duration: 2s;
-          animation-duration: 2s;
-  -webkit-animation-iteration-count: 1;
-          animation-iteration-count: 1;
-  -webkit-animation-direction: alternate;
-          animation-direction: alternate; }
+  animation-name: color_change;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+  animation-direction: alternate; }
 
 @media only screen and (max-width: 1400px) {
   .nf-field-type-button {
@@ -2038,7 +1970,9 @@ WP Color Picker (Iris) Styles
   .nf-app-menu .preview .app-menu-text {
     text-indent: -9999px;
     display: inline-block;
-    width: 0; } }
+    width: 0; }
+  .nf-drawer-opened .nf-actions-table th:nth-child(3), .nf-drawer-opened .nf-actions-table td:nth-child(3) {
+    display: none; } }
 
 @media only screen and (max-width: 900px) {
   #nf-header ul {
@@ -2049,7 +1983,6 @@ WP Color Picker (Iris) Styles
     display: inline-block; }
   #nf-app-sub-header h2 {
     padding-left: 0;
-    -webkit-transition: all 1.0s ease 0s;
     transition: all 1.0s ease 0s; }
   .nf-add-new.nf-open-drawer {
     position: fixed;
@@ -2076,7 +2009,7 @@ WP Color Picker (Iris) Styles
       text-indent: 0px; }
   #nf-main-header .nf-button {
     display: none; }
-  .nf-one-half, .nf-on-third {
+  .nf-one-half, .nf-one-third {
     float: none;
     width: 100%; }
   .nf-drawer-expand .nf-one-half {
@@ -2133,39 +2066,17 @@ WP Color Picker (Iris) Styles
 @media only screen and (max-width: 782px) {
   .ninja-forms-app.folded #wpcontent, .ninja-forms-app.auto-fold #wpcontent {
     margin-left: 0; }
-  .nf-item-controls {
-    top: 15px; }
   #nf-builder {
     padding: 80px 20px 10px; }
   #nf-main {
-    padding: 0 0 80px; }
+    padding: 20px 0 80px; }
   #nf-drawer {
     padding: 20px; }
   #nf-main-content {
     width: 100%;
     max-width: 100%; }
   #nf-main {
-    border: 0; }
-  .nf-field-wrap {
-    border: 0;
-    border-top: 8px solid #f1f1f1;
-    border-radius: 0;
-    margin: 0;
-    padding: 20px; }
-    .nf-field-wrap:first-child {
-      border-top: 8px solid #fff; }
-  .nf-fields-sortable-placeholder {
-    margin-top: 0;
-    margin-bottom: 0;
-    border: 4px solid #84CC1E; }
-  .nf-fields-sortable-placeholder + .nf-field-wrap {
-    border: 0; }
-  .nf-fields-sortable {
-    border: 0;
-    padding: 0; }
-  .nf-field-wrap.ui-sortable-helper {
-    background: transparent;
-    border: 2px solid #84CC1E; } }
+    border: 0; } }
 
 @media only screen and (max-width: 660px) {
   .nf-one-half, .nf-one-third {
@@ -2174,24 +2085,11 @@ WP Color Picker (Iris) Styles
     display: none; }
   .nf-drawer-buttons {
     display: block; }
-  .nf-drawer-header {
-    background: #fff;
-    margin: -20px -20px 20px;
-    padding: 0; }
-    .nf-drawer-header h2 {
-      font-size: 16px;
-      line-height: 46px;
-      margin: 0; }
-      .nf-drawer-header h2 .dashicons {
-        background: #fff;
-        font-size: 30px;
-        padding-top: 7px;
-        width: 45px;
-        height: 45px; }
-    .nf-drawer-header .nf-button {
-      border-radius: 0; }
   .nf-item {
     padding: 15px; }
+    .nf-item .fa {
+      padding: 14px;
+      width: 48px; }
   .nf-saved .nf-item::after {
     padding: 14px; } }
 
@@ -2309,7 +2207,6 @@ WP Color Picker (Iris) Styles
     height: 60px;
     opacity: 1.0;
     filter: alpha(opacity=100);
-    -webkit-transition: all 1.0s ease;
     transition: all 1.0s ease; }
 
 .scrollWrap {

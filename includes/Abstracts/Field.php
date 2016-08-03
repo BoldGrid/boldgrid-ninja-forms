@@ -114,9 +114,6 @@ abstract class NF_Abstracts_Field
      */
     public function __construct()
     {
-        // Translate the nicename property.
-        $this->_nicename = __( $this->_nicename, 'ninja-forms' );
-
         if( ! empty( $this->_settings_only ) ){
 
             $this->_settings = array_merge( $this->_settings, $this->_settings_only );
@@ -144,7 +141,12 @@ abstract class NF_Abstracts_Field
     {
         $errors = array();
         // Required check.
-        if( isset( $field['required'] ) && $field['required'] && ! trim( $field['value'] ) ){
+
+        if( is_array( $field[ 'value' ] ) ){
+            $field[ 'value' ] = implode( '', $field[ 'value' ] );
+        }
+
+        if( isset( $field['required'] ) && 1 == $field['required'] && ! trim( $field['value'] ) ){
             $errors[] = 'Field is required.';
         }
         return $errors;

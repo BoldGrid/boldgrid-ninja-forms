@@ -233,6 +233,12 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
 
         // Combine Field and Field Data
         foreach( $import[ 'fields' ] as $key => $field ){
+
+            if( '_honeypot' == $field[ 'type' ] ) {
+                unset( $import[ 'fields' ][ $key ] );
+                continue;
+            }
+
             // TODO: Split Credit Card field into multiple fields.
             $field = $this->import_field_backwards_compatibility( $field );
 

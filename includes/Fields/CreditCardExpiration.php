@@ -16,6 +16,9 @@ class NF_Fields_CreditCardExpiration extends NF_Abstracts_Input
 
     protected $_test_value = '01/2025';
 
+    protected $_settings_exclude = array( 'input_limit_set', 'disable_input' );
+
+
     public function __construct()
     {
         parent::__construct();

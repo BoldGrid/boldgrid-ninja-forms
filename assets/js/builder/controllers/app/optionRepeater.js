@@ -25,6 +25,11 @@ define( ['models/app/optionRepeaterModel', 'models/app/optionRepeaterCollection'
 			nfRadio.channel( 'option-repeater' ).reply( 'update:optionSortable', this.updateOptionSortable, this );
 			nfRadio.channel( 'option-repeater' ).reply( 'stop:optionSortable', this.stopOptionSortable, this );
 			nfRadio.channel( 'option-repeater' ).reply( 'start:optionSortable', this.startOptionSortable, this );
+		
+			/**
+			 * When we init our setting model, we need to convert our array/objects into collections/models
+			 */
+			this.listenTo( nfRadio.channel( 'option-repeater' ), 'init:dataModel', this.convertSettings );
 		},
 
 		/**
@@ -250,6 +255,28 @@ define( ['models/app/optionRepeaterModel', 'models/app/optionRepeaterCollection'
 		startOptionSortable: function( ui ) {
 			jQuery( ui.placeholder ).find( 'div' ).remove();
 			jQuery( ui.item ).css( 'opacity', '0.5' ).show();
+		},
+
+		/**
+		 * Convert settings from an array/object to a collection/model
+		 * 
+		 * @since  3.0
+		 * @param  Backbone.Model dataModel
+		 * @param  Backbone.Model settingModel
+		 * @return void
+		 */
+		convertSettings: function( dataModel, settingModel ) {
+			/*
+			 * Our options are stored in our database as objects, not collections.
+			 * Before we attempt to render them, we need to convert them to a collection if they aren't already one.
+			 */ 
+			var optionCollection = dataModel.get( settingModel.get( 'name' ) );
+
+			if ( false == optionCollection instanceof Backbone.Collection ) {
+				optionCollection = new listOptionCollection( [], { settingModel: settingModel } );
+				optionCollection.add( dataModel.get( settingModel.get( 'name' ) ) );
+				dataModel.set( settingModel.get( 'name' ), optionCollection, { silent: true } );
+			}
 		}
 
 	});

@@ -32,6 +32,8 @@ class NF_Fields_Checkbox extends NF_Abstracts_Input
         $this->_settings[ 'label_pos' ][ 'value' ] = 'right';
 
         add_filter( 'ninja_forms_custom_columns', array( $this, 'custom_columns' ), 10, 2 );
+
+        add_filter( 'ninja_forms_merge_tag_value_' . $this->_name, array( $this, 'filter_merge_tag_value' ), 10, 2 );
     }
 
     public function admin_form_element( $id, $value )
@@ -46,6 +48,19 @@ class NF_Fields_Checkbox extends NF_Abstracts_Input
         if( 'checkbox' == $field->get_setting( 'type' ) ){
             $value = ( $value ) ? __( 'checked', 'ninja-forms' ) : __( 'unchecked', 'ninja-forms' );
         }
+        return $value;
+    }
+
+    public function filter_merge_tag_value( $value, $field )
+    {
+        if( $value && isset( $field[ 'checked_calc_value' ] ) ){
+            return $field[ 'checked_calc_value' ];
+        }
+
+        if( ! $value && isset( $field[ 'unchecked_calc_value' ] ) ){
+            return $field[ 'unchecked_calc_value' ];
+        }
+
         return $value;
     }
 }

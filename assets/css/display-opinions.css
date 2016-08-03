@@ -155,7 +155,6 @@ input[type=checkbox].nf-toggle {
     left: -4px;
     width: 46px;
     height: 24px;
-    -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease; }
   input[type=checkbox].nf-toggle::before {
     background: #fff;
@@ -167,17 +166,14 @@ input[type=checkbox].nf-toggle {
     width: 18px;
     height: 18px;
     z-index: 99;
-    -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease; }
   input[type=checkbox].nf-toggle:checked::after {
     background: lightgreen;
     border: 2px solid lightgreen;
-    -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease; }
   input[type=checkbox].nf-toggle:checked::before {
     top: -1px;
     left: 20px;
-    -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease; }
   .label-right input[type=checkbox].nf-toggle {
     padding: 0 50px 0 0; }

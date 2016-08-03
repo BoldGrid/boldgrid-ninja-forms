@@ -332,12 +332,15 @@ function ninja_forms_output_tab_metabox($form_id = '', $slug, $metabox){
 						$x = 0; ?>
 						<?php foreach($s['options'] as $option){ ?>
 							<input type="radio" name="<?php echo $name;?>" value="<?php echo $option['value'];?>" id="<?php echo $name."_".$x;?>" <?php checked($value, $option['value']);?> class="<?php echo $class;?>"> <label for="<?php echo $name."_".$x;?>"><?php echo $option['name'];?></label>
-								<?php if( $help_text != ''){ ?>
+								<?php 
+								$radio_help_text = isset($option['help_text']) ? $option['help_text'] : $help_text;
+								
+								if( $radio_help_text != ''){ ?>
 									<a href="#" class="tooltip">
 									    <img id="" class='ninja-forms-help-text' src="<?php echo NINJA_FORMS_URL;?>images/question-ico.gif" title="">
 									    <span>
 									        <img class="callout" src="<?php echo NINJA_FORMS_URL;?>images/callout.gif" />
-									        <?php echo $help_text;?>
+									        <?php echo $radio_help_text;?>
 									    </span>
 									</a>
 								<?php } ?>
