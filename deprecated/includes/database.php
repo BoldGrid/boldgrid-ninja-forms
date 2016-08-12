@@ -381,12 +381,12 @@ function nf_get_sub_count( $form_id, $post_status = 'publish' ) {
 	$sql = "SELECT count(DISTINCT pm.post_id)
 	FROM $wpdb->postmeta pm
 	JOIN $wpdb->posts p ON (p.ID = pm.post_id)
-	WHERE pm.meta_key = '$meta_key'
-	AND pm.meta_value = '$meta_value'
+	WHERE pm.meta_key = %s
+	AND pm.meta_value = %s
 	AND p.post_type = 'nf_sub'
-	AND p.post_status = '$post_status'";
+	AND p.post_status = %s";
 
-	$count = $wpdb->get_var($sql);
+	$count = $wpdb->get_var( $wpdb->prepare( $sql, $meta_key, $meta_value, $post_status ) );
 
 	return $count;
 }

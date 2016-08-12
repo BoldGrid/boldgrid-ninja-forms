@@ -153,12 +153,13 @@ class NF_Abstracts_Model
             $this->_id = absint( $id );
         } elseif( $id ) {
 
-            $field = $this->_db->get_row(
+            $field = $this->_db->get_row( $this->_db->prepare(
                 "
                 SELECT `id`
                 FROM   `$this->_table_name`
-                WHERE  `key` = '$id'
+                WHERE  `key` = %s
                 "
+                , $id )
             );
 
             if( $field ){
