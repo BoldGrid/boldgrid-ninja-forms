@@ -10,7 +10,7 @@
 		edit: function( text, update ) {
 
 			wp.media.editor.open();
-			
+
 			IMHWPB.editform = this;
 			wp.media.frame.setState( 'iframe:boldgrid_form' );
 
@@ -20,7 +20,7 @@
 			setTimeout( function() {
 				IMHWPB.editform = null;
 			}, 10000 );
-			
+
 			$(window).trigger(boldgrid_edit_form, this);
 		}
 	};
@@ -34,15 +34,15 @@
 			var options = this.shortcode.attrs.named;
 			var desc = options.description == "true" ? '1' : '0';
 			var title = options.title == "true" ? '1' : '0';
-			
+
 			var current_selector = 'editor-boldgrid-form-' + options.id;
 			if ( $( '#tmpl-' + current_selector ).length ) {
 				this.template = wp.media.template( current_selector );
-				
-				this.render( "<div class='boldgrid-ninja-form' data-id='" + 
-					options.id + "' data-description=" + desc + 
+
+				this.render( "<div class='boldgrid-ninja-form' data-id='" +
+					options.id + "' data-description=" + desc +
 					" data-title=" + title + ">" + this.template() + "</div>" );
-				
+
 				setTimeout( function () {
 					if ( tinymce && tinymce.activeEditor ) {
 						$( tinymce.activeEditor.iframeElement ).contents()
@@ -51,7 +51,7 @@
 							.attr( 'contentEditable', true );
 					}
 				} );
-				
+
 			} else {
 				this.template = wp.media.template( 'editor-boldgrid-not-found' );
 				this.render( this.template() );
@@ -70,7 +70,7 @@
 			wp_mce_draggable.insert_from_media_modal_tab( 'iframe:boldgrid_form' );
 		} );
 	});
-	
+
 } )( window, window.wp.mce.views, window.jQuery );
 
 
