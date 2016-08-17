@@ -2,7 +2,7 @@
 Contributors: imh_brad, joemoto, rramo012, timph
 Tags: inspiration,customization,build,create,design,forms,webforms
 Requires at least: 4.3
-Tested up to: 4.5.3
+Tested up to: 4.6
 Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -27,6 +27,7 @@ This section describes how to install the plugin and get it working.
 * As with all our security releases, we urge all users to update to prevent any possible issues.
 
 = 1.2.2 In progress =
+* Misc:			JIRA WPB-2256	Updated readme.txt for Tested up to: 4.6.
 * Rework:		JIRA WPB-1825	Formatting.
 * Update:		JIRA WPB-2241	Updated Ninja Forms version to 2.9.55.2.
 
