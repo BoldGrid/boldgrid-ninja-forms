@@ -264,6 +264,11 @@ class Boldgrid_Ninja_Forms {
 		// Get the site's email address:
 		$email_address = get_bloginfo( 'admin_email' );
 
+		// If the current blog's admin email address is missing, then try the network.
+		if ( empty( $email_address ) ) {
+			$email_address = get_site_option( 'admin_email' );
+		}
+
 		// Initialize $notifications_array:
 		$notifications_array = array ();
 
