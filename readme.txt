@@ -28,6 +28,7 @@ This section describes how to install the plugin and get it working.
 
 = 1.2.3 In progress =
 * Bug fix:		JIRA WPB-2336	Load BoldGrid settings from the correct WP option (site/blog).
+* Update:		JIRA WPB-2368	Set version constant from plugin file.
 
 = 1.2.2 =
 * Bug fix:		JIRA WPB-2263	In multisite, if the site's admin email address is missing, then use the network admin email address.
