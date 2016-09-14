@@ -44,7 +44,7 @@ if ( false === defined( 'ABSPATH' ) )
 
 // Define Form version.
 if ( false === defined( 'BOLDGRID_NINJA_FORM_VERSION' ) ) {
-	define( 'BOLDGRID_NINJA_FORM_VERSION', '1.2.2' );
+	define( 'BOLDGRID_NINJA_FORM_VERSION', implode( get_file_data( __FILE__, array( 'Version' ), 'plugin' ) ) );
 }
 
 // Define boldgrid-ninja-forms Path.
