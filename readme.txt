@@ -3,7 +3,6 @@ Contributors: imh_brad, joemoto, rramo012, timph
 Tags: inspiration,customization,build,create,design,forms,webforms
 Requires at least: 4.3
 Tested up to: 4.6.1
-Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,6 +24,9 @@ This section describes how to install the plugin and get it working.
 
 * Patched a security vulnerability related to shortcodes and logged-in users.
 * As with all our security releases, we urge all users to update to prevent any possible issues.
+
+- 1.3 =
+* Update:						Bump version.
 
 - 1.2.4 =
 * Misc:			JIRA WPB-2420	Added EOF line breaks.
