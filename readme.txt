@@ -12,6 +12,10 @@ BoldGrid Ninja Forms is a webform builder with unparalleled ease of use and feat
 
 BoldGrid Ninja Forms is a webform builder with unparalleled ease of use and features.
 
+== Requirements ==
+
+* PHP 5.3 or higher.
+
 == Installation ==
 
 This section describes how to install the plugin and get it working.
@@ -24,6 +28,9 @@ This section describes how to install the plugin and get it working.
 
 * Patched a security vulnerability related to shortcodes and logged-in users.
 * As with all our security releases, we urge all users to update to prevent any possible issues.
+
+= 1.3.1 In progress =
+* Misc:			JIRA WPB-2503	Added plugin requirements to readme.txt file.
 
 - 1.3 =
 * Update:						Bump version.
