@@ -31,6 +31,7 @@ This section describes how to install the plugin and get it working.
 
 = 1.3.1 In progress =
 * Misc:			JIRA WPB-2503	Added plugin requirements to readme.txt file.
+* Bug fix:		JIRA WPB-2631	Ninja Form error in widget.
 
 - 1.3 =
 * Update:						Bump version.
