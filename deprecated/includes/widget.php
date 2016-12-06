@@ -25,9 +25,7 @@ class Ninja_Forms_Widget extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 		extract( $args );
-		// BoldGrid.
-		// $form_id = $instance['form_id'];
-		$form_id = ( isset( $instance['form_id'] ) ? $instance['form_id'] : null );
+		$form_id = $instance['form_id'];
 		$form_row = ninja_forms_get_form_by_id( $form_id );
 		$form_data = $form_row['data'];
 		if ( isset ( $form_data['form_title'] ) ) {
@@ -35,11 +33,9 @@ class Ninja_Forms_Widget extends WP_Widget {
 		} else {
 			$title = '';
 		}
-
+		
 		$title = apply_filters( 'widget_title', $title );
-		// BoldGrid.
-		// $display_title = $instance['display_title'];
-		$display_title = ( isset( $instance['display_title'] ) ? $instance['display_title'] : '' );
+		$display_title = $instance['display_title'];
 
 		echo $before_widget;
 		if ( ! empty( $title ) AND $display_title == 1 )
@@ -102,9 +98,7 @@ class Ninja_Forms_Widget extends WP_Widget {
 			$all_forms = ninja_forms_get_all_forms();
 
 			foreach($all_forms as $form){
-				// BoldGrid.
-				// $title = $form['data']['form_title'];
-				$title = ( isset( $form['data']['form_title'] ) ? $form['data']['form_title'] : '' );
+				$title = $form['data']['form_title'];
 				$id = $form['id'];
 				?>
 				<option value = "<?php echo $id;?>" <?php selected( $id, $form_id );?>>
