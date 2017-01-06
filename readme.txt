@@ -2,7 +2,7 @@
 Contributors: imh_brad, joemoto, rramo012, timph
 Tags: inspiration,customization,build,create,design,forms,webforms
 Requires at least: 4.3
-Tested up to: 4.6.1
+Tested up to: 4.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,7 @@ This section describes how to install the plugin and get it working.
 * As with all our security releases, we urge all users to update to prevent any possible issues.
 
 = 1.3.1 In progress =
+* Testing:		JIRA WPB-2744	Tested on WordPress 4.7.
 * Misc:			JIRA WPB-2503	Added plugin requirements to readme.txt file.
 
 - 1.3 =
