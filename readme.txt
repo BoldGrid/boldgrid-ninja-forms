@@ -2,7 +2,7 @@
 Contributors: imh_brad, joemoto, rramo012, timph
 Tags: inspiration,customization,build,create,design,forms,webforms
 Requires at least: 4.3
-Tested up to: 4.7
+Tested up to: 4.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,19 +24,20 @@ This section describes how to install the plugin and get it working.
 2. Activate the plugin through the Plugins menu in WordPress.
 3. You will find the Forms menu in your WordPress Dashboard / admin panel.
 
-*Security:*
+== Security ==
 
 * Patched a security vulnerability related to shortcodes and logged-in users.
 * As with all our security releases, we urge all users to update to prevent any possible issues.
 
 = 1.3.1 In progress =
+* Bug fix:		JIRA WPB-2821	Fixed plugin update checks for some scenarios (WP-CLI, Plesk, etc).
 * Testing:		JIRA WPB-2744	Tested on WordPress 4.7.
 * Misc:			JIRA WPB-2503	Added plugin requirements to readme.txt file.
 
-- 1.3 =
+= 1.3 =
 * Update:						Bump version.
 
-- 1.2.4 =
+= 1.2.4 =
 * Misc:			JIRA WPB-2420	Added EOF line breaks.
 
 = 1.2.3 =
@@ -107,7 +108,7 @@ This section describes how to install the plugin and get it working.
 * Bug fix:		JIRA WPB-1443	Extra page listed under 'Mine'.
 
 = 1.0.3 =
-* Bug Fix:				Preventing notice on list all pages
+* Bug Fix:						Preventing notice on list all pages
 
 = 1.0.2 =
 * Bug Fix:		JIRA WPB-1277	Removed ninja_forms_preview_page from being displayed.
