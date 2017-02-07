@@ -45,10 +45,6 @@ class Boldgrid_Ninja_Forms_Update {
 		$is_cron = ( defined( 'DOING_CRON' ) && DOING_CRON );
 		$is_wpcli = ( defined( 'WP_CLI' ) && WP_CLI );
 
-		if ( $is_cron || $is_wpcli ){
-			$this->wp_update_this_plugin();
-		}
-
 		if ( $is_cron || $is_wpcli || is_admin() ) {
 			add_filter( 'plugins_api',
 				array (
@@ -70,6 +66,10 @@ class Boldgrid_Ninja_Forms_Update {
 					'custom_plugins_transient_update',
 				), 11
 			);
+		}
+
+		if ( $is_cron || $is_wpcli ){
+			$this->wp_update_this_plugin();
 		}
 	}
 

@@ -81,10 +81,9 @@ class Boldgrid_Ninja_Forms {
 			) );
 		}
 
-		// If DOING_CRON, then check if this plugin should be auto-updated.
+		// If DOING_CRON, then setup the environment to perform update checks.
 		if ( $is_cron ){
 			$this->wpcron();
-			$this->load_boldgrid_ninja_form_update();
 		}
 	}
 
