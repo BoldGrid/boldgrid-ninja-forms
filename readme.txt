@@ -29,7 +29,7 @@ This section describes how to install the plugin and get it working.
 * Patched a security vulnerability related to shortcodes and logged-in users.
 * As with all our security releases, we urge all users to update to prevent any possible issues.
 
-= 1.3.1 In progress =
+= 1.3.1 =
 * Bug fix:		JIRA WPB-2821	Fixed plugin update checks for some scenarios (WP-CLI, Plesk, etc).
 * Testing:		JIRA WPB-2744	Tested on WordPress 4.7.
 * Misc:			JIRA WPB-2503	Added plugin requirements to readme.txt file.
