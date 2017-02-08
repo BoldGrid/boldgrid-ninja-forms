@@ -28,6 +28,8 @@ class Boldgrid_Ninja_Forms {
 
 	/**
 	 * Path configurations used for the plugin
+	 *
+	 * @var array
 	 */
 	protected $path_configs;
 
@@ -59,9 +61,9 @@ class Boldgrid_Ninja_Forms {
 
 		$this->tab_configs = include $plugin_dir . '/boldgrid/includes/config/layouts.php';
 
-		$this->path_configs = array (
+		$this->path_configs = array(
 			'plugin_dir' => $plugin_dir,
-			'plugin_filename' => $plugin_filename
+			'plugin_filename' => $plugin_filename,
 		);
 
 		// Load and instantiate Boldgrid_Ninja_Forms_Config.
@@ -70,60 +72,31 @@ class Boldgrid_Ninja_Forms {
 		// Instantiate the Boldgrid_Ninja_Forms_Config class and save it into a class property.
 		$this->boldgrid_ninja_form_config = new Boldgrid_Ninja_Forms_Config();
 
+		$this->prepare_plugin_update();
+	}
+
+	/**
+	 * Prepare for the update class.
+	 *
+	 * @since 1.3.2
+	 */
+	public function prepare_plugin_update() {
 		$is_cron = ( defined( 'DOING_CRON' ) && DOING_CRON );
 		$is_wpcli = ( defined( 'WP_CLI' ) && WP_CLI );
 
-		// Add an action to load this plugin on init, only in the dashboard.
 		if ( $is_cron || $is_wpcli || is_admin() ) {
-			add_action( 'init', array (
-				$this,
-				'load_boldgrid_ninja_form_update'
+			require_once BOLDGRID_NINJA_FORMS_PATH .
+				'/boldgrid/includes/class-boldgrid-ninja-forms-update.php';
+
+			$plugin_update = new Boldgrid_Ninja_Forms_Update(
+				$this->boldgrid_ninja_form_config->get_configs()
+			);
+
+			add_action( 'init', array(
+				$plugin_update,
+				'add_hooks',
 			) );
 		}
-
-		// If DOING_CRON, then setup the environment to perform update checks.
-		if ( $is_cron ){
-			$this->wpcron();
-		}
-	}
-
-	/**
-	 * WP-CRON init.
-	 *
-	 * @since 1.3.1
-	 */
-	public function wpcron() {
-		// Ensure required definitions for pluggable.
-		if ( ! defined( 'AUTH_COOKIE' ) ) {
-			define( 'AUTH_COOKIE', null );
-		}
-
-		if ( ! defined( 'LOGGED_IN_COOKIE' ) ) {
-			define( 'LOGGED_IN_COOKIE', null );
-		}
-
-		// Load the pluggable class, if needed.
-		require_once ABSPATH . 'wp-includes/pluggable.php';
-	}
-
-	/**
-	 * Load the BoldGrid Ninja Forms update class.
-	 */
-	public function load_boldgrid_ninja_form_update() {
-		// Load and check for plugin updates.
-		require_once BOLDGRID_NINJA_FORMS_PATH .
-			 '/boldgrid/includes/class-boldgrid-ninja-forms-update.php';
-
-		$plugin_data = array(
-			'plugin_key_code' => 'ninja-forms',
-			'slug' => 'boldgrid-ninja-forms',
-			'main_file_path' => BOLDGRID_NINJA_FORMS_PATH . '/ninja-forms.php',
-			'configs' => $this->boldgrid_ninja_form_config->get_configs(),
-			'version_data' => get_site_transient( 'boldgrid_ninja_forms_version_data' ),
-			'transient' => 'boldgrid_ninja_forms_version_data',
-		);
-
-		$plugin_update = new Boldgrid_Ninja_Forms_Update( $plugin_data );
 	}
 
 	/**
