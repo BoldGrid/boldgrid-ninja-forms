@@ -29,7 +29,7 @@ This section describes how to install the plugin and get it working.
 * Patched a security vulnerability related to shortcodes and logged-in users.
 * As with all our security releases, we urge all users to update to prevent any possible issues.
 
-= 1.3.3 In progress =
+= 1.3.3 =
 * Bug fix:		JIRA WPB-2912	Fixed issue when installing plugins from the Tools Import page.
 
 = 1.3.2 =
