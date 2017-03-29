@@ -1,13 +1,16 @@
 <?php
-/*
-Plugin Name: BoldGrid Ninja Forms
-Plugin URI: http://www.boldgrid.com/
-Description: BoldGrid Ninja Forms
-Version: 1.4
-Author: BoldGrid.com
-Author URI: http://www.boldgrid.com/
-Text Domain: boldgrid-ninja-forms
-Domain Path: /lang/
+/**
+ * Plugin Name: BoldGrid Ninja Forms
+ * Plugin URI:  https://www.boldgrid.com/
+ * Description: BoldGrid Ninja Forms.
+ * Version:     1.4
+ * Author:      BoldGrid <support@boldgrid.com>
+ * Author URI:  https://www.boldgrid.com
+ * Text Domain: boldgrid-ninja-forms
+ * Domain Path: /lang/
+ * License:     GPL-2.0+
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ * @package     boldgrid-ninja-forms
 
 Copyright 2011 WP Ninjas/Kevin Stover.
 
