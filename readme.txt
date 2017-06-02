@@ -29,6 +29,9 @@ This section describes how to install the plugin and get it working.
 * Patched a security vulnerability related to shortcodes and logged-in users.
 * As with all our security releases, we urge all users to update to prevent any possible issues.
 
+= 1.4.0.1 In Progress =
+* Bug fix:		JIRA WPB-3218	Forms not replacing on edit.
+
 = 1.4 =
 * Bug fix:		JIRA WPB-2912	Fixed issue when installing plugins from the Tools Import page.
 

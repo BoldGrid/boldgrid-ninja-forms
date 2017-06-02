@@ -20,6 +20,12 @@
 				IMHWPB.editform = null;
 			}, 10000 );
 
+			if ( this.getNodes ) {
+				this.getNodes( function( editor, node ) {
+					editor.selection.select( node );
+				} );
+			}
+
 			$( window ).trigger( boldgrid_edit_form, this );
 		}
 	};
