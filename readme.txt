@@ -2,7 +2,7 @@
 Contributors: imh_brad, joemoto, rramo012, timph
 Tags: inspiration,customization,build,create,design,forms,webforms
 Requires at least: 4.3
-Tested up to: 4.7.4
+Tested up to: 4.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,9 @@ This section describes how to install the plugin and get it working.
 
 = 1.4.1 =
 * Bug fix:		JIRA WPB-3151	Added check and load before using get_plugin_data() for updates.
+
+= 1.4.0.1 =
+* Bug fix:		JIRA WPB-3218	Forms not replacing on edit.
 
 = 1.4 =
 * Bug fix:		JIRA WPB-2912	Fixed issue when installing plugins from the Tools Import page.
