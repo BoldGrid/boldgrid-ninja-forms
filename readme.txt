@@ -24,10 +24,7 @@ This section describes how to install the plugin and get it working.
 2. Activate the plugin through the Plugins menu in WordPress.
 3. You will find the Forms menu in your WordPress Dashboard / admin panel.
 
-== Security ==
-
-* Patched a security vulnerability related to shortcodes and logged-in users.
-* As with all our security releases, we urge all users to update to prevent any possible issues.
+== Changelog == 
 
 = 1.4.2 =
 * Bug fix:		JIRA WPB-3161	Fixed auto plugin update.
