@@ -53,7 +53,9 @@ define( [], function() {
 			 * and trigger a radio message saying we've changed the domain.
 			 */ 
 			if ( 0 == model.get( 'url' ).length ) {
+				var mainEl = nfRadio.channel( 'app' ).request( 'get:mainEl' );
 				nfRadio.channel( 'app' ).request( 'update:currentDomain', model );
+				jQuery( mainEl ).scrollTop( 0 );				
 				nfRadio.channel( 'app' ).trigger( 'change:currentDomain', model );
 			}
 		},

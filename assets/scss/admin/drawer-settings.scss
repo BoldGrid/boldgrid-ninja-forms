@@ -5,6 +5,7 @@
     display: inline-block;
     font-size: 17px;
     padding: 10px 30px;
+    text-align: center;
     text-decoration: none;
     text-transform: uppercase;
     appearance: none;
@@ -58,6 +59,7 @@
         margin-bottom: 20px;
     }
     label {
+        position: relative;
         &::after {
             clear: both;
             content: "";
@@ -73,13 +75,20 @@
         display: block;
         font-size: 13px;
         text-transform: uppercase;
+        .open-media-manager {
+            position: absolute;
+            color: #ccc;
+            right: 15px;
+            top: 5px;
+            text-decoration: none;
+        }
     }
     input[type=text],
     input[type=number],
     textarea {
         background: #f9f9f9;
         border: 0;
-        margin-top: 5px;
+        margin-top: 7px;
         padding: 12px 15px;
         width: 100%;
         height: 41px;
@@ -105,6 +114,12 @@
     }
 }
 .ninja-forms-app {
+    .jBox-wrapper.import-options {
+        padding: 12px 20px 0px !important;
+    }
+    .jBox-wrapper.import-options.jBox-pointerPosition-top.jBox-closeButton-box:before {
+        right: 10px;
+    }
     .nf-list-options {
         padding-bottom: 20px;
         .nf-add-new {
@@ -143,6 +158,13 @@
         }
         &.calculations {
             .nf-div-table {
+                .nf-table-header{
+                    div{
+                        &:nth-child(4) {
+                            display: none;
+                        }
+                    }
+                }
                 .nf-table-row {
                     div {
                         vertical-align: top;
@@ -161,6 +183,7 @@
                         textarea {
                             margin: 0;
                             height: 100px;
+                            padding-right: 40px;
                         }
                         .merge-tags {
                             color: #999;
@@ -173,7 +196,44 @@
                             margin-top: 10px;
                         }
                     }
+                    .calc-left {
+                        div {
+                            display: inline-block;
+                            &:nth-child(1) {
+                                width: 100%;
+                                padding: 0px;
+                            }
+                            &:nth-child(2) {
+                                width: 60%;
+                                text-align: right;
+                                font-size: 12px;
+                                float: left;
+                                padding-top: 20px;
+                                padding-right: 10px;
+                            }
+                            &:nth-child(3) {
+                                width: 50px;
+                                float: left;
+                                padding-top: 10px;
+                            }
+                        }
+                    }
                 }
+            }
+        }
+    }
+    .options {
+        position: relative;
+        legend {
+            .nf-open-import-tooltip {
+                background: #EBEDEE;
+                color: $cta_color;
+                font-size: 16px;
+                padding: 6px 15px;
+                text-decoration: none;
+                position: absolute;
+                right: 15px;
+                top: 0;
             }
         }
     }

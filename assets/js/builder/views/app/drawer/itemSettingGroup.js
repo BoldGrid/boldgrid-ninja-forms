@@ -1,7 +1,7 @@
 define( ['views/app/drawer/itemSettingCollection'], function( itemSettingCollectionView ) {
 	var view = Marionette.LayoutView.extend({
 		tagName: 'div',
-		template: '#nf-tmpl-drawer-content-edit-field-setting-group',
+		template: '#tmpl-nf-drawer-content-edit-field-setting-group',
 		
 		regions: {
 			settings: '.nf-field-settings'
@@ -38,7 +38,7 @@ define( ['views/app/drawer/itemSettingCollection'], function( itemSettingCollect
 			return {
 				renderLabel: function() {
 					if ( '' != this.label ) {
-						var groupLabel = Marionette.TemplateCache.get( '#nf-tmpl-drawer-content-edit-setting-group-label' );
+						var groupLabel = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-drawer-content-edit-setting-group-label' );
 						return groupLabel( this );
 					} else {
 						return '';

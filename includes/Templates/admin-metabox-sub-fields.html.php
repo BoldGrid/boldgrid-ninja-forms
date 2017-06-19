@@ -4,8 +4,8 @@
 
         <thead>
             <tr>
-                <th>Field</th>
-                <th>Value</th>
+                <th><?php _e( 'Field', 'ninja-forms' ); ?></th>
+                <th><?php _e( 'Value', 'ninja-forms' ); ?></th>
             </tr>
         </thead>
 

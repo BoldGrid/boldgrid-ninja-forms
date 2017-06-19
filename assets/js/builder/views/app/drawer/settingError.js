@@ -9,7 +9,7 @@
 define( [], function() {
 	var view = Marionette.ItemView.extend({
 		tagName: 'div',
-		template: '#nf-tmpl-edit-setting-error'
+		template: '#tmpl-nf-edit-setting-error'
 	});
 
 	return view;

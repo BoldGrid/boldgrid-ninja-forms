@@ -10,6 +10,9 @@ Normalize Ninja Forms fields with default structure
   -ms-box-sizing: border-box;
   box-sizing: border-box; }
 
+.nf-response-msg {
+  display: none; }
+
 .nf-field-container,
 #ninja_forms_required_items {
   clear: both;
@@ -67,8 +70,7 @@ Normalize Ninja Forms fields with default structure
   padding: 0 10px; }
 
 .nf-after-field .nf-error-msg {
-  margin-right: 10px;
-  text-align: right; }
+  margin-right: 10px; }
 
 /* ---------------------------------
 CHECKBOX FIELD
@@ -169,79 +171,87 @@ HELPER CLASSES
   float: left;
   width: 25%; }
 
+.five-col-list ul li {
+  float: left;
+  width: 20%; }
+
+.six-col-list ul li {
+  float: left;
+  width: 16.66%; }
+
 body .pika-label {
   background: transparent; }
 
 /* Column Classes
     Link: http://twitter.github.io/bootstrap/assets/css/bootstrap-responsive.css
 --------------------------------------------- */
-.five-sixths,
-.four-sixths,
-.one-fourth,
-.one-half,
-.one-sixth,
-.one-third,
-.three-fourths,
-.three-sixths,
-.two-fourths,
-.two-sixths,
-.two-thirds {
+.nf-form-cont .five-sixths,
+.nf-form-cont .four-sixths,
+.nf-form-cont .one-fourth,
+.nf-form-cont .one-half,
+.nf-form-cont .one-sixth,
+.nf-form-cont .one-third,
+.nf-form-cont .three-fourths,
+.nf-form-cont .three-sixths,
+.nf-form-cont .two-fourths,
+.nf-form-cont .two-sixths,
+.nf-form-cont .two-thirds {
   clear: initial;
   float: left;
   margin-left: 2.564102564102564%; }
-  .five-sixths .inside,
-  .four-sixths .inside,
-  .one-fourth .inside,
-  .one-half .inside,
-  .one-sixth .inside,
-  .one-third .inside,
-  .three-fourths .inside,
-  .three-sixths .inside,
-  .two-fourths .inside,
-  .two-sixths .inside,
-  .two-thirds .inside {
+  .nf-form-cont .five-sixths .inside,
+  .nf-form-cont .four-sixths .inside,
+  .nf-form-cont .one-fourth .inside,
+  .nf-form-cont .one-half .inside,
+  .nf-form-cont .one-sixth .inside,
+  .nf-form-cont .one-third .inside,
+  .nf-form-cont .three-fourths .inside,
+  .nf-form-cont .three-sixths .inside,
+  .nf-form-cont .two-fourths .inside,
+  .nf-form-cont .two-sixths .inside,
+  .nf-form-cont .two-thirds .inside {
     padding: 20px; }
-  .five-sixths::after,
-  .four-sixths::after,
-  .one-fourth::after,
-  .one-half::after,
-  .one-sixth::after,
-  .one-third::after,
-  .three-fourths::after,
-  .three-sixths::after,
-  .two-fourths::after,
-  .two-sixths::after,
-  .two-thirds::after {
+  .nf-form-cont .five-sixths::after,
+  .nf-form-cont .four-sixths::after,
+  .nf-form-cont .one-fourth::after,
+  .nf-form-cont .one-half::after,
+  .nf-form-cont .one-sixth::after,
+  .nf-form-cont .one-third::after,
+  .nf-form-cont .three-fourths::after,
+  .nf-form-cont .three-sixths::after,
+  .nf-form-cont .two-fourths::after,
+  .nf-form-cont .two-sixths::after,
+  .nf-form-cont .two-thirds::after {
     clear: both;
     content: "";
     display: block; }
 
-.one-half,
-.three-sixths,
-.two-fourths {
+.nf-form-cont .one-half,
+.nf-form-cont .three-sixths,
+.nf-form-cont .two-fourths {
   width: 48.717948717948715%; }
 
-.one-third,
-.two-sixths {
+.nf-form-cont .one-third,
+.nf-form-cont .two-sixths {
   width: 31.623931623931625%; }
 
-.four-sixths,
-.two-thirds {
+.nf-form-cont .four-sixths,
+.nf-form-cont .two-thirds {
   width: 65.81196581196582%; }
 
-.one-fourth {
+.nf-form-cont .one-fourth {
   width: 23.076923076923077%; }
 
-.three-fourths {
+.nf-form-cont .three-fourths {
   width: 74.35897435897436%; }
 
-.one-sixth {
+.nf-form-cont .one-sixth {
   width: 14.52991452991453%; }
 
-.five-sixths {
+.nf-form-cont .five-sixths {
   width: 82.90598290598291%; }
 
-.first {
+.nf-form-cont .first {
   clear: both;
   margin-left: 0; }
 
@@ -292,6 +302,7 @@ body .pika-label {
     height: auto; }
   .nf-form-wrap .note-editor .dropdown-toggle {
     position: relative;
+    display: inline-block;
     top: 0; }
     .nf-form-wrap .note-editor .dropdown-toggle::after {
       content: "";

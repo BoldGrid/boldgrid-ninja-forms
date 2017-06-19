@@ -11,7 +11,7 @@
 define( [], function() {
 	var view = Marionette.ItemView.extend({
 		tagName: 'div',
-		template: '#nf-tmpl-sub-header-actions'
+		template: '#tmpl-nf-sub-header-actions'
 	});
 
 	return view;

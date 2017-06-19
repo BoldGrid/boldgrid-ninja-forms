@@ -11,7 +11,7 @@
 define( [], function() {
 	var view = Marionette.ItemView.extend({
 		tagName: 'div',
-		template: '#nf-tmpl-drawer-header-edit-settings',
+		template: '#tmpl-nf-drawer-header-edit-settings',
 
 		initialize: function() {
 			if ( this.model ) {

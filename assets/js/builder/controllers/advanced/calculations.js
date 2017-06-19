@@ -31,19 +31,24 @@ define( [], function() {
 			// Get our current value
 			var value = jQuery( e.target ).val();
 			// Check to see if we're editing a name or eq
-			if( 'name' == jQuery( e.target ).data( 'id' ) ) { // We are editing the name field
+            var id = jQuery( e.target ).data( 'id' );
+			if( 'name' == id ) { // We are editing the name field
 				// Check to see if our name already exists.
 				this.checkName( value, optionModel );
 				this.checkEQ( optionModel.get( 'eq' ), optionModel );
-			} else { // We're editing the eq
+			} else if( 'eq' == id ) { // We're editing the eq
 				// Check to see if there are any calcs referenced in our eq
 				this.checkEQ( value, optionModel );
-			}
+			} else if( 'dec' == id ) { // We're editing the dec
+                // Check to see that we have a non-negative integer
+                this.checkDec( value, optionModel );
+            }
 		},
 
 		updateCalc: function( optionModel ) {
 			this.checkName( optionModel.get( 'name' ), optionModel, false );
 			this.checkEQ( optionModel.get( 'eq' ), optionModel );
+			this.checkDec( optionModel.get( 'dec' ), optionModel );
 		},
 
 		sortCalc: function( optionModel, setting ) {
@@ -144,11 +149,49 @@ define( [], function() {
 
 		},
 
+        /**
+         * Ceck to see if a dec is an integer value.
+         * 
+         * @since 3.1
+         * @param string            dec         our decimal value
+         * @param backbone.model    optionModel
+         * @return void
+         */
+        checkDec: function( dec, optionModel ) {
+            // If dec isn't defined, bail...
+            if( 'undefined' === typeof(dec) ) return false;
+			// Get our current errors, if any.
+			var errors = optionModel.get( 'errors' );
+            /**
+             * We're looking for one error:
+             * - dec is not a non-negative integer.
+             */
+            var errorNonIntDec = false;
+            
+            // Get our target value and see if it matches what we got.
+            var checked = Math.abs( parseInt( dec.trim() ) );
+            if ( dec.trim() !== '' && checked.toString() !== dec.trim() ) {
+                errorNonIntDec = true;
+                errors.nonIntDec = 'Decimals must be a non-negative integer!';
+            }
+            
+            // If our dec value is a non-negative integer.
+            if ( ! errorNonIntDec ) {
+                delete errors.nonIntDec;
+            }
+            
+			// Set errors and trigger our optionModel change.
+			optionModel.set( 'errors', errors );
+			optionModel.trigger( 'change:errors', optionModel );
+            
+        },
+        
 		checkAllCalcs: function( collection ) {
 			var that = this;
 			collection.models.map( function( opt ) {
 				that.checkName( opt.get( 'name' ), opt );
 				that.checkEQ( opt.get( 'eq' ), opt );
+                that.checkDec( opt.get( 'dec' ), opt );
 			} );
 		}
 

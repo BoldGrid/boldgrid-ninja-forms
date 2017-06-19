@@ -9,53 +9,33 @@
 define( [], function() {
     var controller = Marionette.Object.extend( {
         initialize: function() {
-            this.listenTo( nfRadio.channel( 'fields' ), 'drop:fieldType', this.dropField );
-            this.listenTo( nfRadio.channel( 'fields' ), 'add:stagedField', this.stageField );
+            this.listenTo( nfRadio.channel( 'fields' ), 'after:addField', this.addField );
         },
 
-        dropField: function( type, tmpID ) {
+        addField: function( model ) {
 
-            if( 'password' == type ) {
-
-                var model = nfRadio.channel( 'fields').request( 'get:field', tmpID );
+            if( 'password' == model.get( 'type' ) ) {
 
                 var order = model.get( 'order' );
 
-                nfRadio.channel( 'fields' ).request( 'delete', model );
+                var confirm = this.insertField( 'passwordconfirm', order + 1 );
 
-                _.each( [ 'password', 'passwordconfirm' ], function( type ) {
-
-                    var fieldType = nfRadio.channel( 'fields' ).request( 'get:type', type );
-
-                    var newField = {
-                        id: nfRadio.channel( 'fields' ).request( 'get:tmpID' ),
-                        type: type,
-                        label: fieldType.get( 'nicename' ),
-                        order: order
-                    };
-
-                    nfRadio.channel('fields').request('add', newField );
-                });
+                confirm.set( 'confirm_field', model.get( 'key' ) );
             }
-
         },
 
-        stageField: function( model ) {
+        insertField: function( type, order ) {
+            var fieldType = nfRadio.channel( 'fields' ).request( 'get:type', type );
 
-            var field_slug = model.get( 'slug' );
+            var newField = {
+                id: nfRadio.channel( 'fields' ).request( 'get:tmpID' ),
+                type: type,
+                label: fieldType.get( 'nicename' ),
+                order: order
+            };
 
-            if( 'password' == field_slug ) {
-
-                nfRadio.channel( 'fields' ).request( 'remove:stagedField', '', model );
-
-                _.each( [ 'password', 'passwordconfirm' ], function( type ) {
-
-                    var silent = ( type == field_slug );
-                    nfRadio.channel('fields').request('add:stagedField', type, silent );
-                });
-            }
+            return nfRadio.channel('fields').request('add', newField );
         }
-
     });
 
     return controller;

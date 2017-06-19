@@ -71,6 +71,7 @@ define( ['models/fields/stagingCollection'], function( stagingCollection ) {
 		 */
 		removeStagedField: function( e, model ) {
 			this.collection.remove( model );
+			nfRadio.channel( 'fields' ).trigger( 'remove:stagedField', model );
 		},
 
 		/**

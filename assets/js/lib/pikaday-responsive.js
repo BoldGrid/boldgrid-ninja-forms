@@ -4,6 +4,8 @@
  * var $ = jQuery; has been added for jQuery no conflict mode.
  * $el.wrap("<span class='pikaday__container'></span>"); has been changed to $el.wrap("<div class='pikaday__container'></div>"); so that the container is a div.
  * placeholder: "Select a date", has been changed to placeholder: "", to remove the placeholder.
+ *
+ * Modernizr dependency has been removed.
  */
 
 (function (root, factory) {
@@ -40,7 +42,7 @@
         format: "YYYY-MM-DD",
         outputFormat: "YYYY-MM-DD",
         checkIfNativeDate: function () {
-            return Modernizr.inputtypes.date && (Modernizr.touch && navigator.appVersion.indexOf("Win") === -1);
+            return false;
         },
         classes: "",
         placeholder: "",

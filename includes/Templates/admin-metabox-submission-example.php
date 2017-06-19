@@ -1,4 +1,4 @@
-<h4>Submission Data</h4>
+<h4><?php _e( 'Submission Data', 'ninja-forms' ); ?></h4>
 
 <?php
 echo "<pre>";

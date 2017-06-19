@@ -10,54 +10,34 @@
  * @copyright (c) 2015 WP Ninjas
  * @since 3.0
  */
-define( [
-	'models/app/typeCollection',
-	'models/app/settingCollection',
-	'models/app/settingGroupCollection',
-	], function(
-	typeCollection,
-	settingCollection,
-	settingGroupCollection
-	) {
+define( [ 'models/app/typeCollection' ], function( TypeCollection ) {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
-			// Create our field type collection
-			this.installedActions = new typeCollection();
-			this.installedActions.slug = 'installed';
-			this.installedActions.nicename = 'Installed';
-			this.availableActions = new typeCollection();
-			this.availableActions.slug = 'available';
-			this.availableActions.nicename = 'Available';
 
-			var that = this;
-			_.each( actionTypeData, function( type ) {
-				var settingGroups = new settingGroupCollection();
-				// Loop through the settings groups within this field type and create an object to add to the groups collection.
-				_.each( type.settingGroups, function( group ) {
-					var groupTmp = {
-						label: group.label,
-						display: group.display,
-						settings: new settingCollection( group.settings ),
-					}
-					// Add the tmp object to our setting groups collection
-					settingGroups.add( groupTmp );
-				} );
+			/*
+			 * Instantiate "installed" actions collection.
+			 */
+			this.installedActions = new TypeCollection(
+				_.filter( actionTypeData, function( type ) {
+					return type.section == 'installed';
+					} 
+				),
+				{
+					slug: 'installed',
+					nicename: nfi18n.installed
+				} 
+			);
 
-				// Build an object for this type that we can add to our field type collection
-				var actionType = {
-					id: type.id,
-					nicename: type.nicename,
-					alias: type.alias,
-					settingGroups: settingGroups,
-					settingDefaults: type.settingDefaults,
-					image: type.image,
-					link: type.link,
-					section: type.section
+			this.availableActions = new TypeCollection(
+				_.filter( actionTypeData, function( type ) {
+					return type.section == 'available';
+					} 
+				),
+				{
+					slug: 'available',
+					nicename: nfi18n.available
 				}
-
-				// Add tmp object to the appropriate collection (either installed or available)
-				that[ type.section + 'Actions' ].add( actionType );
-			} );
+			);
 
 			// Respond to requests to get field type, collection, settings, and sections
 			nfRadio.channel( 'actions' ).reply( 'get:type', this.getType, this );

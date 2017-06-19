@@ -13,7 +13,12 @@ return array(
         'label' => __( 'Message', 'ninja-forms' ),
         'placeholder' => '',
         'width' => 'full',
-        'value' => '','use_merge_tags' => TRUE,
+        'value' => __( 'Your form has been successfully submitted.', 'ninja-forms' ),
+        'use_merge_tags' => array(
+            'include' => array(
+                'calcs',
+            ),
+        ),
     ),
 
 );

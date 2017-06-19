@@ -1,0 +1,101 @@
+.widget {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  padding: 20px;
+
+  header {
+    margin-bottom: 20px;
+  }
+
+}
+
+.widget-memberships {
+  border: 0;
+  padding: 0;
+}
+.pricing-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  .pricing-block {
+    width: 30%;
+
+    &.highlight {
+      background-color: #f1f1f1;
+    }
+
+  }
+
+  .pricing-header {
+
+    text-align: center;
+
+    & > div {
+      margin-bottom: 10px;
+    }
+
+    .pricing-title {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .pricing-price {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+  }
+
+  .pricing-body {
+
+    & > div {
+      padding: 10px 0;
+      position: relative;
+    }
+
+    span {
+      display: block;
+      margin-left: 40px;
+    }
+
+    ul {
+      list-style: disc;
+      margin-left: 20px;
+    }
+
+    .fa {
+      //color: #86CA32;
+      color: #aaa;
+      font-size: 24px;
+      position: absolute;
+      left: 0;
+    }
+
+    .pricing-body-title {
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+  }
+
+}
+
+.widget-plan-notice {
+
+  text-align: center;
+
+  .widget-title {
+    font-size: 26px;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    text-align: center;
+  }
+
+  .nf-button {
+    margin-bottom: 20px;
+  }
+
+}

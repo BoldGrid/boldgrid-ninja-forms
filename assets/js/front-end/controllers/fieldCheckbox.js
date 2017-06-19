@@ -1,6 +1,4 @@
 define([], function() {
-	var radioChannel = nfRadio.channel( 'checkbox' );
-
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
 			/*
@@ -8,13 +6,14 @@ define([], function() {
 			 */
 			this.listenTo( nfRadio.channel( 'checkbox' ), 'init:model', this.registerRenderClasses );
 
-			radioChannel.reply( 'validate:required', this.validateRequired );
+			nfRadio.channel( 'checkbox' ).reply( 'validate:required', this.validateRequired );
+			nfRadio.channel( 'checkbox' ).reply( 'validate:modelData', this.validateModelData );
             nfRadio.channel( 'checkbox' ).reply( 'before:updateField', this.beforeUpdateField, this );
             nfRadio.channel( 'checkbox' ).reply( 'get:calcValue', this.getCalcValue, this );
 		},
 
 		beforeUpdateField: function( el, model ) {
-			var checked = jQuery( el ).attr( 'checked' );
+			var checked = jQuery( el ).prop( 'checked' );
 			if ( checked ) {
 				var value = 1;
 				jQuery( el ).addClass( 'nf-checked' );
@@ -30,6 +29,10 @@ define([], function() {
 
 		validateRequired: function( el, model ) {
 			return el[0].checked;
+		},
+
+		validateModelData: function( model ) {
+			return model.get( 'value' ) != 0;
 		},
 
 		getCalcValue: function( fieldModel ) {
@@ -54,7 +57,7 @@ define([], function() {
 		},
 
 		customClasses: function( classes ) {
-			if ( 1 == this.value || ( 'undefined' != typeof this.default_value && 'checked' == this.default_value ) ) {
+			if ( 1 == this.value || ( this.clean && 'undefined' != typeof this.default_value && 'checked' == this.default_value ) ) {
 				classes += ' nf-checked';
 			} else {
 				classes.replace( 'nf-checked', '' );
@@ -63,7 +66,7 @@ define([], function() {
 		},
 
 		customLabelClasses: function( classes ) {
-			if ( 1 == this.value || ( 'undefined' != typeof this.default_value && 'checked' == this.default_value ) ) {
+			if ( 1 == this.value || ( this.clean && 'undefined' != typeof this.default_value && 'checked' == this.default_value ) ) {
 				classes += ' nf-checked-label';
 			} else {
 				classes.replace( 'nf-checked-label', '' );
@@ -72,7 +75,7 @@ define([], function() {
 		},
 
 		maybeChecked: function() {
-			if ( 1 == this.value || ( 'undefined' != typeof this.default_value && 'checked' == this.default_value ) ) {
+			if ( 1 == this.value || ( this.clean && 'undefined' != typeof this.default_value && 'checked' == this.default_value ) ) {
 				return ' checked';
 			} else {
 				return '';

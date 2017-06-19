@@ -1,3 +1,3 @@
-<script id="nf-tmpl-field-checkbox" type="text/template">
-	<input id="nf-field-<%= id %>" name="nf-field-<%= id %>" class="<%= renderClasses() %> nf-element" type="checkbox" value="1" <%= maybeDisabled() %><%= maybeChecked() %>>
+<script id="tmpl-nf-field-checkbox" type="text/template">
+	<input id="nf-field-{{{ data.id }}}" name="nf-field-{{{ data.id }}}" class="{{{ data.renderClasses() }}} nf-element" type="checkbox" value="1" {{{ data.maybeDisabled() }}}{{{ data.maybeChecked() }}}>
 </script>

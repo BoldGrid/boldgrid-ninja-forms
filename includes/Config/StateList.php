@@ -58,6 +58,7 @@ return apply_filters( 'ninja_forms_config_state_list', array(
     'West Virginia'=>'WV',
     'Wisconsin'=>'WI',
     'Wyoming'=>'WY',
+    'Washington DC'=>'DC',
     'ARMED FORCES AFRICA \ CANADA \ EUROPE \ MIDDLE EAST' => 'AE',
     'ARMED FORCES AMERICA (EXCEPT CANADA)' => 'AA',
     'ARMED FORCES PACIFIC' => 'AP'

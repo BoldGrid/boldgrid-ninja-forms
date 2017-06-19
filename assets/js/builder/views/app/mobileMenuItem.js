@@ -9,7 +9,7 @@
 define( [], function() {
 	var view = Marionette.ItemView.extend({
 		tagName: 'div',
-		template: '#nf-tmpl-mobile-menu-item',
+		template: '#tmpl-nf-mobile-menu-item',
 
 		/**
 		 * When we render this view, remove the extra <div> tag created by backbone.

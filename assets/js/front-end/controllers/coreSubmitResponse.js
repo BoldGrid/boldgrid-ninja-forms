@@ -5,6 +5,7 @@ define([], function() {
 		},
 
 		actionSubmit: function( response ) {
+			var formModel = nfRadio.channel( 'app' ).request( 'get:form', response.data.form_id );
 			/*
 			 * If we have errors, don't hide or clear.
 			 */
@@ -14,7 +15,6 @@ define([], function() {
 
 			if ( 1 == response.data.settings.clear_complete ) {
 				// nfRadio.channel( 'form-' + response.data.form_id ).trigger( 'reset' );
-				var formModel = nfRadio.channel( 'app' ).request( 'get:form', response.data.form_id );
 				formModel.get( 'fields' ).reset( formModel.get( 'loadedFields' ) );
 			}
 
@@ -22,8 +22,9 @@ define([], function() {
 				/**
 				 * TODO: This needs to be re-worked for backbone. It's not dynamic enough.
 				 */
-				jQuery( '.nf-fields' ).hide();
-				jQuery( '.nf-form-title' ).hide();
+				formModel.trigger( 'hide' );
+				// jQuery( '.nf-fields' ).hide();
+				// jQuery( '.nf-form-title' ).hide();
 			}
 		}
 

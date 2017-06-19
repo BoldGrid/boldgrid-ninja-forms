@@ -20,11 +20,14 @@ jQuery(document).ready(function($) {
             legend: wp.template( 'legend' ),
         },
 
+        formCheckPointer: 0,
+        formConvertPointer: 0,
+
         updateTable: function(){
 
             var data = {
                 title: '',
-                headers: [ 'Status', 'Title' ],
+                headers: [ 'Title', 'Status' ],
                 rows: this.forms,
                 step: this.step,
                 showSupportLink: 0,
@@ -32,7 +35,7 @@ jQuery(document).ready(function($) {
 
             if( 'checking' == this.step ) {
 
-                data.title = 'Form Upgrade Compatibility';
+                data.title = 'Form Upgrade List';
 
                 data.legend = this.tmpl.legend( {
                     no_issues_detected: 'No Issues Detected',
@@ -61,18 +64,26 @@ jQuery(document).ready(function($) {
             jQuery( this.container ).html( this.tmpl.table( data ) );
         },
 
+        checkForms: function() {
+            var form = this.forms[ this.formCheckPointer ] || null;
+            if( form ) this.checkForm( form );
+            this.formCheckPointer++;
+        },
+
         checkForm: function( form ) {
 
             var that = this;
             $.post( ajaxurl, { action: 'ninja_forms_upgrade_check', formID: form.id }, function( response ) {
 
-                var icon = ( response.canUpgrade ) ? 'yes' : 'flag';
+                var icon = ( response.canUpgrade ) ? '' : 'flag';
                 var flagged = ( response.canUpgrade ) ? 0 : 1;
                 that.updateForm( form.id, 'title', response.title );
                 that.updateForm( form.id, 'icon', icon );
                 that.updateForm( form.id, 'checked', true );
                 that.updateForm( form.id, 'flagged', flagged );
                 that.updateTable();
+
+                that.checkForms();
             }, 'json' );
         },
 
@@ -94,7 +105,8 @@ jQuery(document).ready(function($) {
                     failed: false,
                 });
             }, this );
-            _.each( this.forms, this.checkForm, this );
+
+            this.checkForms();
             this.updateTable();
 
             var that = this;
@@ -112,22 +124,27 @@ jQuery(document).ready(function($) {
 
                 $.post( ajaxurl, { action: 'nfThreeUpgrade_GetSerializedFields' }, function( fieldsExport ) {
                     $.post(ajaxurl, { nf2to3: 1, fields: fieldsExport.serialized, action: 'ninja_forms_ajax_import_fields' }, function ( fieldsImport ) {
-                        _.each(app.forms, function (form) {
-                            this.convertForm(form);
-                        }, app );
+                        app.convertForms();
                     }, 'json' );
                 }, 'json' );
             });
-
-            _.each(app.forms, function (form) {
-                form.icon = 'update';
-            }, app );
-            app.updateTable();
         },
 
 
+        convertForms: function() {
+            var form = this.forms[ this.formConvertPointer ] || null;
+            if( form ) this.convertForm( form );
+            this.formConvertPointer++;
+        },
+
         convertForm: function( form ) {
             var app =  this;
+            console.log( 'Converting...' );
+            console.log( form );
+
+            form.icon = 'update'
+            app.updateTable();
+
             $.post(ajaxurl, {action: 'nfThreeUpgrade_GetSerializedForm', formID: form.id}, function ( formExport ) {
                 $.post(ajaxurl, { nf2to3: 1, action: 'ninja_forms_ajax_import_form', formID: form.id, import: formExport.serialized, flagged: form.flagged }, function ( formImport ) {
                     form.converted = true;
@@ -138,6 +155,8 @@ jQuery(document).ready(function($) {
                     form.failed = true;
                     form.icon = 'no';
                     app.updateTable();
+                }).always( function() {
+                    app.convertForms();
                 });
 
             }, 'json' );

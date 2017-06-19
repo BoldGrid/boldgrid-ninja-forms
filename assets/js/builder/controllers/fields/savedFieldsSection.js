@@ -23,6 +23,7 @@ define( ['models/fields/typeSectionCollection'], function( fieldTypeSectionColle
 		},
 
         getSavedFields: function() {
+        	console.log( this.collection );
             return this.collection;
         }
 	});

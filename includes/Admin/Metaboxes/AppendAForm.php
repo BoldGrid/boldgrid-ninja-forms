@@ -8,7 +8,7 @@ final class NF_Admin_Metaboxes_AppendAForm extends NF_Abstracts_Metabox
     {
         parent::__construct();
 
-        $this->_title = __( 'Append a Ninja Forms', 'ninja-forms' );
+        $this->_title = __( 'Append a Ninja Form', 'ninja-forms' );
 
         add_filter( 'the_content', array( $this, 'append_form' ) );
     }

@@ -1,29 +1,29 @@
-<script id="nf-tmpl-field-product" type="text/template">
-    <div class="nf-product-field <%= renderClasses() %>">
-        <%= renderProduct() %>
+<script id="tmpl-nf-field-product" type="text/template">
+    <div class="nf-product-field {{{ data.renderClasses() }}}">
+        {{{ data.renderProduct() }}}
     </div>
 </script>
 
-<script id="nf-tmpl-product-single" type="text/template">
-    <span class="nf-product-price-label">Price:</span>
-    <span class="nf-product-price">$<%= product_price %></span>
-    <%= renderProductQuantity() %>
+<script id="tmpl-nf-product-single" type="text/template">
+    <span class="nf-product-price-label">{{{ nfi18n.fieldsProductsPrice }}}</span>
+    <span class="nf-product-price">{{{ data.renderCurrencyFormatting( data.product_price ) }}}</span>
+    {{{ data.renderProductQuantity() }}}
 </script>
 
-<script id="nf-tmpl-product-dropdown" type="text/template">
-    <span for="nf-field-<%= id %>">
-    <select id="nf-field-<%= id %>" name="nf-field-<%= id %>" class="<%= renderClasses() %> nf-element">
-        <%= renderOptions() %>
-        <%= renderProductQuantity() %>
+<script id="tmpl-nf-product-dropdown" type="text/template">
+    <span for="nf-field-{{{ data.id }}}">
+    <select id="nf-field-{{{ data.id }}}" name="nf-field-{{{ data.id }}}" class="{{{ data.renderClasses() }}} nf-element">
+        {{{ data.renderOptions() }}}
+        {{{ data.renderProductQuantity() }}}
     </select>
     </span>
 </script>
 
-<script id="nf-tmpl-product-dropdown-option" type="text/template">
-    <option value="<%= value %>" <%= ( 1 == selected ) ? 'selected="selected"' : '' %>><%= label %></option>
+<script id="tmpl-nf-product-dropdown-option" type="text/template">
+    <option value="{{{ data.value }}}" {{{ ( 1 == data.selected ) ? 'selected="selected"' : '' }}}{{{ data.label }}}</option>
 </script>
 
-<script id="nf-tmpl-product-quantity" type="text/template">
-    <span class="nf-product-quantity-label">Quantity:</span>
-    <span class="nf-product-quantity"><input id="nf-field-qty-<%= id %>" name="nf-field-qty-<%= id %>" class="nf-field-qty nf-element" type="number" min="0" size="10" value="<%= value %>"></span></span>
+<script id="tmpl-nf-product-quantity" type="text/template">
+    <span class="nf-product-quantity-label">{{{ nfi18n.fieldsProductsQuantity }}}</span>
+    <span class="nf-product-quantity"><input id="nf-field-qty-{{{ data.id }}}" name="nf-field-qty-{{{ data.id }}}" class="nf-field-qty nf-element" type="number" min="0" size="10" value="{{{ data.value }}}"></span></span>
 </script>

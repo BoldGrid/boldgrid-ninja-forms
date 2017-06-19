@@ -9,7 +9,7 @@
 define( [], function() {
 	var view = Marionette.ItemView.extend({
 		tagName: 'div',
-		template: '#nf-tmpl-drawer-content-view-changes-item',
+		template: '#tmpl-nf-drawer-content-view-changes-item',
 
 		initialize: function() {
 			this.model.on( 'change:disabled', this.render, this );

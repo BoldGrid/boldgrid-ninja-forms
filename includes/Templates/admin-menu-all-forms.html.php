@@ -6,6 +6,8 @@
         </a>
     </h1>
 
+    <?php do_action( 'nf_admin_before_form_list' ); ?>
+
     <form method="post">
         <?php $table->display(); ?>
     </form>

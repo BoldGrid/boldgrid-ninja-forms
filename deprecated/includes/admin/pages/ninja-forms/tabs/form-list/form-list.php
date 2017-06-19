@@ -45,7 +45,7 @@ function ninja_forms_tab_form_list(){
 
 	do_action( 'nf_admin_before_form_list' );
 
-	$all_forms = Ninja_Forms()->forms()->get_all();
+	$all_forms = apply_filters( 'ninja_forms_form_list_forms', Ninja_Forms()->forms()->get_all() );
 
 	$form_count = count($all_forms);
 

@@ -15,25 +15,34 @@ define([], function() {
 
         validateMinMax: function( el, model ) {
             var $el = jQuery( el );
-            var value = parseInt( $el.val() );
+            var value = parseFloat( $el.val() );
             var min = $el.attr( 'min' );
             var max = $el.attr( 'max' );
-            var step = $el.attr( 'step' );
+            var step = parseFloat( $el.attr( 'step' ) );
 
             if( min && value < min ){
-                nfRadio.channel( 'fields' ).request( 'add:error', model.get( 'id' ), 'number-min', 'Number Min Error' );
+                var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', model.get( 'id' ) );
+                var formModel  = nfRadio.channel( 'app'    ).request( 'get:form',  fieldModel.get( 'formID' ) );
+                nfRadio.channel( 'fields' ).request( 'add:error', model.get( 'id' ), 'number-min', formModel.get( 'settings' ).fieldNumberNumMinError );
             } else {
                 nfRadio.channel( 'fields' ).request( 'remove:error', model.get( 'id' ), 'number-min' );
             }
 
             if ( max && value > max ){
-                nfRadio.channel( 'fields' ).request( 'add:error', model.get( 'id' ), 'number-max', 'Number Max Error' );
+                var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', model.get( 'id' ) );
+                var formModel  = nfRadio.channel( 'app'    ).request( 'get:form',  fieldModel.get( 'formID' ) );
+                nfRadio.channel( 'fields' ).request( 'add:error', model.get( 'id' ), 'number-max', formModel.get( 'settings' ).fieldNumberNumMaxError );
             } else {
                 nfRadio.channel( 'fields' ).request( 'remove:error', model.get( 'id' ), 'number-max' );
             }
 
-            if( value && 0 !== value % step ){
-                nfRadio.channel( 'fields' ).request( 'add:error', model.get( 'id' ), 'number-step', 'Please increment by ' + step );
+            var testValue = parseInt( value * 1000000000 );
+            var testStep = parseInt( step * 1000000000  );
+
+            if( value && 0 !== testValue % testStep ){
+                var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', model.get( 'id' ) );
+                var formModel  = nfRadio.channel( 'app'    ).request( 'get:form',  fieldModel.get( 'formID' ) );
+                nfRadio.channel( 'fields' ).request( 'add:error', model.get( 'id' ), 'number-step', formModel.get( 'settings' ).fieldNumberIncrementBy + step );
             } else {
                 nfRadio.channel( 'fields' ).request( 'remove:error', model.get( 'id' ), 'number-step' );
             }

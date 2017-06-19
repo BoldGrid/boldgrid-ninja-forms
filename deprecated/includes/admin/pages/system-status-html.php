@@ -26,6 +26,10 @@
 			<td><?php echo esc_html( NF_PLUGIN_VERSION ); ?></td>
 		</tr>
 		<tr>
+			<td><?php _e( 'Ninja Forms Codebase','ninja-forms' ); ?>:</td>
+			<td>v2.9.x DEPRECATED</td>
+		</tr>
+		<tr>
 			<td><?php _e( 'WP Version','ninja-forms' ); ?>:</td>
 			<td><?php bloginfo('version'); ?></td>
 		</tr>

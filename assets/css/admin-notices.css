@@ -32,7 +32,6 @@
 }
 .nf-notice-title {
     font-size: 24px;
-    margin: 0;
 }
 .nf-notice-body {
     font-weight: normal;
@@ -52,4 +51,15 @@
 }
 .nf-red {
     color: #ED494D;
+}
+.nf-admin-error {
+    border-left: 5px solid #ED494D;
+}
+.nf-admin-error .nf-notice-title {
+    color: #ED494D;
+}
+
+.nf-admin-error .nf-notice-title,
+.nf-admin-error .nf-notice-body {
+    margin: 10px 0 10px 130px;
 }

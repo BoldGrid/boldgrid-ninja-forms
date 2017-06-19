@@ -1,22 +1,22 @@
-<script id="nf-tmpl-field-listradio" type="text/template">
+<script id="tmpl-nf-field-listradio" type="text/template">
     <ul>
-        <%= renderOptions() %>
+        {{{ data.renderOptions() }}}
     </ul>
 </script>
 
-<script id='nf-tmpl-field-listradio-option' type='text/template'>
+<script id='tmpl-nf-field-listradio-option' type='text/template'>
+    <# if ( ! data.visible ) { return '' } #>
     <li>
-        <input type="radio" id="nf-field-<%= fieldID %>-<%= index %>" name="nf-field-<%= fieldID %>" class="<%= classes %> nf-element <%= ( value == currentValue  || 1 == selected ) ? 'nf-checked' : '' %>" value="<%= value %>" <%= ( value == currentValue  || 1 == selected ) ? 'checked="checked"' : '' %>> <label for="nf-field-<%= fieldID %>-<%= index %>" class="<%= ( value == currentValue  || 1 == selected ) ? 'nf-checked-label' : '' %>"><%= label %></label>
+        <input type="radio" id="nf-field-{{{ data.fieldID }}}-{{{ data.index }}}" name="nf-field-{{{ data.fieldID }}}" class="{{{ data.classes }}} nf-element {{{ ( data.value == data.currentValue  || 1 == data.selected ) ? 'nf-checked' : '' }}}" value="{{{ data.value }}}" {{{ ( data.value == data.currentValue  || 1 == data.selected ) ? 'checked="checked"' : '' }}}> <label for="nf-field-{{{ data.fieldID }}}-{{{ data.index }}}" class="{{{ ( data.value == data.currentValue  || 1 == data.selected ) ? 'nf-checked-label' : '' }}}">{{{ data.label }}}</label>
     </li>
 </script>
 
-<script id='nf-tmpl-field-listradio-other' type='text/template'>
+<script id='tmpl-nf-field-listradio-other' type='text/template'>
     <li>
-
-        <input type="radio" name="nf-field-<%= fieldID %>" class="<%= classes %> nf-element" value="nf-other" <%= ( ! valueFound ) ? 'checked="checked"' : '' %>> <label>Other <%= renderOtherText() %></label>
+        <input type="radio" name="nf-field-{{{ data.fieldID }}}" class="{{{ data.classes }}} nf-element" value="nf-other" {{{ ( ! data.valueFound ) ? 'checked="checked"' : '' }}}> <label>Other {{{ data.renderOtherText() }}}</label>
     </li>
 </script>
 
-<script id='nf-tmpl-field-listradio-other-text' type='text/template'>
-    <input type="text" name="nf-field-<%= fieldID %>" class="nf-element" value="<%= currentValue %>">
+<script id='tmpl-nf-field-listradio-other-text' type='text/template'>
+    <input type="text" name="nf-field-{{{ data.fieldID }}}" class="nf-element" value="{{{ data.currentValue }}}">
 </script>

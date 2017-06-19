@@ -13,7 +13,7 @@ class NF_Extension_Updater
     public $product_nice_name = '';
     public $product_name = '';
     public $version = '';
-    public $store_url = 'https://ninjaforms.com';
+    public $store_url = 'https://ninjaforms.com/update-check/';
     public $file = '';
     public $author = '';
     public $error = '';
@@ -69,11 +69,12 @@ class NF_Extension_Updater
         $api_params = array(
             'edd_action'=> 'activate_license',
             'license' 	=> $license_key,
-            'item_name' => urlencode( $this->product_nice_name ) // the name of our product in EDD
+            'item_name' => urlencode( $this->product_nice_name ), // the name of our product in EDD
+            'url' => home_url()
         );
 
         // Call the custom API.
-        $response = wp_remote_post( esc_url_raw( add_query_arg( $api_params, $this->store_url ) ) );
+        $response = wp_remote_post( $this->store_url, array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params ) );
 
         $this->maybe_debug( $response );
 
@@ -111,11 +112,12 @@ class NF_Extension_Updater
         $api_params = array(
             'edd_action'=> 'deactivate_license',
             'license' 	=> $license,
-            'item_name' => urlencode( $this->product_nice_name ) // the name of our product in EDD
+            'item_name' => urlencode( $this->product_nice_name ), // the name of our product in EDD
+            'url'       => home_url()
         );
 
         // Call the custom API.
-        $response = wp_remote_post( esc_url_raw( add_query_arg( $api_params, $this->store_url ) ), array( 'timeout' => 15, 'sslverify' => false ) );
+        $response = wp_remote_post( $this->store_url, array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params ) );
 
         $this->maybe_debug( $response );
 

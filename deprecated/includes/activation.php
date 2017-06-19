@@ -48,7 +48,7 @@ function ninja_forms_activation( $network_wide ){
 
 	if ( ! $network_wide ) { // This is a single-site activation.
 
-		wp_schedule_event( time(), 'daily', 'ninja_forms_daily_action' );
+        wp_schedule_event( time(), 'daily', 'ninja_forms_daily_action' );
 
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 

@@ -15,6 +15,8 @@ class NF_Fields_Note extends NF_Fields_Hidden
 
     protected $_icon = 'sticky-note-o';
 
+    protected $_templates = 'null';
+
     protected $_aliases = array( 'notes', 'info' );
 
     protected $_settings_only = array(
@@ -43,9 +45,6 @@ class NF_Fields_Note extends NF_Fields_Hidden
         $this->_settings[ 'value_mirror' ][ 'value' ] = $this->_settings[ 'default' ][ 'value' ] = __( 'Note text can be edited in the note field\'s advanced settings below.' );
 
         $this->_nicename = __( 'Note', 'ninja-forms' );
-
-        add_filter( 'ninja_forms_display_type_note', '__return_false' );
-        add_filter( 'ninja_forms_preview_display_type_note', '__return_false' );
 
         add_filter( 'nf_sub_hidden_field_types', array( $this, 'hide_field_type' ) );
     }

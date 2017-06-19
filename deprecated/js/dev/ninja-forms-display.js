@@ -14,43 +14,49 @@ function init_all_the_ninja_things() {
 
 	/* * * Begin Mask JS * * */
 
-	jQuery("div.label-inside input, div.label-inside textarea").focus(function(){
-		var label = jQuery("#" + this.id + "_label_hidden").val();
-		if( this.value == label ){
-			this.value = '';
-		}
-	});
-
-	jQuery("div.label-inside input, div.label-inside textarea").blur(function(){
-		var label = jQuery("#" + this.id + "_label_hidden").val();
-		if( this.value == '' ){
-			this.value = label;
-		}
-	});
-
-	if( jQuery.fn.mask ){
-		jQuery(".ninja-forms-mask").each(function(){
-			var mask = jQuery(this).data('mask');
-			mask = mask.toString();
-			jQuery(this).mask(mask);
+	jQuery( document ).ready( function() {
+		jQuery("div.label-inside input, div.label-inside textarea").focus(function () {
+			var label = jQuery("#" + this.id + "_label_hidden").val();
+			if (this.value == label) {
+				this.value = '';
+			}
 		});
 
-		var date_format_mask = ninja_forms_settings.date_format;
-		date_format_mask = date_format_mask.replace( /m/g, 9 );
-		date_format_mask = date_format_mask.replace( /d/g, 9 );
-		date_format_mask = date_format_mask.replace( /y/g, 99 );
-		date_format_mask = date_format_mask.replace( /Y/g, 9999 );
+		jQuery("div.label-inside input, div.label-inside textarea").blur(function () {
+			var label = jQuery("#" + this.id + "_label_hidden").val();
+			if (this.value == '') {
+				this.value = label;
+			}
+		});
 
-		jQuery(".ninja-forms-date").mask(date_format_mask);
-	}
+		if (jQuery.fn.mask) {
+			jQuery(".ninja-forms-mask").each(function () {
+				var mask = jQuery(this).data('mask');
+				mask = mask.toString();
+				jQuery(this).mask(mask);
+			});
 
-	if( jQuery.fn.datepicker ){
-		jQuery(".ninja-forms-datepicker").datepicker( ninja_forms_settings.datepicker_args );
-	}
+			var date_format_mask = ninja_forms_settings.date_format;
+			date_format_mask = date_format_mask.replace(/m/g, 9);
+			date_format_mask = date_format_mask.replace(/d/g, 9);
+			date_format_mask = date_format_mask.replace(/y/g, 99);
+			date_format_mask = date_format_mask.replace(/Y/g, 9999);
 
-	if( jQuery.fn.autoNumeric ){
-		jQuery(".ninja-forms-currency").autoNumeric({aSign: ninja_forms_settings.currency_symbol, aSep: thousandsSeparator, aDec: decimalPoint});
-	}
+			jQuery(".ninja-forms-date").mask(date_format_mask);
+		}
+
+		if (jQuery.fn.datepicker) {
+			jQuery(".ninja-forms-datepicker").datepicker(ninja_forms_settings.datepicker_args);
+		}
+
+		if (jQuery.fn.autoNumeric) {
+			jQuery(".ninja-forms-currency").autoNumeric({
+				aSign: ninja_forms_settings.currency_symbol,
+				aSep: thousandsSeparator,
+				aDec: decimalPoint
+			});
+		}
+	});
 
 	/* * * End Mask JS * * */
 

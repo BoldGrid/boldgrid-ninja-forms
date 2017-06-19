@@ -9,7 +9,7 @@
 define( [], function() {
 	var view = Marionette.ItemView.extend({
 		tagName: 'span',
-		template: '#nf-tmpl-mobile-menu-button',
+		template: '#tmpl-nf-mobile-menu-button',
 
 		initialize: function() {
 			// Listen to changes on the app 'clean' state. When it changes, re-render.

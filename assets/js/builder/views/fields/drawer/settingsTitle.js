@@ -9,10 +9,10 @@
 define( ['views/fields/drawer/addSavedField'], function( addSavedFieldView ) {
 	var view = Marionette.LayoutView.extend({
 		tagName: 'div',
-		template: '#nf-tmpl-drawer-content-edit-settings-title-fields',
+		template: '#tmpl-nf-drawer-content-edit-settings-title-fields',
 
 		initialize: function() {
-			this.model.on( 'change:isSaved', this.render, this );
+			this.model.on( 'change:saved', this.render, this );
 			this.model.on( 'change:label', this.renderjBoxContent, this );
 		},
 
@@ -21,7 +21,7 @@ define( ['views/fields/drawer/addSavedField'], function( addSavedFieldView ) {
 		},
 
 		onBeforeDestroy: function() {
-			this.model.off( 'change:isSaved', this.render );
+			this.model.off( 'change:saved', this.render );
 			this.addSavedjBox.destroy();
 			this.model.unset( 'jBox', { silent: true } );
 		},
@@ -61,7 +61,7 @@ define( ['views/fields/drawer/addSavedField'], function( addSavedFieldView ) {
 	    			var type = nfRadio.channel( domainID ).request( 'get:type', this.type );
 	    			var displayName = type.get( 'nicename' );
 
-	    			if ( this.isSaved ) {
+	    			if ( this.saved ) {
 	    				var realType = nfRadio.channel( domainID ).request( 'get:type', type.get( 'type' ) );
 	    				displayName += ' - ' + realType.get( 'nicename' );
 	    			}
@@ -69,7 +69,7 @@ define( ['views/fields/drawer/addSavedField'], function( addSavedFieldView ) {
 				},
 				
 				renderSavedStar: function() {
-					if ( this.isSaved ) {
+					if ( this.saved ) {
 						var star = 'filled';
 					} else {
 						var star = 'empty';

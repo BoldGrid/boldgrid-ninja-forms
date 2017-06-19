@@ -3,36 +3,15 @@ define( [], function() {
 		tagName: 'div',
 
 		initialize: function() {
-    		this.model.on( 'reRender', this.render, this );
-    		this.model.on( 'change:errors', this.changeError, this );
-    		this.model.on( 'change:addWrapperClass', this.addWrapperClass, this );
-    		this.model.on( 'change:removeWrapperClass', this.removeWrapperClass, this );
-    		// this.listenTo( nfRadio.channel( 'submit' ), 'before:submit', this.test );
+    		this.listenTo( this.model, 'reRender', this.render, this );
+    		this.listenTo( this.model, 'change:addWrapperClass', this.addWrapperClass, this );
+    		this.listenTo( this.model, 'change:removeWrapperClass', this.removeWrapperClass, this );
 
-    		this.template = '#nf-tmpl-field-' + this.model.get( 'wrap_template' );
-		},
-
-		onBeforeDestroy: function() {
-			this.model.off( 'reRender', this.render );
-    		this.model.off( 'change:errors', this.changeError );
-    		this.model.off( 'change:addWrapperClass', this.addWrapperClass );
-    		this.model.off( 'change:removeWrapperClass', this.removeWrapperClass );
+    		this.template = '#tmpl-nf-field-' + this.model.get( 'wrap_template' );
 		},
 
 		test: function( model ) {
 			console.log( 'firing from trigger 1' );
-		},
-
-		changeError: function() {
-			if ( 0 == this.model.get( 'errors' ).models.length ) {
-				this.model.removeWrapperClass( 'nf-error' );
-				this.model.removeWrapperClass( 'nf-fail' );
-				this.model.addWrapperClass( 'nf-pass' );
-			} else {
-				this.model.removeWrapperClass( 'nf-pass' );
-				this.model.addWrapperClass( 'nf-fail' );
-				this.model.addWrapperClass( 'nf-error' );
-			}
 		},
 
 		addWrapperClass: function() {
@@ -56,9 +35,7 @@ define( [], function() {
 			this.$el.unwrap();
 			this.setElement( this.$el );
 
-			var el = jQuery( this.el ).children( '.nf-error-wrap' );
-
-    		/*
+	   		/*
     		 * If we have an input mask, init that mask.
     		 * TODO: Move this to a controller so that the logic isn't in the view.
     		 */
@@ -69,32 +46,34 @@ define( [], function() {
     				var mask = this.model.get( 'mask' );
     			}
 
+
+				/* POLYFILL */ Number.isInteger = Number.isInteger || function(value) { return typeof value === "number" && isFinite(value) && Math.floor(value) === value; };
     			if ( Number.isInteger( mask ) ) {
     				mask = mask.toString();
     			}
 
     			jQuery( this.el ).find( '.nf-element' ).mask( mask );
     		}
-
 			nfRadio.channel( this.model.get( 'type' ) ).trigger( 'render:view', this );
 			nfRadio.channel( 'fields' ).trigger( 'render:view', this );
 		},
 
 		templateHelpers: function () {
+			var that = this;
 	    	return {
 
 				renderElement: function(){
 					var tmpl = _.find( this.element_templates, function( tmpl ) {
-						if ( 0 < jQuery( '#nf-tmpl-field-' + tmpl ).length ) {
+						if ( 0 < jQuery( '#tmpl-nf-field-' + tmpl ).length ) {
 							return true;
 						}
 					} );
-					var template = Marionette.TemplateCache.get( '#nf-tmpl-field-' + tmpl );
+					var template = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-field-' + tmpl );
 					return template( this );
 				},
 
 				renderLabel: function() {
-					var template = Marionette.TemplateCache.get( '#nf-tmpl-field-label' );
+					var template = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-field-label' );
 					return template( this );
 				},
 
@@ -184,8 +163,7 @@ define( [], function() {
 				},
 
 				getHelpText: function() {
-					this.help_text = jQuery( this.help_text ).html();
-
+					// this.help_text = jQuery( this.help_text ).html();
 					return ( 'undefined' != typeof this.help_text ) ? this.help_text.replace(/"/g, "&quot;") : '';
 				},
 
@@ -208,6 +186,22 @@ define( [], function() {
 					} else {
 						return '';
 					}
+				},
+
+				renderCurrencyFormatting: function( number ) {
+					/*
+					 * Our number will have a . as a decimal point. We want to replace that with our locale decimal, nfi18n.decimal_point.
+					 */
+					var replacedDecimal = number.toString().replace( '.', '||' );
+					/*
+					 * Add thousands separator. Our original number var won't have thousands separators.
+					 */
+					var replacedThousands = replacedDecimal.replace( /\B(?=(\d{3})+(?!\d))/g, nfi18n.thousands_sep );
+					var formattedNumber = replacedThousands.replace( '||', nfi18n.decimal_point );
+
+					var form = nfRadio.channel( 'app' ).request( 'get:form', that.model.get( 'formID' ) );
+					var currency_symbol = form.get( 'settings' ).currency_symbol;
+					return currency_symbol + formattedNumber;
 				}
 			};
 		},
@@ -251,6 +245,10 @@ define( [], function() {
 			nfRadio.channel( 'field-' + this.model.get( 'id' ) ).trigger( 'blur:field', el, this.model );
 			nfRadio.channel( this.model.get( 'type' ) ).trigger( 'blur:field', el, this.model );
 			nfRadio.channel( 'fields' ).trigger( 'blur:field', el, this.model );
+		},
+
+		onAttach: function() {
+			nfRadio.channel( this.model.get( 'type' ) ).trigger( 'attach:view', this );
 		}
 	});
 

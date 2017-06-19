@@ -8,7 +8,6 @@ return apply_filters( 'ninja_forms_config_country_list', array(
      * @since 2.2.28
      */
 
-    __( '- Select One', 'ninja-forms' ) => '',
     __( 'Afghanistan', 'ninja-forms' ) => 'AF',
     __( 'Albania', 'ninja-forms' ) => 'AL',
     __( 'Algeria', 'ninja-forms' ) => 'DZ',

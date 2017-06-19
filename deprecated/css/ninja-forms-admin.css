@@ -809,7 +809,9 @@ p.debug-report {
 .branch-4-2 #post-body .menu-item-handle,
 .branch-4-3 #post-body .menu-item-handle,
 .branch-4-4 #post-body .menu-item-handle,
-.branch-4-5 #post-body .menu-item-handle {
+.branch-4-5 #post-body .menu-item-handle,
+.branch-4-6 #post-body .menu-item-handle,
+.branch-4-7 #post-body .menu-item-handle {
 	background: #fff;
 	padding: 10px 5px 10px 10px;
 }
@@ -820,7 +822,9 @@ p.debug-report {
 .branch-4-2 #post-body .menu-item-settings,
 .branch-4-3 #post-body .menu-item-settings,
 .branch-4-4 #post-body .menu-item-settings,
-.branch-4-5 #post-body .menu-item-settings {
+.branch-4-5 #post-body .menu-item-settings,
+.branch-4-6 #post-body .menu-item-settings,
+.branch-4-7 #post-body .menu-item-settings {
 	background: #fff;
 	padding: 12px;
 }
@@ -831,7 +835,9 @@ p.debug-report {
 .branch-4-2 #post-body #post-body-content h3,
 .branch-4-3 #post-body #post-body-content h3,
 .branch-4-4 #post-body #post-body-content h3,
-.branch-4-5 #post-body #post-body-content h3 {
+.branch-4-5 #post-body #post-body-content h3,
+.branch-4-6 #post-body #post-body-content h3,
+.branch-4-7 #post-body #post-body-content h3 {
  margin-top: 0;
 }
 /*.branch-3-8 .item-controls {
@@ -844,19 +850,27 @@ p.debug-report {
 .branch-4-2 #TB_window .item-controls,
 .branch-4-3 #TB_window .item-controls,
 .branch-4-4 #TB_window .item-controls,
-.branch-4-5 #TB_window .item-controls {
+.branch-4-5 #TB_window .item-controls,
+.branch-4-6 #TB_window .item-controls,
+.branch-4-7 #TB_window .item-controls {
 	top: -5px;
 }
 
-.branch-4-5 .inside::after {
+.branch-4-5 .inside::after,
+.branch-4-6 .inside::after,
+.branch-4-7 .inside::after {
 	clear: both;
 	content: "";
 	display: block;
 }
-.branch-4-5.nav-menus-php .item-edit {
+.branch-4-5.nav-menus-php .item-edit,
+.branch-4-6.nav-menus-php .item-edit,
+.branch-4-7.nav-menus-php .item-edit {
 	visibility: hidden;
 }
-.branch-4-5.nav-menus-php .item-edit::before {
+.branch-4-5.nav-menus-php .item-edit::before,
+.branch-4-6.nav-menus-php .item-edit::before,
+.branch-4-7.nav-menus-php .item-edit::before {
 	visibility: visible;
 }
 

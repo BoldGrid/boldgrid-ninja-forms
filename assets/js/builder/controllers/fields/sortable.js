@@ -268,7 +268,8 @@ define( [], function() {
 		 * @param  Object 	ui jQuery UI element
 		 * @return void
 		 */
-		updateFieldsSortable: function( ui ) {
+		updateFieldsSortable: function( ui, sortable ) {
+			
 			nfRadio.channel( 'fields' ).request( 'sort:fields' );
 
 			// If we aren't dragging an item in from types or staging, update our change log.

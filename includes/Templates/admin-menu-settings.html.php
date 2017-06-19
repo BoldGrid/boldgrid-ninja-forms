@@ -30,7 +30,7 @@
             <?php foreach( $grouped_settings as $group => $settings ) : ?>
                 <div id="ninja_forms_metabox_<?php echo $group; ?>_settings" class="postbox">
                 <span class="item-controls">
-                    <a class="item-edit metabox-item-edit" id="edit_id" title="Edit Menu Item" href="#">Edit Menu Item</a>
+                    <a class="item-edit metabox-item-edit" id="edit_id" title="<?php _e( 'Edit Menu Item', 'ninja-forms' ); ?>" href="#"><?php _e( 'Edit Menu Item', 'ninja-forms' ); ?></a>
                 </span>
                     <h3 class="hndle"><span><?php echo $groups[ $group ][ 'label' ]; ?></span></h3>
                     <div class="inside" style="">
@@ -56,6 +56,9 @@
                                         case 'textbox' :
                                             echo "<input type='text' class='code widefat' name='{$setting['id']}' id='{$setting['id']}' value='{$setting['value']}'>";
                                             break;
+                                        case 'password' :
+                                            echo "<input type='password' class='code widefat' name='{$setting['id']}' id='{$setting['id']}' value='{$setting['value']}'>";
+                                            break;		
                                         case 'checkbox' :
                                             $checked = ( $setting[ 'value' ] ) ? 'checked' : '';
                                             echo "<input type='hidden' name='{$setting['id']}' value='0'>";

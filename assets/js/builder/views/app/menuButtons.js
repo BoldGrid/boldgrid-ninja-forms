@@ -9,7 +9,7 @@
 define( [], function() {
 	var view = Marionette.ItemView.extend({
 		tagName: 'span',
-		template: '#nf-tmpl-app-header-action-button',
+		template: '#tmpl-nf-app-header-action-button',
 
 		initialize: function() {
 			// Listen to changes on the app 'clean' state. When it changes, re-render.
@@ -42,9 +42,9 @@ define( [], function() {
 	    				this.publishWidth = '';
 	    			}
 	    			if ( nfRadio.channel( 'app' ).request( 'get:setting', 'loading' ) ) {
-	    				var template = Marionette.TemplateCache.get( '#nf-tmpl-add-header-publish-loading' );
+	    				var template = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-add-header-publish-loading' );
 	    			} else {
-	    				var template = Marionette.TemplateCache.get( '#nf-tmpl-app-header-publish-button' );
+	    				var template = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-app-header-publish-button' );
 	    			}
 	    			return template( this );
 	    		},
@@ -70,7 +70,7 @@ define( [], function() {
 	    		 */
 	    		maybeRenderCancel: function() {
 	    			if ( ! nfRadio.channel( 'app' ).request( 'get:setting', 'clean' ) ) {
-	    				var viewChanges = Marionette.TemplateCache.get( '#nf-tmpl-app-header-view-changes' );
+	    				var viewChanges = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-app-header-view-changes' );
 	    				return viewChanges( this );
 	    			} else {
 	    				return '';

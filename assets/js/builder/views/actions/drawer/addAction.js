@@ -11,7 +11,7 @@
 define( ['views/actions/drawer/typeCollection'], function( actionTypeCollectionView ) {
 
 	var view = Marionette.LayoutView.extend( {
-		template: '#nf-tmpl-drawer-content-add-action',
+		template: '#tmpl-nf-drawer-content-add-action',
 
 		regions: {
 			primary: '#nf-drawer-primary',

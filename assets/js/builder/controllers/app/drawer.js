@@ -58,7 +58,12 @@ define( [], function() {
 
 			// Triggers the before close drawer action on our current domain's drawer channel.
 			nfRadio.channel( 'drawer-' + currentDrawer.get( 'id' ) ).trigger( 'before:closeDrawer' );
+			/*
+			 * The 'before:closeDrawer' message is deprecated as of version 3.0 in favour of 'before:close'.
+			 * TODO: Remove this radio message in the future.
+			 */
 			nfRadio.channel( 'drawer' ).trigger( 'before:closeDrawer' );
+			nfRadio.channel( 'drawer' ).trigger( 'before:close' );
 			
 			// Send a message to our drawer to empty its contents.
 			nfRadio.channel( 'drawer' ).request( 'empty:drawerContent' );
@@ -91,6 +96,10 @@ define( [], function() {
 	        		clearInterval( that.checkCloseDrawerPos );
 		    		nfRadio.channel( 'app' ).request( 'update:currentDrawer', false );
 		    		nfRadio.channel( 'drawer' ).trigger( 'closed' );
+		    		/*
+		    		 * Reset the add new button z-index to 98.
+		    		 */
+		    		jQuery( '.nf-master-control' ).css( 'z-index', 98 );
 		    		// jQuery( drawerEl ).scrollTop( 0 );
 	        	}
 			}, 150 );
@@ -138,7 +147,8 @@ define( [], function() {
 
 			// Send out a message requesting our drawer view to load the content for our drawer ID.
 			nfRadio.channel( 'drawer' ).request( 'load:drawerContent', drawerID, data );
-
+			nfRadio.channel( 'drawer' ).trigger( 'before:open' );
+			
 			// To open our drawer, we have to add our opened class to our builder element and remove the closed class.
 			var builderEl = nfRadio.channel( 'app' ).request( 'get:builderEl' );
 			jQuery( builderEl ).addClass( 'nf-drawer-opened' ).removeClass( 'nf-drawer-closed' );
@@ -161,6 +171,11 @@ define( [], function() {
 			 */
 			this.hasFocus = false;
 
+			/*
+			 * Set our add new button z-index to 0;
+			 */
+			jQuery( '.nf-master-control' ).css( 'z-index', 0 );
+
 			this.checkOpenDrawerPos = setInterval( function() {
 	        	if ( '0px' == jQuery( drawerEl ).css( 'right' ) ) {
 	        		clearInterval( that.checkOpenDrawerPos );
@@ -168,7 +183,7 @@ define( [], function() {
 		        		that.focusFilter();
 						that.hasFocus = true;
 			    		nfRadio.channel( 'app' ).request( 'update:currentDrawer', drawerID );
-			    		// jQuery( drawerEl ).scrollTop( 0 );
+			    		jQuery( drawerEl ).scrollTop( 0 );
 			    		nfRadio.channel( 'drawer' ).trigger( 'opened' );
 					}   		
 	        	}
@@ -257,7 +272,7 @@ define( [], function() {
         	 /*
         	 * When we remove all of our disables preventing closing the drawer, remove the disable class.
         	 */
-        	if ( ! this.maybePreventClose() ) {
+        	if ( ! this.maybePreventClose() && 'undefined' != typeof this.dataModel ) {
 	        	// Get our current drawer.
 				this.dataModel.set( 'drawerDisabled', false );        		
         	}

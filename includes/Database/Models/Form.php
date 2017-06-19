@@ -46,11 +46,20 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
 
     public static function get_next_sub_seq( $form_id )
     {
-        $form = Ninja_Forms()->form( $form_id )->get();
+        global $wpdb;
 
-        $last_seq_num = $form->get_setting( '_seq_num', 1 );
+        // TODO: Leverage form cache.
 
-        $form->update_setting( '_seq_num', $last_seq_num + 1 )->save();
+        $last_seq_num = $wpdb->get_var( $wpdb->prepare(
+            'SELECT value FROM ' . $wpdb->prefix . 'nf3_form_meta WHERE `key` = "_seq_num" AND `parent_id` = %s'
+        , $form_id ) );
+
+        if( $last_seq_num ) {
+            $wpdb->update( $wpdb->prefix . 'nf3_form_meta', array( 'value' => $last_seq_num + 1 ), array( 'key' => '_seq_num', 'parent_id' => $form_id ) );
+        } else {
+            $last_seq_num = 1;
+            $wpdb->insert( $wpdb->prefix . 'nf3_form_meta', array( 'key' => '_seq_num', 'value' => $last_seq_num + 1, 'parent_id' => $form_id ) );
+        }
 
         return $last_seq_num;
     }
@@ -67,28 +76,50 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
         $form->save();
         $form_id = $form->get_id();
 
+        $form_cache = array(
+            'id' => $form_id,
+            'fields' => array(),
+            'actions' => array(),
+            'settings' => $form->get_settings()
+        );
+        $update_process = Ninja_Forms()->background_process( 'update-fields' );
         foreach( $import[ 'fields' ] as $settings ){
-
             if( $is_conversion ) {
-
                 $field_id = $settings[ 'id' ];
-
                 $field = Ninja_Forms()->form($form_id)->field( $field_id )->get();
             } else {
+                unset( $settings[ 'id' ] );
                 $field = Ninja_Forms()->form($form_id)->field()->get();
+                $field->save();
             }
 
             $settings[ 'parent_id' ] = $form_id;
 
-            $field->update_settings( $settings )->save();
+            array_push( $form_cache[ 'fields' ], array(
+                'id' => $field->get_id(),
+                'settings' => $settings
+            ));
+
+            $update_process->push_to_queue(array(
+                'id' => $field->get_id(),
+                'settings' => $settings
+            ));
         }
+        $update_process->save()->dispatch();
 
         foreach( $import[ 'actions' ] as $settings ){
 
             $action = Ninja_Forms()->form($form_id)->action()->get();
 
             $action->update_settings( $settings )->save();
+
+            array_push( $form_cache[ 'actions' ], array(
+                'id' => $action->get_id(),
+                'settings' => $settings
+            ));
         }
+
+        update_option( 'nf_form_' . $form_id, WPN_Helper::utf8_encode( $form_cache ) );
 
         add_action( 'admin_notices', array( 'NF_Database_Models_Form', 'import_admin_notice' ) );
 
@@ -181,12 +212,12 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
             $filename = apply_filters( 'ninja_forms_form_export_filename', 'nf_form_' . $today );
             $filename = $filename . ".nff";
 
-            header( 'Content-type: application/nff');
+            header( 'Content-type: application/json');
             header( 'Content-Disposition: attachment; filename="'.$filename .'"' );
             header( 'Pragma: no-cache');
             header( 'Expires: 0' );
-            echo apply_filters( 'ninja_forms_form_export_bom',"\xEF\xBB\xBF" ) ; // Byte Order Mark
-            echo base64_encode( maybe_serialize( $export ) );
+//            echo apply_filters( 'ninja_forms_form_export_bom',"\xEF\xBB\xBF" ) ; // Byte Order Mark
+            echo json_encode( WPN_Helper::utf8_encode( $export ) );
 
             die();
         }
@@ -216,6 +247,11 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
         if( isset( $import[ 'settings' ][ 'form_title' ] ) ){
             $import[ 'settings' ][ 'title' ] = $import[ 'settings' ][ 'form_title' ];
             unset( $import[ 'settings' ][ 'form_title' ] );
+        }
+
+        // Convert `last_sub` to `_seq_num`
+        if( isset( $import[ 'settings' ][ 'last_sub' ] ) ) {
+            $import[ 'settings' ][ '_seq_num' ] = $import[ 'settings' ][ 'last_sub' ] + 1;
         }
 
         // Make sure
@@ -263,7 +299,7 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
         if( ! $has_save_action ) {
             $import[ 'actions' ][] = array(
                 'type' => 'save',
-                'label' => 'Save Form',
+                'label' => __( 'Save Form', 'ninja-forms' ),
                 'active' => TRUE
             );
         }
@@ -327,6 +363,10 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
             $action['type'] = str_replace('_', '', $action['type']);
         }
 
+        if( 'email' == $action[ 'type' ] ){
+            $action[ 'to' ] = str_replace( '`', ',', $action[ 'to' ] );
+        }
+
         // Convert `name` to `label`
         if( isset( $action[ 'name' ] ) ) {
             $action['label'] = $action['name'];
@@ -359,44 +399,6 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
 
         if( 'submit' == $field[ 'type' ] ){
             $field[ 'processing_label' ] = 'Processing';
-        }
-
-        if( 'calc' == $field[ 'type' ] ){
-            $field[ 'type' ] = 'note';
-
-            if( isset( $field[ 'calc_method' ] ) ) {
-
-                switch( $field[ 'calc_method' ] ){
-                    case 'eq':
-                        $method = __( 'Equation (Advanced)', 'ninja-forms' );
-                        break;
-                    case 'fields':
-                        $method = __( 'Operations and Fields (Advanced)', 'ninja-forms' );
-                        break;
-                    case 'auto':
-                        $method = __( 'Auto-Total Fields', 'ninja-forms' );
-                        break;
-                    default:
-                        $method = '';
-                }
-                $field['default'] = $method . "\r\n";
-
-                if ('eq' == $field['calc_method'] && isset( $field['calc_eq'] ) ) {
-                    $field['default'] .= $field['calc_eq'];
-                }
-
-                if ('fields' == $field['calc_method'] && isset( $field['calc'] ) ) {
-                    // TODO: Support 'operations and fields (advanced)' calculations.
-                }
-
-                if ('auto' == $field['calc_method'] && isset( $field['calc'] ) ) {
-                    // TODO: Support 'auto-totaling' calculations.
-                }
-            }
-
-            unset( $field[ 'calc' ] );
-            unset( $field[ 'calc_eq' ] );
-            unset( $field[ 'calc_method' ] );
         }
 
         if( isset( $field[ 'email' ] ) ){
@@ -444,6 +446,8 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
 
             unset( $field[ 'default_value' ] );
             unset( $field[ 'default_value_type' ] );
+        } else if ( isset ( $field[ 'default_value' ] ) ) {
+            $field[ 'default' ] = $field[ 'default_value' ];
         }
 
         if( 'list' == $field[ 'type' ] ) {
@@ -465,9 +469,19 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
             }
 
             if( isset( $field[ 'list' ][ 'options' ] ) ) {
-                $field[ 'options' ] = $field[ 'list' ][ 'options' ];
+                $field[ 'options' ] = array_values( $field[ 'list' ][ 'options' ] );
                 unset( $field[ 'list' ][ 'options' ] );
             }
+
+            foreach( $field[ 'options' ] as &$option ){
+                if( isset( $option[ 'value' ] ) && $option[ 'value' ] ) continue;
+                $option[ 'value' ] = $option[ 'label' ];
+            }
+        }
+
+        if( 'country' == $field[ 'type' ] ){
+            $field[ 'type' ] = 'listcountry';
+            $field[ 'options' ] = array();
         }
 
         // Convert `textbox` to other field types
@@ -542,6 +556,45 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
 
         if( 'desc' == $field[ 'type' ] ){
             $field[ 'type' ] = 'html';
+        }
+
+        if( 'credit_card' == $field[ 'type' ] ){
+
+            $field[ 'type' ] = 'creditcardnumber';
+            $field[ 'label' ] = $field[ 'cc_number_label' ];
+            $field[ 'label_pos' ] = 'above';
+
+            if( $field[ 'help_text' ] ){
+                $field[ 'help_text' ] = '<p>' . $field[ 'help_text' ] . '</p>';
+            }
+
+            $credit_card_fields = array(
+                'creditcardcvc'        => $field[ 'cc_cvc_label' ],
+                'creditcardfullname'   => $field[ 'cc_name_label' ],
+                'creditcardexpiration' => $field[ 'cc_exp_month_label' ] . ' ' . $field[ 'cc_exp_year_label' ],
+                'creditcardzip'        => __( 'Credit Card Zip', 'ninja-forms' ),
+            );
+
+
+            foreach( $credit_card_fields as $new_type => $new_label ){
+                $field[ 'new_fields' ][] = array_merge( $field, array(
+                    'id' => '',
+                    'type' => $new_type,
+                    'label' => $new_label,
+                    'help_text' => '',
+                    'desc_text' => ''
+                ));
+            }
+        }
+
+        /*
+         * Convert inside label position over to placeholder
+         */
+        if ( isset ( $field[ 'label_pos' ] ) && 'inside' == $field[ 'label_pos' ] ) {
+            if ( ! isset ( $field[ 'placeholder' ] ) || empty ( $field[ 'placeholder' ] ) ) {
+                $field[ 'placeholder' ] = $field[ 'label' ];
+            }
+            $field[ 'label_pos' ] = 'hidden';
         }
 
         return apply_filters( 'ninja_forms_upgrade_field', $field );

@@ -10,6 +10,7 @@ define( [], function() {
 	var model = Backbone.Model.extend( {
 		defaults: {
 			errors: {},
+            max_options: 0,
 		},
 
 		initialize: function() {

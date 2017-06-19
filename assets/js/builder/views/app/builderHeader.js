@@ -10,11 +10,11 @@
  * @copyright (c) 2015 WP Ninjas
  * @since 3.0
  */
-define( ['views/app/header', 'views/app/subHeader', 'views/app/formTitle'], function( appHeaderView, appSubHeaderView, formTitleView ) {
+define( [ 'views/app/header', 'views/app/subHeader' ], function( appHeaderView, appSubHeaderView ) {
 
 	var view = Marionette.LayoutView.extend({
 		tagName: "div",
-		template: "#nf-tmpl-header",
+		template: "#tmpl-nf-header",
 
 		regions: {
 			app: "#nf-app-header",
@@ -31,6 +31,8 @@ define( ['views/app/header', 'views/app/subHeader', 'views/app/formTitle'], func
 
 			var formData = nfRadio.channel( 'app' ).request( 'get:formModel' );
 			var formSettings = formData.get( 'settings' );
+
+			var formTitleView = nfRadio.channel( 'views' ).request( 'get:formTitle' );
 			this.formTitle.show( new formTitleView( { model: formSettings } ) );
 
 			this.changeSubHeader();

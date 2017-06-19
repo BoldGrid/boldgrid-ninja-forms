@@ -9,19 +9,16 @@
 define( [], function() {
     var controller = Marionette.Object.extend( {
         initialize: function() {
-            this.listenTo( nfRadio.channel( 'fields' ), 'drop:fieldType', this.dropCreditCardField );
-            this.listenTo( nfRadio.channel( 'fields' ), 'add:stagedField', this.stageCreditCardField );
+          this.listenTo( nfRadio.channel( 'fields' ), 'after:addField', this.dropCreditCardField );
         },
 
-        dropCreditCardField: function( type, tmpID ) {
+        dropCreditCardField: function( fieldModel ) {
 
-            if( 'creditcard' == type ) {
+            if( 'creditcard' == fieldModel.get( 'type' ) ) {
 
-                var model = nfRadio.channel( 'fields').request( 'get:field', tmpID );
+                var order = fieldModel.get( 'order' );
 
-                var order = model.get( 'order' );
-
-                nfRadio.channel( 'fields' ).request( 'delete', model );
+                nfRadio.channel( 'fields' ).request( 'delete', fieldModel );
 
                 _.each( [ 'creditcardfullname', 'creditcardnumber', 'creditcardcvc', 'creditcardexpiration', 'creditcardzip'], function( type ) {
 
@@ -34,7 +31,7 @@ define( [], function() {
                         order: order
                     };
 
-                    nfRadio.channel('fields').request('add', newField );
+                    nfRadio.channel( 'fields' ).request( 'add', newField );
                 });
             }
 

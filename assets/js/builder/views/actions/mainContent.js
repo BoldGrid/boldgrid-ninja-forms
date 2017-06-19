@@ -2,7 +2,7 @@
  * Main content view for our actions.
  *
  * TODO: make dynamic
- * 
+ *
  * @package Ninja Forms builder
  * @subpackage Actions
  * @copyright (c) 2015 WP Ninjas
@@ -10,9 +10,13 @@
  */
 define( ['views/actions/actionItem', 'views/actions/mainContentEmpty'], function( actionView, emptyView ) {
 	var view = Marionette.CompositeView.extend({
-		template: '#nf-tmpl-action-table',
+		template: '#tmpl-nf-action-table',
 		childView: actionView,
 		emptyView: emptyView,
+
+		initialize: function() {
+			this.template = nfRadio.channel( 'actions' ).request( 'get:mainContentTemplate' ) || this.template;
+		},
 
 		onRender: function() {
 			jQuery( this.el ).droppable( {
@@ -26,6 +30,8 @@ define( ['views/actions/actionItem', 'views/actions/mainContentEmpty'], function
 		},
 
 		attachHtml: function( collectionView, childView ) {
+			if ( 'undefined' == typeof nfRadio.channel( 'actions' ).request( 'get:type', childView.model.get( 'type' ) ) ) return;
+
 			jQuery( collectionView.el ).find( 'tbody' ).append( childView.el );
 		},
 	});

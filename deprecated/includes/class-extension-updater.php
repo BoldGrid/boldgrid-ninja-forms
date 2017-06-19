@@ -20,7 +20,7 @@ class NF_Extension_Updater
 	public $product_nice_name = '';
 	public $product_name = '';
 	public $version = '';
-	public $store_url = 'https://ninjaforms.com';
+	public $store_url = 'https://ninjaforms.com/update-check/';
 	public $file = '';
 	public $author = '';
 	public $error = '';
@@ -43,7 +43,7 @@ class NF_Extension_Updater
 		}
 
 		$this->version = $version;
-		$this->file = $file;
+		$this->file = str_replace( '/deprecated', '', $file );
 		$this->author = $author;
 
 		$this->add_license_fields();

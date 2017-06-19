@@ -98,7 +98,8 @@ define( [], function() {
 			var tmpID = nfRadio.channel( currentDomainID ).request( 'get:tmpID' );
 			newModel.set( 'id', tmpID );
 			// Add new model.
-			nfRadio.channel( currentDomainID ).request( 'add', newModel );
+			// Params are: model, silent, renderTrigger, action
+			nfRadio.channel( currentDomainID ).request( 'add', newModel, false, false, 'duplicate' );
 			
 			// Add our action addition to our change log.
 			var label = {

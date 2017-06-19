@@ -55,6 +55,7 @@ final class NF_Actions_CollectPayment extends NF_Abstracts_Action
 
     public function process( $action_settings, $form_id, $data )
     {
+        
         $payment_gateway = $action_settings[ 'payment_gateways' ];
 
         $payment_gateway_class = $this->payment_gateways[ $payment_gateway ];

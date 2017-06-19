@@ -1,6 +1,6 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit;
 
-return array(
+return apply_filters( 'ninja_forms_action_settings', array(
 
     /*
      * Label
@@ -28,4 +28,4 @@ return array(
         'value' => 1
     ),
 
-);
+) );

@@ -17,6 +17,8 @@ class NF_Fields_Recaptcha extends NF_Abstracts_Field
 
     protected $_test_value = '';
 
+    protected $_settings = array( 'label' );
+
     public function __construct()
     {
         parent::__construct();
@@ -27,7 +29,7 @@ class NF_Fields_Recaptcha extends NF_Abstracts_Field
             'name' => 'wrapper_class',
             'type' => 'textbox',
             'placeholder' => '',
-            'label' => __( 'Wrapper', 'ninja-forms' ),
+            'label' => __( 'Wrapper Class', 'ninja-forms' ),
             'width' => 'full',
             'value' => '',
             'group' => 'primary',

@@ -1,7 +1,7 @@
 define( [], function() {
 	var view = Marionette.ItemView.extend({
 		tagName: 'div',
-		template: '#nf-tmpl-main-header-fields',
+		template: '#tmpl-nf-main-header-fields',
 
 		initialize: function() {
 			var fieldCollection = nfRadio.channel( 'fields' ).request( 'get:collection' );

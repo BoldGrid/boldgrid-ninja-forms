@@ -2,7 +2,7 @@
     .nf-field-element {
         label {
             position: relative;
-            margin-left: 30px;
+            margin-left: 30px !important;
             &::after {
                 border-radius: 50%;
                 content: "";

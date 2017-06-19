@@ -21,7 +21,7 @@
             </tr>
             <tr id="row_nf_export_fields_submit">
                 <th scope="row">
-                    <label for="nf_export_fields_submit">Export Fields</label>
+                    <label for="nf_export_fields_submit"><?php _e( 'Export Fields', 'ninja-forms' ); ?></label>
                 </th>
                 <td>
                     <input type="submit" id="nf_export_fields_submit" class="button-secondary" value="<?php echo __( 'Export Fields', 'ninja-forms' ) ;?>">

@@ -9,7 +9,7 @@
 define( ['views/app/mobileMenuItem'], function( mobileMenuItemView ) {
 	var view = Marionette.CompositeView.extend({
 		tagName: 'div',
-		template: '#nf-tmpl-mobile-menu',
+		template: '#tmpl-nf-mobile-menu',
 		childView: mobileMenuItemView,
 
 		initialize: function() {

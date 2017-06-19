@@ -24,18 +24,36 @@ class NF_Fields_ListCheckbox extends NF_Abstracts_List
         parent::__construct();
 
         $this->_nicename = __( 'Checkbox List', 'ninja-forms' );
+
+        add_filter( 'ninja_forms_merge_tag_calc_value_' . $this->_type, array( $this, 'get_calc_value' ), 10, 2 );
     }
 
     public function admin_form_element( $id, $value )
     {
-        $field = Ninja_Forms()->form()->get_field( $id );
+        $form_id = get_post_meta( absint( $_GET[ 'post' ] ), '_form_id', true );
+
+        $field = Ninja_Forms()->form( $form_id )->get_field( $id );
 
         $list = '';
         foreach( $field->get_setting( 'options' ) as $option ){
-            $checked = ( in_array( $option[ 'value' ], $value ) ) ? "checked" : '';
+            $checked = '';
+            if( is_array( $value ) && in_array( $option[ 'value' ], $value ) ) $checked = "checked";
             $list .= "<li><label><input type='checkbox' value='{$option[ 'value' ]}' name='fields[$id][]' $checked> {$option[ 'label' ]}</label></li>";
         }
 
-        return "<ul>$list</ul>";
+        return "<input type='hidden' name='fields[$id]' value='0' ><ul>$list</ul>";
+    }
+
+    public function get_calc_value( $value, $field )
+    {
+        $selected = explode( ',', $value );
+        $value = 0;
+        if( isset( $field[ 'options' ] ) ) {
+            foreach ($field['options'] as $option ) {
+                if( ! isset( $option[ 'value' ] ) || ! in_array( $option[ 'value' ], $selected )  || ! isset( $option[ 'calc' ] ) ) continue;
+                $value +=  $option[ 'calc' ];
+            }
+        }
+        return $value;
     }
 }

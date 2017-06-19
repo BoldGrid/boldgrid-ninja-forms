@@ -41,6 +41,9 @@
         left: 40px;
     }
 }
+.nf-add-new.disabled {
+    display: none;
+}
 .ninja-forms-app {
     &.folded {
         .nf-add-new {

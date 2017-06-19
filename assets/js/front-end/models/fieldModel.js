@@ -43,23 +43,9 @@ define( ['models/fieldErrorCollection'], function( fieldErrorCollection ) {
 			this.listenTo( nfRadio.channel( 'form-' + this.get( 'formID' ) ), 'loaded', this.formLoaded );
 		
 			/*
-			 * Before we submit our form, we need to validate each field.
+			 * Before we submit our form, send out a message so that this field can be modified if necessary.
 			 */
 			this.listenTo( nfRadio.channel( 'form-' + this.get( 'formID' ) ), 'before:submit', this.beforeSubmit );
-		},
-
-		resetModel: function() {
-			/*
-			 * Trigger an init event on two channels:
-			 * 
-			 * fields
-			 * field-type
-			 *
-			 * This lets specific field types modify model attributes before anything uses them.
-			 */ 
-			// nfRadio.channel( 'fields' ).trigger( 'init:model', this );
-			// nfRadio.channel( this.get( 'type' ) ).trigger( 'init:model', this );
-			// nfRadio.channel( 'fields-' + this.get( 'type' ) ).trigger( 'init:model', this );
 		},
 
 		changeModel: function() {
@@ -88,7 +74,6 @@ define( ['models/fieldErrorCollection'], function( fieldErrorCollection ) {
 		},
 
 		beforeSubmit: function( formModel ) {
-			nfRadio.channel( 'submit' ).trigger( 'validate:field', this );
 			nfRadio.channel( this.get( 'type' ) ).trigger( 'before:submit', this );
 			nfRadio.channel( 'fields' ).trigger( 'before:submit', this );
 		}

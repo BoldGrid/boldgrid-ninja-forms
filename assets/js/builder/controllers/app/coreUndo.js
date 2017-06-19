@@ -50,8 +50,10 @@ define( [], function() {
 			var objectModel = change.get( 'model' );
 			var collection = change.get( 'data' ).collection;
 
-			delete collection.newIDs[ objectModel.get( 'id' ) ];
-			
+			if ( 'undefined' != typeof collection.newIDs ) {
+				delete collection.newIDs[ objectModel.get( 'id' ) ];
+			}
+						
 			if ( ! undoAll ) {
 				var changeCollection = nfRadio.channel( 'changes' ).request( 'get:collection' );
 				var results = changeCollection.where( { model: objectModel } );
@@ -88,7 +90,7 @@ define( [], function() {
 					if ( model !== change ) {
 						changeCollection.remove( model );
 					}
-				} );				
+				} );
 			}
 
 			objectCollection.remove( objectModel );

@@ -5,6 +5,8 @@ define([], function() {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
 			this.listenTo( nfRadio.channel( 'form' ), 'render:view', this.initHelpText );
+
+			nfRadio.channel( 'form' ).reply( 'init:help', this.initHelpText );
 		},
 
 		initHelpText: function( view ) {

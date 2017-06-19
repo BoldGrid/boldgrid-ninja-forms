@@ -74,7 +74,7 @@ return apply_filters( 'ninja_forms_from_restriction_settings', array(
                 'label' => __( 'Limit Reached Message', 'ninja-forms' ),
                 'width' => 'full',
                 'group' => 'primary',
-                'value' => '',
+                'value' => __( 'The Form has reached it\'s submission limit.', 'ninja-forms' )
 
                 //TODO: Add following text below the WYSIWYG.
                 //Please enter a message that you want displayed when this form has reached its submission limit and will not

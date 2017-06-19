@@ -1,7 +1,7 @@
 define( [], function() {
     var view = Marionette.ItemView.extend({
         tagName: 'nf-section',
-        template: '#nf-tmpl-field-input-limit',
+        template: '#tmpl-nf-field-input-limit',
 
         initialize: function() {
         	this.listenTo( nfRadio.channel( 'field-' + this.model.get( 'id' ) ), 'keyup:field', this.updateCount );
@@ -16,7 +16,7 @@ define( [], function() {
             var wordCount = words.length;
             var charCount = value.length;
 
-            if ( 'char' == this.model.get( 'input_limit_type' ) ) {
+            if ( 'characters' == this.model.get( 'input_limit_type' ) ) {
                 jQuery( el ).attr( 'maxlength', this.model.get( 'input_limit' ) );
                 this.count = this.model.get( 'input_limit' ) - charCount;
             } else {

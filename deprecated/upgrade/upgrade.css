@@ -2,7 +2,8 @@
     display: none;
 }
 
-html {
+html,
+body {
     background: #fff;
 }
 h1 {
@@ -22,6 +23,9 @@ ol {
 }
 hr {
     margin: 50px 20px;
+}
+img {
+    width: 100%;
 }
 
 table {
@@ -124,7 +128,8 @@ ol .dashicons {
 
 .nf-upgrade-button {
     color: white;
-    background-color: green;
+    background-color: #2BAAE7;
+    cursor: pointer;
     padding: 10px 20px;
     height: auto;
     display: block;
@@ -134,7 +139,7 @@ ol .dashicons {
 }
 .nf-upgrade-button:hover,
 .nf-upgrade-button:active {
-    color: green;
-    border-color: green;
+    color: #2BAAE7;
+    border-color: #2BAAE7;
     background-color: white;
 }

@@ -9,7 +9,7 @@
 define( ['views/app/drawer/contentEmpty'], function( drawerEmptyView ) {
 
 	var view = Marionette.LayoutView.extend( {
-		template: '#nf-tmpl-drawer',
+		template: '#tmpl-nf-drawer',
 
 		regions: {
 			header: '#nf-drawer-header',
@@ -26,9 +26,7 @@ define( ['views/app/drawer/contentEmpty'], function( drawerEmptyView ) {
 		onShow: function() {
 			if ( ! nfRadio.channel( 'app' ).request( 'is:mobile' ) ) {
 				jQuery( this.el ).parent().perfectScrollbar();
-				// jQuery( this.el ).parent().fakeScroll();
 			}
-		    // jQuery( this.el ).parent().disableSelection();
 		},
 
 		loadContent: function( drawerID, data ) {

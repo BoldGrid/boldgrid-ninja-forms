@@ -39,7 +39,7 @@ class NF_Download_All_Subs extends NF_Step_Processing {
 			wp_die( __( 'Invalid form id', 'ninja-forms' ) );
 		}
 
-		$this->args[ 'filename' ] = wp_kses( $this->args[ 'filename' ] );
+		$this->args[ 'filename' ] = wp_kses_post( $this->args[ 'filename' ] );
 
 		$exported_subs = get_user_option( get_current_user_id(), 'nf_download_all_subs_ids' );
 		if ( ! is_array( $exported_subs ) ) {

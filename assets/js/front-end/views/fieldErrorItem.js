@@ -1,7 +1,7 @@
 define( [], function() {
 	var view = Marionette.ItemView.extend({
 		tagName: 'nf-section',
-		template: '#nf-tmpl-field-error',
+		template: '#tmpl-nf-field-error',
 
 		onRender: function() {
 			this.$el = this.$el.children();

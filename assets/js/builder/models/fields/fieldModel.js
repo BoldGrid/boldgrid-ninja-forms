@@ -11,10 +11,13 @@ define( [], function() {
 		defaults: {
 			objectType: 'Field',
 			objectDomain: 'fields',
-			editActive: false
+			editActive: false,
+			order: 999
 		},
 
 		initialize: function() {
+			if ( 'undefined' == typeof this.get( 'type' ) ) return;
+
 			// Listen for model attribute changes
 			this.on( 'change', this.changeSetting, this );
 
@@ -23,13 +26,19 @@ define( [], function() {
 			var parentType = fieldType.get( 'parentType' );
 
 			// Loop through our field type "settingDefaults" and add any default settings.
-			var that = this;
 			_.each( fieldType.get( 'settingDefaults' ), function( val, key ) {
-				if ( 'undefined' == typeof that.get( key ) ) {
-					that.set( key, val, { silent: true } );
+				if ( 'undefined' == typeof this.get( key ) ) {
+					this.set( key, val, { silent: true } );
 				}
-			} );
-			
+			}, this );
+
+			/*
+			 * If our field type is a saved field, set our field type to the actual field type
+			 */
+			if ( 'saved' == fieldType.get( 'section' ) ) {
+				this.set( 'type', fieldType.get( 'type' ) );
+			}
+
 			/*
 			 * Trigger an init event on three channels:
 			 * 

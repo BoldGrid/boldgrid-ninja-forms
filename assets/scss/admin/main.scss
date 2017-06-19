@@ -21,8 +21,10 @@
 #nf-main-content,
 #nf-main-header {
     margin: 0 auto;
-    max-width: 800px;
+    max-width: 860px;
     user-select: none;
+    padding: 0 80px;
+    position: relative;
 }
 #nf-main-header {
     //padding: 0 0 20px;
@@ -41,4 +43,34 @@
 
 #the-list tr.flagged th:first-child {
     border-left: 5px solid yellow;
+}
+
+#nf-main-gutter-left,
+#nf-main-gutter-right {
+    //background: red;
+    position: absolute;
+    top: 0;
+    width: 80px;
+    height: 450px;
+    .fa-chevron-circle-left,
+    .fa-chevron-circle-right,
+    .fa-plus-circle {
+        color: #eee;
+        font-size: 86px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        &:hover {
+            color: $cta_color;
+            cursor: pointer;
+        }
+    }
+}
+#nf-main-gutter-left {
+    left: 0;
+    padding-left: 6px;
+}
+#nf-main-gutter-right {
+    right: 0;
+    padding-right: 6px;
 }

@@ -7,58 +7,58 @@
 .nf-field-description {
   font-size: 14px; }
 
-.nf-fields {
+.nf-form-content {
   padding: 5px;
   max-width: 1000px;
   margin: 0 auto; }
-  .nf-fields label {
+  .nf-form-content label {
     font-size: 18px;
     line-height: 20px; }
-  .nf-fields .ninja-forms-field,
-  .nf-fields .listselect-wrap .nf-field-element div {
+  .nf-form-content .ninja-forms-field,
+  .nf-form-content .listselect-wrap .nf-field-element div {
     font-size: 16px;
     margin: 0;
     padding: 12px; }
-  .nf-fields input.ninja-forms-field,
-  .nf-fields select.ninja-forms-field,
-  .nf-fields .listselect-wrap .nf-field-element div {
+  .nf-form-content input.ninja-forms-field,
+  .nf-form-content select.ninja-forms-field,
+  .nf-form-content .listselect-wrap .nf-field-element div {
     height: 50px; }
-  .nf-fields textarea.ninja-forms-field {
+  .nf-form-content textarea.ninja-forms-field {
     height: 200px; }
-  .nf-fields hr.ninja-forms-field {
+  .nf-form-content hr.ninja-forms-field {
     padding: 0; }
-  .nf-fields input[type="radio"].ninja-forms-field,
-  .nf-fields input[type="checkbox"].ninja-forms-field {
+  .nf-form-content input[type="radio"].ninja-forms-field,
+  .nf-form-content input[type="checkbox"].ninja-forms-field {
     height: auto; }
-  .nf-fields .listradio-wrap li,
-  .nf-fields .listcheckbox-wrap li {
+  .nf-form-content .listradio-wrap li,
+  .nf-form-content .listcheckbox-wrap li {
     margin-bottom: 12px !important;
     line-height: 0; }
-  .nf-fields .nf-product-field span {
+  .nf-form-content .nf-product-field span {
     padding-right: 16px; }
-  .nf-fields .nf-product-field .nf-field-qty {
+  .nf-form-content .nf-product-field .nf-field-qty {
     font-size: 16px;
     padding: 5px;
     width: 80px !important; }
-  .nf-fields .nf-static {
+  .nf-form-content .nf-static {
     background: transparent;
     border: 0;
     font-weight: bold;
     padding: 0; }
-  .nf-fields .label-above .nf-field-label,
-  .nf-fields .label-below .nf-field-label,
-  .nf-fields .label-hidden .nf-field-label {
+  .nf-form-content .label-above .nf-field-label,
+  .nf-form-content .label-below .nf-field-label,
+  .nf-form-content .label-hidden .nf-field-label {
     margin-bottom: 10px;
     padding: 0; }
-  .nf-fields .label-below .nf-field-label {
+  .nf-form-content .label-below .nf-field-label {
     margin-bottom: 0;
     margin-top: 10px; }
-  .nf-fields .label-right .nf-field-label {
+  .nf-form-content .label-right .nf-field-label {
     margin: 0; }
-  .nf-fields .label-right > input[type=radio],
-  .nf-fields .label-right input[type=checkbox] {
+  .nf-form-content .label-right > input[type=radio],
+  .nf-form-content .label-right input[type=checkbox] {
     margin-right: 1%; }
-  .nf-fields .label-right ul {
+  .nf-form-content .label-right ul {
     margin-right: 1%; }
 
 /* Column Classes

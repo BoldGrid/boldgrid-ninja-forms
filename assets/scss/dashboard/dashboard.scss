@@ -1,0 +1,313 @@
+html {
+  overflow: auto!important; /* Override normalize.scss */
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.ninja-forms-app {
+
+}
+
+a {
+  color: #1EA9EA;
+  text-decoration: none;
+  outline: none !important;
+  border: 0;
+}
+
+#wpwrap,
+#wpcontent {
+  background-color: #fff;
+}
+
+#wpcontent {
+  padding: 0;
+
+  .wrap {
+    margin: 0;
+  }
+}
+
+/** Hide anything that isn't our page wrap, ie Admin Notices */
+#wpbody-content > div:not(.wrap) {
+  display: none;
+}
+
+@mixin wrap {
+  width: 100%;
+  max-width: 50rem;
+  margin: auto;
+}
+
+#ninja-forms-dashboard {
+
+  box-sizing: border-box;
+
+  .nf-widget {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+
+  header {
+
+    &.topbar {
+      background-color: #EBEDEE;
+    }
+
+    .app-title {
+      @include wrap;
+      background-image: url("../img/nf-logo-dashboard.png");
+      background-size: 315px 48px;
+      background-position: left bottom;
+      background-repeat: no-repeat;
+      height: 52px;
+      margin-bottom: 40px;
+      //padding: 10px;
+      strong {
+        display: block;
+        text-indent: -9999px;
+      }
+    }
+  }
+
+  nav {
+    @include wrap;
+    margin-bottom: 40px;
+
+    ul {
+      display: flex;
+      margin: 0;
+
+      li {
+
+        a {
+          color: #424242;
+          cursor: pointer;
+          font-size: 16px;
+          margin: 0 16px 10px 16px;
+          margin-bottom: 10px;
+          padding: 16px 0 8px;
+
+          &.active {
+            border-bottom: 2px solid #424242;
+          }
+        }
+      }
+    }
+  }
+
+
+  main {
+    @include wrap;
+  }
+
+  .form-row-actions {
+
+    display: none;
+
+    li {
+      font-size: 12px;
+    }
+
+  }
+  .nf-table-display {
+
+    td:nth-child(1) {
+      width: 100%;
+    }
+
+    td:nth-child(2),
+    td:nth-child(3) {
+      width: 250px;
+      white-space:nowrap;
+    }
+
+    .title {
+      //white-space: normal;
+    }
+
+  }
+
+  tr.show-actions {
+
+    .title {
+      display: block;
+      margin-bottom: 30px;
+    }
+
+    .form-row-actions {
+
+      display: flex;
+      background: #ECEDEE;
+      position: absolute;
+      padding-top: 6px;
+      bottom: 0;
+      z-index: 1;
+      margin: 0;
+
+      li {
+        padding: 0 10px;
+      }
+
+    }
+
+  }
+
+  .nf-search {
+
+    border-bottom: 1px solid #ECEDEE;
+
+    &::before {
+      top: 16px;
+    }
+
+    input[type=search] {
+      width: auto;
+    }
+
+  }
+
+  .nf-item-controls .nf-item-control a {
+    margin-left: 20px;
+    width: 24px;
+    cursor: pointer;
+  }
+}
+
+/*
+Notices
+---------------------------------------------*/
+
+@import 'notices/oauth';
+
+/*
+Sections
+---------------------------------------------*/
+
+@import 'sections/widgets';
+@import 'sections/apps';
+@import 'sections/memberships';
+
+/*
+Widgets
+---------------------------------------------*/
+
+@import 'widgets/forms';
+
+/*
+jBox
+---------------------------------------------*/
+
+.jBox-Modal {
+
+    background-color: white;
+
+    .jBox-title {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 150%;
+        font-weight: bold;
+        text-align: center;
+        width: 100%;
+    }
+    .jBox-content {
+        padding: 10px;
+        width: 100%;
+    }
+}
+
+/*
+Loading Spinner
+---------------------------------------------*/
+
+.nf-loading-spinner {
+  width: 40px;
+  height: 40px;
+  margin: 15px auto;
+  background-color: rgba(208,208,208,.5);
+
+  border-radius: 100%;
+  animation: nf-scaleout 1.0s infinite ease-in-out;
+}
+
+@-webkit-keyframes nf-scaleout {
+  0% { transform: scale(0) }
+  100% {
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes nf-scaleout {
+  0% {
+    transform: scale(0);
+  } 100% {
+      transform: scale(1.0);
+      opacity: 0;
+    }
+}
+
+.apps-container {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
+  padding: 10px;
+
+  .nf-box {
+      background: #fff;
+      flex-basis: 48%;
+  }
+
+  .nf-box-inside {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+  }
+
+  .nf-extend {
+      float: left;
+      margin: 0 0 20px 0;
+      width: 300px;
+      position: relative;
+  }
+  .nf-extend img {
+      margin-bottom: 10px;
+      max-width: 100%;
+      height: auto;
+  }
+
+  .nf-extend h2 {
+      white-space: nowrap;
+      overflow: hidden;
+  }
+
+  .nf-extend-content p {
+      min-height: 60px;
+  }
+
+  .nf-extend-buttons {
+
+    &::after {
+
+      clear:        both;
+      content:      "";
+      display:      block;
+
+    }
+
+  }
+
+  .nf-extend .nf-button {
+      float: right;
+  }
+
+  .nf-extend .nf-doc-button {
+      float: left;
+  }
+
+}
+

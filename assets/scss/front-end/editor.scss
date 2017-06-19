@@ -62,6 +62,7 @@
       }
       .dropdown-toggle {
         position: relative;
+        display: inline-block;
         top: 0;
           &::after {
             content: "";

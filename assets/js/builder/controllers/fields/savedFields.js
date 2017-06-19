@@ -1,5 +1,5 @@
 /**
- * If we add a saved field to our form and then update it, set the "isSaved" flag to false.
+ * If we add a saved field to our form and then update it, set the "saved" flag to false.
  * 
  * @package Ninja Forms builder
  * @subpackage Fields
@@ -11,7 +11,7 @@ define( [], function() {
 		ignoreAttributes: [
 			'editActive',
 			'order',
-			'isSaved',
+			'saved',
 			'jBox'
 		],
 
@@ -22,7 +22,7 @@ define( [], function() {
 		},
 
 		updateField: function( dataModel ) {
-			if ( dataModel.get( 'isSaved' ) ) {
+			if ( dataModel.get( 'saved' ) ) {
 				
 				var modified = false;
 				var changedAttributes = _.keys( dataModel.changedAttributes() );
@@ -34,7 +34,7 @@ define( [], function() {
 				} );
 				
 				if ( modified ) {
-					dataModel.set( 'isSaved', false );
+					dataModel.set( 'saved', false );
 				}
 			}
 		},
@@ -43,7 +43,7 @@ define( [], function() {
 			var modelClone = nfRadio.channel( 'app' ).request( 'clone:modelDeep', dataModel );
 
 			var fieldData = modelClone.attributes;
-			fieldData.isSaved = true;
+			fieldData.saved = true;
 
 			delete fieldData.jBox;
 			delete fieldData.editActive;
@@ -80,7 +80,7 @@ define( [], function() {
 				dataModel.set( 'addSavedLoading', false );
 				dataModel.unset( 'addSavedLoading', { silent: true } );
 				dataModel.get( 'jBox' ).close();
-				// dataModel.set( 'isSaved', true );
+				// dataModel.set( 'saved', true );
 
 				nfRadio.channel( 'notices' ).request( 'add', 'addSaved', 'Saved Field Added' );
 			} );

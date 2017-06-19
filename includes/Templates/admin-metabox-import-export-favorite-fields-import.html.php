@@ -14,7 +14,7 @@
             </tr>
             <tr id="row_nf_import_fields_submit">
                 <th scope="row">
-                    <label for="nf_import_fields_submit">Import Fields</label>
+                    <label for="nf_import_fields_submit"><?php _e( 'Import Fields', 'ninja-forms' ); ?></label>
                 </th>
                 <td>
                     <input type="submit" id="nf_import_fields_submit" class="button-secondary" value="<?php echo __( 'Import Fields', 'ninja-forms' ) ;?>">

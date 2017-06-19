@@ -21,7 +21,7 @@ class NF_Fields_Shipping extends NF_Abstracts_Input
 
     protected $_settings =  array( 'shipping_type', 'shipping_cost', 'shipping_options' );
 
-    protected $_settings_exclude = array( 'input_limit_set' );
+    protected $_settings_exclude = array( 'input_limit_set', 'disable_input', 'required' );
 
     public function __construct()
     {
@@ -83,7 +83,7 @@ class NF_Fields_Shipping extends NF_Abstracts_Input
                     break;
             }
         }
-
+        $value = preg_replace ('/[^\d,\.]/', '', $value );
         return $value;
     }
 }

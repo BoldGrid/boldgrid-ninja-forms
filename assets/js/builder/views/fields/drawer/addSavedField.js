@@ -1,7 +1,7 @@
 define( [], function() {
 	var view = Marionette.ItemView.extend({
 		tagName: 'div',
-		template: '#nf-tmpl-add-saved-field',
+		template: '#tmpl-nf-add-saved-field',
 
 		initialize: function() {
 			this.model.on( 'change:addSavedLoading', this.renderAddButton, this );
@@ -13,9 +13,9 @@ define( [], function() {
 
 		renderAddButton: function() {
 			if ( this.model.get( 'addSavedLoading' ) ) {
-				var button = Marionette.TemplateCache.get( '#nf-tmpl-add-saved-field-loading' );
+				var button = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-add-saved-field-loading' );
 			} else {
-				var button = Marionette.TemplateCache.get( '#nf-tmpl-add-saved-field-button' );
+				var button = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-add-saved-field-button' );
 			}
 			jQuery( this.el ).find( '.add-button' ).html( button( this ) );
 		},

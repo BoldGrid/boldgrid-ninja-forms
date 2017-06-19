@@ -30,10 +30,12 @@ final class NF_Database_Models_Submission
 
         if( $this->_id ){
             $sub = get_post( $this->_id );
-            $this->_status = $sub->post_status;
-            $this->_user_id = $sub->post_author;
-            $this->_sub_date = $sub->post_date;
-            $this->_mod_date = $sub->post_modified;
+            if ($sub) {
+                $this->_status = $sub->post_status;
+                $this->_user_id = $sub->post_author;
+                $this->_sub_date = $sub->post_date;
+                $this->_mod_date = $sub->post_modified;
+            }
         }
 
         if( $this->_id && ! $this->_form_id ){
@@ -217,8 +219,9 @@ final class NF_Database_Models_Submission
      * @param array $where
      * @return array
      */
-    public function find( $form_id, array $where = array() )
+    public function find( $form_id, array $where = array(), array $ids = array() )
     {
+
         $this->_form_id = $form_id;
 
         $args = array(
@@ -226,6 +229,10 @@ final class NF_Database_Models_Submission
             'posts_per_page' => -1,
             'meta_query' => $this->format_meta_query( $where )
         );
+
+        if ( ! empty ( $ids ) ) {
+            $args[ 'post__in' ] = $ids;
+        }
 
         $subs = get_posts( $args );
 
@@ -283,7 +290,6 @@ final class NF_Database_Models_Submission
     {
         $date_format = Ninja_Forms()->get_setting( 'date_format' );
 
-
         /*
          * Labels
          */
@@ -298,36 +304,50 @@ final class NF_Database_Models_Submission
 
         $fields = Ninja_Forms()->form( $form_id )->get_fields();
 
-        $hidden_field_types = apply_filters( 'nf_sub_hidden_field_types', array() );
-
-        foreach( $fields as $field ){
-
-            if( in_array( $field->get_setting( 'type' ), $hidden_field_types ) ) continue;
-
-            $field_labels[ $field->get_id() ] = $field->get_setting( 'label' );
+        /*
+         * If we are using an add-on that filters our field order, we don't want to call sort again.
+         *
+         * TODO: This is probably not the most effecient way to handle this. It should be re-thought.
+         */
+        if ( ! has_filter( 'ninja_forms_get_fields_sorted' ) ) {
+            uasort( $fields, array( 'NF_Database_Models_Submission', 'sort_fields' ) );
         }
 
+        $hidden_field_types = apply_filters( 'nf_sub_hidden_field_types', array() );
 
         /*
          * Submissions
          */
 
-        $value_array = array();
-
-        $subs = Ninja_Forms()->form( $form_id )->get_subs();
+        $subs = Ninja_Forms()->form( $form_id )->get_subs( array(), FALSE, $sub_ids );
 
         foreach( $subs as $sub ){
-
-            if( ! in_array( $sub->get_id(), $sub_ids ) ) continue;
 
             $value[ '_seq_num' ] = $sub->get_seq_num();
             $value[ '_date_submitted' ] = $sub->get_sub_date( $date_format );
 
-            foreach( $field_labels as $field_id => $label ){
+            foreach ($fields as $field_id => $field) {
 
-                if( ! is_int( $field_id ) ) continue;
+              if (!is_int($field_id)) continue;
+                if( in_array( $field->get_setting( 'type' ), $hidden_field_types ) ) continue;
 
-                $value[ $field_id ] = $sub->get_field_value( $field_id );
+                if ( $field->get_setting( 'admin_label' ) ) {
+                    $field_labels[ $field->get_id() ] = $field->get_setting( 'admin_label' );
+                } else {
+                    $field_labels[ $field->get_id() ] = $field->get_setting( 'label' );
+                }
+
+                $field_value = maybe_unserialize( $sub->get_field_value( $field_id ) );
+
+                $field_value = apply_filters('nf_subs_export_pre_value', $field_value, $field_id);
+                $field_value = apply_filters('ninja_forms_subs_export_pre_value', $field_value, $field_id, $form_id);
+                $field_value = apply_filters( 'ninja_forms_subs_export_field_value_' . $field->get_setting( 'type' ), $field_value );
+
+                if ( is_array($field_value ) ) {
+                    $field_value = implode( ',', $field_value );
+                }
+
+                $value[ $field_id ] = $field_value;
             }
 
             $value_array[] = $value;
@@ -340,6 +360,9 @@ final class NF_Database_Models_Submission
 
         $csv_array[ 0 ][] = $field_labels;
         $csv_array[ 1 ][] = $value_array;
+        
+        // Get any extra data from our other plugins...
+        $csv_array = apply_filters( 'nf_subs_csv_extra_values', $csv_array, $subs, $form_id );
 
         $today = date( $date_format, current_time( 'timestamp' ) );
         $filename = apply_filters( 'nf_subs_csv_filename', 'nf_subs_' . $today );
@@ -463,6 +486,14 @@ final class NF_Database_Models_Submission
         $field_id = $wpdb->get_var( "SELECT id FROM {$wpdb->prefix}nf3_fields WHERE `key` = '{$field_key}' AND `parent_id` = {$this->_form_id}" );
 
         return $field_id;
+    }
+
+    public static function sort_fields( $a, $b )
+    {
+        if ( $a->get_setting( 'order' ) == $b->get_setting( 'order' ) ) {
+            return 0;
+        }
+        return ( $a->get_setting( 'order' ) < $b->get_setting( 'order' ) ) ? -1 : 1;
     }
 
 

@@ -1,7 +1,6 @@
 define( [], function() {
 	var radioChannel = nfRadio.channel( 'fields' );
 	var errorID = 'confirm-mismatch';
-	var errorMsg = 'These fields must match!';
 
 	var controller = Marionette.Object.extend( {
 
@@ -44,7 +43,9 @@ define( [], function() {
 			if ( '' == confirmModel.get( 'value' ) || confirmModel.get( 'value' ) == targetModel.get( 'value' ) ) {
 				nfRadio.channel( 'fields' ).request( 'remove:error', confirmID, errorID );
 			} else {
-				nfRadio.channel( 'fields' ).request( 'add:error', confirmID, errorID, errorMsg );
+				var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', confirmID );
+				var formModel  = nfRadio.channel( 'app'    ).request( 'get:form',  fieldModel.get( 'formID' ) );
+				nfRadio.channel( 'fields' ).request( 'add:error', confirmID, errorID, formModel.get( 'settings' ).confirmFieldErrorMsg );
 			}
 		},
 		
@@ -70,7 +71,9 @@ define( [], function() {
 				} else if ( currentValue == compareValue ) {
 					nfRadio.channel( 'fields' ).request( 'remove:error', confirmID, errorID );
 				} else {
-					nfRadio.channel( 'fields' ).request( 'add:error', confirmID, errorID, errorMsg );
+					var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', confirmID );
+					var formModel  = nfRadio.channel( 'app'    ).request( 'get:form',  fieldModel.get( 'formID' ) );
+					nfRadio.channel( 'fields' ).request( 'add:error', confirmID, errorID, formModel.get( 'settings' ).confirmFieldErrorMsg );
 				}
 			}
 		}

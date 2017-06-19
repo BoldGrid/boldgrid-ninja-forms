@@ -10,8 +10,8 @@ define( ['models/fields/stagingCollection'], function( stagingCollection ) {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
 			// Listen to our field type draggables
-			this.listenTo( nfRadio.channel( 'drawer-addField' ), 'startDrag:type', this.addActiveClass );
-			this.listenTo( nfRadio.channel( 'drawer-addField' ), 'stopDrag:type', this.removeActiveClass );
+			// this.listenTo( nfRadio.channel( 'drawer-addField' ), 'startDrag:type', this.addActiveClass );
+			// this.listenTo( nfRadio.channel( 'drawer-addField' ), 'stopDrag:type', this.removeActiveClass );
 			// Listen to our sortable events
 			this.listenTo( nfRadio.channel( 'drawer-addField' ), 'receive:stagedFields', this.receiveStagedFields );
 			this.listenTo( nfRadio.channel( 'drawer-addField' ), 'over:stagedFields', this.overStagedFields );

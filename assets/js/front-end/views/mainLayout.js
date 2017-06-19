@@ -1,7 +1,7 @@
 define( ['views/beforeForm', 'views/formLayout', 'views/afterForm'], function( BeforeForm, FormLayout, AfterForm ) {
 
 	var view = Marionette.LayoutView.extend({
-		template: '#nf-tmpl-layout',
+		template: '#tmpl-nf-layout',
 
 		regions: {
 			responseMsg: '.nf-response-msg',
@@ -19,12 +19,16 @@ define( ['views/beforeForm', 'views/formLayout', 'views/afterForm'], function( B
 			this.beforeForm.show( new BeforeForm( { model: this.model } ) );
 			this.formLayout.show( new FormLayout( { model: this.model, fieldCollection: this.options.fieldCollection } ) );
 			this.afterForm.show( new AfterForm( { model: this.model } ) );
+
+			/*
+			 * If we need to hide a form, set the visibility of this form to hidden.
+			 */
+			 this.listenTo( this.model, 'hide', this.hide );
 		},
 
-		onRender: function() {
-			// var formEl = jQuery( '#nf-form-' + this.model.get( 'id' ) );
-			// console.log( formEl );
-		}
+        hide: function() {
+        	jQuery( this.el ).find( '.nf-form-title' ).hide();
+        }
 
 	});
 

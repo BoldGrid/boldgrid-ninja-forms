@@ -81,7 +81,7 @@ function nf_license_settings_no_licenses_notice() {
 		return false;
 	}
 
-	$desc = sprintf( __( 'To activate licenses for Ninja Forms extensions you must first %sinstall and activate%s the chosen extension. License settings will then appear below.', 'ninja-forms' ), '<a target="_blank" href="http://ninjaforms.com/documentation/extension-docs/installing-extensions/">', '</a>' );
+	$desc = sprintf( __( 'To activate licenses for Ninja Forms extensions you must first %sinstall and activate%s the chosen extension. License settings will then appear below.', 'ninja-forms' ), '<a target="_blank" href="https://ninjaforms.com/docs/installation/">', '</a>' );
 	?>
 	<tr id="row_license_key">
 		<td colspan="2"><?php echo $desc; ?></td>

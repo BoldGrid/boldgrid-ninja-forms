@@ -1,23 +1,24 @@
 define( ['views/fieldItem', 'views/beforeField', 'views/afterField'], function( fieldItem, beforeField, afterField ) {
 
     var view = Marionette.LayoutView.extend({
-        tagName: "nf-field",
-        template: "#nf-tmpl-field-layout",
+        tagName: 'nf-field',
 
         regions: {
-            beforeField: ".nf-before-field",
-            field: ".nf-field",
-            afterField: ".nf-after-field",
+            beforeField: '.nf-before-field',
+            field: '.nf-field',
+            afterField: '.nf-after-field',
         },
 
         initialize: function() {
-            this.model.on( 'change:visible', this.render, this );
+            this.listenTo( this.model, 'change:visible', this.render, this );
         },
 
-        onShow: function() {
-            // this.beforeField.show( new beforeField( { model: this.model } ) );
-            // this.field.show( new fieldItem( { model: this.model } ) );
-            // this.afterField.show( new afterField( { model: this.model } ) );
+        getTemplate: function() {
+            if ( this.model.get( 'visible' ) ) {
+                return '#tmpl-nf-field-layout';
+            } else {
+                return '#tmpl-nf-empty';
+            }
         },
 
         onRender: function() {
@@ -25,10 +26,6 @@ define( ['views/fieldItem', 'views/beforeField', 'views/afterField'], function( 
                 this.beforeField.show( new beforeField( { model: this.model } ) );
                 this.field.show( new fieldItem( { model: this.model } ) );
                 this.afterField.show( new afterField( { model: this.model } ) );
-            } else {
-                this.beforeField.empty();
-                this.field.empty();
-                this.afterField.empty();
             }
         },
 

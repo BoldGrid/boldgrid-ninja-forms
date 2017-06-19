@@ -13,6 +13,11 @@ define( [], function() {
 			this.listenTo( nfRadio.channel( 'drawer' ), 'closed', this.updateDB );
 			// Respond to requests to update the database.
 			nfRadio.channel( 'app' ).reply( 'update:db', this.updateDB, this );
+			/*
+			 * Register our default formContent save filter.
+			 * This converts our collection into an array of keys.
+			 */
+			nfRadio.channel( 'formContent' ).request( 'add:saveFilter', this.defaultSaveFilter, 10, this );
 		},
 
 		/**
@@ -51,31 +56,36 @@ define( [], function() {
 			} );
 
 			/*
-			 * The main content of our form is called the fieldContents.
+			 * The main content of our form is called the formContent.
 			 * In this next section, we check to see if any add-ons want to modify that contents before we save.
 			 * If there aren't any filters found, we default to the field collection.
 			 * 
 			 */
-			var fieldContentsData = nfRadio.channel( 'settings' ).request( 'get:setting', 'fieldContentsData' );
-			var fieldContentsSaveDataFilters = nfRadio.channel( 'fieldContents' ).request( 'get:saveFilters' );
 			
-			if ( 0 != fieldContentsSaveDataFilters.length ) {
-				/* 
-				* Get our first filter, this will be the one with the highest priority.
-				*/
-				var sortedArray = _.without( fieldContentsSaveDataFilters, undefined );
-				var callback = _.first( sortedArray );
-				/*
-				 * Set our fieldContentsData to the callback specified in the filter, passing our current fieldContentsData.
-				 */
-				fieldContentsData = callback( fieldContentsData );
-			} else { // Default to our field collection.
-				fieldContentsData = nfRadio.channel( 'fields' ).request( 'get:collection' );
-			}
+			var formContentData = nfRadio.channel( 'settings' ).request( 'get:setting', 'formContentData' );
 			/*
-			 * Update our fieldContentsData form setting.
+			 * As of version 3.0, 'fieldContentsData' has deprecated in favour of 'formContentData'.
+			 * If we don't have this setting, then we check for this deprecated value.
+			 * 
+			 * Set our fieldContentsData to our form setting 'fieldContentsData'
+			 *
+			 * TODO: Remove this backwards compatibility eventually.
 			 */
-			// nfRadio.channel( 'settings' ).request( 'update:setting', 'fieldContentsData', fieldContentsData );
+			if ( ! formContentData ) {
+				formContentData = nfRadio.channel( 'settings' ).request( 'get:setting', 'fieldContentsData' );
+			}
+
+			var formContentSaveDataFilters = nfRadio.channel( 'formContent' ).request( 'get:saveFilters' );
+						
+			/* 
+			* Get our first filter, this will be the one with the highest priority.
+			*/
+			var sortedArray = _.without( formContentSaveDataFilters, undefined );
+			var callback = _.first( sortedArray );
+			/*
+			 * Set our formContentData to the callback specified in the filter, passing our current formContentData.
+			 */
+			formContentData = callback( formContentData );
 			
 			if ( 'publish' == action && formModel.get( 'show_publish_options' ) ) {
 				nfRadio.channel( 'app' ).request( 'open:drawer', 'newForm' );
@@ -89,7 +99,7 @@ define( [], function() {
 
 			// Turn our formData model into an object
 			var data = JSON.parse( JSON.stringify( formData ) );
-			data.settings.fieldContentsData = fieldContentsData;
+			data.settings.formContentData = formContentData;
 			/**
 			 * Prepare fields for submission.
 			 */
@@ -124,6 +134,13 @@ define( [], function() {
 				        delete field[ prop ];
 				    }
 				}
+
+				for( var setting in settings ){
+					if( null === settings[ setting ] ) {
+						delete settings[setting];
+					}
+				}
+
 				// Update our field object.
 				field.settings = settings;
 				field.id = id;
@@ -201,10 +218,14 @@ define( [], function() {
 					}
 				} catch( exception ) {
 					console.log( 'Something went wrong!' );
-					console.log( response );
+					console.log( exception );
 				}
 				
 			} );
+		},
+
+		defaultSaveFilter: function( formContentData ) {
+			return formContentData.pluck( 'key' );
 		}
 
 	});

@@ -11,21 +11,21 @@ final class NF_Database_MockData
     public function saved_fields()
     {
         $field = Ninja_Forms()->form()->field()->get();
-        $field->update_setting( 'label', 'Foo' );
+        $field->update_setting( 'label', __( 'Foo', 'ninja-forms' ) );
         $field->update_setting( 'key', 'foo' );
         $field->update_setting( 'type', 'textbox' );
         $field->update_setting( 'saved', 1 );
         $field->save();
 
         $field = Ninja_Forms()->form()->field()->get();
-        $field->update_setting( 'label', 'Bar' );
+        $field->update_setting( 'label', __( 'Bar', 'ninja-forms' ) );
         $field->update_setting( 'key', 'bar' );
         $field->update_setting( 'type', 'checkbox' );
         $field->update_setting( 'saved', 1 );
         $field->save();
 
         $field = Ninja_Forms()->form()->field()->get();
-        $field->update_setting( 'label', 'Baz' );
+        $field->update_setting( 'label', __( 'Baz', 'ninja-forms' ) );
         $field->update_setting( 'key', 'baz' );
         $field->update_setting( 'type', 'listselect' );
         $field->update_setting( 'saved', 1 );
@@ -39,7 +39,7 @@ final class NF_Database_MockData
          */
 
         $form = Ninja_Forms()->form()->get();
-        $form->update_setting( 'title', 'Blank Forms' );
+        $form->update_setting( 'title', __( 'Blank Forms', 'ninja-forms' ) );
         $form->update_setting( 'default_label_pos', 'above' );
         $form->save();
     }
@@ -51,7 +51,7 @@ final class NF_Database_MockData
          */
 
         $form = Ninja_Forms()->form()->get();
-        $form->update_setting( 'title', 'Contact Me' );
+        $form->update_setting( 'title', __( 'Contact Me', 'ninja-forms' ) );
         $form->update_setting( 'default_label_pos', 'above' );
         $form->save();
 
@@ -63,7 +63,7 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'textbox' )
-            ->update_setting( 'label', 'Name')
+            ->update_setting( 'label', __( 'Name', 'ninja-forms' ) )
             ->update_setting( 'label_pos', 'above' )
             ->update_setting( 'required', 1 )
             ->update_setting( 'order', 1 )
@@ -78,7 +78,7 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'email' )
-            ->update_setting( 'label', 'Email')
+            ->update_setting( 'label', __( 'Email', 'ninja-forms' ) )
             ->update_setting( 'label_pos', 'above' )
             ->update_setting( 'required', 1 )
             ->update_setting( 'order', 2 )
@@ -102,7 +102,7 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'textarea' )
-            ->update_setting( 'label', 'Message')
+            ->update_setting( 'label', __( 'Message', 'ninja-forms' ) )
             ->update_setting( 'label_pos', 'above' )
             ->update_setting( 'required', 1 )
             ->update_setting( 'order', 3 )
@@ -124,21 +124,21 @@ final class NF_Database_MockData
 
         $options = array(
             array(
-                'label' => 'One',
+                'label' => __( 'One', 'ninja-forms' ),
                 'value' => '1',
                 'calc' => 1,
                 'order' => 1,
                 'selected' => 0,
             ),
             array(
-                'label' => 'Two',
+                'label' => __( 'Two', 'ninja-forms' ),
                 'value' => '2',
                 'calc' => 2,
                 'order' => 2,
                 'selected' => 1,
             ),
             array(
-                'label' => 'Three',
+                'label' => __( 'Three', 'ninja-forms' ),
                 'value' => '3',
                 'calc' => 3,
                 'order' => 3,
@@ -149,11 +149,11 @@ final class NF_Database_MockData
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'listradio' )
             ->update_setting( 'label_pos', 'above')
-            ->update_setting( 'label', "James' List")
+            ->update_setting( 'label', __( 'List', 'ninja-forms' ) )
             ->update_setting( 'required', 0)
             ->update_setting( 'options', $options)
             ->update_setting( 'order', 4 )
-            ->update_setting( 'key', 'james_list' )
+            ->update_setting( 'key', 'list' )
             ->update_setting( 'placeholder', '' )
             ->update_setting( 'default', '' )
             ->update_setting( 'wrapper_class', '' )
@@ -162,7 +162,7 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'submit' )
-            ->update_setting( 'label', 'Submit')
+            ->update_setting( 'label', __( 'Submit', 'ninja-forms' ) )
             ->update_setting( 'processing_label', 'Processing' )
             ->update_setting( 'order', 5 )
             ->update_setting( 'key', 'submit' )
@@ -173,9 +173,9 @@ final class NF_Database_MockData
          */
 
         $action = Ninja_Forms()->form( $form_id )->action()->get();
-        $action->update_setting( 'label',  'Mock Success Message Action' )
+        $action->update_setting( 'label', __( 'Mock Success Message Action', 'ninja-forms' ) )
             ->update_setting( 'type', 'successmessage' )
-            ->update_setting( 'message', 'Thank you {field:name} for filling out my form!' )
+            ->update_setting( 'message', __( 'Thank you {field:name} for filling out my form!', 'ninja-forms' ) )
             ->update_setting( 'active', TRUE )
             ->save();
 
@@ -187,11 +187,11 @@ final class NF_Database_MockData
 //            ->save();
 
         $action = Ninja_Forms()->form( $form_id )->action()->get();
-        $action->update_setting( 'label',  'Mock Email Action' )
+        $action->update_setting( 'label',  __( 'Mock Email Action', 'ninja-forms' ) )
             ->update_setting( 'type', 'email' )
             ->update_setting( 'to', 'myformbuildingbringsallthedeveloperstotheyard@wpninjas.com' )
-            ->update_setting( 'subject', 'This is an email action.' )
-            ->update_setting( 'message', 'Hello, Ninja Forms!' )
+            ->update_setting( 'subject', __( 'This is an email action.', 'ninja-forms' ) )
+            ->update_setting( 'message', __( 'Hello, Ninja Forms!', 'ninja-forms' ) )
             ->update_setting( 'active', FALSE )
             ->save();
 
@@ -203,7 +203,7 @@ final class NF_Database_MockData
 //            ->save();
 
         $action = Ninja_Forms()->form( $form_id )->action()->get();
-        $action->update_setting( 'label',  'Mock Save Action' )
+        $action->update_setting( 'label',  __( 'Mock Save Action', 'ninja-forms' ) )
             ->update_setting( 'type', 'save' )
             ->update_setting( 'active', TRUE )
             ->save();
@@ -213,22 +213,22 @@ final class NF_Database_MockData
          */
 
         $sub = Ninja_Forms()->form( $form_id )->sub()->get();
-        $sub->update_field_value( 1, 'Kyle Johnson' )
-            ->update_field_value( 2, 'kyle@wpninjas.com' )
-            ->update_field_value( 3, 'This is a test' )
+        $sub->update_field_value( 1, __( 'Foo Bar', 'ninja-forms' ) )
+            ->update_field_value( 2, __( 'foo@wpninjas.com', 'ninja-forms' ) )
+            ->update_field_value( 3, __( 'This is a test', 'ninja-forms' ) )
             ->update_field_value( 4, '2' )
-            ->update_field_value( 5, 'Kyle Johnson' );
+            ->update_field_value( 5, __( 'Foo Bar', 'ninja-forms' ) );
         $sub->save();
 
         // Delay Execution for different submission dates
         sleep(1);
 
         $sub = Ninja_Forms()->form( $form_id )->sub()->get();
-        $sub->update_field_value( 1, 'John Doe' )
-            ->update_field_value( 2, 'user@gmail.com' )
-            ->update_field_value( 3, 'This is another test.' )
+        $sub->update_field_value( 1, __( 'John Doe', 'ninja-forms' ) )
+            ->update_field_value( 2, __( 'user@gmail.com', 'ninja-forms' ) )
+            ->update_field_value( 3, __( 'This is another test.', 'ninja-forms' ) )
             ->update_field_value( 4, '3' )
-            ->update_field_value( 5, 'John Doe' );
+            ->update_field_value( 5, __( 'John Doe', 'ninja-forms' ) );
         $sub->save();
     }
 
@@ -239,7 +239,7 @@ final class NF_Database_MockData
          */
 
         $form = Ninja_Forms()->form()->get();
-        $form->update_setting( 'title', 'Get Help' );
+        $form->update_setting( 'title', __( 'Get Help', 'ninja-forms' ) );
         $form->update_setting( 'default_label_pos', 'above' );
         $form->save();
 
@@ -252,53 +252,53 @@ final class NF_Database_MockData
         $fields = array(
             array(
                 'type' 			=> 'textbox',
-                'label'			=> 'Name',
+                'label'			=> __( 'Name', 'ninja-forms' ),
                 'label_pos' 	=> 'above',
                 'order'         => 1,
                 'key'           => 'name',
             ),
             array(
                 'type'			=> 'email',
-                'label'			=> 'Email',
+                'label'			=> __( 'Email', 'ninja-forms' ),
                 'label_pos'		=> 'above',
                 'order'         => 2,
                 'key'           => 'email',
             ),
             array(
                 'type' 			=> 'textarea',
-                'label'			=> 'What Can We Help You With?',
+                'label'			=> __( 'What Can We Help You With?', 'ninja-forms' ),
                 'label_pos'		=> 'above',
                 'order'         => 3,
                 'key'           => 'message',
             ),
             array(
                 'type' 			=> 'checkbox',
-                'label'			=> 'Agree?',
+                'label'			=> __( 'Agree?', 'ninja-forms' ),
                 'label_pos'		=> 'right',
                 'order'         => 4,
                 'key'           => 'agree',
             ),
             array(
                 'type' 			=> 'listradio',
-                'label'			=> 'Best Contact Method?',
+                'label'			=> __( 'Best Contact Method?', 'ninja-forms' ),
                 'label_pos'		=> 'above',
                 'options'		=> array(
                     array(
-                        'label'	=> 'Phone',
+                        'label'	=> __( 'Phone', 'ninja-forms' ),
                         'value'	=> 'phone',
                         'calc'  => '',
                         'order' => 1,
                         'selected' => 0,
                     ),
                     array(
-                        'label'	=> 'Email',
+                        'label'	=> __( 'Email', 'ninja-forms' ),
                         'value'	=> 'email',
                         'calc'  => '',
                         'order' => 2,
                         'selected' => 0,
                     ),
                     array(
-                        'label'	=> 'Snail Mail',
+                        'label'	=> __( 'Snail Mail', 'ninja-forms' ),
                         'value'	=> 'snail-mail',
                         'calc'  => '',
                         'order' => 3,
@@ -312,7 +312,7 @@ final class NF_Database_MockData
             ),
             array(
                 'type'			=> 'submit',
-                'label'			=> 'Send',
+                'label'			=> __( 'Send', 'ninja-forms' ),
                 'order'         => 6,
                 'key'           => 'submit',
             )
@@ -329,7 +329,7 @@ final class NF_Database_MockData
          */
 
         $action = Ninja_Forms()->form( $form_id )->action()->get();
-        $action->update_setting( 'label',  'Mock Save Action' )
+        $action->update_setting( 'label',  __( 'Mock Save Action', 'ninja-forms' ) )
             ->update_setting( 'type', 'save' )
             ->save();
     }
@@ -340,7 +340,7 @@ final class NF_Database_MockData
          * FORM
          */
         $form = Ninja_Forms()->form()->get();
-        $form->update_setting( 'title', 'Kitchen Sink' );
+        $form->update_setting( 'title', __( 'Kitchen Sink', 'ninja-forms' ) );
         $form->update_setting( 'default_label_pos', 'above' );
         $form->save();
 
@@ -353,55 +353,55 @@ final class NF_Database_MockData
         $fields = array(
             array(
                 'type'          => 'html',
-                'label'         => 'Textbox',
+                'label'         => __( 'Textbox', 'ninja-forms' ),
                 'key'           => 'textbox',
             ),
             array(
                 'type' 			=> 'textbox',
-                'label'			=> 'Textbox',
+                'label'			=> __( 'Textbox', 'ninja-forms' ),
                 'key'           => 'textbox',
             ),
             array(
                 'type' 			=> 'firstname',
-                'label'			=> 'First Name',
+                'label'			=> __( 'First Name', 'ninja-forms' ),
                 'key'           => 'first_name',
             ),
             array(
                 'type' 			=> 'lastname',
-                'label'			=> 'Last Name',
+                'label'			=> __( 'Last Name', 'ninja-forms' ),
                 'key'           => 'last_name',
             ),
             array(
                 'type' 			=> 'hidden',
-                'label'			=> 'Hidden',
+                'label'			=> __( 'Hidden', 'ninja-forms' ),
                 'label_pos' 	=> 'hidden',
                 'key'           => 'hidden',
             ),
             array(
                 'type' 			=> 'textarea',
-                'label'			=> 'Textarea',
+                'label'			=> __( 'Textarea', 'ninja-forms' ),
                 'key'           => 'textarea',
             ),
             array(
                 'type' 			=> 'listselect',
-                'label'			=> 'Select List',
+                'label'			=> __( 'Select List', 'ninja-forms' ),
                 'options'      => array(
                     array(
-                        'label' => 'Option One',
+                        'label' => __( 'Option One', 'ninja-forms' ),
                         'value' => 1,
                         'calc'  => '',
                         'order' => 1,
                         'selected' => 0,
                     ),
                     array(
-                        'label' => 'Option Two',
+                        'label' => __( 'Option Two', 'ninja-forms' ),
                         'value' => 2,
                         'calc'  => '',
                         'order' => 2,
                         'selected' => 0,
                     ),
                     array(
-                        'label' => 'Option Three',
+                        'label' => __( 'Option Three', 'ninja-forms' ),
                         'value' => 3,
                         'calc'  => '',
                         'order' => 3,
@@ -412,24 +412,24 @@ final class NF_Database_MockData
             ),
             array(
                 'type' 			=> 'listradio',
-                'label'			=> 'Radio List',
+                'label'			=> __( 'Radio List', 'ninja-forms' ),
                 'options'       => array(
                     array(
-                        'label' => 'Option One',
+                        'label' => __( 'Option One', 'ninja-forms' ),
                         'value' => 1,
                         'calc'  => '',
                         'order' => 1,
                         'selected' => 0,
                     ),
                     array(
-                        'label' => 'Option Two',
+                        'label' => __( 'Option Two', 'ninja-forms' ),
                         'value' => 2,
                         'calc'  => '',
                         'order' => 2,
                         'selected' => 0,
                     ),
                     array(
-                        'label' => 'Option Three',
+                        'label' => __( 'Option Three', 'ninja-forms' ),
                         'value' => 3,
                         'calc'  => '',
                         'order' => 3,
@@ -440,7 +440,7 @@ final class NF_Database_MockData
             ),
             array(
                 'type' 			=> 'checkbox',
-                'label'			=> 'Checkbox',
+                'label'			=> __( 'Checkbox', 'ninja-forms' ),
                 'key'           => 'checkbox',
             ),
             // array(
@@ -480,14 +480,14 @@ final class NF_Database_MockData
         }
 
         $submit = Ninja_Forms()->form($form_id)->field()->get();
-        $submit->update_setting( 'label', 'Submit')
+        $submit->update_setting( 'label', __( 'Submit', 'ninja-forms' ) )
                 ->update_setting( 'type', 'submit' )
                 ->update_setting( 'order', $order)
                 ->update_setting( 'key', 'submit' )
                 ->save();
 
         $action = Ninja_Forms()->form( $form_id )->action()->get();
-        $action->update_setting( 'label',  'Mock Save Action' )
+        $action->update_setting( 'label',  __( 'Mock Save Action', 'ninja-forms' ) )
             ->update_setting( 'type', 'save' )
             ->save();
     }
@@ -498,7 +498,7 @@ final class NF_Database_MockData
          * FORM
          */
         $form = Ninja_Forms()->form()->get();
-        $form->update_setting( 'title', 'Bathroom Sink' );
+        $form->update_setting( 'title', __( 'Bathroom Sink', 'ninja-forms' ) );
         $form->update_setting( 'default_label_pos', 'above' );
         $form->save();
 
@@ -518,39 +518,39 @@ final class NF_Database_MockData
             ),
             array(
                 'type' 			=> 'textbox',
-                'label'			=> 'Textbox',
+                'label'			=> __( 'Textbox', 'ninja-forms' ),
                 'key'           => 'textbox',
             ),
             array(
                 'type'          => 'textarea',
-                'label'         => 'Textarea',
+                'label'         => __( 'Textarea', 'ninja-forms' ),
                 'key'           => 'textarea',
             ),
             array(
                 'type'          => 'checkbox',
-                'label'         => 'Checkbox',
+                'label'         => __( 'Checkbox', 'ninja-forms' ),
                 'key'           => 'checkbox',
             ),
             array(
                 'type'          => 'listselect',
-                'label'         => 'Select List',
+                'label'         => __( 'Select List', 'ninja-forms' ),
                 'options'      => array(
                     array(
-                        'label' => 'Option One',
+                        'label' => __( 'Option One', 'ninja-forms' ),
                         'value' => 1,
                         'calc'  => '',
                         'order' => 1,
                         'selected' => 0,
                     ),
                     array(
-                        'label' => 'Option Two',
+                        'label' => __( 'Option Two', 'ninja-forms' ),
                         'value' => 2,
                         'calc'  => '',
                         'order' => 2,
                         'selected' => 0,
                     ),
                     array(
-                        'label' => 'Option Three',
+                        'label' => __( 'Option Three', 'ninja-forms' ),
                         'value' => 3,
                         'calc'  => '',
                         'order' => 3,
@@ -561,24 +561,24 @@ final class NF_Database_MockData
             ),
             array(
                 'type'          => 'listradio',
-                'label'         => 'Radio List',
+                'label'         => __( 'Radio List', 'ninja-forms' ),
                 'options'       => array(
                     array(
-                        'label' => 'Option One',
+                        'label' => __( 'Option One', 'ninja-forms' ),
                         'value' => 1,
                         'calc'  => '',
                         'order' => 1,
                         'selected' => 0,
                     ),
                     array(
-                        'label' => 'Option Two',
+                        'label' => __( 'Option Two', 'ninja-forms' ),
                         'value' => 2,
                         'calc'  => '',
                         'order' => 2,
                         'selected' => 0,
                     ),
                     array(
-                        'label' => 'Option Three',
+                        'label' => __( 'Option Three', 'ninja-forms' ),
                         'value' => 3,
                         'calc'  => '',
                         'order' => 3,
@@ -589,24 +589,24 @@ final class NF_Database_MockData
             ),
             array(
                 'type'          => 'listcheckbox',
-                'label'         => 'Checkbox List',
+                'label'         => __( 'Checkbox List', 'ninja-forms' ),
                 'options'       => array(
                     array(
-                        'label' => 'Option One',
+                        'label' => __( 'Option One', 'ninja-forms' ),
                         'value' => 1,
                         'calc'  => '',
                         'order' => 1,
                         'selected' => 0,
                     ),
                     array(
-                        'label' => 'Option Two',
+                        'label' => __( 'Option Two', 'ninja-forms' ),
                         'value' => 2,
                         'calc'  => '',
                         'order' => 2,
                         'selected' => 0,
                     ),
                     array(
-                        'label' => 'Option Three',
+                        'label' => __( 'Option Three', 'ninja-forms' ),
                         'value' => 3,
                         'calc'  => '',
                         'order' => 3,
@@ -617,12 +617,12 @@ final class NF_Database_MockData
             ),
             array(
                 'type'          => 'date',
-                'label'         => 'Date',
+                'label'         => __( 'Date', 'ninja-forms' ),
                 'key'           => 'date',
             ),
             array(
                 'type'          => 'number',
-                'label'         => 'Number',
+                'label'         => __( 'Number', 'ninja-forms' ),
                 'key'           => 'number',
                 'num_min'       => '0',
                 'num_max'       => '100',
@@ -630,7 +630,7 @@ final class NF_Database_MockData
             ),
             array(
                 'type'          => 'hidden',
-                'label'         => 'Hidden',
+                'label'         => __( 'Hidden', 'ninja-forms' ),
                 'label_pos'     => 'hidden',
                 'key'           => 'hidden',
             ),
@@ -645,36 +645,37 @@ final class NF_Database_MockData
                 'label'         => '',
                 'label_pos'     => 'hidden',
                 'key'           => 'html_2',
-                'default'       => '<div style="background:#DBF0FD; padding: 15px;"><h3>User Information Fields</h3><div>These are all the fields in the User Information section.</div></div>',
+                'default'       => '<div style="background:#DBF0FD; padding: 15px;"><h3>' . __( 'User Information Fields', 'ninja-forms' ) .
+                                    '</h3><div>' . __( 'These are all the fields in the User Information section.', 'ninja-forms' ) . '</div></div>',
             ),
             array(
                 'type' 			=> 'firstname',
-                'label'			=> 'First Name',
+                'label'			=> __( 'First Name', 'ninja-forms' ),
                 'key'           => 'first_name',
             ),
             array(
                 'type' 			=> 'lastname',
-                'label'			=> 'Last Name',
+                'label'			=> __( 'Last Name', 'ninja-forms' ),
                 'key'           => 'last_name',
             ),
             array(
                 'type'          => 'email',
-                'label'         => 'Email',
+                'label'         => __( 'Email', 'ninja-forms' ),
                 'key'           => 'email',
             ),
             array(
                 'type'          => 'phone',
-                'label'         => 'Phone',
+                'label'         => __( 'Phone', 'ninja-forms' ),
                 'key'           => 'phone',
             ),
             array(
                 'type'          => 'address',
-                'label'         => 'Address',
+                'label'         => __( 'Address', 'ninja-forms' ),
                 'key'           => 'address',
             ),
             array(
                 'type'          => 'city',
-                'label'         => 'City',
+                'label'         => __( 'City', 'ninja-forms' ),
                 'key'           => 'city',
             ),
             // array(
@@ -684,7 +685,7 @@ final class NF_Database_MockData
             // ),
             array(
                 'type'          => 'zip',
-                'label'         => 'Zip Code',
+                'label'         => __( 'Zip Code', 'ninja-forms' ),
                 'key'           => 'zip',
             ),
             array(
@@ -692,25 +693,26 @@ final class NF_Database_MockData
                 'label'         => '',
                 'label_pos'     => 'hidden',
                 'key'           => 'html_3',
-                'default'       => '<div style="background:#DBF0FD; padding: 15px;"><h3>Pricing Fields</h3><div>These are all the fields in the Pricing section.</div></div>',
+                'default'       => '<div style="background:#DBF0FD; padding: 15px;"><h3>' . __( "Pricing Fields", "ninja-forms" ) .
+                                    '</h3><div>' . __( "These are all the fields in the Pricing section.", "ninja-forms" ) . '</div></div>',
             ),
             array(
                 'type'                  => 'product',
-                'label'                 => 'Product (quanitity included)',
+                'label'                 => __( 'Product (quanitity included)', 'ninja-forms' ),
                 'key'                   => 'product_qty',
                 'product_use_quantity'  => 1,
                 'product_price'         => '5.00',
             ),
             array(
                 'type'                  => 'product',
-                'label'                 => 'Product (seperate quantity)',
+                'label'                 => __( 'Product (seperate quantity)', 'ninja-forms' ),
                 'key'                   => 'product',
                 'product_use_quantity'  => 0,
                 'product_price'         => '5.00',
             ),
             array(
                 'type'                  => 'quantity',
-                'label'                 => 'Quantity',
+                'label'                 => __( 'Quantity', 'ninja-forms' ),
                 'key'                   => 'quantity',
                 'product_assignment'    => '999',
                 'num_min'               => '0',
@@ -719,38 +721,38 @@ final class NF_Database_MockData
             ),
             array(
                 'type'                  => 'shipping',
-                'label'                 => 'Shipping',
+                'label'                 => __( 'Shipping', 'ninja-forms' ),
                 'key'                   => 'shipping',
                 'shipping_cost'         => '10.00',
             ),
             array(
                 'type'          => 'total',
-                'label'         => 'Total',
+                'label'         => __( 'Total', 'ninja-forms' ),
                 'key'           => 'total',
             ),
             array(
                 'type'          => 'creditcardfullname',
-                'label'         => 'Credit Card Full Name',
+                'label'         => __( 'Credit Card Full Name', 'ninja-forms' ),
                 'key'           => 'creditcardfullname',
             ),
             array(
                 'type'          => 'creditcardnumber',
-                'label'         => 'Credit Card Number',
+                'label'         => __( 'Credit Card Number', 'ninja-forms' ),
                 'key'           => 'creditcardnumber',
             ),
             array(
                 'type'          => 'creditcardcvc',
-                'label'         => 'Credit Card CVV',
+                'label'         => __( 'Credit Card CVV', 'ninja-forms' ),
                 'key'           => 'creditcardcvc',
             ),
             array(
                 'type'          => 'creditcardexpiration',
-                'label'         => 'Credit Card Expiration',
+                'label'         => __( 'Credit Card Expiration', 'ninja-forms' ),
                 'key'           => 'creditcardexpiration',
             ),
             array(
                 'type'          => 'creditcardzip',
-                'label'         => 'Credit Card Zip Code',
+                'label'         => __( 'Credit Card Zip Code', 'ninja-forms' ),
                 'key'           => 'creditcardzip',
             ),
             array(
@@ -758,19 +760,20 @@ final class NF_Database_MockData
                 'label'         => '',
                 'label_pos'     => 'hidden',
                 'key'           => 'html_3',
-                'default'       => '<div style="background:#DBF0FD; padding: 15px;"><h3>Miscellaneous Fields</h3><div>These are various special fields.</div></div>',
+                'default'       => '<div style="background:#DBF0FD; padding: 15px;"><h3>' . __( "Miscellaneous Fields", "ninja-forms" ) .
+                                    '</h3><div>' . __( "These are various special fields.", "ninja-forms" ) . '</div></div>',
             ),
             array(
                 'type'          => 'starrating',
-                'label'         => 'Star Rating',
+                'label'         => __( 'Star Rating', 'ninja-forms' ),
                 'key'           => 'starrating',
                 'default'       => '5',
             ),
             array(
                 'type'          => 'spam',
-                'label'         => 'Anti-Spam Question (Answer = answer)',
+                'label'         => __( 'Anti-Spam Question (Answer = answer)', 'ninja-forms' ),
                 'key'           => 'spam',
-                'spam_answer'   => 'answer',
+                'spam_answer'   => __( 'answer', 'ninja-forms' ),
             ),
             array(
                 'type'          => 'hr',
@@ -796,15 +799,15 @@ final class NF_Database_MockData
         }
 
         $submit = Ninja_Forms()->form($form_id)->field()->get();
-        $submit->update_setting( 'label', 'Submit')
+        $submit->update_setting( 'label', __( 'Submit', 'ninja-forms' ) )
             ->update_setting( 'type', 'submit' )
             ->update_setting( 'order', $order)
-            ->update_setting( 'process_label', 'processing' )
+            ->update_setting( 'process_label', __( 'processing', 'ninja-forms' ) )
             ->update_setting( 'key', 'submit' )
             ->save();
 
         $action = Ninja_Forms()->form( $form_id )->action()->get();
-        $action->update_setting( 'label',  'Mock Save Action' )
+        $action->update_setting( 'label',  __( 'Mock Save Action', 'ninja-forms' ) )
             ->update_setting( 'type', 'save' )
             ->save();
     }
@@ -816,7 +819,7 @@ final class NF_Database_MockData
         */
 
         $form = Ninja_Forms()->form()->get();
-        $form->update_setting( 'title', 'Long Form - ' . $num_fields . ' Fields' );
+        $form->update_setting( 'title', __( 'Long Form - ', 'ninja-forms' ) . $num_fields . __( ' Fields', 'ninja-forms' ) );
         $form->update_setting( 'default_label_pos', 'above' );
         $form->save();
 
@@ -829,7 +832,7 @@ final class NF_Database_MockData
         for( $i = 1; $i <= $num_fields; $i++ ) {
             $field = Ninja_Forms()->form($form_id)->field()->get();
             $field->update_setting( 'type', 'textbox' )
-                ->update_setting( 'label', 'Field #' . $i )
+                ->update_setting( 'label', __( 'Field #', 'ninja-forms' ) . $i )
                 ->update_setting( 'label_pos', 'above' )
                 ->update_setting( 'required', 0 )
                 ->update_setting( 'order', $i )
@@ -845,7 +848,7 @@ final class NF_Database_MockData
          */
 
         $form = Ninja_Forms()->form()->get();
-        $form->update_setting( 'title', 'Email Subscription Form' );
+        $form->update_setting( 'title', __( 'Email Subscription Form', 'ninja-forms' ) );
         $form->update_setting( 'default_label_pos', 'above' );
         $form->save();
 
@@ -857,11 +860,11 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'email' )
-            ->update_setting( 'label', 'Email Address')
+            ->update_setting( 'label', __( 'Email Address', 'ninja-forms' ) )
             ->update_setting( 'label_pos', 'hidden' )
             ->update_setting( 'required', 1 )
             ->update_setting( 'order', 1 )
-            ->update_setting( 'placeholder', 'Enter your email address' )
+            ->update_setting( 'placeholder', __( 'Enter your email address', 'ninja-forms' ) )
             ->update_setting( 'wrapper_class', 'three-fourths first' )
             ->update_setting( 'key', 'email' )
             ->save();
@@ -870,7 +873,7 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'submit' )
-            ->update_setting( 'label', 'Subscribe')
+            ->update_setting( 'label', __( 'Subscribe', 'ninja-forms' ) )
             ->update_setting( 'order', 5 )
             ->update_setting( 'wrapper_class', 'one-fourth' )
             ->update_setting( 'key', 'submit' )
@@ -882,7 +885,7 @@ final class NF_Database_MockData
     {
         /* FORM */
         $form = Ninja_Forms()->form()->get();
-        $form->update_setting( 'title', 'Product Form (with Quantity Field)' );
+        $form->update_setting( 'title', __( 'Product Form (with Quantity Field)', 'ninja-forms' ) );
         $form->update_setting( 'default_label_pos', 'above' );
         $form->update_setting( 'hide_successfully_completed_form', 1 );
         $form->save();
@@ -892,7 +895,7 @@ final class NF_Database_MockData
         /* Fields */
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'product' )
-            ->update_setting( 'label', 'Product')
+            ->update_setting( 'label', __( 'Product', 'ninja-forms' ))
             ->update_setting( 'label_pos', 'above' )
             ->update_setting( 'product_price', 10.10 )
             ->update_setting( 'product_use_quantity', 0 )
@@ -904,7 +907,7 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'quantity' )
-            ->update_setting( 'label', 'Quantity')
+            ->update_setting( 'label', __( 'Quantity', 'ninja-forms' ))
             ->update_setting( 'label_pos', 'above' )
             ->update_setting( 'product_assignment', $product_field_id )
             ->update_setting( 'default', 1 )
@@ -919,7 +922,7 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'shipping' )
-            ->update_setting( 'label', 'Shipping')
+            ->update_setting( 'label', __( 'Shipping', 'ninja-forms' ) )
             ->update_setting( 'label_pos', 'above' )
             ->update_setting( 'shipping_cost', 2.00 )
             ->update_setting( 'order', 4 )
@@ -928,7 +931,7 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'total' )
-            ->update_setting( 'label', 'Total')
+            ->update_setting( 'label', __( 'Total', 'ninja-forms' ) )
             ->update_setting( 'label_pos', 'above' )
             ->update_setting( 'key', 'total' )
             ->update_setting( 'order', 5 )
@@ -937,7 +940,7 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'submit' )
-            ->update_setting( 'label', 'Purchase')
+            ->update_setting( 'label', __( 'Purchase', 'ninja-forms' ) )
             ->update_setting( 'order', 1000 )
             ->update_setting( 'key', 'submit' )
             ->save();
@@ -947,9 +950,10 @@ final class NF_Database_MockData
          */
 
         $action = Ninja_Forms()->form( $form_id )->action()->get();
-        $action->update_setting( 'label',  'Success Message' )
+        $action->update_setting( 'label',  __( 'Success Message', 'ninja-forms' ) )
             ->update_setting( 'type', 'successmessage' )
-            ->update_setting( 'message', '<div style="border: 2px solid green; padding: 10px; color: green;">You purchased {field:' . $quantity_field_id . '} product(s) for ${field:total}.</div>' )
+            ->update_setting( 'message', '<div style="border: 2px solid green; padding: 10px; color: green;">' . __( 'You purchased ', 'ninja-forms' ) .
+                            '{field:' . $quantity_field_id . '}' .  __( 'product(s) for ', 'ninja-forms' ) . '${field:total}.</div>' )
             ->save();
     }
 
@@ -957,7 +961,7 @@ final class NF_Database_MockData
     {
         /* FORM */
         $form = Ninja_Forms()->form()->get();
-        $form->update_setting( 'title', 'Product Form (Inline Quantity)' );
+        $form->update_setting( 'title', __( 'Product Form (Inline Quantity)', 'ninja-forms' ) );
         $form->update_setting( 'default_label_pos', 'above' );
         $form->update_setting( 'hide_successfully_completed_form', 1 );
         $form->save();
@@ -967,7 +971,7 @@ final class NF_Database_MockData
         /* Fields */
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'product' )
-            ->update_setting( 'label', 'Product')
+            ->update_setting( 'label', __( 'Product', 'ninja-forms' ) )
             ->update_setting( 'label_pos', 'above' )
             ->update_setting( 'product_price', 10.10 )
             ->update_setting( 'product_use_quantity', 1 )
@@ -979,7 +983,7 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'shipping' )
-            ->update_setting( 'label', 'Shipping')
+            ->update_setting( 'label', __( 'Shipping', 'ninja-forms' ) )
             ->update_setting( 'label_pos', 'above' )
             ->update_setting( 'shipping_cost', 2.00 )
             ->update_setting( 'order', 4 )
@@ -988,7 +992,7 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'total' )
-            ->update_setting( 'label', 'Total')
+            ->update_setting( 'label', __( 'Total', 'ninja-forms' ) )
             ->update_setting( 'label_pos', 'above' )
             ->update_setting( 'key', 'total' )
             ->update_setting( 'order', 5 )
@@ -997,7 +1001,7 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'submit' )
-            ->update_setting( 'label', 'Purchase')
+            ->update_setting( 'label', __( 'Purchase', 'ninja-forms' ) )
             ->update_setting( 'order', 1000 )
             ->update_setting( 'key', 'submit' )
             ->save();
@@ -1007,9 +1011,10 @@ final class NF_Database_MockData
          */
 
         $action = Ninja_Forms()->form( $form_id )->action()->get();
-        $action->update_setting( 'label',  'Success Message' )
+        $action->update_setting( 'label',  __( 'Success Message', 'ninja-forms' ) )
             ->update_setting( 'type', 'successmessage' )
-            ->update_setting( 'message', '<div style="border: 2px solid green; padding: 10px; color: green;">You purchased {field:' . $product_field_id . '} product(s) for ${field:total}.</div>' )
+            ->update_setting( 'message', '<div style="border: 2px solid green; padding: 10px; color: green;">' . __( 'You purchased ', 'ninja-forms' ) .
+                                        '{field:' . $product_field_id . '}' . __( ' product(s) for ', 'ninja-forms' ) . '${field:total}' . '.' . '</div>' )
             ->save();
     }
 
@@ -1017,7 +1022,7 @@ final class NF_Database_MockData
     {
         /* FORM */
         $form = Ninja_Forms()->form()->get();
-        $form->update_setting( 'title', 'Product Form (Multiple Products)' );
+        $form->update_setting( 'title', __( 'Product Form (Multiple Products)', 'ninja-forms' ) );
         $form->update_setting( 'default_label_pos', 'above' );
         $form->update_setting( 'hide_successfully_completed_form', 1 );
         $form->save();
@@ -1027,7 +1032,7 @@ final class NF_Database_MockData
         /* Fields */
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'product' )
-            ->update_setting( 'label', 'Product A')
+            ->update_setting( 'label', __( 'Product A', 'ninja-forms' ) )
             ->update_setting( 'label_pos', 'above' )
             ->update_setting( 'product_price', 10.10 )
             ->update_setting( 'product_use_quantity', 0 )
@@ -1039,7 +1044,7 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'quantity' )
-            ->update_setting( 'label', 'Quantity for Product A')
+            ->update_setting( 'label', __( 'Quantity for Product A', 'ninja-forms' ) )
             ->update_setting( 'label_pos', 'above' )
             ->update_setting( 'product_assignment', $product_field_A_id )
             ->update_setting( 'default', 1 )
@@ -1054,7 +1059,7 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'product' )
-            ->update_setting( 'label', 'Product B')
+            ->update_setting( 'label', __( 'Product B', 'ninja-forms' ) )
             ->update_setting( 'label_pos', 'above' )
             ->update_setting( 'product_price', 9.23 )
             ->update_setting( 'product_use_quantity', 0 )
@@ -1066,7 +1071,7 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'quantity' )
-            ->update_setting( 'label', 'Quantity for Product B')
+            ->update_setting( 'label', __( 'Quantity for Product B', 'ninja-forms' ) )
             ->update_setting( 'label_pos', 'above' )
             ->update_setting( 'product_assignment', $product_field_B_id )
             ->update_setting( 'default', 1 )
@@ -1081,7 +1086,7 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'shipping' )
-            ->update_setting( 'label', 'Shipping')
+            ->update_setting( 'label', __( 'Shipping', 'ninja-forms' ) )
             ->update_setting( 'label_pos', 'above' )
             ->update_setting( 'shipping_cost', 2.00 )
             ->update_setting( 'order', 998 )
@@ -1090,7 +1095,7 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'total' )
-            ->update_setting( 'label', 'Total')
+            ->update_setting( 'label', __( 'Total', 'ninja-forms' ) )
             ->update_setting( 'label_pos', 'above' )
             ->update_setting( 'key', 'total' )
             ->update_setting( 'order', 999 )
@@ -1099,7 +1104,7 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'submit' )
-            ->update_setting( 'label', 'Purchase')
+            ->update_setting( 'label', __( 'Purchase', 'ninja-forms' ) )
             ->update_setting( 'order', 1000 )
             ->update_setting( 'key', 'submit' )
             ->save();
@@ -1109,9 +1114,11 @@ final class NF_Database_MockData
          */
 
         $action = Ninja_Forms()->form( $form_id )->action()->get();
-        $action->update_setting( 'label',  'Success Message' )
+        $action->update_setting( 'label',  __( 'Success Message', 'ninja-forms' ) )
             ->update_setting( 'type', 'successmessage' )
-            ->update_setting( 'message', '<div style="border: 2px solid green; padding: 10px; color: green;">You purchased {field:' . $quantity_field_A_id . '} of Product A and {field:' . $quantity_field_B_id . '} of Product B for ${field:total}.</div>' )
+            ->update_setting( 'message', '<div style="border: 2px solid green; padding: 10px; color: green;">' . __( 'You purchased ', 'ninja-forms' ) .
+                            '{field:' . $quantity_field_A_id . '}' . __( 'of Product A and ', 'ninja-forms' ) . '{field:' . $quantity_field_B_id . '}' .
+                            __( 'of Product B for $', 'ninja-forms' ) . '{field:total}.</div>' )
             ->save();
     }
 
@@ -1122,15 +1129,15 @@ final class NF_Database_MockData
          */
 
         $form = Ninja_Forms()->form()->get();
-        $form->update_setting( 'title', 'Form with Calculations' );
+        $form->update_setting( 'title', __( 'Form with Calculations', 'ninja-forms' ) );
         $form->update_setting( 'default_label_pos', 'above' );
         $form->update_setting( 'calculations', array(
             array(
-                'name' => 'My First Calculation',
+                'name' => __( 'My First Calculation', 'ninja-forms' ),
                 'eq' => '2 * 3'
             ),
             array(
-                'name' => 'My Second Calculation',
+                'name' => __( 'My Second Calculation', 'ninja-forms' ),
                 'eq' => '4 + 1'
             )
         ));
@@ -1140,15 +1147,15 @@ final class NF_Database_MockData
 
         $field = Ninja_Forms()->form( $form_id )->field()->get();
         $field->update_setting( 'type', 'submit' )
-            ->update_setting( 'label', 'Purchase')
+            ->update_setting( 'label', __( 'Purchase', 'ninja-forms' ) )
             ->update_setting( 'order', 1000 )
             ->update_setting( 'key', 'submit' )
             ->save();
 
         $action = Ninja_Forms()->form( $form_id )->action()->get();
-        $action->update_setting( 'label',  'Success Message' )
+        $action->update_setting( 'label',  __( 'Success Message', 'ninja-forms' ) )
             ->update_setting( 'type', 'successmessage' )
-            ->update_setting( 'message', 'Calculations are returned with the AJAX response ( response -> data -> calcs' )
+            ->update_setting( 'message', __( 'Calculations are returned with the AJAX response ( response -> data -> calcs', 'ninja-forms' ) )
             ->save();
     }
 

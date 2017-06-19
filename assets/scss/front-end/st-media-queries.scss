@@ -39,4 +39,25 @@
             }
         }
     }
+    .nf-form-cont {
+        .five-sixths,
+        .four-sixths,
+        .one-fourth,
+        .one-half,
+        .one-sixth,
+        .one-third,
+        .three-fourths,
+        .three-sixths,
+        .two-fourths,
+        .two-sixths,
+        .two-thirds {
+            clear: both;
+            float: none;
+            margin: 0;
+            width: 100%;
+            .inside {
+                padding: 0;
+            }
+        }
+    }
 }

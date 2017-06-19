@@ -1,10 +1,16 @@
 define(['controllers/submitButton'], function( submitButton ) {
 	var controller = Marionette.Object.extend( {
+		bound: {},
+
 		initialize: function() {
 			this.listenTo( nfRadio.channel( 'submit' ), 'init:model', this.registerHandlers );
 		},
 
 		registerHandlers: function( fieldModel ) {
+			if ( 'undefined' != typeof this.bound[ fieldModel.get( 'id' ) ] ) {
+				return false;
+			}
+
 			this.listenTo( nfRadio.channel( 'field-' + fieldModel.get( 'id' ) ), 'click:field', this.click, this );
 			/*
 			 * Register an interest in the 'before:submit' event of our form.
@@ -18,6 +24,8 @@ define(['controllers/submitButton'], function( submitButton ) {
 
 			fieldModel.listenTo( nfRadio.channel( 'fields' ), 'add:error', this.maybeDisable, fieldModel );
 			fieldModel.listenTo( nfRadio.channel( 'fields' ), 'remove:error', this.maybeEnable, fieldModel );
+			
+			this.bound[ fieldModel.get( 'id') ] = true;
 		},
 
 		click: function( e, fieldModel ) {
@@ -31,6 +39,9 @@ define(['controllers/submitButton'], function( submitButton ) {
 		},
 
 		maybeDisable: function( fieldModel ) {
+
+			if( 'undefined' != typeof fieldModel && fieldModel.get( 'formID' ) != this.get( 'formID' ) ) return;
+
 			this.set( 'disabled', true );
 			this.trigger( 'reRender' );
 		},
@@ -51,13 +62,17 @@ define(['controllers/submitButton'], function( submitButton ) {
 		},
 
 		processingLabel: function() {
+			if ( this.get( 'label' ) == this.get( 'processing_label' ) ) return false;
+
 			this.set( 'oldLabel', this.get( 'label' ) );
 			this.set( 'label', this.get( 'processing_label' ) );
 			this.trigger( 'reRender' );
 		},
 
 		resetLabel: function( response ) {
-			this.set( 'label', this.get( 'oldLabel' ) );
+			if ( 'undefined' != typeof this.get( 'oldLabel' ) ) {
+				this.set( 'label', this.get( 'oldLabel' ) );
+			}
 			this.set( 'disabled', false );
 			this.trigger( 'reRender' );
 		}

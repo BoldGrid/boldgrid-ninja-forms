@@ -2,6 +2,7 @@
     padding: 0 40px;
     h3 {
         font-size: 30px;
+        line-height: 32px;
     }
     p {
         font-size: 18px;
@@ -53,6 +54,16 @@
             box-shadow: 0 0 20px $cta_color;
             color: $cta_color;
             transition: all 0.2s ease-in-out 0.1s, box-shadow 0.2s ease-in-out 0.1s;
+        }
+    }
+    .nf-drawer-opened & {
+        width: 50%;
+    }
+}
+@media only screen and (max-width: 1400px) {
+    .nf-drawer-opened {
+        .template-box {
+            width: 100%;
         }
     }
 }

@@ -4,6 +4,8 @@ define( ['views/fields/drawer/stagedField', 'views/fields/drawer/stagingEmpty'],
 		childView: stagedFieldView,
 		emptyView: stagedFieldsEmptyView,
 
+		activeClass: 'nf-staged-fields-active', // CSS Class for showing the reservoir.
+
 		initialize: function() {
 			nfRadio.channel( 'app' ).reply( 'get:stagedFieldsEl', this.getStagedFieldsEl, this );
 		},
@@ -76,6 +78,19 @@ define( ['views/fields/drawer/stagedField', 'views/fields/drawer/stagingEmpty'],
 
 		getStagedFieldsEl: function() {
 			return jQuery( this.el );
+		},
+
+		onAddChild: function() {
+			jQuery( this.el ).addClass( this.activeClass );
+		},
+
+		onRemoveChild: function() {
+			if( this.hasStagedFields() ) return;
+			jQuery( this.el ).removeClass( this.activeClass );
+		},
+
+		hasStagedFields: function() {
+			return  0 != this.collection.length;
 		}
 
 	} );

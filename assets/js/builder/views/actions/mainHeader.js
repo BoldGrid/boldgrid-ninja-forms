@@ -11,7 +11,7 @@
 define( [], function() {
 	var view = Marionette.ItemView.extend({
 		tagName: 'div',
-		template: '#nf-tmpl-main-header-actions',
+		template: '#tmpl-nf-main-header-actions',
 
 		initialize: function() {
 			var actionCollection = nfRadio.channel( 'actions' ).request( 'get:collection' );

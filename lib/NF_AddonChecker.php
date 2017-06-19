@@ -20,7 +20,7 @@ final class NF_AddonChecker
 
         foreach( $plugins as $plugin => $data ){
 
-            if( 'ninja-forms/ninja-forms.php' != $plugin && 0 === strpos( $plugin, 'ninja-forms' ) && version_compare( $data[ 'Version' ], '3', '<' ) ){
+            if( 'ninja-forms/ninja-forms.php' != $plugin && 0 === strncmp( $plugin, 'ninja-forms-', 12 ) && version_compare( $data[ 'Version' ], '3', '<' ) ){
 
                 if( ! is_plugin_active( $plugin ) ) continue;
 

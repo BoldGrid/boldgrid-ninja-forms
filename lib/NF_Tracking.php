@@ -106,10 +106,10 @@ final class NF_Tracking
     /**
      * Check if a site is opted in
      *
-     * @access private
+     * @access public
      * @return bool
      */
-    private function is_opted_in()
+    public function is_opted_in()
     {
         return (bool) get_option( 'ninja_forms_allow_tracking', $this->is_freemius_opted_in() );
     }
@@ -150,10 +150,10 @@ final class NF_Tracking
     /**
      * Check if a site is opted out
      *
-     * @access private
+     * @access public
      * @return bool
      */
-    private function is_opted_out()
+    public function is_opted_out()
     {
         return (bool) get_option( 'ninja_forms_do_not_allow_tracking', $this->is_freemius_opted_out() );
     }
@@ -192,5 +192,3 @@ final class NF_Tracking
     }
 
 } // END CLASS NF_Tracking
-
-new NF_Tracking();

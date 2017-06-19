@@ -22,5 +22,18 @@ class NF_Fields_ListRadio extends NF_Abstracts_List
         parent::__construct();
 
         $this->_nicename = __( 'Radio List', 'ninja-forms' );
+
+        add_filter( 'ninja_forms_merge_tag_calc_value_' . $this->_type, array( $this, 'get_calc_value' ), 10, 2 );
+    }
+
+    public function get_calc_value( $value, $field )
+    {
+        if( isset( $field[ 'options' ] ) ) {
+            foreach ($field['options'] as $option ) {
+                if( ! isset( $option[ 'value' ] ) || $value != $option[ 'value' ] || ! isset( $option[ 'calc' ] ) ) continue;
+                $value =  $option[ 'calc' ];
+            }
+        }
+        return $value;
     }
 }

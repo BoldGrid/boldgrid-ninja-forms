@@ -107,3 +107,142 @@ label.has-merge-tags {
         }
     }
 }
+
+/* MERGE TAG BOX STYLES */
+#merge-tags-box {
+    display: none;
+    background-color: #DBDDDD;
+    max-height: 360px;
+    z-index: 1001;
+    position: absolute;
+    top: -1px;
+    left:12px;
+    right: 10px;
+
+    .merge-tag-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .merge-tag-sections,
+    .merge-tag-list {
+        float: left;
+        font-size: 14px;
+        background-color: #fff;
+        height: 300px;
+        overflow-y: auto;
+    }
+
+    .merge-tag-sections {
+        background-color: #DBDDDD;
+        ul {
+            margin: 0;
+            li {
+                background: #DBDDDD;
+                border-bottom: 1px solid #fff;
+                cursor: pointer;
+                font-size: 14px;
+                margin: 0;
+                padding: 8px 26px 8px 16px;
+                &:hover {
+                    background: #f6f6f6;
+                }
+                &.active {
+                    position: relative;
+                }
+                &.active::after {
+                    clear: both;
+                    content: "";
+                    display: block;
+                    width: 0;
+                    height: 0;
+                    border-top: 17px solid transparent;
+                    border-bottom: 17px solid transparent;
+                    border-right: 24px solid #fff;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                }
+                &:hover {
+                    color: #1EA9EA;
+                }
+            }
+        }
+    }
+
+    .merge-tag-list {
+        flex-grow: 1;
+        padding-top: 10px;
+        div {
+            div {
+                line-height: 22px;
+            }
+        }
+        &:hover li { // Uses !important to override first-of-type selector.
+            &:hover {
+                color: #1EA9EA !important;
+            }
+            color: black !important;
+        }
+        ul {
+            margin: 0;
+        }
+        li {
+            cursor: pointer;
+            margin-bottom: 0;
+            span {
+                padding: 4px 16px;
+                display: block;
+                small {
+                    font-family: "Courier New", Courier, monospace, sans-serif;
+                }
+            }
+            &:first-of-type {
+                color: #1EA9EA;
+            }
+        }
+    }
+
+    .merge-tag-filter {
+        border-bottom: 2px solid #DBDDDD;
+        margin: 3px 10px 10px 10px;
+        clear: both;
+    }
+}
+.merge-tag-focus {
+    position: relative;
+    z-index: 1000;
+}
+.merge-tag-focus-overlay {
+    &:before {
+        content: '';
+        position: fixed;
+        top: 0; right: 0; bottom: 0; left: 0;
+        background-color: rgba( 0, 0, 0, .5 );
+        z-index: 100;
+    }
+    &.note-editor:before { // Summernote RTE Support
+        z-index: 0;
+    }
+}
+
+#merge-tags-box.one-half--first {
+    width: 538px;
+    left: 12px;
+}
+#merge-tags-box.one-half--second {
+    width: 538px;
+    right: 10px;
+    left: auto;
+}
+
+.setting + .merge-tags {
+    color: rgba( 204, 204, 204, .3 );
+}
+.setting:focus + .merge-tags,
+.merge-tag-focus-overlay .merge-tags {
+    color: rgba( 204, 204, 204, 1 );
+}
+.merge-tag-focus-overlay .merge-tags {
+    z-index: 1000;
+}

@@ -31,12 +31,16 @@ define( [], function() {
 			var value = value || null;
 			if ( ! value ) {
 				// Sends out a request on the fields-type (fields-text, fields-checkbox, etc) channel to see if that field type needs to return a special value for saving.
-				var value = nfRadio.channel( settingModel.get( 'type' ) ).request( 'before:updateSetting', e, dataModel, name, settingModel ) || jQuery( e.target ).val();
+				value = nfRadio.channel( settingModel.get( 'type' ) ).request( 'before:updateSetting', e, dataModel, name, settingModel );
 			}
 
+			if( 'undefined' == typeof value ){
+			    value = jQuery( e.target ).val();
+            }
+			
 			// Update our field model with the new setting value.
 			dataModel.set( name, value, { settingModel: settingModel } );
-			nfRadio.channel( 'setting-' + name, 'after:updateSetting', dataModel, settingModel );
+			nfRadio.channel( 'setting-' + name ).trigger( 'after:updateSetting', dataModel, settingModel );
 			// Register our setting change with our change tracker
 			var after = value;
 			
@@ -48,24 +52,6 @@ define( [], function() {
 
 			var currentDomain = nfRadio.channel( 'app' ).request( 'get:currentDomain' );
 			var currentDomainID = currentDomain.get( 'id' );
-
-			/*
-			 * TODO: Make this more dynamic.
-			 * Currently, this is a very specific work-around. It should be more generalized.
-			 */
-			if ( 'toggle' == settingModel.get( 'type' ) ) {
-				if ( 1 == before ) {
-					before = 'On';
-				} else {
-					before = 'Off';
-				}
-
-				if ( 1 == after ) {
-					after = 'On';
-				} else {
-					after = 'Off';
-				}
-			}
 
 			var label = {
 				object: dataModel.get( 'objectType' ),

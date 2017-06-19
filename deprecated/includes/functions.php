@@ -153,10 +153,13 @@ function nf_get_end_date( $end_date ) {
  * @param string  $function Name of the function.
  * @return bool Whether or not function is disabled.
  */
-function nf_is_func_disabled( $function ) {
-	$disabled = explode( ',',  ini_get( 'disable_functions' ) );
+if( ! function_exists( 'nf_is_func_disabled' ) ) {
+    function nf_is_func_disabled($function)
+    {
+        $disabled = explode(',', ini_get('disable_functions'));
 
-	return in_array( $function, $disabled );
+        return in_array($function, $disabled);
+    }
 }
 
 /**

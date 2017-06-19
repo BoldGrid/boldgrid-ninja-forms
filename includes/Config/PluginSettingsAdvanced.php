@@ -82,7 +82,7 @@ return apply_filters( 'ninja_forms_plugin_settings_advanced', array(
         'type'  => 'html',
         'html' => '<a href="' . admin_url( 'admin.php?page=ninja-forms&nf-switcher=rollback' ) . '" class="button">' . __( 'Rollback', 'ninja-forms' ) . '</a>',
         'label' => __( 'Rollback to v2.9.x', 'ninja-forms' ),
-        'desc'  => __( 'Rollback to the most recent 2.9.x release.', 'ninja-forms' ),
+        'desc'  => __( 'Rollback to the most recent 2.9.x release.', 'ninja-forms' ) . '<br /><div style="color: red">' . __( 'IMPORTANT: All 3.0 data will be removed.', 'ninja-forms' ) . '<br />' . __( 'Please export any forms or submissions you do not want to be lost during this process.', 'ninja-forms' ) . '</div>',
     ),
 
 ));

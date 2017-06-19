@@ -9,7 +9,7 @@
 define( ['views/app/drawer/mergeTagsSection', 'models/app/mergeTagCollection'], function( mergeTagsSectionView, MergeTagCollection ) {
 	var view = Marionette.CollectionView.extend({
 		tagName: 'div',
-		template: '#nf-tmpl-merge-tags-content',
+		template: '#tmpl-nf-merge-tags-content',
 		childView: mergeTagsSectionView,
 
 		initialize: function() {
@@ -19,13 +19,23 @@ define( ['views/app/drawer/mergeTagsSection', 'models/app/mergeTagCollection'], 
 		reRender: function( settingModel ) {
 			var mergeTagCollection = nfRadio.channel( 'mergeTags' ).request( 'get:collection' );
 			var defaultGroups = mergeTagCollection.where( { default_group: true } );
+
+			/*
+			 * For the Actions Domain, Add Calc Merge Tags as a Default Group.
+			 */
+			var currentDomain = nfRadio.channel( 'app' ).request( 'get:currentDomain' );
+			if( 'actions' == currentDomain.get( 'id' ) ){
+				var calcMergeTagGroup = mergeTagCollection.where( { id: 'calcs' } );
+                defaultGroups = defaultGroups.concat( calcMergeTagGroup );
+            }
+
 			this.collection = new MergeTagCollection( defaultGroups );
 			var that = this;
 			var useMergeTags = settingModel.get( 'use_merge_tags' );
 			if ( 'object' == typeof useMergeTags ) {
 				if ( 'undefined' != typeof useMergeTags.exclude ) {
 					_.each( useMergeTags.exclude, function( exclude ) {
-						that.collection.remove( exclude );
+						that.collection.remove( exclude )
 					} );
 				}
 

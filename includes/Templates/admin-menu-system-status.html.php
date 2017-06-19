@@ -1,11 +1,11 @@
 <div class="wrap">
 
     <h1><?php _e( 'Get Help', 'ninja-forms' ); ?></h1>
-<h2>Before requesting help from our support team please review:</h2>
+<h2><?php _e( 'Before requesting help from our support team please review:', 'ninja-forms' ); ?></h2>
 <ol>
-  <li><a href='http://ninjaforms.com/three/'>Ninja Forms THREE documentation</a></li>
-  <li><a href='http://docs.ninjaforms.com/customer/en/portal/articles/2045713-troubleshooting-ninja-forms'>What to try before contacting support</a></li>
-  <li><a href='http://ninjaforms.com/scope-of-support/'>Our Scope of Support</a></li>
+  <li><a href='http://ninjaforms.com/three/'><?php _e( 'Ninja Forms THREE documentation', 'ninja-forms' ); ?></a></li>
+  <li><a href='http://docs.ninjaforms.com/customer/en/portal/articles/2045713-troubleshooting-ninja-forms'><?php _e( 'What to try before contacting support', 'ninja-forms' ); ?></a></li>
+  <li><a href='http://ninjaforms.com/scope-of-support/'><?php _e( 'Our Scope of Support', 'ninja-forms' ); ?></a></li>
 </ol>
 
 

@@ -11,46 +11,15 @@
  * @since 3.0
  */
 define( [
-	'models/app/typeCollection',
-	'models/app/settingCollection',
-	'models/app/settingGroupCollection',
-	], function(
-	typeCollection,
-	settingCollection,
-	settingGroupCollection
+		'models/app/typeCollection'
+	],
+	function(
+		TypeCollection
 	) {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
 			// Create our field type collection
-			this.collection = new typeCollection();
-
-			var that = this;
-			_.each( formSettingTypeData, function( type ) {
-				var settingGroups = new settingGroupCollection();
-				// Loop through the settings groups within this field type and create an object to add to the groups collection.
-				_.each( type.settingGroups, function( group ) {
-					var groupTmp = {
-						label: group.label,
-						display: group.display,
-						settings: new settingCollection( group.settings ),
-					}
-					// Add the tmp object to our setting groups collection
-					settingGroups.add( groupTmp );
-				} );
-
-				// Build an object for this type that we can add to our field type collection
-				var settingType = {
-					id: type.id,
-					nicename: type.nicename,
-					alias: type.alias,
-					settingGroups: settingGroups,
-					settingDefaults: type.settingDefaults,
-					editActive: false
-				}
-
-				// Add tmp object to the appropriate collection (either installed or available)
-				that.collection.add( settingType );
-			} );
+			this.collection = new TypeCollection( formSettingTypeData );
 
 			// Respond to requests to get field type, collection, settings, and sections
 			nfRadio.channel( 'settings' ).reply( 'get:type', this.getType, this );

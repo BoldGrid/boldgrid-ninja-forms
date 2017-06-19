@@ -8,7 +8,14 @@
  */
 define( ['models/app/typeModel'], function( typeModel ) {
 	var collection = Backbone.Collection.extend( {
-		model: typeModel
+		model: typeModel,
+		type: false,
+
+		initialize: function( models, options ) {
+			_.each( options, function( option, key ) {
+				this[ key ] = option;
+			}, this );
+		}
 	} );
 	return collection;
 } );

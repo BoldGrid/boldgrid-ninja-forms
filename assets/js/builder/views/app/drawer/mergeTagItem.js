@@ -10,7 +10,7 @@ define( [], function() {
 	var view = Marionette.ItemView.extend({
 		tagName: 'li',
 
-		template: '#nf-tmpl-merge-tags-item',
+		template: '#tmpl-nf-merge-tags-item',
 
 		onBeforeDestroy: function() {
 			this.model.off( 'change:active', this.render );

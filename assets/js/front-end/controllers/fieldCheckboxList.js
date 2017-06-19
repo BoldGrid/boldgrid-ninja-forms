@@ -27,8 +27,8 @@ define([], function() {
         },
 
         renderOptions: function() {
-            var that = this;
             var html = '';
+
             if ( '' == this.value ) {
                 var valueFound = true;
             } else {
@@ -36,26 +36,35 @@ define([], function() {
             }
 
             _.each( this.options, function( option, index ) {
-                if ( option.value == that.value ) {
+                if ( option.value == this.value ) {
                     valueFound = true;
                 }
 
-                option.fieldID = that.id;
-                option.classes = that.classes;
-                option.index = index;
-
-                if( option.selected ){
-                    that.selected.push( option.value );
+                /*
+                 * TODO: This is a bandaid fix for making sure that each option has a "visible" property.
+                 * This should be moved to creation so that when an option is added, it has a visible property by default.
+                 */
+                if ( 'undefined' == typeof option.visible ) {
+                    option.visible = true;
                 }
 
-                var testValues = _.map( that.value, function( value ) {
-                    return value.toString();
-                } );
+                option.fieldID = this.id;
+                option.classes = this.classes;
+                option.index = index;
 
-                option.isSelected = ( -1 != testValues.indexOf( option.value.toString() ) );
-                var template = Marionette.TemplateCache.get( '#nf-tmpl-field-listcheckbox-option' );
+                if( ( option.selected && "0" != option.selected ) && this.clean ){
+                    option.isSelected = true;
+                } else {
+                    var testValues = _.map( this.value, function( value ) {
+                        return value.toString();
+                    } );               
+                    
+                    option.isSelected = ( -1 != testValues.indexOf( option.value.toString() ) );
+                }
+
+                var template = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-field-listcheckbox-option' );
                 html += template( option );
-            } );
+            }, this );
 
             if ( 1 == this.show_other ) {
                 if ( 'nf-other' == this.value ) {
@@ -69,7 +78,7 @@ define([], function() {
                     valueFound: valueFound
                 };
 
-                var template = Marionette.TemplateCache.get( '#nf-tmpl-field-listcheckbox-other' );
+                var template = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-field-listcheckbox-other' );
                 html += template( data );
 
             }
@@ -87,7 +96,7 @@ define([], function() {
                     classes: this.classes,
                     currentValue: this.currentValue
                 };
-                var template = Marionette.TemplateCache.get( '#nf-tmpl-field-listcheckbox-other-text' );
+                var template = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-field-listcheckbox-other-text' );
                 return template( data );
             }
         },
@@ -98,7 +107,7 @@ define([], function() {
             if ( 0 != options.length ) {
                 _.each( fieldModel.get( 'value' ), function( val ) {
                     var tmp_opt = _.find( options, function( opt ) { return opt.value == val } );
-                    calc_value = math.add( calc_value, tmp_opt.calc );
+                    calc_value = Number( calc_value ) + Number( tmp_opt.calc );
                 } );
             }
             return calc_value;
@@ -109,7 +118,7 @@ define([], function() {
             if ( typeof selected == 'string' ) selected = [ selected ];
 
             var value = jQuery( el ).val();
-            var checked = jQuery( el ).attr( 'checked' );
+            var checked = jQuery( el ).prop( 'checked' );
             if ( checked ) {
                 selected.push( value );
                 jQuery( el ).addClass( 'nf-checked' );

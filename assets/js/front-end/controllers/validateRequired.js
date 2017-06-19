@@ -61,14 +61,19 @@ define([], function() {
 			}
 
 			currentValue = model.get( 'value' );
-			
+
 			var defaultReqValidation = true;
 
 			if ( ! jQuery.trim( currentValue ) ) {
 				defaultReqValidation = false;
 			}
 
-			var valid = defaultReqValidation;
+			var customReqValidation = nfRadio.channel( model.get( 'type' ) ).request( 'validate:modelData', model );
+			if ( 'undefined' !== typeof customReqValidation ) {
+				var valid = customReqValidation;
+			} else {
+				var valid = defaultReqValidation;
+			}
 
 			this.maybeError( valid, model );
 
@@ -76,7 +81,12 @@ define([], function() {
 
 		maybeError: function( valid, model ) {
 			if ( ! valid ) {
-				nfRadio.channel( 'fields' ).request( 'add:error', model.get( 'id' ), 'required-error', 'This is a required field.' );
+
+				var formModel  = nfRadio.channel( 'form-' + model.get( 'formID' ) ).request( 'get:form' );
+
+				if( 'undefined' != typeof formModel ) {
+					nfRadio.channel('fields').request('add:error', model.get('id'), 'required-error', formModel.get('settings').validateRequiredField);
+				}
 			} else {
 				nfRadio.channel( 'fields' ).request( 'remove:error', model.get( 'id' ), 'required-error' );
 			}			

@@ -1,86 +1,90 @@
-.ninja-forms-app {
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        td, th {
-            border-bottom: 1px solid #ECEDEE;
-            font-size: 14px;
-            padding: 15px;
+.nf-actions-table,
+.nf-table-display {
+    border-collapse: collapse;
+    width: 100%;
+    td, th {
+        border-bottom: 1px solid #ECEDEE;
+        font-size: 14px;
+        padding: 15px;
+        vertical-align: top;
+        position: relative;
+        //max-width: 500px;
+    }
+    th {
+        color: #666;
+        text-align: left;
+        text-transform: uppercase;
+    }
+    td {
+        color: #676F75;
+        //white-space:nowrap;
+        position: relative;
+        &:nth-child(2) {
+            width: 90%;
         }
-        th {
-            color: #666;
-            text-align: left;
-            text-transform: uppercase;
-        }
+    }
+    .deactivated {
         td {
-            color: #676F75;
-            white-space:nowrap;
-            position: relative;
-            &:nth-child(2) {
-                width: 90%;
-            }
-        }
-        .deactivated {
-            td {
-                color: #BCBDBF;
-                a {
-                    color: #ddd;
-                }
-            }
-        }
-        input[type=checkbox].nf-toggle + label {
-            margin: 2px 0 0;
-            // &::after {
-            //     border-radius: 20px;
-            //     top: 2px;
-            //     left: -4px;
-            //     width: 30px;
-            //     height: 14px;
-            // }
-            // &::before {
-            //     border-radius: 20px;
-            //     top: 4px;
-            //     left: -1px;
-            //     width: 14px;
-            //     height: 14px;
-            // }
-            // &:checked {
-            //     &::before {
-            //         top: 7px;
-            //         left: 17px;
-            //     }
-            // }
-        }
-        .active {
-            td {
-                color: $accent_color;
-                font-weight: bold;
-            }
+            color: #BCBDBF;
             a {
-                //color: $accent_color;
+                color: #ddd;
             }
-            .nf-item-controls {
-                font-weight: normal;
-                float: right;
-                a {
-                    color: $accent_color;
-                }
-                .nf-item-delete,
-                .nf-item-duplicate {
-                    display: none;
-                }
-                .nf-item-editing {
-                    display: inline !important;
-                }
-                .nf-item-edit {
-                    .dashicons {
-                        margin-right: 12px
-                    }
+        }
+    }
+    input[type=checkbox].nf-toggle + label {
+        z-index: 0; // Set to fix a bug with the merge tag box overlay with RTEs.
+        margin: 2px 0 0;
+        // &::after {
+        //     border-radius: 20px;
+        //     top: 2px;
+        //     left: -4px;
+        //     width: 30px;
+        //     height: 14px;
+        // }
+        // &::before {
+        //     border-radius: 20px;
+        //     top: 4px;
+        //     left: -1px;
+        //     width: 14px;
+        //     height: 14px;
+        // }
+        // &:checked {
+        //     &::before {
+        //         top: 7px;
+        //         left: 17px;
+        //     }
+        // }
+    }
+    .active {
+        td {
+            color: $accent_color;
+            font-weight: bold;
+        }
+        a {
+            //color: $accent_color;
+        }
+        .nf-item-controls {
+            font-weight: normal;
+            float: right;
+            a {
+                color: $accent_color;
+            }
+            .nf-item-delete,
+            .nf-item-duplicate {
+                display: none;
+            }
+            .nf-item-editing {
+                display: inline !important;
+            }
+            .nf-item-edit {
+                .dashicons {
+                    margin-right: 12px
                 }
             }
         }
     }
 }
+
 .ui-droppable {
     border: 4px solid #fff;
 }

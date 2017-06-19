@@ -84,12 +84,10 @@ final class WP_Session extends Recursive_ArrayAccess implements Iterator, Counta
 			$cookie = stripslashes( $_COOKIE[WP_SESSION_COOKIE] );
 			$cookie_crumbs = explode( '||', $cookie );
 
-			$this->session_id = $cookie_crumbs[0];
-
 			if( $this->is_valid_md5( $cookie_crumbs[0] ) ){
 				$this->session_id = $cookie_crumbs[0];
 			} else {
-				$this->session_id = $this->generate_id();
+				$this->session_id = $this->regenerate_id();
 			}
 
 			$this->expires = $cookie_crumbs[1];

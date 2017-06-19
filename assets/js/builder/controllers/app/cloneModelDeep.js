@@ -17,14 +17,13 @@ define( [], function() {
 			var replace = {};
 			// Loop over every model attribute and if we find a collection, clone each model and instantiate a new collection.
 			_.each( model.attributes, function( val, key ) {
-				// console.log( val );
 				if( val instanceof Backbone.Collection ) { // Is this a backbone collection?
 					var clonedCollection = nfRadio.channel( 'app' ).request( 'clone:collectionDeep', val );
 					replace[ key ] = clonedCollection;
 				} else if ( val instanceof Backbone.Model ) { // Is this a backbone model?
-					replace[ key ] = val.clone();
+					replace[ key ] = this.cloneModelDeep( val );
 				}
-			} );
+			}, this );
 
 			// Clone our original model
 			var newModel = model.clone();

@@ -7,7 +7,7 @@
  * @copyright (c) 2015 WP Ninjas
  * @since 3.0
  */
-define( ['views/fields/fieldItem', 'views/fields/mainContentEmpty'], function( fieldItemView, mainContentEmptyView ) {
+define( [ 'views/fields/fieldItem', 'views/fields/mainContentEmpty', 'views/app/formTitle' ], function( fieldItemView, mainContentEmptyView, FormTitleView ) {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
 			// Reply to requests for our field item view.
@@ -15,6 +15,9 @@ define( ['views/fields/fieldItem', 'views/fields/mainContentEmpty'], function( f
 		
 			// Reply to requests for our empty content view.
 			nfRadio.channel( 'views' ).reply( 'get:mainContentEmpty', this.getMainContentEmpty );
+		
+			// Reply to requests for our form title view.
+			nfRadio.channel( 'views' ).reply( 'get:formTitle', this.getFormTitle );
 		},
 
 		getFieldItem: function( model ) {
@@ -23,6 +26,10 @@ define( ['views/fields/fieldItem', 'views/fields/mainContentEmpty'], function( f
 
 		getMainContentEmpty: function() {
 			return mainContentEmptyView;
+		},
+
+		getFormTitle: function() {
+			return FormTitleView;
 		}
 
 	});

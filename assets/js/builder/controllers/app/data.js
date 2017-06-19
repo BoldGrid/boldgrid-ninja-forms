@@ -38,6 +38,7 @@ define( ['models/app/appModel'], function( appModel ) {
 			nfRadio.channel( 'app' ).reply( 'get:setting', this.getSetting, this );
 			nfRadio.channel( 'app' ).reply( 'get:currentDomain', this.getCurrentDomain, this );
 			nfRadio.channel( 'app' ).reply( 'get:currentDrawer', this.getCurrentDrawer, this );
+			nfRadio.channel( 'drawer' ).reply( 'get:current', this.getCurrentDrawer, this );
 
 			/*
 			 * Respond to app channel requests to update app settings.

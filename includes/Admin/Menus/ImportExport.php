@@ -4,43 +4,54 @@ final class NF_Admin_Menus_ImportExport extends NF_Abstracts_Submenu
 {
     public $parent_slug = 'ninja-forms';
 
-    public $page_title = 'Import / Export';
+    public $menu_slug = 'nf-import-export';
 
     public function __construct()
     {
-        add_action( 'plugins_loaded', array( $this, 'import_form_listener' ) );
-        add_action( 'plugins_loaded', array( $this, 'export_form_listener' ) );
+        add_action( 'init', array( $this, 'import_form_listener' ), 0 );
+        add_action( 'init', array( $this, 'export_form_listener' ), 0 );
 
-        add_action( 'plugins_loaded', array( $this, 'import_fields_listener' ) );
-        add_action( 'plugins_loaded', array( $this, 'export_fields_listener' ) );
+        add_action( 'init', array( $this, 'import_fields_listener' ), 0 );
+        add_action( 'init', array( $this, 'export_fields_listener' ), 0 );
 
         add_filter( 'ninja_forms_before_import_fields', array( $this, 'import_fields_backwards_compatibility' ) );
 
         parent::__construct();
     }
 
+    public function get_page_title()
+    {
+        return __( 'Import / Export', 'ninja-forms' );
+    }
+
     public function import_form_listener()
     {
-        if( ! current_user_can( apply_filters( 'ninja_forms_admin_import_form_capabilities', 'manage_options' ) ) ) return;
+        $capability = apply_filters( 'ninja_forms_admin_import_export_capabilities', 'manage_options' );
+        $capability = apply_filters( 'ninja_forms_admin_import_form_capabilities',   $capability      );
+        if( ! current_user_can( $capability ) ) return;
 
         if( ! isset( $_FILES[ 'nf_import_form' ] ) || ! $_FILES[ 'nf_import_form' ] ) return;
 
         $this->upload_error_check( $_FILES[ 'nf_import_form' ] );
 
-        $import = file_get_contents( $_FILES[ 'nf_import_form' ][ 'tmp_name' ] );
+        $data = file_get_contents( $_FILES[ 'nf_import_form' ][ 'tmp_name' ] );
 
-        $data = unserialize( base64_decode( $import ) );
+        $import = Ninja_Forms()->form()->import_form( $data );
 
-        if( ! $data ) {
-            $data = unserialize( $import );
+        if( ! $import ){
+
+            wp_die(
+                __( 'There uploaded file is not a valid format.', 'ninja-forms' ) . ' ' . ( function_exists( 'json_last_error' ) ) ? json_last_error_msg() : '',
+                __( 'Invalid Form Upload.', 'ninja-forms' )
+            );
         }
-
-        Ninja_Forms()->form()->import_form( $data );
     }
 
     public function export_form_listener()
     {
-        if( ! current_user_can( apply_filters( 'ninja_forms_admin_export_form_capabilities', 'manage_options' ) ) ) return;
+        $capability = apply_filters( 'ninja_forms_admin_import_export_capabilities', 'manage_options' );
+        $capability = apply_filters( 'ninja_forms_admin_export_form_capabilities',   $capability      );
+        if( ! current_user_can( $capability ) ) return;
 
         if( isset( $_REQUEST[ 'nf_export_form' ] ) && $_REQUEST[ 'nf_export_form' ] ){
             $form_id = $_REQUEST[ 'nf_export_form' ];
@@ -367,5 +378,10 @@ final class NF_Admin_Menus_ImportExport extends NF_Abstracts_Submenu
         );
         $message = Ninja_Forms()->template( 'admin-wp-die.html.php', $args );
         wp_die( $message, $args[ 'title' ], array( 'back_link' => TRUE ) );
+    }
+
+    public function get_capability()
+    {
+        return apply_filters( 'ninja_forms_admin_import_export_capabilities', $this->capability );
     }
 }

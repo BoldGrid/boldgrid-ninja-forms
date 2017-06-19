@@ -32,7 +32,7 @@ define( [], function( ) {
 			// jQuery( this.mainEl )[0].style.setProperty( 'overflow', 'visible', 'important' );
 
 			var stagedFields = nfRadio.channel( 'fields' ).request( 'get:staging' );
-			var html = Marionette.TemplateCache.get( '#nf-tmpl-staged-fields-drag' );
+			var html = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-staged-fields-drag' );
 			jQuery( ui.helper ).html( html( { num: stagedFields.models.length } ) );
 			jQuery( ui.helper ).prop( 'id', 'nf-staged-fields-drag' );
 			jQuery( ui.item ).css( 'opacity', '0.7' );

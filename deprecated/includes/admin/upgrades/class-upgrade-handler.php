@@ -1,5 +1,14 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit;
 
+if( ! function_exists( 'nf_is_func_disabled' ) ) {
+    function nf_is_func_disabled($function)
+    {
+        $disabled = explode(',', ini_get('disable_functions'));
+
+        return in_array($function, $disabled);
+    }
+}
+
 require_once( NF_PLUGIN_DIR . 'includes/admin/upgrades/database-migrations.php' );
 require_once( NF_PLUGIN_DIR . 'includes/admin/upgrades/convert-forms.php' );
 require_once( NF_PLUGIN_DIR . 'includes/admin/upgrades/convert-notifications.php' );
@@ -29,7 +38,9 @@ class NF_UpgradeHandler
     public function __construct()
     {
 
-        ignore_user_abort( true );
+        if ( function_exists( 'ignore_user_abort' ) && ! nf_is_func_disabled( 'ignore_user_abort' ) ) {
+            ignore_user_abort( true );
+        }
 
         $this->register_upgrades();
 

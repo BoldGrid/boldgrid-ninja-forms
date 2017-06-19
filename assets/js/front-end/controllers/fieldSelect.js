@@ -1,10 +1,11 @@
 define([], function() {
 	var controller = Marionette.Object.extend( {
 		initialize: function() {
-			this.listenTo( nfRadio.channel( 'listselect' ), 'init:model', this.register );
-			this.listenTo( nfRadio.channel( 'liststate' ), 'init:model', this.register );
-			this.listenTo( nfRadio.channel( 'listcountry' ), 'init:model', this.register );
-			this.listenTo( nfRadio.channel( 'listmultiselect' ), 'init:model', this.register );
+
+			this.listenTo( nfRadio.channel( 'fields' ), 'init:model', function( model ){
+				if( 'list' == model.get( 'parentType' ) ) this.register( model );
+			}, this );
+
 			nfRadio.channel( 'listselect' ).reply( 'get:calcValue', this.getCalcValue, this );
 			nfRadio.channel( 'listmultiselect' ).reply( 'get:calcValue', this.getCalcValue, this );
 		},
@@ -27,7 +28,7 @@ define([], function() {
 					var selected = _.filter( model.get( 'options' ), function( opt ) { return 1 == opt.selected } );
 					selected = _.map( selected, function( opt ) { return opt.value } );
 					var value = selected;
-				} else {
+				} else if ( 'listradio' !== model.get( 'type' ) ) {
 					/*
 					 * Check to see if we have a selected value.
 					 */
@@ -36,32 +37,53 @@ define([], function() {
 					 * We don't have a selected value, so use our first option.
 					 */
 					if ( 'undefined' == typeof selected ) {
-						selected = model.get( 'options' )[0];
+						selected = _.first( model.get( 'options' ) );
 					}
-					var value = selected.value;
+
+					if ( 'undefined' != typeof selected && 'undefined' != typeof selected.value ) {
+						var value = selected.value;
+					} else if ( 'undefined' != typeof selected ) {
+						var value = selected.label;
+					}	
 				}
 
-				model.set( 'value', value );
+				if ( 'undefined' != typeof selected ) {
+					model.set( 'value', value );
+				}
 			}
 		},
 
 		renderOptions: function() {
-			var that = this;
 			var html = '';
 			_.each( this.options, function( option ) {
-				if ( 1 == option.selected ) {
+				
+
+				if ( ( 1 == option.selected && this.clean ) ) {
+					var selected = true;
+				} else if ( _.isArray( this.value ) && -1 != _.indexOf( this.value, option.value ) ) {
+					var selected = true;
+				} else if ( ! _.isArray( this.value ) && option.value == this.value ) {
 					var selected = true;
 				} else {
 					var selected = false;
 				}
 
+				/*
+                 * TODO: This is a bandaid fix for making sure that each option has a "visible" property.
+                 * This should be moved to creation so that when an option is added, it has a visible property by default.
+                 */
+                if ( 'undefined' == typeof option.visible ) {
+                    option.visible = true;
+                }
+
 				option.selected = selected;
-				option.fieldID = that.id;
-				option.classes = that.classes;
-				option.currentValue = that.value;
-				var template = Marionette.TemplateCache.get( '#nf-tmpl-field-listselect-option' );
+				option.fieldID = this.id;
+				option.classes = this.classes;
+				option.currentValue = this.value;
+
+				var template = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-field-listselect-option' );
 				html += template( option );
-			} );
+			}, this );
 
 			return html;
 		},
@@ -89,7 +111,7 @@ define([], function() {
 					 */
 					_.each( fieldModel.get( 'value' ), function( val ) {
 						var tmp_opt = _.find( options, function( opt ) { return opt.value == val } );
-						calc_value = math.add( calc_value, tmp_opt.calc );
+						calc_value += tmp_opt.calc;
 					} );
 				} else {
 					/*

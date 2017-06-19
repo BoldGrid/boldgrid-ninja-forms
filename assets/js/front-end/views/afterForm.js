@@ -2,7 +2,7 @@ define( [], function( ) {
 
 	var view = Marionette.ItemView.extend({
 		tagName: "nf-section",
-		template: "#nf-tmpl-after-form",
+		template: "#tmpl-nf-after-form",
 		
 	});
 

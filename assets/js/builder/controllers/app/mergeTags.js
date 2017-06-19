@@ -63,7 +63,8 @@ define( [
 			this.settingModel = {};
 			this.open = false;
 
-			nfRadio.channel( 'mergeTags' ).reply( 'init', this.initMergeTags, this );
+			// Unhook jBox Merge Tag stuff.
+			// nfRadio.channel( 'mergeTags' ).reply( 'init', this.initMergeTags, this );
 
 			this.listenTo( nfRadio.channel( 'mergeTags' ), 'click:mergeTag', this.clickMergeTag );
 			this.listenTo( nfRadio.channel( 'fields' ), 'add:field', this.addFieldTags );
@@ -116,6 +117,7 @@ define( [
 			 */
 			this.jBoxes = {};
 			var that = this;
+
 			jQuery( view.el ).find( '.merge-tags' ).each(function() {
 				if ( 'undefined' == typeof jQuery( this ).data( 'jBox-id' ) ) {
 					var jBox = jQuery( this ).jBox( 'Tooltip', {
@@ -158,16 +160,28 @@ define( [
 			 * Currently, the RTE is the only section that modifies how merge tags work,
 			 * but another type of setting might need to do this in the future.
 			 */
-			if ( 'rte' != this.settingModel.get( 'type' ) ) {
+
+			if( 'undefined' != typeof this.settingModel.get( 'settingModel' ) && 'calculations' == this.settingModel.get( 'settingModel' ).get( 'name' ) ) {
+
+				console.log( tagModel );
+
+				var currentValue = jQuery( this.currentElement ).val();
+				var currentPos = jQuery( this.currentElement ).caret();
+				var newPos = currentPos + tagModel.get( 'tag' ).length;
+
+				var tag = ( 'undefined' != typeof tagModel.get( 'calcTag' ) ) ? tagModel.get( 'calcTag' ) : tagModel.get( 'tag' );
+
+				currentValue = currentValue.substr( 0, currentPos ) + tag + currentValue.substr( currentPos );
+				jQuery( this.currentElement ).val( currentValue ).caret( newPos ).trigger( 'change' );
+			} else if( 'rte' == this.settingModel.get( 'type' ) ) {
+				jQuery( this.currentElement ).summernote( 'insertText', tagModel.get( 'tag' ) );
+			} else {
 				var currentValue = jQuery( this.currentElement ).val();
 				var currentPos = jQuery( this.currentElement ).caret();
 				var newPos = currentPos + tagModel.get( 'tag' ).length;
 				currentValue = currentValue.substr( 0, currentPos ) + tagModel.get( 'tag' ) + currentValue.substr( currentPos );
-				jQuery( this.currentElement ).val( currentValue ).caret( newPos ).trigger( 'change' );				
-			} else { // We're in an RTE
-				jQuery( this.currentElement ).summernote( 'insertText', tagModel.get( 'tag' ) );
+				jQuery( this.currentElement ).val( currentValue ).caret( newPos ).trigger( 'change' );
 			}
-
 		},
 
 		addFieldTags: function( fieldModel ) {
@@ -176,7 +190,8 @@ define( [
 				this.tagSectionCollection.get( 'fields' ).get( 'tags' ).add( {
 					id: fieldModel.get( 'id' ),
 					label: fieldModel.get( 'label' ),
-					tag: this.getFieldKeyFormat( fieldModel.get( 'key' ) )
+					tag: this.getFieldKeyFormat( fieldModel.get( 'key' ) ),
+					calcTag: this.getFieldKeyFormatCalc( fieldModel.get( 'key' ) )
 				} );
 			}
 		},
@@ -304,11 +319,33 @@ define( [
 			return '{field:' + key + '}';
 		},
 
+		getFieldKeyFormatCalc: function( key ) {
+			return '{field:' + key + ':calc}';
+		},
+
 		replaceFieldKey: function( dataModel, keyModel, settingModel ) {
-			var oldKey = this.getFieldKeyFormat( keyModel._previousAttributes[ 'key' ] );
+            var oldKey = this.getFieldKeyFormat( keyModel._previousAttributes[ 'key' ] );
 			var newKey = this.getFieldKeyFormat( keyModel.get( 'key' ) );
 			var settingName = settingModel.get( 'name' );
 			var oldVal = dataModel.get( settingName );
+            if(settingName == 'calculations' && 'undefined' != typeof(dataModel.get('calculations'))) {
+                var calcModel = dataModel.get( 'calculations' );
+                calcModel.each( function( model ) {
+                    var oldCalcKey = oldKey.slice( 0, (oldKey.length - 1) ) + ':calc}';
+                    var newCalcKey = newKey.slice( 0, (newKey.length - 1 ) ) + ':calc}';
+                    oldVal = model.get( 'eq' );
+                    if ( 'string' == typeof( oldVal ) ) {
+                        var re = new RegExp( oldCalcKey, 'g' );
+                        var newVal = oldVal.replace( re, newCalcKey );
+                        re = new RegExp( oldKey, 'g' );
+                        // TODO: We won't need this second replace when we no longer
+                        // have to append :calc to merge tags.
+                        newVal = newVal.replace( re, newKey );
+                        model.set( 'eq', newVal );
+                    }
+                } );
+                return false;
+            }
 			if ( 'string' == typeof oldVal ) {
 				var re = new RegExp( oldKey, 'g' );
 				newVal = oldVal.replace( re, newKey );

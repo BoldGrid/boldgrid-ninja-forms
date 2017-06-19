@@ -1,7 +1,7 @@
 define( ['views/app/drawer/mergeTagsContent', 'views/app/drawer/settingError'], function( mergeTagsContentView, settingErrorView ) {
 	var view = Marionette.LayoutView.extend({
 		tagName: 'div',
-		template: '#nf-tmpl-edit-setting-wrap',
+		template: '#tmpl-nf-edit-setting-wrap',
 
 		regions: {
 			error: '.nf-setting-error'
@@ -11,10 +11,10 @@ define( ['views/app/drawer/mergeTagsContent', 'views/app/drawer/settingError'], 
 			this.dataModel = data.dataModel;
 			/*
 			 * Send out a request on the setting-type-{type} channel asking if we should render on dataModel change.
-			 * Defaults to true.
+			 * Defaults to false.
 			 * This lets specific settings, like RTEs, say that they don't want to be re-rendered when their data model changes.
 			 */
-			var renderOnChange = ( 'undefined' == typeof nfRadio.channel( 'setting-type-' + this.model.get( 'type' ) ).request( 'renderOnChange' ) ) ? true: nfRadio.channel( 'setting-type-' + this.model.get( 'type' ) ).request( 'renderOnChange' );
+			var renderOnChange = ( 'undefined' == typeof nfRadio.channel( 'setting-type-' + this.model.get( 'type' ) ).request( 'renderOnChange' ) ) ? false : nfRadio.channel( 'setting-type-' + this.model.get( 'type' ) ).request( 'renderOnChange' );
 			
 			if ( renderOnChange ) {
 				this.dataModel.on( 'change:' + this.model.get( 'name' ), this.render, this );
@@ -77,9 +77,28 @@ define( ['views/app/drawer/mergeTagsContent', 'views/app/drawer/settingError'], 
 			 */
 			nfRadio.channel( 'setting-' + this.model.get( 'name' ) ).trigger( 'destroy:setting', this.model, this.dataModel, this );
 			nfRadio.channel( 'setting-type-' + this.model.get( 'type' ) ).trigger( 'destroy:setting', this.model, this.dataModel, this );
+		
+			/*
+			 * Unescape any HTML being saved if we are a textbox.
+			 */
+			if ( 'textbox' == this.model.get( 'type' ) ) {
+				var setting = this.model.get( 'name' );
+				var value = this.dataModel.get( setting );
+				this.dataModel.set( setting, _.unescape( value ), { silent: true } );
+			}
+
 		},
 
 		onBeforeRender: function() {
+			/*
+			 * We want to escape any HTML being output if we are a textbox.
+			 */
+			if ( 'textbox' == this.model.get( 'type' ) ) {
+				var setting = this.model.get( 'name' );
+				var value = this.dataModel.get( setting );
+				this.dataModel.set( setting, _.escape( value ), { silent: true } );
+			}
+			
 			nfRadio.channel( 'app' ).trigger( 'before:renderSetting', this.model, this.dataModel );
 			nfRadio.channel( 'setting-type-' + this.model.get( 'type' ) ).trigger( 'before:renderSetting', this.model, this.dataModel, this );
 			nfRadio.channel( 'setting-' + this.model.get( 'name' ) ).trigger( 'before:renderSetting', this.model, this.dataModel, this );
@@ -127,8 +146,12 @@ define( ['views/app/drawer/mergeTagsContent', 'views/app/drawer/settingError'], 
 						});
 						break;
 					case 'currency':
+
+						var currency = nfRadio.channel( 'settings' ).request( 'get:setting', 'currency' );
+						var currencySymbol = nfAdmin.currencySymbols[ currency ] || '';
+
 						input.autoNumeric({
-							aSign: '$', // TODO: Use form setting
+							aSign:  jQuery('<div />').html(currencySymbol).text(),
 							aSep: thousandsSeparator,
 							aDec: decimalPoint
 						});
@@ -194,7 +217,7 @@ define( ['views/app/drawer/mergeTagsContent', 'views/app/drawer/settingError'], 
 	    			} else if ( 'undefined' == typeof this.value ) {
 	    				this.value = '';
 	    			}
-	    			var setting = Marionette.TemplateCache.get( '#nf-tmpl-edit-setting-' + this.type );
+	    			var setting = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-edit-setting-' + this.type );
 					return setting( this );
 				},
 
@@ -227,7 +250,7 @@ define( ['views/app/drawer/mergeTagsContent', 'views/app/drawer/settingError'], 
 
 				renderTooltip: function() {
 					if ( this.help ) {
-						return '<a class="nf-help" href="#"><span class="dashicons dashicons-admin-comments"></span></a><div class="nf-help-text">' + this.help + '</div>';
+						return '<a class="nf-help" href="#" tabindex="-1"><span class="dashicons dashicons-admin-comments"></span></a><div class="nf-help-text">' + this.help + '</div>';
 					} else {
 						return '';
 					}
@@ -275,6 +298,7 @@ define( ['views/app/drawer/mergeTagsContent', 'views/app/drawer/settingError'], 
 		clickExtra: function( e ) {
 			nfRadio.channel( 'setting-type-' + this.model.get( 'type' ) ).trigger( 'click:extra', e, this.model, this.dataModel, this );
 			nfRadio.channel( 'setting-type-' + this.model.get( 'name' ) ).trigger( 'click:extra', e, this.model, this.dataModel, this );
+			nfRadio.channel( 'setting-name-' + this.model.get( 'name' ) ).trigger( 'click:extra', e, this.model, this.dataModel, this );
 		},
 
 		drawerOpened: function() {

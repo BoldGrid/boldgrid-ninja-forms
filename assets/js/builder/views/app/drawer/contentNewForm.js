@@ -9,7 +9,7 @@
 define( ['views/app/drawer/itemSetting'], function( itemSettingView) {
 	var view = Marionette.LayoutView.extend( {
 		tagName: 'div',
-		template: '#nf-tmpl-drawer-content-new-form',
+		template: '#tmpl-nf-drawer-content-new-form',
 
 		regions: {
 			formName: '.new-form-name',

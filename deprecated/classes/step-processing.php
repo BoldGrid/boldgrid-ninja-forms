@@ -1,4 +1,14 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit;
+
+if( ! function_exists( 'nf_is_func_disabled' ) ) {
+    function nf_is_func_disabled($function)
+    {
+        $disabled = explode(',', ini_get('disable_functions'));
+
+        return in_array($function, $disabled);
+    }
+}
+
 /**
  * Class for performing actions incrementally. Internally used for converting submissions, exporting submissions, etc.
  * Very useful when interacting with large amounts of data.
@@ -55,7 +65,9 @@ class NF_Step_Processing
 		if ( ! is_admin() )
 			return false;
 
-		ignore_user_abort( true );
+        if ( function_exists( 'ignore_user_abort' ) && ! nf_is_func_disabled( 'ignore_user_abort' ) ) {
+            ignore_user_abort( true );
+        }
 
 		if ( ! nf_is_func_disabled( 'set_time_limit' ) && ! ini_get( 'safe_mode' ) ) {
 			//set_time_limit( 0 );

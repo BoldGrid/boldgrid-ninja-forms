@@ -48,7 +48,7 @@ define( [], function() {
 			}
 
 			jQuery( this.el ).sortable( {
-				containment: '#nf-main',
+				//containment: '#nf-main',
 				helper: 'clone',
 				cancel: '.nf-item-controls',
 				placeholder: 'nf-fields-sortable-placeholder',
@@ -59,26 +59,32 @@ define( [], function() {
 				scrollSensitivity: 10,
 
 				receive: function( e, ui ) {
+					if ( ui.item.dropping ) return;
 					nfRadio.channel( 'app' ).request( 'receive:fieldsSortable', ui );
 				},
 
 				over: function( e, ui ) {
+					if ( ui.item.dropping ) return;
 					nfRadio.channel( 'app' ).request( 'over:fieldsSortable', ui );
 				},
 
 				out: function( e, ui ) {
+					if ( ui.item.dropping ) return;
 					nfRadio.channel( 'app' ).request( 'out:fieldsSortable', ui );
 				},
 
 				start: function( e, ui ) {
+					if ( ui.item.dropping ) return;
 					nfRadio.channel( 'app' ).request( 'start:fieldsSortable', ui );
 				},
 
 				update: function( e, ui ) {
-					nfRadio.channel( 'app' ).request( 'update:fieldsSortable', ui );
+					if ( ui.item.dropping ) return;
+					nfRadio.channel( 'app' ).request( 'update:fieldsSortable', ui, this );
 				},
 
 				stop: function( e, ui ) {
+					if ( ui.item.dropping ) return;
 					nfRadio.channel( 'app' ).request( 'stop:fieldsSortable', ui );
 				}
 			} );

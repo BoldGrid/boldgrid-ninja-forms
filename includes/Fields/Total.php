@@ -19,7 +19,7 @@ class NF_Fields_Total extends NF_Abstracts_Input
 
     protected $_test_value = '0.00';
 
-    protected $_settings_exclude = array( 'placeholder', 'default', 'input_limit_set' );
+    protected $_settings_exclude = array( 'placeholder', 'default', 'input_limit_set', 'disable_input', 'required' );
 
     public function __construct()
     {
@@ -34,7 +34,7 @@ class NF_Fields_Total extends NF_Abstracts_Input
 
         foreach( $data[ 'fields' ] as $key => $field ){
 
-            if( 'shipping' == $field[ 'type' ] ){
+            if( isset ( $field[ 'type' ] ) && 'shipping' == $field[ 'type' ] ){
                 $subtotal += $field[ 'shipping_cost' ];
             }
         }

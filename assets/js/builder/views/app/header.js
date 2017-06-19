@@ -9,7 +9,7 @@
 define( ['views/app/menu', 'views/app/menuButtons', 'views/app/mobileMenuButton'], function( appMenuCollectionView, appMenuButtonsView, mobileMenuButtonView ) {
 	var view = Marionette.LayoutView.extend( {
 		tagName: 'div',
-		template: '#nf-tmpl-app-header',
+		template: '#tmpl-nf-app-header',
 
 		regions: {
 			// Menu is our main app menu.

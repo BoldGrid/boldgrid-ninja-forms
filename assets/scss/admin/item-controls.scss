@@ -1,5 +1,6 @@
 .nf-item-controls {
     height: 30px;
+    width: 30px;
     float: right;
     margin: 0;
     position: absolute;
@@ -39,7 +40,7 @@
         &.nf-item-edit {
             opacity: 100;
             visibility: visible;
-            z-index: 100;
+            z-index: auto;
         }
     }
     &:hover {

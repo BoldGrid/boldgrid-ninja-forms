@@ -118,22 +118,26 @@ abstract class NF_Abstracts_ActionNewsletter extends NF_Abstracts_Action
         );
 
         $fields = array();
-        foreach( $lists as $list ){
+        foreach( $lists as $list ) {
             $this->_settings[ $prefix . 'newsletter_list' ][ 'options' ][] = $list;
 
-            foreach( $list[ 'fields' ] as $field ){
-                $name = $list[ 'value' ] . '_' . $field[ 'value' ];
-                $fields[] = array(
-                    'name' => $name,
-                    'type' => 'textbox',
-                    'label' => $field[ 'label' ],
-                    'width' => 'full',
-                    'use_merge_tags' => array(
-                        'exclude' => array(
-                            'user', 'post', 'system', 'querystrings'
+            //Check to see if list has fields array set.
+            if ( isset( $list[ 'fields' ] ) ) {
+
+                foreach ( $list[ 'fields' ] as $field ) {
+                    $name = $list[ 'value' ] . '_' . $field[ 'value' ];
+                    $fields[] = array(
+                        'name' => $name,
+                        'type' => 'textbox',
+                        'label' => $field[ 'label' ],
+                        'width' => 'full',
+                        'use_merge_tags' => array(
+                            'exclude' => array(
+                                'user', 'post', 'system', 'querystrings'
+                            )
                         )
-                    )
-                );
+                    );
+                }
             }
         }
 

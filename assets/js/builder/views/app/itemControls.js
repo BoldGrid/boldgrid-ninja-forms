@@ -9,7 +9,7 @@
 define( [], function() {
 	var view = Marionette.ItemView.extend({
 		tagName: 'div',
-		template: '#nf-tmpl-item-controls',
+		template: '#tmpl-nf-item-controls',
 
 		initialize: function() {
 			// Listen for domain changes and re-render when we detect one.

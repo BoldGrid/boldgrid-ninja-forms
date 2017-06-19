@@ -283,7 +283,7 @@ class NF_Notification_Email extends NF_Notification_Base_Type
 		$headers[] = 'From: ' . $email_from;
 
 		if( ! empty( $reply_to ) ) {
-			$headers[] = 'Reply-To: ' . $reply_to;
+			$headers[] = sprintf('Reply-To: "%s" <%s>', $from_name, $reply_to);
 		}
 		$headers[] = 'Content-Type: text/' . $email_format;
 		$headers[] = 'charset=utf-8';

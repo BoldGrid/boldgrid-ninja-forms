@@ -113,6 +113,10 @@
         label {
             margin: 0 0 0 30px;
             display: block;
+            &::before {
+                left: -30px;
+                bottom: 0;
+            }
             &::after {
                 left: -28px;
                 bottom: 0;
@@ -133,6 +137,25 @@
         label {
             &::after {
                 bottom: 2px !important;
+            }
+        }
+    }
+    &.label-hidden {
+        label {
+            height: 0;
+            margin: 0;
+            display: block;
+            &::after {
+                left: 0;
+                bottom: 0;
+                visibility: visible;
+            }
+            &.nf-checked-label {
+                &::before {
+                    left: -2px;
+                    bottom: 0;
+                    visibility: visible;
+                }
             }
         }
     }

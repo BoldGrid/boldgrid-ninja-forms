@@ -2,38 +2,36 @@
 [Contributors](https://github.com/wpninjas/ninja-forms/graphs/contributors)
 
 Tags: form, forms, contact form, custom form, form builder, form creator, form manager, form creation, contact forms, custom forms, forms builder, forms creator, forms manager, forms creation, form administration,
-Requires at least: 4.3
-Tested up to: 4.5.3
-Stable tag: 2.9.55.2
+Requires at least: 4.5
+Tested up to: 4.7
+Stable tag: 3.1.4
 License: GPLv2 or later
 
-Forms created with a simple drag and drop interface. Contact forms, Email collection forms, or any other form you want on your WordPress site.
+With a simple drag and drop interface you can create contact forms, email subscription forms, order forms, payment forms, and any other type of form for your WordPress site.
 
 ## Description
-Ninja Forms is the ultimate FREE form creation solution for WordPress. Build WordPress Forms within minutes using Ninja Forms powerful forms creation page. It allows you to easily and quickly design complex forms through a drag and drop interface and absolutely no code. But for you developers it has a ton of hooks and filters so you can do absolutely anything with this powerful form building framework.
-
-This [review of Ninja Forms](http://www.youtube.com/watch?v=hVfPmKzqYpk) was done by Pippin Williamson:
-
+Ninja Forms is the ultimate FREE form creation tool for WordPress. Build forms within minutes using a simple yet powerful drag-and-drop form creator. For beginners, quickly and easily design complex forms with absolutely no code. For developers, utilize built-in hooks, filters, and even custom field templates to do whatever you need at any step in the form building or submission using Ninja Forms as a framework.
 
 Here are just a few of the things you will find in Ninja Forms:
 
-* Custom input masks allow you to restrict user input in your forms for things like phone numbers, currency, and dates.
+* Special, easy to use fields for emails, dates (w/ datepicker), phone numbers, addresses and more
+* Modify your own field then save them as favorites to re-use later (even in other forms!)
+* Force required fields and correct data formatting with custom input masks
+* Give your users a success message or redirect them elsewhere after they complete a form.
 * Manage, Edit, and Export form user submissions.
-* Save fields as favorites and re-use them in multiple forms.
 * Export and Import forms and favorite fields.
-* Set required fields.
-* Add a datepicker to text fields.
-* Email form results to any number of pre-determined email addresses, as well as specific messages to the user filling out the form.
-* Customize form emails with the WordPress editor.
-* Anti-Spam field.
-* Extremely developer friendly.
-* Submit your form by reloading the page or asynchronously with AJAX.
+* Email form data to administrators and/or users every time a form is processed.
+* Customize emails and add raw HTML(for photos, videos, and more) with the powerful Summernote HTML editor.
+* Several anti-spam options including Google reCaptcha, question/response fields, and honeypot fields
+* Form submission via AJAX, allowing a seamless user experience without page refreshes
 * Please note that if you are using a version of PHP lower than 5.3, you may experience some problems using AJAX Submissions. These can be minimized by using simple success/error messages without any quotes or special characters.
 
 ## Demo Site
 Please feel free to visit our [demo site](http://demo.ninjaforms.com/) where you can test the features of Ninja Forms and all of our extensions.
 
 ## Extensions
+
+[We have more integrations](https://ninjaforms.com/extensions/) than any other WordPress form builder, with more added regularly!
 
 * [PayPal Express](http://ninjaforms.com/downloads/paypal-express/) - Accept payments using PayPal Express and Ninja Forms!
 * [Front-End Editor](http://ninjaforms.com/downloads/front-end-editor/) - Give your users the ability to create, edit, or delete posts, pages, or any custom post type and allow your users to edit their Ninja Forms submissions all from the front-end. Also included is front-end profile editing, custom registration forms, login and password resetting, all without needing to see the default, WordPress branded login page.
@@ -48,18 +46,15 @@ Please feel free to visit our [demo site](http://demo.ninjaforms.com/) where you
 * [User Analytics](http://ninjaforms.com/downloads/user-analytics/) - The User Analytics extension will help website owners understand how hot a lead is based on extra data automatically collected about the user.
 * [Constant Contact](http://ninjaforms.com/downloads/constant-contact/) - The Constant Contact extension allows you to quickly create newsletter signup forms for your Constant Contact account using the power and flexibility that Ninja Forms provides.
 * [Pushover](http://ninjaforms.com/downloads/pushover/) - When email and SMS notifications just do not cut it, send yourself push notifications of form submissions with Pushover. Pushover makes it easy to send real-time notifications to your Android and iOS devices.
-* [Freshbooks](http://ninjaforms.com/downloads/freshbooks/) - Automatically insert Ninja Forms data right into Freshbooks when your potential clients submit forms. Go from lead to invoice that much quicker by having the information already in your favorite invoicing application.
-
-We have several other extensions in the works.
 
 If you're a developer and would like to talk about creating some premium extensions for Ninja Forms, send us an email: info@wpninjas.com.
 
 ## Contributing
 
-If you're a developer and want to help make Ninja Forms better, you're in the right place! We know contributing to a project can be intimidating; sometimes it’s hard to tell how to get involved. We believe Ninja Forms is a perfect community to get involved in. In our experience, everyone involved with the project has been amazing and helpful. :)
-So here are some [friendly guidelines](https://github.com/wpninjas/ninja-forms/blob/master/CONTRIBUTING.md).
+If you're a developer and want to help make Ninja Forms better, we would love to work together! We know contributing to a project can be intimidating; sometimes it’s hard to tell how to get involved. We believe Ninja Forms is a great community to get involved in. In our experience, everyone involved with the project has been amazing and helpful. :)
+Here are some [friendly guidelines](https://github.com/wpninjas/ninja-forms/blob/master/CONTRIBUTING.md).  [You can also join our development community here.](http://developer.ninjaforms.com/)
 
-__Please Note:__ GitHub is for bug reports and contributions only - if you have a support question or a request for a customisation, go to our [Ninja Forms Support](http://ninjaforms.com/documentation/using-ninja-forms/faq-troubleshooting/) instead.
+__Please Note:__ GitHub is for bug reports and contributions only - if you have a support question or a request for a customization, please contact [Ninja Forms Support](http://ninjaforms.com/contact/) instead.
 
 ## Screenshots
 
@@ -73,12 +68,12 @@ This section describes how to install the plugin and get it working.
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Visit the 'Forms' menu item in your admin sidebar
 
-Shortcodes have been re-implemented. They are used like so: `[ninja_forms_display_form id=3]` where 3 is the ID number of the form you want to display.
+Shortcodes have been re-implemented. They are used like so: `[ninja_forms id=#]` where # is the ID number of the form you want to display.
 
 ## Use
 
-For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/intro/)
+For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://ninjaforms.com/documentation/)
 
 ## Requested Features
 
-If you have any feature requests, please feel free to visit [ninjaforms.com](http://ninjaforms.com) and let us know about it.
+If you have any feature requests, please feel free to visit [ninjaforms.com](http://ninjaforms.com) and let us know!

@@ -1,8 +1,8 @@
 define([], function() {
 	var radioChannel = nfRadio.channel( 'email' );
-	var emailReg = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+	// var emailReg = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+	var emailReg = /^.+@.+\..+/i;
 	var errorID = 'invalid-email';
-	var errorMsg = 'Please enter a valid email address!';
 
 	var controller = Marionette.Object.extend( {
 
@@ -29,7 +29,9 @@ define([], function() {
 				if( emailReg.test( value ) ) {
 					nfRadio.channel( 'fields' ).request( 'remove:error', fieldID, errorID );
 				} else {
-					nfRadio.channel( 'fields' ).request( 'add:error', fieldID, errorID, errorMsg );
+					var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', fieldID );
+					var formModel  = nfRadio.channel( 'app'    ).request( 'get:form',  fieldModel.get( 'formID' ) );
+					nfRadio.channel( 'fields' ).request( 'add:error', fieldID, errorID, formModel.get( 'settings' ).changeEmailErrorMsg );
 				}				
 			} else {
 				nfRadio.channel( 'fields' ).request( 'remove:error', fieldID, errorID );
@@ -47,6 +49,7 @@ define([], function() {
 		 * @return {void}
 		 */
 		emailKeyup: function( el, model, keyCode ) {
+			
 			/*
 			 * If we pressed the 'tab' key to get to this field, return false.
 			 */
@@ -66,13 +69,24 @@ define([], function() {
 			/*
 			 * Check our value to see if it is a valid email.
 			 */
+		
 			
 			if ( 0 == value.length ) {
 				nfRadio.channel( 'fields' ).request( 'remove:error', fieldID, errorID );
-			} else if ( ! emailReg.test( value ) ) {
-				nfRadio.channel( 'fields' ).request( 'add:error', fieldID, errorID, errorMsg );
+			} else if ( ! emailReg.test( value ) && ! model.get( 'clean' ) ) {
+
+				var fieldModel = nfRadio.channel( 'fields' ).request( 'get:field', fieldID );
+				var formModel  = nfRadio.channel( 'app'    ).request( 'get:form',  fieldModel.get( 'formID' ) );
+				nfRadio.channel( 'fields' ).request( 'add:error', fieldID, errorID, formModel.get( 'settings' ).changeEmailErrorMsg );
+
+				model.removeWrapperClass( 'nf-pass' );
 			} else if ( emailReg.test( value ) ) {
 				nfRadio.channel( 'fields' ).request( 'remove:error', fieldID, errorID );
+				/*
+				 * Add nf-pass class to the wrapper.
+				 */
+				model.addWrapperClass( 'nf-pass' );
+				model.set( 'clean', false );
 			}
 		}
 	});

@@ -1,7 +1,7 @@
 define( [], function() {
 	var view = Marionette.ItemView.extend({
 		tagName: 'div',
-		template: '#nf-tmpl-main-content-actions-empty',
+		template: '#tmpl-nf-main-content-actions-empty',
 
 		onBeforeDestroy: function() {
 			jQuery( this.el ).parent().parent().removeClass( 'nf-actions-empty' );

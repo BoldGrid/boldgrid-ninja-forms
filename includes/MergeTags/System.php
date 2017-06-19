@@ -14,26 +14,19 @@ final class NF_MergeTags_System extends NF_Abstracts_MergeTags
         $this->merge_tags = Ninja_Forms()->config( 'MergeTagsSystem' );
     }
 
-    protected function system_date()
+    protected function admin_email()
     {
-        $format = 'm/d/Y';
-        return date( $format, time() );
+        return get_option( 'admin_email' );
     }
 
-    protected function system_ip()
+    protected function site_title()
     {
-        $ip = '127.0.0.1';
-        if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
-            //check ip from share internet
-            $ip = $_SERVER['HTTP_CLIENT_IP'];
-        } elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-            //to check ip is pass from proxy
-            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } elseif( ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
-            $ip = $_SERVER['REMOTE_ADDR'];
-        }
+        return get_bloginfo( 'name' );
+    }
 
-        return apply_filters( 'ninja_forms-get_ip', apply_filters( 'nf_get_ip', $ip ) );
+    protected function site_url()
+    {
+        return get_bloginfo( 'url' );
     }
 
 } // END CLASS NF_MergeTags_System

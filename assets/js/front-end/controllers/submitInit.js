@@ -12,7 +12,7 @@ define(['controllers/submitButton'], function( submitButton ) {
 
 		maybeRenderError: function() {
 			if ( nfRadio.channel( 'form' ).request( 'get:errors', this.formID ) ) {
-				var template = Marionette.TemplateCache.get( '#nf-tmpl-field-submit-error-msg' );
+				var template = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-field-submit-error-msg' );
 				return template( this );
 			} else {
 				return '';

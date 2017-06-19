@@ -1,7 +1,7 @@
 define( [], function() {
 	var view = Marionette.ItemView.extend({
 		tagName: 'div',
-		template: '#nf-tmpl-main-content-fields-empty',
+		template: '#tmpl-nf-main-content-fields-empty',
 
 		onBeforeDestroy: function() {
 			jQuery( this.el ).parent().removeClass( 'nf-fields-empty-droppable' ).droppable( 'destroy' );

@@ -34,6 +34,18 @@ final class WPN_Helper
     }
 
     /**
+     * @param $input
+     * @return array|string
+     */
+    public static function utf8_decode( $input ){
+        if ( is_array( $input ) )    {
+            return array_map( array( 'self', 'utf8_decode' ), $input );
+        }else{
+            return utf8_decode( $input );
+        }
+    }
+
+    /**
      * @param $search
      * @param $replace
      * @param $subject
@@ -197,6 +209,81 @@ final class WPN_Helper
             return array_map( array( 'self', 'sanitize_text_field' ), $data );
         }
         return sanitize_text_field( $data );
+    }
+
+    public static function get_plugin_version( $plugin )
+    {
+        $plugins = get_plugins();
+
+        if( ! isset( $plugins[ $plugin ] ) ) return false;
+
+        return $plugins[ $plugin ][ 'Version' ];
+    }
+
+    public static function is_func_disabled( $function )
+    {
+        if( ! function_exists( $function ) ) return true;
+        $disabled = explode( ',',  ini_get( 'disable_functions' ) );
+        return in_array( $function, $disabled );
+    }
+
+    public static function maybe_unserialize( $original )
+    {
+        // Repalcement for https://codex.wordpress.org/Function_Reference/maybe_unserialize
+        if ( is_serialized( $original ) ){
+            // Ported with php5.2 support from https://magp.ie/2014/08/13/php-unserialize-string-after-non-utf8-characters-stripped-out/
+            $parsed = preg_replace_callback( '!s:(\d+):"(.*?)";!s', array( 'self', 'parse_utf8_serialized' ), $original );
+            $parsed = @unserialize( $parsed );
+
+            return ( $parsed ) ? $parsed : unserialize( $original ); // Fallback if parse error.
+        }
+        return $original;
+    }
+    
+        
+    /**
+     * Function to get this installation's TLS version
+     * 
+     * Since 3.0
+     * 
+     * @return float OR false
+     */
+    public static function get_tls()
+    {
+        $php_ver = phpversion();
+        // If we have a php version lower than 5.6, bail.
+        if( version_compare( $php_ver, '5.6.0', '<' ) ) return false;
+        // Get the user's TLS version.
+
+        // If we have a php version of 7.0 or higher...
+        if( version_compare( $php_ver, '7.0.0', '>=' ) ) {
+            $meta = stream_get_meta_data( fopen( 'https://ninjaforms.com/', 'r' ) );
+            $tls = $meta[ 'crypto' ][ 'protocol' ];            
+        }
+        // Otherwise (php version between 5.6 and 7.0)...
+        else {
+            $ctx = stream_context_create( array( 'ssl' => array(
+                'capture_session_meta' => TRUE
+            ) ) );
+            $html = file_get_contents( 'https://ninjaforms.com/', FALSE, $ctx );
+            $meta = stream_context_get_options( $ctx );
+            $tls = $meta[ 'ssl' ][ 'session_meta' ][ 'protocol' ];
+            unset( $ctx );
+        }
+        // If we got a TLS version number...
+        if( false !== strpos( $tls, 'TLSv' ) ) {
+            $ver = substr( $tls, strpos( $tls, 'TLSv' ) + 4 );
+            return floatval( $ver );
+        } else {
+            return false;
+        }
+    }
+
+    private static function parse_utf8_serialized( $matches )
+    {
+        if ( isset( $matches[2] ) ){
+            return 's:'.strlen($matches[2]).':"'.$matches[2].'";';
+        }
     }
 
 } // End Class WPN_Helper

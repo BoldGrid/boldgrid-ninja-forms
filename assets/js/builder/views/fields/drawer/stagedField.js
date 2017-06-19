@@ -1,7 +1,7 @@
 define( [], function() {
 	var view = Marionette.ItemView.extend({
 		tagName: 'div',
-		template: '#nf-tmpl-drawer-staged-field',
+		template: '#tmpl-nf-drawer-staged-field',
 
 		onRender: function() {
 			this.$el = this.$el.children();

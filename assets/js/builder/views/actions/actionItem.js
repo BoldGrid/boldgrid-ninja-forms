@@ -2,7 +2,7 @@
  * Single action table row
  *
  * TODO: make dynamic
- * 
+ *
  * @package Ninja Forms builder
  * @subpackage Actions
  * @copyright (c) 2015 WP Ninjas
@@ -11,13 +11,14 @@
 define( ['views/app/itemControls'], function( itemControlsView ) {
 	var view = Marionette.LayoutView.extend({
 		tagName: 'tr',
-		template: '#nf-tmpl-action-item',
-		
+		template: '#tmpl-nf-action-item',
+
 		regions: {
 			itemControls: '.nf-item-controls'
 		},
 
 		initialize: function() {
+			this.template = nfRadio.channel( 'actions' ).request( 'get:actionItemTemplate' ) || this.template;
 			this.model.on( 'change:label', this.render, this );
 			this.model.on( 'change:editActive', this.render, this );
 			this.model.on( 'change:active', this.maybeDeactivate, this );
@@ -28,7 +29,7 @@ define( ['views/app/itemControls'], function( itemControlsView ) {
 			this.model.off( 'change:editActive', this.render );
 			this.model.off( 'change:active', this.maybeDeactivate );
 		},
-		
+
 		onRender: function() {
 			if ( this.model.get( 'editActive' ) ) {
 				jQuery( this.el ).addClass( 'active' );
@@ -37,7 +38,7 @@ define( ['views/app/itemControls'], function( itemControlsView ) {
 			}
 
 			this.maybeDeactivate();
-			
+
 			this.itemControls.show( new itemControlsView( { model: this.model } ) );
 		},
 
@@ -61,19 +62,23 @@ define( ['views/app/itemControls'], function( itemControlsView ) {
 		},
 
 		changeToggle: function( e ) {
-			var settingModel = nfRadio.channel( 'actions' ).request( 'get:settingModel', 'active' );
+			var setting = jQuery( e.target ).data( 'setting' );
+			var settingModel = nfRadio.channel( 'actions' ).request( 'get:settingModel', setting );
+			console.log( settingModel );
+			console.log( this.model );
 			nfRadio.channel( 'app' ).request( 'change:setting', e, settingModel, this.model );
 			nfRadio.channel( 'app' ).request( 'update:db' );
 		},
 
 		templateHelpers: function() {
 			return {
-				renderToggle: function() {
+				renderToggle: function( settingName ) {
+					this.settingName = settingName || 'active';
 					var actionLabel = this.label;
 					this.label = '';
-					this.value = this.active;
-					this.name = this.id + '-active';
-					var html = Marionette.TemplateCache.get( '#nf-tmpl-edit-setting-toggle' );
+					this.value = this[ this.settingName ];
+					this.name = this.id + '-' + this.settingName;
+					var html = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-edit-setting-toggle' );
 					html = html( this );
 					this.label = actionLabel;
 					return html;
@@ -81,12 +86,14 @@ define( ['views/app/itemControls'], function( itemControlsView ) {
 
 				renderTypeNicename: function() {
 					var type = nfRadio.channel( 'actions' ).request( 'get:type', this.type );
+					if ( 'undefined' == typeof type ) return;
+
 					return type.get( 'nicename' );
 				},
 
 				renderTooltip: function() {
 					if ( this.help ) {
-						return '<a class="nf-help" href="#"><span class="dashicons dashicons-admin-comments"></span></a><div class="nf-help-text">' + this.help + '</div>';
+						return '<a class="nf-help" href="#" tabindex="-1"><span class="dashicons dashicons-admin-comments"></span></a><div class="nf-help-text">' + this.help + '</div>';
 					} else {
 						return '';
 					}

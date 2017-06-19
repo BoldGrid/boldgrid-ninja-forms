@@ -119,9 +119,19 @@ define( [], function() {
 				},
 				prettifyHtml: true,
 				callbacks: {
-					onBlur: function() {
+					onBlur: function( e, context ) {
 						var value = jQuery( this ).summernote( 'code' );
 						that.updateDataModel( settingModel, dataModel, value );
+                        nfRadio.channel( 'summernote' ).trigger( 'blur', settingModel, dataModel, value );
+					},
+                    onFocus: function( e, context ) {
+                        nfRadio.channel( 'summernote' ).trigger( 'focus', e, this, context );
+                    },
+                    onKeydown: function( e, context ) {
+                        nfRadio.channel( 'summernote' ).trigger( 'keydown', e, this, context );
+                    },
+                    onKeyup: function( e, context ) {
+                        nfRadio.channel( 'summernote' ).trigger( 'keyup', e, this, context );
 					}
 				}
 			} );
@@ -151,6 +161,13 @@ define( [], function() {
 
 		renderSetting: function( settingModel, dataModel, settingView ) {
 			this.initRTE( settingModel, dataModel,settingView );
+			var linkMenu = jQuery( settingView.el ).find( '.link-button' ).next( '.dropdown-menu' ).find( 'button' );
+			linkMenu.replaceWith(function () {
+			    return jQuery( '<div/>', {
+			        class: jQuery( linkMenu ).attr( 'class' ),
+			        html: this.innerHTML
+			    } );
+			} );
 		},
 
 		destroySetting: function( settingModel, dataModel, settingView ) {
@@ -168,11 +185,11 @@ define( [], function() {
 		linkButton: function( context ) {
 			var that = this;
 			var ui = jQuery.summernote.ui;
-			var linkButton = Marionette.TemplateCache.get( '#nf-tmpl-rte-link-button' );
-			var linkDropdown = Marionette.TemplateCache.get( '#nf-tmpl-rte-link-dropdown' );
+			var linkButton = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-rte-link-button' );
+			var linkDropdown = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-rte-link-dropdown' );
 			return ui.buttonGroup([
 				ui.button({
-	            className: 'dropdown-toggle',
+	            className: 'dropdown-toggle link-button',
 	            contents: linkButton({}),
 	            tooltip: 'Insert Link',
 	            click: function( e ) {
@@ -197,9 +214,9 @@ define( [], function() {
 
 		mergeTags: function( context ) {
 			var ui = jQuery.summernote.ui;
-			var mergeTagsButton = Marionette.TemplateCache.get( '#nf-tmpl-rte-merge-tags-button' );
+			var mergeTagsButton = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-rte-merge-tags-button' );
 			return ui.button({
-				className: 'dropdown-toggle',
+				className: 'dropdown-toggle merge-tags',
 				contents: mergeTagsButton({}),
 				tooltip: 'Merge Tags'
 			}).render();
@@ -208,7 +225,7 @@ define( [], function() {
 		mediaButton: function( context ) {
 			var that = this;
 			var ui = jQuery.summernote.ui;
-			var mediaButton = Marionette.TemplateCache.get( '#nf-tmpl-rte-media-button' );
+			var mediaButton = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-rte-media-button' );
 			return ui.button({
 	            className: 'dropdown-toggle',
 	            contents: mediaButton({}),
@@ -220,7 +237,10 @@ define( [], function() {
 		},
 
 		openMediaManager: function( e, context ) {
+			context.invoke( 'editor.createRange' );
 			context.invoke( 'editor.saveRange' );
+			this.currentContext = context;
+			
 			// If the frame already exists, re-open it.
 			if ( this.meta_image_frame ) {
 				this.meta_image_frame.open();
@@ -283,11 +303,11 @@ define( [], function() {
 		},
 
 		insertMedia: function( media, context ) {
-			context.invoke( 'editor.restoreRange' );
+			this.currentContext.invoke( 'editor.restoreRange' );
 			if ( 'image' == media.type ) {
-				context.invoke( 'editor.insertImage', media.url );
+				this.currentContext.invoke( 'editor.insertImage', media.url );
 			} else {
-				context.invoke( 'editor.createLink', { text: media.filename, url: media.url } );
+				this.currentContext.invoke( 'editor.createLink', { text: media.filename, url: media.url } );
 			}
 
 		}

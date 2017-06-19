@@ -1,4 +1,4 @@
-.nf-fields {
+.nf-form-content {
     input:not([type='button']),
     textarea,
     .list-select-wrap .nf-field-element > div {
@@ -135,9 +135,19 @@
             text-align: center;
             transition: all .5s;
         }
+        &.checkbox-wrap {
+            .nf-field-element::after {
+                display: none;
+            }
+        }
     }
     .nf-error-msg {
         color: #E80000;
+    }
+}
+.checkbox-container {
+    .nf-after-field .nf-error-msg {
+        //text-align: left;
     }
 }
 .nf-pass {
@@ -158,6 +168,11 @@
             height: 50px;
             line-height: 50px;
             transition: all .5s;
+        }
+        &.checkbox-wrap {
+            .nf-field-element::after {
+                display: none;
+            }
         }
     }
     // &.field-wrap::before {

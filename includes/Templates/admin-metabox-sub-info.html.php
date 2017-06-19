@@ -9,15 +9,22 @@
         </li>
         <li class="nf-sub-info-status">
             Status: <strong><?php echo $status; ?></strong>
+            <?php do_action( 'nf_sub_edit_after_status', $post ); ?>
         </li>
         <li class="nf-sub-info-form">
             Form: <strong><?php echo $form_title; ?></strong>
         </li>
 
-        <li class="nf-sub-info-updated">Updated on: <strong><?php echo $mod_date; ?></strong></li>
-        <li class="nf-sub-info-created">Submitted on: <strong><?php echo $sub_date; ?></strong></li>
+        <li class="nf-sub-info-updated">
+            <?php _e( 'Updated on: ', 'ninja-forms' ); ?><strong><?php echo $mod_date; ?></strong>
+            <?php do_action( 'nf_sub_edit_date_modified', $post ); ?>
+        </li>
+        <li class="nf-sub-info-created">
+            <?php _e ( 'Submitted on: ', 'ninja-forms' ); ?><strong><?php echo $sub_date; ?></strong>
+            <?php do_action( 'nf_sub_edit_date_submitted', $post ); ?>
+        </li>
 
-        <li class="nf-sub-info-user">Submitted by: <strong><?php echo $user; ?></strong></li>
+        <li class="nf-sub-info-user"><?php _e( 'Submitted by: ', 'ninja-forms' ); ?><strong><?php echo $user; ?></strong></li>
 
     </ul>
 

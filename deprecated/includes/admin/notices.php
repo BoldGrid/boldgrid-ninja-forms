@@ -21,7 +21,7 @@ function nf_admin_notices( $notices ) {
         $upgrade_link = admin_url( 'admin.php?page=ninja-forms-three' );
         $notices['three_upgrade'] = array(
             'title' => __( 'Upgrade to Ninja Forms THREE', 'ninja-forms' ),
-            'msg' => sprintf( __( 'You are eligible to upgrade to the Ninja Forms THREE Release Candidate! %sUpgrade Now%s', 'ninja-forms' ), '<a target="_blank" href="' . $upgrade_link . '">', '</a>' ),
+            'msg' => sprintf( __( 'You are eligible to upgrade to Ninja Forms THREE! %sUpgrade Now%s', 'ninja-forms' ), '<a target="_blank" href="' . $upgrade_link . '">', '</a>' ),
             'link' => '',
             'int' => 0,
             'blacklist' => array( 'ninja-forms', 'ninja-forms-three' ),

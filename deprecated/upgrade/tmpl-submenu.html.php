@@ -1,31 +1,32 @@
 <img class="nf-logo" src="<?php echo NF_PLUGIN_URL . 'images/nf-logo.png'; ?>">
 <div class="nf-upgrade">
-    <h1>Congratulations!</h1>
-    <h2>You are elgible to update to Ninja Forms THREE!</h2>
+    <h1>Ninja Forms THREE is Here!</h1>
 
     <p>You are only moments away from the biggest thing to ever happen to the WordPress form building experience.</p>
 
     <p>Ninja Forms THREE is the most <em>intuitive</em>, <em>powerful</em>, and <em>enjoyable</em> form builder you will ever use.</p>
+
+    <img src="<?php echo NF_PLUGIN_URL; ?>images/ninja-forms-three.png" />
 
     <h2>Before you update, we want to make you aware of a few <strong>very important points:</strong></h2>
 
     <ol>
         <li>
             <p>
-                <span class="dashicons dashicons-warning"></span><strong>This is a pre-release.</strong>
-                <br />We have tested everything we can and consider this release ready, but if you have any issues please report them via the "Get Help" item in the "Forms" menu.
+                <span class="dashicons dashicons-welcome-widgets-menus"></span><strong>This is completely new form building experience</strong>
+                <br />The Ninja Forms 3.0 form builder looks nothing like what you're used to currently. We've spent considerable resources to improve this over all experience, but we want you to be prepared for the difference.
             </p>
         </li>
         <li>
             <p>
-                <span class="dashicons dashicons-flag"></span><strong>Calculations will not convert.</strong>
-                <br />Any forms with calculations will be converted to Ninja Forms THREE, but calculations within those forms will need recreated as a result of our vastly improved calculations system.
+                <span class="dashicons dashicons-admin-page"></span><strong><a href='https://ninjaforms.com/documentation/'>Our documentation has been updated to assist through this change</a></strong>
+                <br />Ninja Forms documentation has been completely reworked in preparation of Ninja Forms 3.0. We will continue to invest time and energy to improve this resource.
             </p>
         </li>
         <li>
             <p>
-                <span class="dashicons dashicons-warning"></span><strong>We have resources to help you with the transition to THREE.</strong>
-                <br />The Ninja Forms THREE documentation, development process, FAQ, and more <a href='http://ninjaforms.com/three/'>can be found here.</a>
+                <span class="dashicons dashicons-smiley"></span><strong><a href='https://ninjaforms.com/contact/'>We are here if you have any questions</a></strong>
+                <br />This is a big change. We've tested everything. And yet we know that things happen and questions arise. Don't hesitate to reach out to us during your transition to THREE.
             </p>
         </li>
     </ol>
@@ -44,7 +45,7 @@
 
         <h2>{{ data.title }}</h2>
 
-        {{{ data.legend }}}
+        <!--{{{ data.legend }}}-->
 
         <table>
             <thead>
@@ -84,9 +85,6 @@
         <# } #>
 
         <# if( 'checking' == data.step && data.readyToConvert ) { #>
-            <p class="opt-in">
-                <small>By upgrading to the Ninja Forms <a href="https://ninjaforms.com/three/">THREE Release Candidate</a>,<br /> you allow <a href="http://wpninjas.com/">The WP Ninjas, LLC</a> to track how Ninja Forms is used and help us make the plugin better.</small>
-            </p>
             <button class="nf-upgrade-button js-nfUpgrade-startConversion">{{data.next}}</button>
         <# } #>
     </script>

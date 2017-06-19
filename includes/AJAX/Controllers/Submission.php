@@ -4,6 +4,8 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
 {
     protected $_form_data = array();
 
+    protected $_form_cache = array();
+
     protected $_preview_data = array();
 
     protected $_form_id = '';
@@ -34,45 +36,34 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
     {
         check_ajax_referer( 'ninja_forms_display_nonce', 'security' );
 
-        if( ! $this->_form_data ) {
+        register_shutdown_function( array( $this, 'shutdown' ) );
 
-            if( function_exists( 'json_last_error' ) // Function not supported in php5.2
-                && function_exists( 'json_last_error_msg' )// Function not supported in php5.2
-                && json_last_error() ){
-                $this->_errors[] = json_last_error_msg();
-            } else {
-                $this->_errors[] = __( 'An unexpected error occurred.', 'ninja-forms' );
-            }
+        $this->form_data_check();
 
-            $this->_respond();
-        }
+        $this->_form_id = $this->_form_data['id'];
 
-        $this->_form_id = $this->_data[ 'form_id' ] = $this->_form_data['id'];
+        if( $this->is_preview() ) {
 
-        if( isset( $this->_form_data[ 'settings' ][ 'is_preview' ] ) && $this->_form_data[ 'settings' ][ 'is_preview' ] ){
-            $this->_preview_data = get_user_option( 'nf_form_preview_' . $this->_form_id );
+            $this->_form_cache = get_user_option( 'nf_form_preview_' . $this->_form_id );
 
-            if( ! $this->_preview_data ){
+            if( ! $this->_form_cache ){
                 $this->_errors[ 'preview' ] = __( 'Preview does not exist.', 'ninja-forms' );
                 $this->_respond();
             }
+        } else {
+            $this->_form_cache = get_option( 'nf_form_' . $this->_form_id );
         }
 
-        $this->_data['settings'] = $this->_form_data['settings'];
-
-        $this->_data['extra'] = $this->_form_data['extra'];
-
-        $this->_data['fields'] = $this->_form_data['fields'];
-
-        $this->validate_fields();
-
-        $this->process_fields();
+        // TODO: Update Conditional Logic to preserve field ID => [ Settings, ID ] structure.
+        $this->_form_data = apply_filters( 'ninja_forms_submit_data', $this->_form_data );
 
         $this->process();
     }
 
     public function resume()
     {
+        $this->_form_data = Ninja_Forms()->session()->get( 'nf_processing_form_data' );
+        $this->_form_cache = Ninja_Forms()->session()->get( 'nf_processing_form_cache' );
         $this->_data = Ninja_Forms()->session()->get( 'nf_processing_data' );
         $this->_data[ 'resume' ] = $_POST[ 'nf_resume' ];
 
@@ -86,28 +77,227 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
 
     protected function process()
     {
-        foreach( $this->_data[ 'fields' ] as $field_id => $field ){
-            if( $this->_preview_data ) {
-                if( ! isset( $this->_preview_data[ 'fields' ][ $field[ 'id' ] ][ 'settings' ] ) ) return;
-                $settings = $this->_preview_data[ 'fields' ][ $field[ 'id' ] ][ 'settings' ];
-            } else {
-                $field_model = Ninja_Forms()->form()->field($field['id'])->get();
-                $settings = $field_model->get_settings();
-            }
-            $this->_data[ 'fields' ][ $field_id ] = array_merge( $this->_data[ 'fields' ][ $field_id ], $settings );
-        }
+        // Init Field Merge Tags.
         $field_merge_tags = Ninja_Forms()->merge_tags[ 'fields' ];
-        $this->populate_field_merge_tags( $this->_data['fields'], $field_merge_tags );
+        $field_merge_tags->set_form_id( $this->_form_id );
 
-        if( isset( $this->_data[ 'settings' ][ 'calculations' ] ) ) {
-            $calcs_merge_tags = Ninja_Forms()->merge_tags[ 'calcs' ];
-            $this->populate_calcs_merge_tags( $this->_data[ 'settings' ][ 'calculations' ], $calcs_merge_tags );
+        // Init Calc Merge Tags.
+        $calcs_merge_tags = Ninja_Forms()->merge_tags[ 'calcs' ];
+
+        $form_settings = $this->_form_cache[ 'settings' ];
+        if( ! $form_settings ){
+            $form = Ninja_Forms()->form( $this->_form_id )->get();
+            $form_settings = $form->get_settings();
         }
 
-        if( isset( $this->_data[ 'settings' ][ 'is_preview' ] ) && $this->_data[ 'settings' ][ 'is_preview' ] ) {
-            $this->run_actions_preview();
+        $this->_data[ 'form_id' ] = $this->_form_data[ 'form_id' ] = $this->_form_id;
+        $this->_data[ 'settings' ] = $form_settings;
+        $this->_data[ 'settings' ][ 'is_preview' ] = $this->is_preview();
+        $this->_data[ 'extra' ] = $this->_form_data[ 'extra' ];
+
+        /*
+        |--------------------------------------------------------------------------
+        | Fields
+        |--------------------------------------------------------------------------
+        */
+
+        $form_fields = Ninja_Forms()->form( $this->_form_id )->get_fields();
+
+        /**
+         * The Field Processing Loop.
+         *
+         * There can only be one!
+         * For performance reasons, this should be the only time that the fields array is traversed.
+         * Anything needing to loop through fields should integrate here.
+         */
+         $validate_fields = apply_filters( 'ninja_forms_validate_fields', true, $this->_data );
+        foreach( $form_fields as $key => $field ){
+
+            if( is_object( $field ) ) {
+                $field = array(
+                    'id' => $field->get_id(),
+                    'settings' => $field->get_settings()
+                );
+            }
+
+            /** Get the field ID */
+            /*
+             * TODO: Refactor data structures to match.
+             * Preview: Field IDs are stored as the associated array key.
+             * Publish: Field IDs are stored as an array key=>value pair.
+             */
+            if( $this->is_preview() ){
+                $field[ 'id' ] = $key;
+            }
+
+            // Duplicate field ID as single variable for more readable array access.
+            $field_id = $field[ 'id' ];
+
+            // Check that the field ID exists in the submitted for data and has a submitted value.
+            if( isset( $this->_form_data[ 'fields' ][ $field_id ] ) && isset( $this->_form_data[ 'fields' ][ $field_id ][ 'value' ] ) ){
+                $field[ 'value' ] = $this->_form_data[ 'fields' ][ $field_id ][ 'value' ];
+            } else {
+                $field[ 'value' ] = '';
+            }
+
+            // Duplicate field value to settings and top level array item for backwards compatible access (ie Save Action).
+            $field[ 'settings' ][ 'value' ] = $field[ 'value' ];
+
+            // Duplicate field value to form cache for passing to the action filter.
+            $this->_form_cache[ 'fields' ][ $key ][ 'settings' ][ 'value' ] = $this->_form_data[ 'fields' ][ $field_id ][ 'value' ];
+
+            // Duplicate the Field ID for access as a setting.
+            $field[ 'settings' ][ 'id' ] = $field[ 'id' ];
+
+            // Combine with submitted data.
+            $field = array_merge( $field, $this->_form_data[ 'fields' ][ $field_id ] );
+
+            // Flatten the field array.
+            $field = array_merge( $field, $field[ 'settings' ] );
+
+            /** Validate the Field */
+            if( $validate_fields && ! isset( $this->_data[ 'resume' ] ) ){
+                $this->validate_field( $field );
+            }
+
+            /** Process the Field */
+            if( ! isset( $this->_data[ 'resume' ] ) ) {
+                $this->process_field($field);
+            }
+            $field = array_merge( $field, $this->_form_data[ 'fields' ][ $field_id ] );
+
+	        // Check for field errors after processing.
+	        if ( isset( $this->_form_data['errors']['fields'][ $field_id ] ) ) {
+		        $this->_errors['fields'][ $field_id ] = $this->_form_data['errors']['fields'][ $field_id ];
+		        $this->_respond();
+	        }
+
+            /** Populate Field Merge Tag */
+            $field_merge_tags->add_field( $field );
+
+            $this->_data[ 'fields' ][ $field_id ] = $field;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Calculations
+        |--------------------------------------------------------------------------
+        */
+
+        if( isset( $this->_form_cache[ 'settings' ][ 'calculations' ] ) ) {
+
+            /**
+             * The Calculation Processing Loop
+             */
+            foreach( $this->_form_cache[ 'settings' ][ 'calculations' ] as $calc ){
+                $eq = apply_filters( 'ninja_forms_calc_setting', $calc[ 'eq' ] );
+                $dec = ( isset( $calc[ 'dec' ] ) && $calc[ 'dec' ] ) ? $calc[ 'dec' ] : 2;
+                $calcs_merge_tags->set_merge_tags( $calc[ 'name' ], $eq, $dec, $this->_form_data['settings']['decimal_point'], $this->_form_data['settings']['thousands_sep'] );
+                $this->_data[ 'extra' ][ 'calculations' ][ $calc[ 'name' ] ] = array(
+                    'raw' => $calc[ 'eq' ],
+                    'parsed' => $eq,
+                    'value' => $calcs_merge_tags->get_formatted_calc_value( $calc[ 'name' ], $dec, $this->_form_data['settings']['decimal_point'], $this->_form_data['settings']['thousands_sep'] ),
+                );
+            }
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Actions
+        |--------------------------------------------------------------------------
+        */
+
+        /*
+         * TODO: This section has become convoluted, but will be refactored along with the submission controller.
+         */
+
+        if( isset( $this->_data[ 'resume' ] ) && $this->_data[ 'resume' ] ){
+            // On Resume Submission, the action data is loaded form the session.
+            // This section intentionally left blank.
+        } elseif( ! $this->is_preview() ) {
+            // Published forms rely on the Database for the "truth" about Actions.
+            $actions = Ninja_Forms()->form($this->_form_id)->get_actions();
+            $this->_form_cache[ 'actions' ] = array();
+            foreach( $actions as $action ){
+                $action_id = $action->get_id();
+                $this->_form_cache[ 'actions' ][ $action_id ] = array(
+                    'id' => $action_id,
+                    'settings' => $action->get_settings()
+                );
+            }
         } else {
-            $this->run_actions();
+            // Previews uses user option for stored data.
+            $preview_data = get_user_option( 'nf_form_preview_' . $this->_form_id );
+            $this->_form_cache[ 'actions' ] = $preview_data[ 'actions' ];
+        }
+        /* END form cache bypass. */
+
+        // Sort Actions by Timing Order, then by Priority Order.
+        usort( $this->_form_cache[ 'actions' ], array( $this, 'sort_form_actions' ) );
+
+        /*
+         * Filter Actions so that they can be pragmatically disabled by add-ons.
+         *
+         * ninja_forms_submission_actions
+         * ninja_forms_submission_actions_preview
+         */
+        $this->_form_cache[ 'actions' ] = apply_filters( 'ninja_forms_submission_actions', $this->_form_cache[ 'actions' ], $this->_form_cache, $this->_form_data );
+        if( $this->is_preview() ) {
+            $this->_form_cache['actions'] = apply_filters('ninja_forms_submission_actions_preview', $this->_form_cache['actions'], $this->_form_cache);
+        }
+
+        // Initialize the process actions log.
+        if( ! isset( $this->_data[ 'processed_actions' ] ) ) $this->_data[ 'processed_actions' ] = array();
+
+        /**
+         * The Action Processing Loop
+         */
+        foreach( $this->_form_cache[ 'actions' ] as $key => $action ){
+
+            /** Get the action ID */
+            /*
+             * TODO: Refactor data structures to match.
+             * Preview: Action IDs are stored as the associated array key.
+             * Publish: Action IDs are stored as an array key=>value pair.
+             */
+            if( $this->is_preview() ){
+                $action[ 'id' ] = $key;
+            }
+
+            // Duplicate the Action ID for access as a setting.
+            $action[ 'settings' ][ 'id' ] = $action[ 'id' ];
+
+            // Duplicate action ID as single variable for more readable array access.
+            $action_id = $action[ 'id' ];
+
+            // If an action has already run (ie resume submission), do not re-process.
+            if( in_array( $action[ 'id' ], $this->_data[ 'processed_actions' ] ) ) continue;
+
+            $action[ 'settings' ] = apply_filters( 'ninja_forms_run_action_settings', $action[ 'settings' ], $this->_form_id, $action[ 'id' ], $this->_form_data['settings'] );
+            if( $this->is_preview() ){
+                $action[ 'settings' ] = apply_filters( 'ninja_forms_run_action_settings_preview', $action[ 'settings' ], $this->_form_id, $action[ 'id' ], $this->_form_data['settings'] );
+            }
+
+            if( ! $action[ 'settings' ][ 'active' ] ) continue;
+
+            if( ! apply_filters( 'ninja_forms_run_action_type_' . $action[ 'settings' ][ 'type' ], TRUE ) ) continue;
+
+            $type = $action[ 'settings' ][ 'type' ];
+
+            if( ! is_string( $type ) ) continue;
+
+            $action_class = Ninja_Forms()->actions[ $type ];
+
+            if( ! method_exists( $action_class, 'process' ) ) continue;
+
+            if( $data = $action_class->process($action[ 'settings' ], $this->_form_id, $this->_data ) ){
+                $this->_data = apply_filters( 'ninja_forms_post_run_action_type_' . $action[ 'settings' ][ 'type' ], $data );
+            }
+
+//            $this->_data[ 'actions' ][ $type ][] = $action;
+
+            $this->maybe_halt( $action[ 'id' ] );
         }
 
         do_action( 'ninja_forms_after_submission', $this->_data );
@@ -115,146 +305,47 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
         $this->_respond();
     }
 
-    protected function populate_field_merge_tags( $fields, $field_merge_tags )
+    protected function validate_field( $field_settings )
     {
-        foreach( $fields as $field ){
+        $field_settings = apply_filters( 'ninja_forms_pre_validate_field_settings', $field_settings );
 
-            $field_merge_tags->add_field( $field );
+        if( ! is_string( $field_settings['type'] ) ) return;
+
+        $field_class = Ninja_Forms()->fields[ $field_settings['type'] ];
+
+        if( ! method_exists( $field_class, 'validate' ) ) return;
+
+        if( $errors = $field_class->validate( $field_settings, $this->_form_data ) ){
+            $field_id = $field_settings[ 'id' ];
+            $this->_errors[ 'fields' ][ $field_id ] = $errors;
+            $this->_respond();
         }
     }
 
-    protected function populate_calcs_merge_tags( $calcs, $calcs_merge_tags )
+    protected function process_field( $field_settings )
     {
-        foreach( $calcs as $calc ){
+        if( ! is_string( $field_settings['type'] ) ) return;
 
-            $calcs_merge_tags->set_merge_tags( $calc[ 'name' ], apply_filters( 'ninja_forms_calc_setting', $calc[ 'eq' ] ) );
-        }
-    }
+        $field_class = Ninja_Forms()->fields[ $field_settings['type'] ];
 
-    protected function validate_fields()
-    {
-        foreach( $this->_data['fields'] as $field ){
+        if( ! method_exists( $field_class, 'process' ) ) return;
 
-            $errors = $this->validate_field( $field, $this->_data );
-
-            if( ! empty( $errors ) ){
-                $this->_errors[ 'fields' ][ $field['id'] ] = $errors;
-            }
-        }
-
-        if( $this->_errors ) $this->_respond();
-    }
-
-    protected function validate_field( $field, $data )
-    {
-        if( $this->_preview_data ) {
-            if( ! isset( $this->_preview_data[ 'fields' ][ $field[ 'id' ] ][ 'settings' ] ) ) return;
-            $settings = $this->_preview_data[ 'fields' ][ $field[ 'id' ] ][ 'settings' ];
-        } else {
-            $field_model = Ninja_Forms()->form()->field($field['id'])->get();
-            $settings = $field_model->get_settings();
-        }
-
-        $field = array_merge($field, $settings );
-
-        $field_class = Ninja_Forms()->fields[ $field['type'] ];
-
-        return $errors = $field_class->validate( $field, $data );
-    }
-
-    protected function process_fields()
-    {
-        foreach( $this->_data['fields'] as $field ){
-
-            $data = $this->process_field( $field, $this->_data );
-
-            if( ! empty( $data ) ){
-                $this->_data = $data;
-            }
-        }
-    }
-
-    protected function process_field( $field, $data )
-    {
-        if( $this->_preview_data ) {
-            if( ! isset( $this->_preview_data[ 'fields' ][ $field[ 'id' ] ][ 'settings' ] ) ) return;
-            $settings = $this->_preview_data[ 'fields' ][ $field[ 'id' ] ][ 'settings' ];
-        } else {
-            $field_model = Ninja_Forms()->form()->field($field['id'])->get();
-            $settings = $field_model->get_settings();
-        }
-
-        $field = array_merge($field, $settings );
-
-        $field_class = Ninja_Forms()->fields[ $field['type'] ];
-
-
-        return $field_class->process( $field, $data );
-    }
-
-    protected function run_actions()
-    {
-        $actions = Ninja_Forms()->form( $this->_form_id )->get_actions();
-
-        usort($actions, array($this, 'sort_form_actions'));
-
-        if( ! isset( $this->_data[ 'processed_actions' ] ) ) $this->_data[ 'processed_actions' ] = array();
-        foreach( $actions as $action ){
-
-            if( in_array( $action->get_id(), $this->_data[ 'processed_actions' ] ) ) continue;
-
-            $action_settings = apply_filters( 'ninja_forms_run_action_settings', $action->get_settings(), $this->_form_id, $action->get_id(), $this->_data['settings'] );
-
-            if( ! $action_settings['active'] ) continue;
-
-            $type = $action_settings['type'];
-
-            if( ! apply_filters( 'ninja_forms_run_action_type_' . $type, TRUE ) ) continue;
-
-            $action_settings[ 'id' ] = $action->get_id();
-
-            if( ! isset( Ninja_Forms()->actions[ $type ] ) ) continue;
-
-            $data = Ninja_Forms()->actions[$type]->process($action_settings, $this->_form_id, $this->_data);
-
-            $this->_data = ( $data ) ? $data : $this->_data;
-
-            $this->maybe_halt( $action->get_id() );
-        }
-    }
-
-    protected function run_actions_preview()
-    {
-        $form = get_user_option( 'nf_form_preview_' . $this->_form_id );
-
-        if( ! isset( $form[ 'actions' ] ) || empty( $form[ 'actions' ] ) ) return;
-
-        usort( $form[ 'actions' ], array( $this, 'sort_form_actions' ) );
-
-        if( ! isset( $this->_data[ 'processed_actions' ] ) ) $this->_data[ 'processed_actions' ] = array();
-        foreach( $form[ 'actions' ] as $action_id => $action ){
-
-            if( in_array( $action_id, $this->_data[ 'processed_actions' ] ) ) continue;
-
-            $action_settings = apply_filters( 'ninja_forms_run_action_settings_preview', $action[ 'settings' ], $this->_form_id, '', $this->_data['settings'] );
-
-            if( ! $action_settings['active'] ) continue;
-
-            $type = $action_settings['type'];
-
-            $data = Ninja_Forms()->actions[ $type ]->process( $action_settings, $this->_form_id, $this->_data );
-
-            $this->_data = ( $data ) ? $data : $this->_data;
-
-            $this->maybe_halt( $action_id );
+        if( $data = $field_class->process( $field_settings, $this->_form_data ) ){
+            $this->_form_data = $data;
         }
     }
 
     protected function maybe_halt( $action_id )
     {
+        if( isset( $this->_data[ 'errors' ] ) && $this->_data[ 'errors' ] ){
+            $this->_respond();
+        }
+
         if( isset( $this->_data[ 'halt' ] ) && $this->_data[ 'halt' ] ){
 
             Ninja_Forms()->session()->set( 'nf_processing_data', $this->_data );
+            Ninja_Forms()->session()->set( 'nf_processing_form_data', $this->_form_data );
+            Ninja_Forms()->session()->set( 'nf_processing_form_cache', $this->_form_cache );
 
             $this->_respond();
         }
@@ -288,5 +379,42 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
         }
 
         return ( $a->get_timing() < $b->get_timing() ) ? -1 : 1;
+    }
+
+    public function shutdown()
+    {
+        $error = error_get_last();
+        if( $error !== NULL && in_array( $error[ 'type' ], array( E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR ) ) ) {
+
+            $this->_errors[ 'form' ][ 'last' ] = __( 'The server encountered an error during processing.', 'ninja-forms' );
+
+            if( current_user_can( 'manage_options' ) && isset( $error[ 'message' ] ) ){
+                $this->_errors[ 'form' ][ 'last_admin' ] = '<pre>' . $error[ 'message' ] . '</pre>';
+            }
+
+            $this->_errors[ 'last' ] = $error;
+            $this->_respond();
+        }
+    }
+
+    protected function form_data_check()
+    {
+        if( $this->_form_data ) return;
+
+        if( function_exists( 'json_last_error' ) // Function not supported in php5.2
+            && function_exists( 'json_last_error_msg' )// Function not supported in php5.2
+            && json_last_error() ){
+            $this->_errors[] = json_last_error_msg();
+        } else {
+            $this->_errors[] = __( 'An unexpected error occurred.', 'ninja-forms' );
+        }
+
+        $this->_respond();
+    }
+
+    protected function is_preview()
+    {
+        if( ! isset( $this->_form_data[ 'settings' ][ 'is_preview' ] ) ) return false;
+        return $this->_form_data[ 'settings' ][ 'is_preview' ];
     }
 }

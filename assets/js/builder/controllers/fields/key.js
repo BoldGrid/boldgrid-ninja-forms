@@ -2,7 +2,7 @@
  * When we add a new field, update its key.
  *
  * When we change the key, update any refs to the key.
- * 
+ *
  * @package Ninja Forms builder
  * @subpackage Fields
  * @copyright (c) 2015 WP Ninjas
@@ -26,13 +26,16 @@ define( [], function() {
 
 		/**
 		 * Add a key to our new field model.
-		 * 
+		 *
 		 * @since 3.0
 		 * @param backbone.model model new field model
 		 * @return void
 		 */
 		newFieldKey: function( model ) {
-			var key = this.keyExists( model.get( 'type' ) );
+			var d = new Date();
+			var n = d.valueOf();
+			var key = this.slugify( model.get( 'type' ) + '_' + n );
+
 			model.set( 'key', key, { silent: true } );
 
 			if( 'undefined' == model.get( 'manual_key' ) ) {
@@ -50,17 +53,19 @@ define( [], function() {
 				 * When we're editing settings, we expect the edits to fire one at a time.
 				 * Since we're calling this in the middle of our label update, anything that inquires about what has changed after we set our key will see both label and key.
 				 * We need to remove the label from our model.changed property so that all that has changed is the key.
-				 * 
+				 *
 				 */
 				delete model.changed.label;
-				var key = this.keyExists( model.get( 'label' ) );
-				model.set( 'key', key );				
+				var d = new Date();
+				var n = d.valueOf();
+				var key = this.slugify( model.get( 'label' ) + '_' + n );
+				model.set( 'key', key );
 			}
 		},
 
 		/**
 		 * When a field key is updated, find any merge tags using the key and update them.
-		 * 
+		 *
 		 * @since  3.0
 		 * @param  backbone.model model field model
 		 * @return void
@@ -82,6 +87,14 @@ define( [], function() {
 			var error = false;
 			if ( '' == jQuery.trim( key ) ) {
 				error = 'Field keys can\'t be empty. Please enter a key.';
+			} else if ( key != key.toLowerCase() ) {
+				error = 'Field keys must be lowercase.';
+			} else if ( key != key.replace( ' ', '_' ) ) {
+				error = 'Field keys must cannot use spaces. Separate with "_" instead.';
+			} else if ( '_' == key.slice( -1 ) ) {
+				error = 'Field keys cannot end with a "_"';
+			} else if ( key != this.slugify( key ) ) {
+				error = 'Invalid Format.';
 			} else if ( key != this.keyExists( key, dataModel ) ) {
 				error = 'Field keys must be unique. Please enter another key.'
 			}
@@ -95,7 +108,10 @@ define( [], function() {
 		},
 
 		keyExists: function( key, dataModel ) {
-			key = jQuery.slugify( key, { separator: '_' } );
+			var newKey = this.slugify( key );
+			if ( 0 != newKey.length ) {
+				key = newKey;
+			}
 			var fieldCollection = nfRadio.channel( 'fields' ).request( 'get:collection' );
 			var x = 1;
 			var testKey = key;
@@ -105,9 +121,14 @@ define( [], function() {
 					x++;
 				}
 			} );
+
 			key = testKey;
 
 			return key;
+		},
+
+		slugify: function( string ){
+			return jQuery.slugify( string, { separator: '_' } )
 		}
 	});
 

@@ -153,6 +153,86 @@ return apply_filters( 'ninja_forms_form_display_settings', array(
         'help' => __( 'We\'ve noticed that don\'t have a submit button on your form. We can add one for your automatically.', 'ninja-forms' ),
     ),
 
+    /*
+     * Form Labels
+     */
 
+    'custom_messages' => array(
+        'name' => 'custom_messages',
+        'type' => 'fieldset',
+        'label' => __( 'Custom Labels', 'ninja-forms' ),
+        'width' => 'full',
+        'group' => 'advanced',
+        'settings' => array(
+            array(
+                'name' => 'changeEmailErrorMsg',
+                'type' => 'textbox',
+                'label' => __( 'Please enter a valid email address!', 'ninja-forms' ),
+                'width' => 'full'
+            ),
+            array(
+                'name' => 'confirmFieldErrorMsg',
+                'type' => 'textbox',
+                'label' => __( 'These fields must match!', 'ninja-forms' ),
+                'width' => 'full'
+            ),
+            array(
+                'name' => 'fieldNumberNumMinError',
+                'type' => 'textbox',
+                'label' => __( 'Number Min Error', 'ninja-forms' ),
+                'width' => 'full'
+            ),
+            array(
+                'name' => 'fieldNumberNumMaxError',
+                'type' => 'textbox',
+                'label' => __( 'Number Max Error', 'ninja-forms' ),
+                'width' => 'full'
+            ),
+            array(
+                'name' => 'fieldNumberIncrementBy',
+                'type' => 'textbox',
+                'label' => __( 'Please increment by ', 'ninja-forms' ),
+                'width' => 'full'
+            ),
+            array(
+                'name' => 'formErrorsCorrectErrors',
+                'type' => 'textbox',
+                'label' => __( 'Please correct errors before submitting this form.', 'ninja-forms' ),
+                'width' => 'full'
+            ),
+            array(
+                'name' => 'validateRequiredField',
+                'type' => 'textbox',
+                'label' => __( 'This is a required field.', 'ninja-forms' ),
+                'width' => 'full'
+            ),
+            array(
+                'name' => 'honeypotHoneypotError',
+                'type' => 'textbox',
+                'label' => __( 'Honeypot Error', 'ninja-forms' ),
+                'width' => 'full'
+            ),
+            array(
+                'name' => 'fieldsMarkedRequired',
+                'type' => 'textbox',
+                'label' => sprintf( __( 'Fields marked with an %s*%s are required', 'ninja-forms' ), '<span class="ninja-forms-req-symbol">', '</span>' ),
+                'width' => 'full'
+            ),
+        )
+    ),
+
+    /*
+     * CURRENCY
+     */
+
+    'currency' => array(
+        'name'      => 'currency',
+        'type'    => 'select',
+        'options' => array_merge( array( array( 'label' => __( 'Plugin Default', 'ninja-forms' ), 'value' => '' ) ), Ninja_Forms::config( 'Currency' ) ),
+        'label'   => __( 'Currency', 'ninja-forms' ),
+        'width' => 'full',
+        'group' => 'advanced',
+        'value'   => ''
+    ),
 
 ));

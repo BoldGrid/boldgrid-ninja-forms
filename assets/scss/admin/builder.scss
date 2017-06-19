@@ -55,8 +55,6 @@ All styles used for displaying table content
 
 @import "media-queries";
 
-@import "rtl";
-
 #nf-app-admin-header {
     background: #EBEDEE;
     height: 60px;
@@ -88,6 +86,36 @@ All styles used for displaying table content
         filter: alpha(opacity=100);
         -webkit-transition: all 1.0s ease;
         transition: all 1.0s ease;
+    }
+    .nf-cta-bubble {
+        background: $cta_color;
+        border: 1px solid $cta_color;
+        border-radius: 6px;
+        color: #fff;
+        display: block;
+        float: left;
+        font-size: 14px;
+        margin: 6px 0 0 20px;
+        padding: 5px 10px;
+        position: relative;
+        text-decoration: none;
+        width: 360px;
+        &::after {
+            display: block;
+            content: "";
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid $cta_color;
+            position: absolute;
+            left: -10px;
+            top: 13px;
+        }
+        &:hover {
+            background: #fff;
+            color: $cta-color;
+        }
     }
 }
 
@@ -130,3 +158,6 @@ body.fakescroll-grabbed{
     cursor     : -moz-grabbing;
     cursor     : -webkit-grabbing;
 }
+
+@import "rtl";
+

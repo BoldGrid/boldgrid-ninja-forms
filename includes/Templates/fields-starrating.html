@@ -1,9 +1,9 @@
-<script id="nf-tmpl-field-starrating" type="text/template">
+<script id="tmpl-nf-field-starrating" type="text/template">
 	<span class="starrating">
-		<%= renderRatings() %>
+		{{{ data.renderRatings() }}}
     </span>
 </script>
 
-<script id="nf-tmpl-field-starrating-star" type="text/template">
-	<input type="radio" name="nf-field-<%= id %>" class="<%= classes %> nf-element" value="<%= num %>" />
+<script id="tmpl-nf-field-starrating-star" type="text/template">
+	<input type="radio" name="nf-field-{{{ data.id }}}" class="{{{ data.classes }}} nf-element" value="{{{ data.num }}}" />
 </script>

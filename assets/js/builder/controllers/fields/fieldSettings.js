@@ -13,10 +13,17 @@ define( ['models/app/settingCollection'], function( settingCollection ) {
 
 			// Responds to requests for settings models.
 			nfRadio.channel( 'fields' ).reply( 'get:settingModel', this.getSettingModel, this );
+			
+			// Responds to requests for our collection.
+			nfRadio.channel( 'fields' ).reply( 'get:settingCollection', this.getSettingCollection, this );
 		},
 
 		getSettingModel: function( name ) {
 			return this.collection.findWhere( { name: name } );
+		},
+
+		getSettingCollection: function() {
+			return this.collection;
 		}
 
 	});

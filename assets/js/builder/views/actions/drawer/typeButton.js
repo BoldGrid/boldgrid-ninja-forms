@@ -11,7 +11,7 @@
 define( [], function() {
 	var view = Marionette.ItemView.extend({
 		tagName: 'div',
-		template: '#nf-tmpl-drawer-action-type-button',
+		template: '#tmpl-nf-drawer-action-type-button',
 
 		onRender: function() {
 			this.$el = this.$el.children();

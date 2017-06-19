@@ -27,10 +27,16 @@ class NF_Fields_Textarea extends NF_Abstracts_Input
 
         $this->_settings[ 'default' ][ 'type' ] = 'textarea';
         $this->_settings[ 'placeholder' ][ 'type' ] = 'textarea';
+
+        add_filter( 'ninja_forms_merge_tag_value_' . $this->_name, array( $this, 'filter_merge_tag_value' ), 10, 2 );
     }
 
     public function admin_form_element( $id, $value )
     {
         return "<textarea class='widefat' name='fields[$id]'>$value</textarea>";
+    }
+
+    public function filter_merge_tag_value( $value, $field ) {
+        return wpautop( $value );
     }
 }

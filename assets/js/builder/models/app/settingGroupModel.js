@@ -6,10 +6,16 @@
  * @copyright (c) 2015 WP Ninjas
  * @since 3.0
  */
-define( [], function() {
+define( [ 'models/app/settingCollection' ], function( SettingCollection ) {
 	var model = Backbone.Model.extend( {
 		defaults: {
 			display: false
+		},
+
+		initialize: function( options ) {
+			if ( false == this.get( 'settings' ) instanceof Backbone.Collection ) {
+				this.set( 'settings', new SettingCollection( this.get( 'settings' ) ) );
+			}
 		}
 	} );
 	

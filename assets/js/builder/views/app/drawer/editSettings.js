@@ -1,7 +1,7 @@
 define( ['views/app/drawer/itemSettingGroupCollection'], function( itemSettingGroupCollectionView ) {
 	var view = Marionette.LayoutView.extend({
 		tagName: 'div',
-		template: '#nf-tmpl-drawer-content-edit-settings',
+		template: '#tmpl-nf-drawer-content-edit-settings',
 
 		regions: {
 			settingTitle: '.nf-setting-title',
@@ -25,7 +25,7 @@ define( ['views/app/drawer/itemSettingGroupCollection'], function( itemSettingGr
 	    	return {
 	    		maybeRenderTitle: function() {
 	    			if ( 'undefined' !== typeof this.type ) {
-	    				var title = Marionette.TemplateCache.get( '#nf-tmpl-drawer-content-edit-settings-title' );
+	    				var title = nfRadio.channel( 'app' ).request( 'get:template',  '#tmpl-nf-drawer-content-edit-settings-title' );
 	    				return title( this );
 	    			} else {
 	    				return '';

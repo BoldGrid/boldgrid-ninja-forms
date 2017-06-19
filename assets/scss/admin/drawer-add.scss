@@ -42,7 +42,8 @@
         content: "";
         display: block;
     }
-    &.nf-droppable-active {
+    &.nf-droppable-active,
+    &.nf-staged-fields-active {
         background: #F8F8F9;
         border: 4px solid #F8F8F9;
         border-radius: 4px;
