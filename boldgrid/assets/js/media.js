@@ -18,7 +18,7 @@ IMHWPB.Media = function( $ ) {
 		}
 	}
 
-	
+
 	/**
 	 * Create New Tabs for the newly created window This function is called by
 	 * an iframe
@@ -33,7 +33,7 @@ IMHWPB.Media = function( $ ) {
 		} );
 		return tabs_html;
 	};
-	
+
 	/**
 	 * When one of our iframes load up, activate the layout appearance
 	 */
@@ -63,11 +63,11 @@ IMHWPB.Media = function( $ ) {
 
 		// Everytime a tab is clicked we should display the appropriate section
 		self.register_tab_click_events();
-		
+
 		self.insert_to_page_event();
-		
+
 	};
-	
+
 
 	/**
 	 * Duplicate the media navbars
@@ -118,17 +118,17 @@ IMHWPB.Media = function( $ ) {
 							$inserting = $(html_to_insert);
 						}
 
-						if ( $inserting && IMHWPB.WP_MCE_Draggable.draggable_instance && 
+						if ( $inserting && IMHWPB.WP_MCE_Draggable.draggable_instance &&
 							$inserting.is( IMHWPB.WP_MCE_Draggable.draggable_instance.row_selectors_string )) {
-							
+
 							var current_node = tinymce.activeEditor.selection.getNode();
 							var $closest_column = $(current_node).closest_context(
-								IMHWPB.WP_MCE_Draggable.draggable_instance.column_selectors_string, 
+								IMHWPB.WP_MCE_Draggable.draggable_instance.column_selectors_string,
 								IMHWPB.WP_MCE_Draggable.draggable_instance.$master_container );
 							var $row = $(current_node)
-								.closest_context( IMHWPB.WP_MCE_Draggable.draggable_instance.row_selectors_string, 
+								.closest_context( IMHWPB.WP_MCE_Draggable.draggable_instance.row_selectors_string,
 									IMHWPB.WP_MCE_Draggable.draggable_instance.$master_container);
-							
+
 							//If We are inside a column, prepend
 							if ( $closest_column.length && $closest_column.is('div') ) {
 								$closest_column.prepend( $inserting );
@@ -139,7 +139,7 @@ IMHWPB.Media = function( $ ) {
 							} else {
 								$(tinyMCE.activeEditor.getBody()).prepend( $inserting );
 							}
-							
+
 							IMHWPB.WP_MCE_Draggable.draggable_instance.validate_markup();
 							tinymce.activeEditor.fire('setContent');
 							tinymce.activeEditor.focus();
@@ -152,14 +152,14 @@ IMHWPB.Media = function( $ ) {
 					}
 				} );
 	};
-	
+
 	/**
 	 * Disabled or enables the insert to page button
-	 */ 
+	 */
 	this.toggle_insert_button = function (enable) {
 		var $insert_button = $('.media-toolbar').find('.button');
 		if (enable === true) {
-			$insert_button.removeClass('button-primary-disabled');   
+			$insert_button.removeClass('button-primary-disabled');
 		} else if (enable === false) {
 			$insert_button.addClass('button-primary-disabled');
 		}
@@ -182,7 +182,7 @@ IMHWPB.Media = function( $ ) {
 			} );
 		}
 	}
-	
+
 	/**
 	 * All actions that occur when an iframe is loaded.
 	 */
@@ -212,20 +212,20 @@ IMHWPB.Media = function( $ ) {
 		self.register_sidebar_event_handlers();
 		self.register_attachment_click_events( thumnail_action,
 			IMHWPB.Globals[ 'tab-details' ][ 'selection-type' ] );
-	
+
 		//This needs to occur after  register_attachment_click_events
 		//so, it cannot be done in the switch
 		if ( IMHWPB.Globals[ 'tab-details' ][ 'type' ] == 'shortcode-form' ) {
 			self.preselect_form();
 		}
 	};
-	
+
 	this.prevent_attachment_content_actions = function () {
 		$('.centered-content-boldgrid').on('click', 'button, a', function () {
 			return false;
 		});
 	};
-	
+
 	this.preselect_form = function () {
 		parent.jQuery(parent).on('boldgrid_edit_form', function ( event, form ) {
 			self.select_form_action( form );
@@ -235,19 +235,19 @@ IMHWPB.Media = function( $ ) {
 			self.select_form_action( parent.IMHWPB.editform );
 		}
 	};
-	
+
 	this.select_form_action = function ( form ) {
 		var settings = form.shortcode.attrs.named;
 		var $media_sidebar = $('.media-sidebar-boldgrid');
 		self.deselect_all_attachments();
-		
+
 		var $title_checkbox = $media_sidebar.find("#title-toggle-boldgrid");
 		var $desc_checkbox = $media_sidebar.find("#description-enable-boldgrid");
 		var $ajax_checkbox = $media_sidebar.find("#ajax-enable-boldgrid");
 		self.preselect_checkbox($title_checkbox, settings.title);
 		self.preselect_checkbox($desc_checkbox, settings.description);
 		self.preselect_checkbox($ajax_checkbox, settings.ajax);
-		
+
 		//Preset Tab index
 		var $tab_index_wrapper = $media_sidebar.find('#tabindex-wrapper-boldgrid');
 		if ( settings.tabindex ) {
@@ -257,10 +257,10 @@ IMHWPB.Media = function( $ ) {
 			$tab_index_wrapper.find('input').val('');
 			$tab_index_wrapper.addClass('hidden');
 		}
-		
+
 		$('[data-form-id-boldgrid="' + settings.id + '"]').find('.attachment-preview').click();
 	}
-	
+
 	this.preselect_checkbox = function ( $checkbox, value ) {
 		if ($checkbox.length) {
 			if ( value == "true" ) {
@@ -272,22 +272,22 @@ IMHWPB.Media = function( $ ) {
 			}
 		}
 	};
-	
+
 	this.bind_checkbox_selections = function () {
 		var $media_sidebar = $('.media-sidebar-boldgrid');
 		$media_sidebar.on('submit', 'form', function () {
 			return false;
 		});
-		
+
 		$media_sidebar.find('#title-toggle-boldgrid').on('click', function () {
 			self.set_sidebar_title_visibility();
 		});
-		
+
 		$media_sidebar.find('#description-enable-boldgrid').on('click', function () {
 			self.set_sidebar_description_visibility();
 		});
 	};
-	
+
 	this.set_sidebar_title_visibility = function () {
 		var $title = $('.media-sidebar-boldgrid').find('.gform_title');
 		if ($('#title-toggle-boldgrid').prop('checked')) {
@@ -310,7 +310,7 @@ IMHWPB.Media = function( $ ) {
 			event.preventDefault();
 			$('#tabindex-wrapper-boldgrid').toggleClass('hidden');
 		});
-		
+
 	};
 
 	/**
@@ -336,7 +336,7 @@ IMHWPB.Media = function( $ ) {
 		};
 		self.find_api_content( $( '.attachment.selected' ) );
 	};
-	
+
 	/**
 	 * Initializes the binds needed for searching for maps
 	 */
@@ -346,11 +346,11 @@ IMHWPB.Media = function( $ ) {
 			e.preventDefault();
 			self.perform_search();
 		} );
-		
+
 		$('.media-sidebar .searchbutton').on('click', function () {
 			self.perform_search();
 		});
-		
+
 		$( '#search-map-imhwpb select[name="select-size-imhwpb"]' ).on('change', function () {
 			if ($(this).val() == 'custom') {
 				$('#map-dimensions-imhwpb').removeClass('hidden');
@@ -373,7 +373,7 @@ IMHWPB.Media = function( $ ) {
 	 */
 	this.find_selected_elements = function() {
 		var html = '';
-		
+
 		switch( IMHWPB.Globals[ 'tab-details' ][ 'type' ]) {
 			case 'html':
 				$( '.attachment[aria-checked="true"]' ).each( function() {
@@ -392,22 +392,22 @@ IMHWPB.Media = function( $ ) {
 				html = self.create_form_shortcode ( form_id );
 				break;
 		}
-		
+
 		return html;
 	};
-	
+
 	this.create_form_shortcode = function ( form_id ) {
 		var $media_sidebar = $('.media-sidebar-boldgrid');
 		var title 		= $media_sidebar.find('#title-toggle-boldgrid').prop('checked');
 		var description = $media_sidebar.find('#description-enable-boldgrid').prop('checked');
 		var ajax 		= $media_sidebar.find('#ajax-enable-boldgrid').prop('checked');
 		var tabindex	= $media_sidebar.find('#tabindex-wrapper-boldgrid input').val();
-		
+
 		title = title ? ' title="true"' : ' title="false"';
 		description = description ? ' description="true"' : ' description="false"';
 		ajax = ajax ? ' ajax="true"' : '';
 		tabindex = tabindex != '' ? ' tabindex="' + tabindex + '"' : '';
-		
+
 		return '[ninja_forms id="' + form_id + '"]';
 	};
 
@@ -445,15 +445,15 @@ IMHWPB.Media = function( $ ) {
 	}
 
 	/**
-	 * Populates sidebar with new data 
+	 * Populates sidebar with new data
 	 */
 	this.find_api_content = function( $attachment ) {
 		var tab_name = $attachment.closest( '.attachments' ).data( 'tabname' );
 		var map_params = IMHWPB.Globals.tabs[ tab_name ][ 'content' ][ $attachment.data( 'id' ) ][ 'map-params' ];
 
-		if ( !self.search_params.center || 
+		if ( !self.search_params.center ||
 				IMHWPB.Globals[ 'tab-details' ]['default-location-setting'] == self.search_params) {
-			
+
 			if ( self.location ) {
 				self.search_params = self.location;
 			} else {
@@ -490,7 +490,7 @@ IMHWPB.Media = function( $ ) {
 			parent.IMHWPB.Media.instance.toggle_insert_button(true);
 		}
 	};
-	
+
 	this.insert_markup = function ( $attachment ) {
 		var $media_sidebar = $( '.media-sidebar' );
 		var form_markup = $attachment.find('.centered').html();
@@ -502,22 +502,22 @@ IMHWPB.Media = function( $ ) {
 		});
 
 		var form_id = $attachment.data('form-id-boldgrid');
-		
+
 		//Set edit link
 		self.insert_edit_link( form_id );
-		
+
 		//Make sure that settings are carried over
 		self.set_sidebar_title_visibility();
 		self.set_sidebar_description_visibility();
 		parent.IMHWPB.Media.instance.toggle_insert_button(true);
 	};
-	
+
 	this.insert_edit_link = function ( form_id ) {
 		var src = IMHWPB.Globals['admin-url'] + 'admin.php?page=ninja-forms&tab=builder&form_id=' + form_id;
 		var $media_sidebar = $( '.media-sidebar' )
 			.find('.editform-link a:first').attr('href', src );
 	};
-	
+
 	/**
 	 * Take an image and replace the src  in the sidebar
 	 */
@@ -575,12 +575,12 @@ IMHWPB.Media = function( $ ) {
 			e.stopPropagation();
 			var $attachment = $( this ).closest( '.attachment' );
 			self.deselect_attachment( $attachment );
-			
+
 			$('.media-sidebar > div').addClass('hidden');
 			if ($('.attachment.selected').length == 0) {
 				parent.IMHWPB.Media.instance.toggle_insert_button(false)
 			}
-			
+
 		} );
 	};
 };

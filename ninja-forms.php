@@ -3,7 +3,7 @@
 Plugin Name: BoldGrid Ninja Forms
 Plugin URI: http://www.boldgrid.com/
 Description: BoldGrid Ninja Forms
-Version: 1.2.1
+Version: 1.4.2
 Author: BoldGrid.com
 Author URI: http://www.boldgrid.com/
 Text Domain: boldgrid-ninja-forms
@@ -42,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Define Form version.
 if ( ! defined( 'BOLDGRID_NINJA_FORM_VERSION' ) ) {
-	define( 'BOLDGRID_NINJA_FORM_VERSION', '1.2.1' );
+	define( 'BOLDGRID_NINJA_FORM_VERSION', implode( get_file_data( __FILE__, array( 'Version' ), 'plugin' ) ) );
 }
 
 // Define boldgrid-ninja-forms Path.
@@ -55,36 +55,10 @@ if ( ! defined( 'BOLDGRID_NINJA_FORMS_CONFIGDIR' ) ) {
 	define( 'BOLDGRID_NINJA_FORMS_CONFIGDIR', BOLDGRID_NINJA_FORMS_PATH . '/boldgrid/includes/config' );
 }
 
-// If DOING_CRON, then check if this plugin should be auto-updated.
-if ( defined( 'DOING_CRON' ) && DOING_CRON ){
-	// Ensure required definitions for pluggable.
-	if ( ! defined( 'AUTH_COOKIE' ) ) {
-		define( 'AUTH_COOKIE', null );
-	}
-
-	if ( ! defined( 'LOGGED_IN_COOKIE' ) ) {
-		define( 'LOGGED_IN_COOKIE', null );
-	}
-
-	// Load the pluggable class, if needed.
-	require_once ABSPATH . 'wp-includes/pluggable.php';
-
-	// Include the update class.
-	require_once BOLDGRID_NINJA_FORMS_PATH . '/boldgrid/includes/class-boldgrid-ninja-forms-update.php';
-
-	// Instantiate the update class.
-	$plugin_update = new Boldgrid_Ninja_Forms_Update();
-
-	// Check and update plugins.
-	$plugin_update->wp_update_this_plugin();
-}
-
 // Add BoldGrid Functionality.
 require_once BOLDGRID_NINJA_FORMS_PATH . '/boldgrid/includes/class-boldgrid-ninja-forms.php';
 $boldgrid_ninja_forms = new Boldgrid_Ninja_Forms();
 $boldgrid_ninja_forms->init();
-
-/* @formatter:off */
 
 require_once dirname( __FILE__ ) . '/lib/NF_VersionSwitcher.php';
 require_once dirname( __FILE__ ) . '/lib/NF_Tracking.php';

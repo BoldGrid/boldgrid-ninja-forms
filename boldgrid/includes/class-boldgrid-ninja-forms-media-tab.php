@@ -25,27 +25,27 @@ class Boldgrid_Ninja_Forms_Media_Tab {
 	 * @var array
 	 */
 	protected $configs;
-	
+
 	/**
 	 * Paths needed for including other files
 	 *
 	 * @var array
 	 */
 	protected $path_configs;
-	
+
 	/**
 	 * The directory were assets belong should be prefixed by this path name
 	 *
 	 * @var string
 	 */
 	protected $asset_path_prefix = null;
-	
+
 	/**
 	 * Constructor
 	 *
-	 * @param unknown $configs        	
-	 * @param unknown $path_configs        	
-	 * @param string $asset_path_prefix        	
+	 * @param unknown $configs
+	 * @param unknown $path_configs
+	 * @param string $asset_path_prefix
 	 *
 	 * @return void
 	 */
@@ -54,7 +54,7 @@ class Boldgrid_Ninja_Forms_Media_Tab {
 		$this->path_configs = $path_configs;
 		$this->asset_path_prefix = $asset_path_prefix;
 	}
-	
+
 	/**
 	 * Accessor $path_configs;
 	 *
@@ -63,7 +63,7 @@ class Boldgrid_Ninja_Forms_Media_Tab {
 	public function get_path_configs() {
 		return $this->path_configs;
 	}
-	
+
 	/**
 	 * Accessor $configs
 	 *
@@ -72,20 +72,20 @@ class Boldgrid_Ninja_Forms_Media_Tab {
 	public function get_configs() {
 		return $this->configs;
 	}
-	
+
 	/**
 	 * Set configs
 	 *
-	 * @param array $configs        	
+	 * @param array $configs
 	 *
 	 * @return bool
 	 */
 	public function set_configs( $configs ) {
 		$this->configs = $configs;
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Add actions to create tabs
 	 *
@@ -93,19 +93,19 @@ class Boldgrid_Ninja_Forms_Media_Tab {
 	 */
 	public function create() {
 		$configs = $this->get_configs();
-		
+
 		add_filter( 'media_upload_tabs', array (
 			$this,
-			'media_upload_tab_name' 
+			'media_upload_tab_name'
 		) );
-		
-		add_action( 'media_upload_' . $configs['slug'], 
+
+		add_action( 'media_upload_' . $configs['slug'],
 			array (
 				$this,
-				'media_upload_tab_content' 
+				'media_upload_tab_content'
 			) );
 	}
-	
+
 	/**
 	 * Return the markup for the tab iframe
 	 *
@@ -116,22 +116,22 @@ class Boldgrid_Ninja_Forms_Media_Tab {
 		include $configs['attachments-template'];
 		include $configs['sidebar-template'];
 	}
-	
+
 	/**
 	 * Create a vertical tab
 	 *
-	 * @param array $tabs        	
+	 * @param array $tabs
 	 *
 	 * @return array
 	 */
 	public function media_upload_tab_name( $tabs ) {
 		$configs = $this->get_configs();
 		$newtab = array (
-			$configs['slug'] => $configs['title'] 
+			$configs['slug'] => $configs['title']
 		);
 		return array_merge( $tabs, $newtab );
 	}
-	
+
 	/**
 	 * Create a tabs content
 	 *
@@ -140,12 +140,12 @@ class Boldgrid_Ninja_Forms_Media_Tab {
 	public function media_upload_tab_content() {
 		add_action( 'admin_enqueue_scripts', array (
 			$this,
-			'enqueue_header_content' 
+			'enqueue_header_content'
 		) );
-		
+
 		return wp_iframe( array (
 			$this,
-			'print_content' 
+			'print_content'
 		) );
 	}
 	/**
@@ -155,36 +155,36 @@ class Boldgrid_Ninja_Forms_Media_Tab {
 	 */
 	public function enqueue_header_content() {
 		wp_enqueue_media();
-		
+
 		wp_enqueue_script( 'custom-header' );
-		
+
 		// Styles for MediaTab iFrame
-		wp_register_style( 'media-tab-css-imhwpb', 
-			plugins_url( $this->asset_path_prefix . '/assets/css/media-tab.css', 
+		wp_register_style( 'media-tab-css-imhwpb',
+			plugins_url( $this->asset_path_prefix . '/assets/css/media-tab.css',
 				$this->path_configs['plugin_filename'] ), array (
-				'media-views' 
+				'media-views'
 			), BOLDGRID_NINJA_FORM_VERSION );
-		
+
 		wp_enqueue_style( 'media-tab-css-imhwpb' );
-		
+
 		// Media Tab Javascript
-		wp_register_script( 'media-imhwpb', 
-			plugins_url( $this->asset_path_prefix . '/assets/js/media.js', 
+		wp_register_script( 'media-imhwpb',
+			plugins_url( $this->asset_path_prefix . '/assets/js/media.js',
 				$this->path_configs['plugin_filename'] ), array (), BOLDGRID_NINJA_FORM_VERSION );
-		
+
 		$configs = $this->get_configs();
-		
+
 		// Pass Variables into JS
-		wp_localize_script( 'media-imhwpb', 'IMHWPB', 
+		wp_localize_script( 'media-imhwpb', 'IMHWPB',
 			array (
 				'Globals' => array (
 					'isIframe' => true,
 					'tabs' => $configs['route-tabs'],
 					'tab-details' => $configs['tab-details'],
-					'admin-url' => get_admin_url() 
-				) 
+					'admin-url' => get_admin_url()
+				)
 			) );
-		
+
 		wp_enqueue_script( 'media-imhwpb' );
 	}
 }

@@ -13,6 +13,10 @@ BoldGrid Ninja Forms is a webform builder with unparalleled ease of use and feat
 
 BoldGrid Ninja Forms is a webform builder with unparalleled ease of use and features.
 
+== Requirements ==
+
+* PHP 5.3 or higher.
+
 == Installation ==
 
 This section describes how to install the plugin and get it working.
@@ -21,13 +25,46 @@ This section describes how to install the plugin and get it working.
 2. Activate the plugin through the Plugins menu in WordPress.
 3. You will find the Forms menu in your WordPress Dashboard / admin panel.
 
-*Security:*
+== Changelog == 
 
-* Patched a security vulnerability related to shortcodes and logged-in users.
-* As with all our security releases, we urge all users to update to prevent any possible issues.
+= 1.4.3 In progress =
+* Update:		JIRA WPB-2345	Updated Ninja Forms version to 3.1.4.
 
-= 1.2.2 In progress =
-* Update:		JIRA WPB-2345	Updated Ninja Forms version to 3.1.4
+= 1.4.2 =
+* Bug fix:		JIRA WPB-3161	Fixed auto plugin update.
+
+= 1.4.1 =
+* Bug fix:		JIRA WPB-3151	Added check and load before using get_plugin_data() for updates.
+
+= 1.4.0.1 =
+* Bug fix:		JIRA WPB-3218	Forms not replacing on edit.
+
+= 1.4 =
+* Bug fix:		JIRA WPB-2912	Fixed issue when installing plugins from the Tools Import page.
+
+= 1.3.2 =
+* Bug fix:		JIRA WPB-2892	Fixed plugin update checks for some scenarios (WP-CLI, Plesk, etc).
+
+= 1.3.1 =
+* Bug fix:		JIRA WPB-2821	Fixed plugin update checks for some scenarios (WP-CLI, Plesk, etc).
+* Testing:		JIRA WPB-2744	Tested on WordPress 4.7.
+* Misc:			JIRA WPB-2503	Added plugin requirements to readme.txt file.
+
+= 1.3 =
+* Update:						Bump version.
+
+= 1.2.4 =
+* Misc:			JIRA WPB-2420	Added EOF line breaks.
+
+= 1.2.3 =
+* Misc:			JIRA WPB-2344	Updated readme.txt for Tested up to 4.6.1.
+* Bug fix:		JIRA WPB-2336	Load BoldGrid settings from the correct WP option (site/blog).
+* Update:		JIRA WPB-2368	Set version constant from plugin file.
+
+= 1.2.2 =
+* Bug fix:		JIRA WPB-2263	In multisite, if the site's admin email address is missing, then use the network admin email address.
+* Misc:			JIRA WPB-2256	Updated readme.txt for Tested up to: 4.6.
+* Rework:		JIRA WPB-1825	Formatting.
 * Update:		JIRA WPB-2241	Updated Ninja Forms version to 2.9.55.2.
 
 = 1.2.1 =
@@ -87,7 +124,7 @@ This section describes how to install the plugin and get it working.
 * Bug fix:		JIRA WPB-1443	Extra page listed under 'Mine'.
 
 = 1.0.3 =
-* Bug Fix:				Preventing notice on list all pages
+* Bug Fix:						Preventing notice on list all pages
 
 = 1.0.2 =
 * Bug Fix:		JIRA WPB-1277	Removed ninja_forms_preview_page from being displayed.

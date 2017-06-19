@@ -28,6 +28,8 @@ class Boldgrid_Ninja_Forms {
 
 	/**
 	 * Path configurations used for the plugin
+	 *
+	 * @var array
 	 */
 	protected $path_configs;
 
@@ -59,35 +61,42 @@ class Boldgrid_Ninja_Forms {
 
 		$this->tab_configs = include $plugin_dir . '/boldgrid/includes/config/layouts.php';
 
-		$this->path_configs = array (
+		$this->path_configs = array(
 			'plugin_dir' => $plugin_dir,
-			'plugin_filename' => $plugin_filename
+			'plugin_filename' => $plugin_filename,
 		);
 
-		// Load and instantiate WPB_Form_Config.
+		// Load and instantiate Boldgrid_Ninja_Forms_Config.
 		require_once $plugin_dir . '/boldgrid/includes/class-boldgrid-ninja-forms-config.php';
 
 		// Instantiate the Boldgrid_Ninja_Forms_Config class and save it into a class property.
 		$this->boldgrid_ninja_form_config = new Boldgrid_Ninja_Forms_Config();
 
-		// Add an action to load this plugin on init, only in the dashboard.
-		if ( is_admin() ) {
-			add_action( 'init', array (
-				$this,
-				'load_boldgrid_ninja_form_update'
-			) );
-		}
+		$this->prepare_plugin_update();
 	}
 
 	/**
-	 * Load the BoldGrid Ninja Forms update class.
+	 * Prepare for the update class.
+	 *
+	 * @since 1.3.2
 	 */
-	public function load_boldgrid_ninja_form_update() {
-		// Load and check for plugin updates.
-		require_once BOLDGRID_NINJA_FORMS_PATH .
-			 '/boldgrid/includes/class-boldgrid-ninja-forms-update.php';
+	public function prepare_plugin_update() {
+		$is_cron = ( defined( 'DOING_CRON' ) && DOING_CRON );
+		$is_wpcli = ( defined( 'WP_CLI' ) && WP_CLI );
 
-		$plugin_update = new Boldgrid_Ninja_Forms_Update( $this );
+		if ( $is_cron || $is_wpcli || is_admin() ) {
+			require_once BOLDGRID_NINJA_FORMS_PATH .
+				'/boldgrid/includes/class-boldgrid-ninja-forms-update.php';
+
+			$plugin_update = new Boldgrid_Ninja_Forms_Update(
+				$this->boldgrid_ninja_form_config->get_configs()
+			);
+
+			add_action( 'init', array(
+				$plugin_update,
+				'add_hooks',
+			) );
+		}
 	}
 
 	/**
@@ -263,6 +272,11 @@ class Boldgrid_Ninja_Forms {
 
 		// Get the site's email address:
 		$email_address = get_bloginfo( 'admin_email' );
+
+		// If the current blog's admin email address is missing, then try the network.
+		if ( empty( $email_address ) ) {
+			$email_address = get_site_option( 'admin_email' );
+		}
 
 		// Initialize $notifications_array:
 		$notifications_array = array ();
