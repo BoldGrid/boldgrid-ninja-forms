@@ -214,7 +214,7 @@ class Boldgrid_Ninja_Forms {
 	}
 
 	/**
-	 * Add Css to hide and show title/description
+	 * Add CSS to hide and show title/description.
 	 *
 	 * @return void
 	 */
@@ -228,49 +228,46 @@ class Boldgrid_Ninja_Forms {
 
 	/**
 	 * Static method that will add all forms that have been defined in the
-	 * boldgrid/includes/prebuilt-forms folder
+	 * boldgrid/includes/prebuilt-forms folder.
 	 *
 	 * @static
 	 *
-	 * @return void
+	 * @return null
 	 */
 	public static function add_prebuilt_forms() {
-		// Locate the prebuilt-forms directory:
+		// Check if Ninja Forms is >= 3.0, or is deprecated (<3.0).
+		$isThree = ! get_option( 'ninja_forms_load_deprecated', FALSE );
+		if ( $isThree ) {
+			return self::add_prebuilt_forms_v3();
+		}
+
 		$prebuilt_forms_directory = self::derive_plugin_dir() . '/boldgrid/includes/prebuilt-forms';
 
-		// If there is no directory found, then return:
-		if ( false === is_dir( $prebuilt_forms_directory ) ) {
+		if ( ! is_dir( $prebuilt_forms_directory ) ) {
 			return;
 		}
 
-		// Get a directory listing:
 		$prebuilt_form_directory_listing = scandir( $prebuilt_forms_directory );
 
-		// Natural sort order
 		natsort( $prebuilt_form_directory_listing );
 
-		// If there are no listings, then return:
 		if ( empty( $prebuilt_form_directory_listing ) ) {
 			return;
 		}
 
-		// Determinte the prebuilt form files:
 		$prebuilt_form_files = array_diff( $prebuilt_form_directory_listing,
-			array (
+			array(
 				'..',
 				'.',
 				'index.php'
 			) );
 
-		// If there are no listings after filtering, then return:
 		if ( empty( $prebuilt_form_files ) ) {
 			return;
 		}
 
-		// Get the site's title:
 		$site_title = get_bloginfo( 'name' );
 
-		// Get the site's email address:
 		$email_address = get_bloginfo( 'admin_email' );
 
 		// If the current blog's admin email address is missing, then try the network.
@@ -278,40 +275,39 @@ class Boldgrid_Ninja_Forms {
 			$email_address = get_site_option( 'admin_email' );
 		}
 
-		// Initialize $notifications_array:
-		$notifications_array = array ();
+		$notifications_array = array();
 
-		// Iterate through each form file and import:
+		// Iterate through each form file and import.
 		foreach ( $prebuilt_form_files as $prebuilt_form_file ) {
-			// Read the form file:
 			$prebuilt_form = file_get_contents(
 				$prebuilt_forms_directory . '/' . $prebuilt_form_file );
 
-			// Unserialize the form data:
 			$prebuilt_form_unserialized = unserialize( $prebuilt_form );
 
-			// If the form data is invalid, then skip:
-			if ( false === $prebuilt_form_unserialized ) {
+			if ( ! $prebuilt_form_unserialized ) {
 				continue;
 			}
 
-			// Initialize $updated_notification:
 			$updated_notification = false;
 
-			// Update the array:
-			if ( false === empty( $prebuilt_form_unserialized['notifications'] ) ) {
+			if ( ! empty( $prebuilt_form_unserialized['notifications'] ) ) {
 				// Update existing email notifications:
 				foreach ( $prebuilt_form_unserialized['notifications'] as $n_index => $notification ) {
-					if ( 'email' == $notification['type'] ) {
-						$prebuilt_form_unserialized['notifications'][$n_index]['date_updated'] = date(
-							'Y-m-d' );
-						$prebuilt_form_unserialized['notifications'][$n_index]['from_name'] = $site_title;
-						$prebuilt_form_unserialized['notifications'][$n_index]['from_address'] = $email_address;
-						$prebuilt_form_unserialized['notifications'][$n_index]['to'] = $email_address;
+					if ( 'email' === $notification['type'] ) {
+						$prebuilt_form_unserialized['notifications'][ $n_index ]['date_updated'] =
+							date( 'Y-m-d' );
+						$prebuilt_form_unserialized['notifications'][ $n_index ]['from_name'] =
+							$site_title;
+						$prebuilt_form_unserialized['notifications'][ $n_index ]['from_address'] =
+							$email_address;
+						$prebuilt_form_unserialized['notifications'][ $n_index ]['to'] =
+							$email_address;
 
 						if ( empty(
-							$prebuilt_form_unserialized['notifications'][$n_index]['email_subject'] ) ) {
-							$prebuilt_form_unserialized['notifications'][$n_index]['email_subject'] = 'Form submission';
+							$prebuilt_form_unserialized['notifications'][ $n_index ]['email_subject']
+							) ) {
+								$prebuilt_form_unserialized['notifications'][ $n_index ]['email_subject'] =
+									'Form submission';
 						}
 
 						$updated_notification = true;
@@ -324,23 +320,27 @@ class Boldgrid_Ninja_Forms {
 				unset( $prebuilt_form_unserialized['notifications'] );
 			}
 
-			// Serialize the form data:
-			$prebuilt_form = serialize( $prebuilt_form_unserialized );
-
-			// Import the form:
-			$last_form_id = ninja_forms_import_form( $prebuilt_form );
-
-			// Move $notification_array_temp to $notifications_array[$last_form_id].
-			if ( false === empty( $notification_array_temp ) ) {
-				$notifications_array[$last_form_id] = $notification_array_temp;
-
-				unset( $notifications_array_temp );
+			// Import the form.
+			if ( $isThree ) {
+				$last_form_id = Ninja_Forms()->form()->import_form( $prebuilt_form_unserialized );
+			} else {
+				$prebuilt_form = serialize( $prebuilt_form_unserialized );
+				$last_form_id = ninja_forms_import_form( $prebuilt_form );
 			}
 
-			// If an email notification does not exist, then add one to $notifications_array:
-			// Array index has no meaning; the import process does not use the key value.
-			if ( false === $updated_notification ) {
-				$notifications_array[$last_form_id][] = array (
+			// Move $notification_array_temp to $notifications_array[ $last_form_id ].
+			if ( ! empty( $notification_array_temp ) ) {
+				$notifications_array[ $last_form_id ] = $notification_array_temp;
+
+				unset( $notification_array_temp );
+			}
+
+			/*
+			 * If an email notification does not exist, then add one to $notifications_array.
+			 * Array index has no meaning; the import process does not use the key value.
+			 */
+			if ( ! $updated_notification ) {
+				$notifications_array[ $last_form_id ][] = array (
 					'date_updated' => date( 'Y-m-d' ),
 					'active' => '1',
 					'name' => 'email',
@@ -360,14 +360,19 @@ class Boldgrid_Ninja_Forms {
 				);
 			}
 		}
-		// Forms have been imported.
+		/* Forms have been imported. */
 
-		// Insert notifications:
+		if ( $isThree ) {
+			return;
+		}
+
+		// Insert notifications.
 		foreach ( $notifications_array as $form_id => $notification_array ) {
 			foreach ( $notification_array as $x => $n ) {
 				$n_id = nf_insert_notification( $form_id );
 				$form['notifications'] = $n;
 				$n = apply_filters( 'nf_import_notification_meta', $n, $n_id, $form );
+
 				foreach ( $n as $meta_key => $meta_value ) {
 					nf_update_object_meta( $n_id, $meta_key, $meta_value );
 				}
@@ -582,5 +587,55 @@ class Boldgrid_Ninja_Forms {
 		}
 
 		return $counts;
+	}
+
+	/**
+	 * Static method that will add all forms that have been defined in the
+	 * boldgrid/includes/prebuilt-forms-v3 folder.
+	 *
+	 * @since 1.4.3
+	 *
+	 * @static
+	 *
+	 * @return null
+	 */
+	public static function add_prebuilt_forms_v3() {
+		$prebuilt_forms_directory = self::derive_plugin_dir() .
+			'/boldgrid/includes/prebuilt-forms-v3';
+
+		if ( ! is_dir( $prebuilt_forms_directory ) ) {
+			return;
+		}
+
+		$directory_listing = scandir( $prebuilt_forms_directory );
+
+		natsort( $directory_listing );
+
+		if ( empty( $directory_listing ) ) {
+			return;
+		}
+
+		$prebuilt_form_files = array_diff( $directory_listing,
+			array(
+				'..',
+				'.',
+				'index.php'
+			) );
+
+		if ( empty( $prebuilt_form_files ) ) {
+			return;
+		}
+
+		// Start with form id 1.
+		$form_id = 1;
+
+		foreach ( $prebuilt_form_files as $prebuilt_form_file ) {
+			$prebuilt_form = file_get_contents(
+				$prebuilt_forms_directory . '/' . $prebuilt_form_file );
+
+			Ninja_Forms()->form( $form_id )->import_form( $prebuilt_form, $form_id );
+
+			$form_id++;
+		}
 	}
 }

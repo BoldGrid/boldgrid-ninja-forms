@@ -714,8 +714,10 @@ if( get_option( 'ninja_forms_load_deprecated', FALSE ) && ! ( isset( $_POST[ 'nf
 
             if( Ninja_Forms()->form()->get_forms() ) return;
 
-            $form = Ninja_Forms::template( 'formtemplate-contactform.nff', array(), TRUE );
-            Ninja_Forms()->form()->import_form( $form );
+            // BoldGrid: Added call to import our default forms, and commented 2 lines for NF import.
+            Boldgrid_Ninja_Forms::add_prebuilt_forms();
+            //$form = Ninja_Forms::template( 'formtemplate-contactform.nff', array(), TRUE );
+            //Ninja_Forms()->form()->import_form( $form );
         }
 
         /**

@@ -252,13 +252,15 @@ function ninja_forms_starter_form_exists() {
  * @returns int
  */
 function ninja_forms_add_starter_form() {
+	// BoldGrid: Skip importing default forms.
+	return;
+
     // load starter form
     $file = file_get_contents( NINJA_FORMS_DIR . "/includes/forms/starter-form.nff" );
     $file = apply_filters( 'ninja_forms_starter_form_contents', $file );
 
     // create new form
-	// BoldGrid: Skip importing default forms.
-    //ninja_forms_import_form( $file );
+    ninja_forms_import_form( $file );
 }
 
 
