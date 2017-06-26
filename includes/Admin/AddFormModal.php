@@ -23,7 +23,7 @@ class NF_Admin_AddFormModal {
     public function insert_form_tinymce_buttons( $context ) {
         global $pagenow;
 
-        if ( 'post.php' != $pagenow ) {
+        if( ! in_array( $pagenow, array( 'post.php', 'post-new.php' ) ) ){
             return $context;
         }
         $html = '<style>

@@ -12,14 +12,14 @@ class NF_Database_Migrations_Objects extends NF_Abstracts_Migration
 
     public function run()
     {
-        $query = "CREATE TABLE IF NOT EXISTS $this->table_name (
+        $query = "CREATE TABLE IF NOT EXISTS {$this->table_name()} (
             `id` int NOT NULL AUTO_INCREMENT,
             `type` longtext,
             `title` longtext,
             `created_at` TIMESTAMP,
             `updated_at` DATETIME,
             UNIQUE KEY (`id`)
-        ) $this->charset_collate;";
+        ) {$this->charset_collate()};";
 
         dbDelta( $query );
     }

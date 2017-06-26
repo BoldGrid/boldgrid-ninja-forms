@@ -198,7 +198,7 @@ final class WPN_Helper
 
         $value = self::htmlspecialchars( $_GET[ $key ] );
 
-        if( is_array( $value ) ) $value = $value[ 0 ];
+        if( is_array( $value ) ) $value = reset( $value );
 
         return $value;
     }

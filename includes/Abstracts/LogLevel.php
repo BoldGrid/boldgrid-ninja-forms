@@ -3,7 +3,7 @@
 /**
 * Describes log levels
 */
-class LogLevel
+class NF_Abstracts_LogLevel
 {
     const EMERGENCY = 'emergency';
     const ALERT     = 'alert';

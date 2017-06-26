@@ -12,7 +12,7 @@ class NF_Database_Migrations_Forms extends NF_Abstracts_Migration
 
     public function run()
     {
-        $query = "CREATE TABLE IF NOT EXISTS $this->table_name (
+        $query = "CREATE TABLE IF NOT EXISTS {$this->table_name()} (
             `id` int NOT NULL AUTO_INCREMENT,
             `title` longtext,
             `key` longtext,
@@ -21,7 +21,7 @@ class NF_Database_Migrations_Forms extends NF_Abstracts_Migration
             `views` int(11),
             `subs` int(11),
             UNIQUE KEY (`id`)
-        ) $this->charset_collate;";
+        ) {$this->charset_collate()};";
 
         dbDelta( $query );
     }

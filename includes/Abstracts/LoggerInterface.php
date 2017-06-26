@@ -15,7 +15,7 @@
 * See https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md
 * for the full interface specification.
 */
-interface LoggerInterface
+interface NF_Abstracts_LoggerInterface
 {
     /**
     * System is unusable.

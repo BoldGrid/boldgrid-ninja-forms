@@ -12,11 +12,19 @@ abstract class NF_Abstracts_Migration
 
     public function __construct( $table_name, $flag )
     {
+        $this->table_name =  $table_name;
+    }
+
+    public function table_name()
+    {
         global $wpdb;
+        return $wpdb->prefix . $this->table_name;
+    }
 
-        $this->table_name = $wpdb->prefix . $table_name;
-
-        $this->charset_collate = $wpdb->get_charset_collate();
+    public function charset_collate()
+    {
+        global $wpdb;
+        $wpdb->get_charset_collate();
     }
 
     public function _run()
@@ -32,4 +40,18 @@ abstract class NF_Abstracts_Migration
     }
 
     protected abstract function run();
+
+    public function _drop()
+    {
+        global $wpdb;
+        if( ! $this->table_name ) return;
+        if( 0 == $wpdb->query( "SHOW TABLES LIKE '{$this->table_name()}'" ) ) return;
+        $wpdb->query( "DROP TABLE {$this->table_name()}" );
+        return $this->drop();
+    }
+
+    protected function drop()
+    {
+        // This section intentionally left blank.
+    }
 }

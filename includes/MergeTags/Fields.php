@@ -119,11 +119,9 @@ final class NF_MergeTags_Fields extends NF_Abstracts_MergeTags
         //print_r($field);
         $hidden_field_types = apply_filters( 'nf_sub_hidden_field_types', array() );
 
-        if( 'html' == $field[ 'type' ] ) { // Include HTML fields in the All Fields Table Merge Tag.
-            $this->merge_tags[ 'all_fields' ][ 'fields' ][ $field['id'] ] = $field;
-        }
-
-        if( in_array( $field[ 'type' ], $hidden_field_types ) ) return;
+        if( in_array( $field[ 'type' ], $hidden_field_types )
+            && 'html' != $field[ 'type' ] // Specifically allow the HTML field in merge tags.
+        ) return;
 
         $field_id  = $field[ 'id' ];
         $callback  = 'field_' . $field_id;

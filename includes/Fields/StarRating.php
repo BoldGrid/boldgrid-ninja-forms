@@ -17,7 +17,7 @@ class NF_Fields_StarRating extends NF_Abstracts_Input
 
     protected $_templates = 'starrating';
 
-    protected $_settings_only = array( 'label', 'label_pos', 'default', 'required', 'classes' );
+    protected $_settings_only = array( 'label', 'label_pos', 'default', 'required', 'classes', 'key', 'admin_label' );
 
     public function __construct()
     {
