@@ -38,6 +38,7 @@ final class NF_Display_Render
     public static function localize( $form_id )
     {
         global $wp_locale;
+        $form_id = absint( $form_id );
 
         $capability = apply_filters( 'ninja_forms_display_test_values_capabilities', 'read' );
         if( isset( $_GET[ 'ninja_forms_test_values' ] ) && current_user_can( $capability ) ){
@@ -322,22 +323,7 @@ final class NF_Display_Render
 
         ?>
         <!-- TODO: Move to Template File. -->
-        <script>
-            var formDisplay = 1;
-
-            /* Maybe initialize nfForms object */
-            var nfForms = nfForms || [];
-
-            /* Build Form Data */
-            var form = [];
-            form.id = '<?php echo $form_id; ?>';
-            form.settings = <?php echo wp_json_encode( $form->get_settings() ); ?>;
-            form.fields = <?php echo wp_json_encode( $fields ); ?>;
-
-            /* Add Form Data to nfForms object */
-            nfForms.push( form );
-        </script>
-
+	<script>var formDisplay=1;var nfForms=nfForms||[];var form=[];form.id='<?php echo $form_id; ?>';form.settings=<?php echo wp_json_encode( $form->get_settings() ); ?>;form.fields=<?php echo wp_json_encode( $fields ); ?>;nfForms.push(form);</script>
         <?php
         self::enqueue_scripts( $form_id );
     }

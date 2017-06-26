@@ -1,7 +1,5 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit;
 
-require_once Ninja_Forms::$dir . "includes/Abstracts/LogLevel.php";
-require_once Ninja_Forms::$dir . "includes/Abstracts/LoggerInterface.php";
 
 /**
  * This is a simple Logger implementation that other Loggers can inherit from.
@@ -10,7 +8,7 @@ require_once Ninja_Forms::$dir . "includes/Abstracts/LoggerInterface.php";
  * reduce boilerplate code that a simple Logger that does the same thing with
  * messages regardless of the error level has to implement.
  */
-abstract class NF_Abstracts_Logger implements LoggerInterface
+abstract class NF_Abstracts_Logger implements NF_Abstracts_LoggerInterface
 {
     /**
      * System is unusable.
@@ -22,7 +20,7 @@ abstract class NF_Abstracts_Logger implements LoggerInterface
      */
     public function emergency($message, array $context = array())
     {
-        $this->log(LogLevel::EMERGENCY, $message, $context);
+        $this->log(NF_Abstracts_LogLevel::EMERGENCY, $message, $context);
     }
 
     /**
@@ -38,7 +36,7 @@ abstract class NF_Abstracts_Logger implements LoggerInterface
      */
     public function alert($message, array $context = array())
     {
-        $this->log(LogLevel::ALERT, $message, $context);
+        $this->log(NF_Abstracts_LogLevel::ALERT, $message, $context);
     }
 
     /**
@@ -53,7 +51,7 @@ abstract class NF_Abstracts_Logger implements LoggerInterface
      */
     public function critical($message, array $context = array())
     {
-        $this->log(LogLevel::CRITICAL, $message, $context);
+        $this->log(NF_Abstracts_LogLevel::CRITICAL, $message, $context);
     }
 
     /**
@@ -67,7 +65,7 @@ abstract class NF_Abstracts_Logger implements LoggerInterface
      */
     public function error($message, array $context = array())
     {
-        $this->log(LogLevel::ERROR, $message, $context);
+        $this->log(NF_Abstracts_LogLevel::ERROR, $message, $context);
     }
 
     /**
@@ -83,7 +81,7 @@ abstract class NF_Abstracts_Logger implements LoggerInterface
      */
     public function warning($message, array $context = array())
     {
-        $this->log(LogLevel::WARNING, $message, $context);
+        $this->log(NF_Abstracts_LogLevel::WARNING, $message, $context);
     }
 
     /**
@@ -96,7 +94,7 @@ abstract class NF_Abstracts_Logger implements LoggerInterface
      */
     public function notice($message, array $context = array())
     {
-        $this->log(LogLevel::NOTICE, $message, $context);
+        $this->log(NF_Abstracts_LogLevel::NOTICE, $message, $context);
     }
 
     /**
@@ -111,7 +109,7 @@ abstract class NF_Abstracts_Logger implements LoggerInterface
      */
     public function info($message, array $context = array())
     {
-        $this->log(LogLevel::INFO, $message, $context);
+        $this->log(NF_Abstracts_LogLevel::INFO, $message, $context);
     }
 
     /**
@@ -124,6 +122,6 @@ abstract class NF_Abstracts_Logger implements LoggerInterface
      */
     public function debug($message, array $context = array())
     {
-        $this->log(LogLevel::DEBUG, $message, $context);
+        $this->log(NF_Abstracts_LogLevel::DEBUG, $message, $context);
     }
 }

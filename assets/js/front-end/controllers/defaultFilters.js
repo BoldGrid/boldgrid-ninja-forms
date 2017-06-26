@@ -48,6 +48,7 @@ define( [ 'views/fieldCollection', 'models/fieldCollection' ], function( FieldCo
         			}
         		} );
 
+                currentFieldCollection.options = { formModel: formModel };
         		currentFieldCollection.reset( resetFields );
         	} );
 

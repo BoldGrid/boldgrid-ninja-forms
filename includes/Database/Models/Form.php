@@ -42,6 +42,8 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
         foreach( $actions as $action ){
             $action->delete();
         }
+
+        delete_option( 'nf_form_' . $this->_id );
     }
 
     public static function get_next_sub_seq( $form_id )
@@ -364,7 +366,8 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
         }
 
         if( 'email' == $action[ 'type' ] ){
-            $action[ 'to' ] = str_replace( '`', ',', $action[ 'to' ] );
+            $action[ 'to' ]            = str_replace( '`', ',', $action[ 'to' ] );
+            $action[ 'email_subject' ] = str_replace( '`', ',', $action[ 'email_subject' ] );
         }
 
         // Convert `name` to `label`

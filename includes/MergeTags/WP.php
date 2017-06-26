@@ -71,7 +71,7 @@ final class NF_MergeTags_WP extends NF_Abstracts_MergeTags
             $subject = str_replace( $search, $this->post_meta[ $meta_key ], $subject );
         }
 
-        return $subject;
+      return parent::replace( $subject );
     }
 
     protected function post_id()

@@ -5,6 +5,9 @@ define( ['models/fieldModel'], function( fieldModel ) {
 
 		initialize: function( models, options ) {
 			this.options = options;
+            this.on( 'reset', function( fieldCollection ){
+                nfRadio.channel( 'fields' ).trigger( 'reset:collection', fieldCollection );
+            }, this );
 		},
 
 		validateFields: function() {

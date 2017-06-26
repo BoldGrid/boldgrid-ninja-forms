@@ -12,7 +12,7 @@ class NF_Database_Migrations_Relationships extends NF_Abstracts_Migration
 
     public function run()
     {
-        $query = "CREATE TABLE IF NOT EXISTS $this->table_name (
+        $query = "CREATE TABLE IF NOT EXISTS {$this->table_name()} (
             `id` int NOT NULL AUTO_INCREMENT,
             `child_id` int NOT NULL,
             `child_type` longtext NOT NULL,
@@ -21,7 +21,7 @@ class NF_Database_Migrations_Relationships extends NF_Abstracts_Migration
             `created_at` TIMESTAMP,
             `updated_at` DATETIME,
             UNIQUE KEY (`id`)
-        ) $this->charset_collate;";
+        ) {$this->charset_collate()};";
 
         dbDelta( $query );
     }

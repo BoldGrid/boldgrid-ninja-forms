@@ -49,6 +49,8 @@ define( [], function() {
 			this.checkName( optionModel.get( 'name' ), optionModel, false );
 			this.checkEQ( optionModel.get( 'eq' ), optionModel );
 			this.checkDec( optionModel.get( 'dec' ), optionModel );
+
+			Backbone.Radio.channel( 'calcs' ).trigger( 'update:calc' );
 		},
 
 		sortCalc: function( optionModel, setting ) {

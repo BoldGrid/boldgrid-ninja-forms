@@ -224,7 +224,12 @@ final class NF_Actions_Email extends NF_Abstracts_Action
             $ignore = array(
                 'hr',
                 'submit',
-                'html'
+                'html',
+                'creditcardcvc',
+                'creditcardexpiration',
+                'creditcardfullname',
+                'creditcardnumber',
+                'creditcardzip',
             );
 
             $ignore = apply_filters( 'ninja_forms_csv_ignore_fields', $ignore );

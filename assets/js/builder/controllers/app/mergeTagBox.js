@@ -112,6 +112,16 @@ define( [
                     jQuery( '.merge-tag-focus-overlay' ).removeClass( 'merge-tag-focus-overlay' );
                 }
             });
+
+            /**
+             * Listen to the Field Changes (add, delete, update) and update the Merge Tags.
+             */
+            this.listenTo( Backbone.Radio.channel( 'fields' ), 'add:field',    this.afterAppStart );
+            this.listenTo( Backbone.Radio.channel( 'fields' ), 'delete:field', this.afterAppStart );
+            this.listenTo( Backbone.Radio.channel( 'fieldSetting-key' ), 'update:setting', this.afterAppStart );
+
+            /** ... and Calc updates. */
+            this.listenTo( Backbone.Radio.channel( 'calcs' ), 'update:calc', this.afterAppStart );
         },
 
         afterAppStart: function() {
@@ -139,12 +149,6 @@ define( [
             layout.getRegion('tags').show(mergeTagListView);
             layout.getRegion('sections').show(mergeTagGroupListView);
             layout.getRegion('filter').show(new MergeTagFilterView);
-
-            var that = this;
-            this.listenTo( nfRadio.channel( 'mergeTags' ), 'open', function(){
-                // layout.destroy();
-                that.afterAppStart();
-            });
         },
 
         beforeRenderSetting: function( settingModel, dataModel ){
