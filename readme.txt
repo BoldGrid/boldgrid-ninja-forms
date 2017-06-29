@@ -27,6 +27,9 @@ This section describes how to install the plugin and get it working.
 
 == Changelog == 
 
+= 1.4.4 In progress =
+* Update:		JIRA WPB-3292	Updated plugin URI.
+
 = 1.4.3 =
 * Update:		JIRA WPB-2345	Updated Ninja Forms version to 3.1.5.
 
