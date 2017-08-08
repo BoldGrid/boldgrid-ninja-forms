@@ -1,8 +1,8 @@
 === BoldGrid Ninja Forms ===
 Contributors: imh_brad, joemoto, rramo012, timph
 Tags: contact form, form, form builder
-Requires at least: 4.3
-Tested up to: 4.8
+Requires at least: 4.4
+Tested up to: 4.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,8 +29,11 @@ This section describes how to install the plugin and get it working.
 * Patched a security vulnerability related to shortcodes and logged-in users.
 * As with all our security releases, we urge all users to update to prevent any possible issues.
 
+= 1.5 =
+* Update:						Bump version.
+
 = 1.4.4 =
-* Update:				Updating Readme.
+* Update:						Updating Readme.
 
 = 1.4.2 =
 * Bug fix:		JIRA WPB-3161	Fixed auto plugin update.

@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: BoldGrid Ninja Forms
-Plugin URI: http://www.boldgrid.com/
+Plugin URI: https://www.boldgrid.com/boldgrid-ninja-forms/
 Description: BoldGrid Ninja Forms
-Version: 1.4.4
+Version: 1.5
 Author: BoldGrid.com
-Author URI: http://www.boldgrid.com/
+Author URI: https://www.boldgrid.com/
 Text Domain: boldgrid-ninja-forms
 Domain Path: /lang/
 
