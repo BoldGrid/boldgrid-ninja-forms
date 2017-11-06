@@ -29,6 +29,9 @@ This section describes how to install the plugin and get it working.
 * Patched a security vulnerability related to shortcodes and logged-in users.
 * As with all our security releases, we urge all users to update to prevent any possible issues.
 
+= 1.5.1 In progress =
+* New feature:  JIRA WPB-3595   Added new pre-built forms (13-20).
+
 = 1.5 =
 * Update:						Bump version.
 
