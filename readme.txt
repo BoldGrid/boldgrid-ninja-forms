@@ -2,7 +2,7 @@
 Contributors: imh_brad, joemoto, rramo012, timph
 Tags: inspiration,customization,build,create,design,forms,webforms
 Requires at least: 4.5
-Tested up to: 4.8
+Tested up to: 4.8.3
 Stable tag: 3.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -27,11 +27,18 @@ This section describes how to install the plugin and get it working.
 
 == Changelog == 
 
-= 1.4.4 In progress =
+= 1.5.1 In progress =
+* New feature:  JIRA WPB-3595   Added new pre-built forms (13-20).
 * Update:		JIRA WPB-3292	Updated plugin URI.
 
 = 1.4.3 =
 * Update:		JIRA WPB-2345	Updated Ninja Forms version to 3.1.5.
+
+= 1.5 =
+* Update:						Bump version.
+
+= 1.4.4 =
+* Update:						Updating Readme.
 
 = 1.4.2 =
 * Bug fix:		JIRA WPB-3161	Fixed auto plugin update.

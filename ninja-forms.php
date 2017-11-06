@@ -3,7 +3,7 @@
 Plugin Name: BoldGrid Ninja Forms
 Plugin URI: https://www.boldgrid.com/wordpress-plugins/#other-plugins
 Description: BoldGrid Ninja Forms
-Version: 1.4.3
+Version: 1.5.1
 Author: BoldGrid.com
 Author URI: https://www.boldgrid.com/
 Text Domain: boldgrid-ninja-forms
