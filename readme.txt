@@ -25,17 +25,16 @@ This section describes how to install the plugin and get it working.
 2. Activate the plugin through the Plugins menu in WordPress.
 3. You will find the Forms menu in your WordPress Dashboard / admin panel.
 
-== Changelog == 
+== Changelog ==
 
 = 1.5.1 In progress =
-* New feature:  JIRA WPB-3595   Added new pre-built forms (13-20).
 * Update:		JIRA WPB-3292	Updated plugin URI.
-
-= 1.4.3 =
-* Update:		JIRA WPB-2345	Updated Ninja Forms version to 3.1.5.
 
 = 1.5 =
 * Update:						Bump version.
+
+= 1.4.3 =
+* Update:		JIRA WPB-2345	Updated Ninja Forms version to 3.1.5.
 
 = 1.4.4 =
 * Update:						Updating Readme.
